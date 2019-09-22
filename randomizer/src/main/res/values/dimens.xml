@@ -8,7 +8,8 @@
     <dimen name="filters_padding_bottom_between">9dp</dimen>
     <dimen name="checkbox_spacing">30dp</dimen>
     <dimen name="star_height">20dp</dimen>
-    <dimen name="corner_radius">2dp</dimen>
+    <dimen name="card_corner_radius">2dp</dimen>
+    <dimen name="card_elevation">2dp</dimen>
     <dimen name="thumbnail_dimen">85dp</dimen>
     <dimen name="restaurant_padding">4dp</dimen>
     <dimen name="menu_spacing">12dp</dimen>

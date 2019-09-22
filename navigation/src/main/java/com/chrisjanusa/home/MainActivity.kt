@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
                         transaction.replace(R.id.fragment_container, randomizerFrag)
                         transaction.addToBackStack(null)
                         transaction.commit()
-                        location.longitude += Random.nextDouble() * 100
+                        location.longitude += Random.nextDouble()
                         randomizerFrag.setMap(location)
                     }
 
