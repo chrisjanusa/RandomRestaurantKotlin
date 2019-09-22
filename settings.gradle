@@ -1,1 +1,1 @@
-include ':app', ':home'
+include ':app', ':navigation', ':randomizer'

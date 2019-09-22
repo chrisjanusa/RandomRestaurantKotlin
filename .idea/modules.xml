@@ -4,7 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/RandomRestaurantKotlin.iml" filepath="$PROJECT_DIR$/RandomRestaurantKotlin.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/home/home.iml" filepath="$PROJECT_DIR$/home/home.iml" />
+      <module fileurl="file://$PROJECT_DIR$/navigation/navigation.iml" filepath="$PROJECT_DIR$/navigation/navigation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/randomizer/randomizer.iml" filepath="$PROJECT_DIR$/randomizer/randomizer.iml" />
     </modules>
   </component>
 </project>
