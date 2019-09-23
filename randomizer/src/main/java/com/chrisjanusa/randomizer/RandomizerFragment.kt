@@ -5,7 +5,6 @@ import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,16 +12,13 @@ import androidx.annotation.DrawableRes
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.*
-import com.google.android.gms.maps.model.BitmapDescriptor
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.*
 import kotlinx.android.synthetic.main.randomizer_frag.*
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 
-class RandomizerFragment : Fragment(), OnMapReadyCallback {
+class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private lateinit var map: GoogleMap
-    private var loc: Location? = null
+    private var loc: LatLng? = null
     private val ZOOM_LEVEL = 16f
     private var curr: LatLng? = null
     private var icon : BitmapDescriptor? = null
@@ -46,7 +42,7 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback {
     }
 
     fun setMap(location: Location) {
-        loc = location
+        loc = LatLng(location.latitude, location.longitude)
         if (mapView != null) {
             if (icon == null){
                 icon = vectorToBitmap(R.drawable.ic_marker)
@@ -62,11 +58,27 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
+    private fun setMap() {
+        if (mapView != null) {
+            if (icon == null){
+                icon = vectorToBitmap(R.drawable.ic_marker)
+            }
+            if (curr != loc) {
+                map.clear()
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, ZOOM_LEVEL))
+                map.addMarker(MarkerOptions()
+                    .position(loc!!)
+                    .icon(icon))
+            }
+        }
+    }
+
     override fun onMapReady(googleMap: GoogleMap?) {
         googleMap ?: return
         map = googleMap
+        map.setOnMarkerClickListener(this)
         if (loc != null) {
-            setMap(loc!!)
+            setMap()
         }
     }
 
@@ -78,5 +90,10 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback {
         vectorDrawable.setBounds(0, 0, canvas.width, canvas.height)
         vectorDrawable.draw(canvas)
         return BitmapDescriptorFactory.fromBitmap(bitmap)
+    }
+
+    override fun onMarkerClick(marker: Marker): Boolean {
+        //TODO: open the menu to open in other apps
+        return false
     }
 }
