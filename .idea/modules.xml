@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/navigation/navigation.iml" filepath="$PROJECT_DIR$/navigation/navigation.iml" />
       <module fileurl="file://$PROJECT_DIR$/randomizer/randomizer.iml" filepath="$PROJECT_DIR$/randomizer/randomizer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/restaurantcard/restaurantcard.iml" filepath="$PROJECT_DIR$/restaurantcard/restaurantcard.iml" />
     </modules>
   </component>
 </project>

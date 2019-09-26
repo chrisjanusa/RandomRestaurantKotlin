@@ -38,14 +38,14 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
             mapView.onResume()
             mapView.getMapAsync(this)
         }
-        icon = vectorToBitmap(R.drawable.ic_marker)
+        icon = vectorToBitmap(R.drawable.marker)
     }
 
     fun setMap(location: Location) {
         loc = LatLng(location.latitude, location.longitude)
         if (mapView != null) {
             if (icon == null){
-                icon = vectorToBitmap(R.drawable.ic_marker)
+                icon = vectorToBitmap(R.drawable.marker)
             }
             val latLong = LatLng(location.latitude, location.longitude)
             if (curr != latLong) {
@@ -61,7 +61,7 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
     private fun setMap() {
         if (mapView != null) {
             if (icon == null){
-                icon = vectorToBitmap(R.drawable.ic_marker)
+                icon = vectorToBitmap(R.drawable.marker)
             }
             if (curr != loc) {
                 map.clear()
@@ -77,6 +77,7 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         googleMap ?: return
         map = googleMap
         map.setOnMarkerClickListener(this)
+        map.uiSettings.isMapToolbarEnabled = false
         if (loc != null) {
             setMap()
         }

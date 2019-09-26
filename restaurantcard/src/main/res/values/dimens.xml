@@ -1,0 +1,10 @@
+<resources>
+    <dimen name="card_corner_radius">@dimen/_10sdp</dimen>
+    <dimen name="card_elevation">@dimen/_2sdp</dimen>
+    <dimen name="thumbnail_dimen">@dimen/_85sdp</dimen>
+    <dimen name="restaurant_padding">@dimen/_4sdp</dimen>
+    <dimen name="restaurant_name_size">@dimen/_16ssp</dimen>
+    <dimen name="restaurant_details_size">@dimen/_12ssp</dimen>
+    <dimen name="card_height">@dimen/_130sdp</dimen>
+    <dimen name="card_button_space">@dimen/_2sdp</dimen>
+</resources>
