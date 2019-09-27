@@ -1,193 +1,196 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.cardview.widget.CardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/restaurantContainer"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/card_height"
-        app:cardCornerRadius="@dimen/card_corner_radius"
-        app:cardElevation="@dimen/card_elevation">
-
+        xmlns:android='http://schemas.android.com/apk/res/android'
+        xmlns:app='http://schemas.android.com/apk/res-auto'
+        android:id='@+id/restaurantContainer'
+        android:layout_height='@dimen/card_height'
+        android:layout_width='match_parent'
+        app:cardCornerRadius='@dimen/card_corner_radius'
+        app:cardElevation='@dimen/card_elevation'>
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="@dimen/restaurant_padding_top"
-            android:paddingBottom="@dimen/restaurant_padding_bottom"
-            android:paddingStart="@dimen/restaurant_padding_sides"
-            android:paddingEnd="@dimen/restaurant_padding_sides">
-
+            android:layout_height='match_parent'
+            android:layout_width='match_parent'
+            android:paddingBottom='@dimen/restaurant_padding_bottom'
+            android:paddingEnd='@dimen/restaurant_padding_sides'
+            android:paddingStart='@dimen/restaurant_padding_sides'
+            android:paddingTop='@dimen/restaurant_padding_top'>
 
         <ImageView
-                android:id="@+id/thumbnail"
-                android:src="@drawable/test_thumbnail"
-                android:layout_width="@dimen/thumbnail_dimen"
-                android:layout_height="@dimen/thumbnail_dimen"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:contentDescription="@string/restaurant_picture"/>
+                android:contentDescription='@string/restaurant_picture'
+                android:id='@+id/thumbnail'
+                android:layout_height='@dimen/thumbnail_dimen'
+                android:layout_width='@dimen/thumbnail_dimen'
+                android:src='@drawable/test_thumbnail'
+                app:layout_constraintStart_toStartOf='parent'
+                app:layout_constraintTop_toTopOf='parent'/>
 
 
         <TextView
-                android:id="@+id/name"
-                android:text="Pecado Bueno"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="top"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="@dimen/restaurant_name_size"
-                app:layout_constraintTop_toTopOf="@id/thumbnail"
-                app:layout_constraintStart_toEndOf="@id/thumbnail"
-                app:layout_constraintBottom_toTopOf="@id/rating"/>
+                android:gravity='top'
+                android:id='@+id/name'
+                android:layout_height='wrap_content'
+                android:layout_width='wrap_content'
+                android:text='Pecado Bueno'
+                android:textAppearance='?android:attr/textAppearanceLarge'
+                android:textSize='@dimen/restaurant_name_size'
+                app:layout_constraintBottom_toTopOf='@id/rating'
+                app:layout_constraintStart_toEndOf='@id/thumbnail'
+                app:layout_constraintTop_toTopOf='@id/thumbnail'/>
 
-        <ImageButton
-                android:id="@+id/saveButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:clickable="true"
-                android:src="@drawable/star_not"
-                android:focusable="true"
-                app:layout_constraintTop_toTopOf="@id/name"
-                app:layout_constraintEnd_toStartOf="@id/removeButton"/>
+        <ToggleButton
+                android:background='@drawable/fav_selector'
+                android:checked='false'
+                android:id='@+id/favButton'
+                android:layout_height='@dimen/toggle_button_size'
+                android:layout_marginEnd='@dimen/toggle_button_space'
+                android:layout_marginRight='@dimen/toggle_button_space'
+                android:layout_width='@dimen/toggle_button_size'
+                android:text=''
+                android:textOff=''
+                android:textOn=''
+                app:layout_constraintBottom_toTopOf='@id/categories'
+                app:layout_constraintEnd_toStartOf='@id/blockButton'
+                app:layout_constraintTop_toTopOf='@id/name'/>
 
-        <ImageButton
-                android:id="@+id/removeButton"
-                app:layout_constraintTop_toTopOf="@id/name"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:clickable="true"
-                android:src="@drawable/block_not"
-                android:focusable="true"/>
+        <ToggleButton
+                android:background='@drawable/block_selector'
+                android:checked='false'
+                android:id='@+id/blockButton'
+                android:layout_height='@dimen/toggle_button_size'
+                android:layout_width='@dimen/toggle_button_size'
+                android:text=''
+                android:textOff=''
+                android:textOn=''
+                app:layout_constraintBottom_toTopOf='@id/categories'
+                app:layout_constraintEnd_toEndOf='parent'
+                app:layout_constraintTop_toTopOf='@id/name'/>
 
         <TextView
-                android:id="@+id/rating"
-                android:text="3.5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="@dimen/restaurant_details_size"
-                app:layout_constraintTop_toBottomOf="@id/name"
-                app:layout_constraintStart_toEndOf="@id/thumbnail"
-                app:layout_constraintBottom_toTopOf="@id/categories"/>
+                android:id='@+id/rating'
+                android:layout_height='wrap_content'
+                android:layout_width='wrap_content'
+                android:text='3.5'
+                android:textAppearance='?android:attr/textAppearanceMedium'
+                android:textSize='@dimen/restaurant_details_size'
+                app:layout_constraintBottom_toTopOf='@id/categories'
+                app:layout_constraintStart_toEndOf='@id/thumbnail'
+                app:layout_constraintTop_toBottomOf='@id/name'/>
 
         <RatingBar
-                android:id="@+id/stars"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/name"
-                app:layout_constraintStart_toEndOf="@+id/rating"
-                android:isIndicator="true"
-                android:rating="3.5"
-                android:numStars="5"
-                style="?android:attr/ratingBarStyleSmall"
-                app:layout_constraintBottom_toTopOf="@+id/categories"
-                android:layout_marginLeft="@dimen/rating_margin"
-                android:layout_marginStart="@dimen/rating_margin"/>
+                android:id='@+id/stars'
+                android:isIndicator='true'
+                android:layout_height='wrap_content'
+                android:layout_marginLeft='@dimen/rating_margin'
+                android:layout_marginStart='@dimen/rating_margin'
+                android:layout_width='wrap_content'
+                android:numStars='5'
+                android:rating='3.5'
+                app:layout_constraintBottom_toTopOf='@+id/categories'
+                app:layout_constraintStart_toEndOf='@+id/rating'
+                app:layout_constraintTop_toBottomOf='@+id/name'
+                style='?android:attr/ratingBarStyleSmall'/>
 
         <TextView
-                android:id="@+id/count"
-                android:text="(95)"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="@dimen/restaurant_details_size"
-                app:layout_constraintStart_toEndOf="@+id/stars"
-                app:layout_constraintTop_toBottomOf="@+id/name"
-                app:layout_constraintBottom_toTopOf="@+id/categories"
-                android:layout_marginLeft="@dimen/rating_margin"
-                android:layout_marginStart="@dimen/rating_margin"/>
+                android:id='@+id/count'
+                android:layout_height='wrap_content'
+                android:layout_marginLeft='@dimen/rating_margin'
+                android:layout_marginStart='@dimen/rating_margin'
+                android:layout_width='wrap_content'
+                android:text='(95)'
+                android:textAppearance='?android:attr/textAppearanceMedium'
+                android:textSize='@dimen/restaurant_details_size'
+                app:layout_constraintBottom_toTopOf='@+id/categories'
+                app:layout_constraintStart_toEndOf='@+id/stars'
+                app:layout_constraintTop_toBottomOf='@+id/name'/>
 
         <TextView
-                android:id="@+id/categories"
-                android:text="Mexican, Breakfast &amp; Brunch, Diners"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="@dimen/restaurant_details_size"
-                app:layout_constraintTop_toBottomOf="@+id/rating"
-                app:layout_constraintStart_toEndOf="@+id/thumbnail"
-                app:layout_constraintBottom_toTopOf="@+id/distancePriceReviewCount"/>
+                android:id='@+id/categories'
+                android:layout_height='wrap_content'
+                android:layout_width='wrap_content'
+                android:text='Mexican, Breakfast &amp; Brunch, Diners'
+                android:textAppearance='?android:attr/textAppearanceMedium'
+                android:textSize='@dimen/restaurant_details_size'
+                app:layout_constraintBottom_toTopOf='@+id/distancePriceReviewCount'
+                app:layout_constraintStart_toEndOf='@+id/thumbnail'
+                app:layout_constraintTop_toBottomOf='@+id/rating'/>
 
         <TextView
-                android:id="@+id/distancePriceReviewCount"
-                android:text="$$ | 0.11 mi away | Closes at 10 PM"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/restaurant_details_size"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                app:layout_constraintTop_toBottomOf="@id/categories"
-                app:layout_constraintStart_toEndOf="@id/thumbnail"
-                app:layout_constraintBottom_toBottomOf="@id/thumbnail"/>
+                android:id='@+id/distancePriceReviewCount'
+                android:layout_height='wrap_content'
+                android:layout_width='wrap_content'
+                android:text='$$ | 0.11 mi away | Closes at 10 PM'
+                android:textAppearance='?android:attr/textAppearanceSmall'
+                android:textSize='@dimen/restaurant_details_size'
+                app:layout_constraintBottom_toBottomOf='@id/thumbnail'
+                app:layout_constraintStart_toEndOf='@id/thumbnail'
+                app:layout_constraintTop_toBottomOf='@id/categories'/>
 
         <com.google.android.material.button.MaterialButton
-                android:id="@+id/uber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/thumbnail"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/maps"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
-                app:icon="@drawable/uber"
-                app:iconTint="@android:color/transparent"
-                app:iconTintMode="add"
-                app:iconSize="@dimen/button_size"
-                app:iconGravity="textStart"
-                android:gravity="center"
-                android:layout_marginEnd="@dimen/card_button_space"
-                android:layout_marginStart="@dimen/card_button_space"
-                android:text="@string/uber"
-                app:cornerRadius="@dimen/button_radius"
-                android:textAppearance="@style/ButtonTextAppearance"
-                android:textColor="@color/button_text_color"
-                android:layout_marginTop="@dimen/button_top_margin"/>
+                android:gravity='center'
+                android:id='@+id/uber'
+                android:layout_height='wrap_content'
+                android:layout_marginEnd='@dimen/card_button_space'
+                android:layout_marginStart='@dimen/card_button_space'
+                android:layout_marginTop='@dimen/button_top_margin'
+                android:layout_width='wrap_content'
+                android:text='@string/uber'
+                android:textAppearance='@style/ButtonTextAppearance'
+                android:textColor='@color/button_text_color'
+                app:cornerRadius='@dimen/button_radius'
+                app:icon='@drawable/uber'
+                app:iconGravity='textStart'
+                app:iconSize='@dimen/button_size'
+                app:iconTint='@android:color/transparent'
+                app:iconTintMode='add'
+                app:layout_constraintEnd_toStartOf='@id/maps'
+                app:layout_constraintStart_toStartOf='parent'
+                app:layout_constraintTop_toBottomOf='@id/thumbnail'
+                style='@style/Widget.MaterialComponents.Button.OutlinedButton.Icon'/>
 
         <com.google.android.material.button.MaterialButton
-                android:id="@+id/maps"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/thumbnail"
-                app:layout_constraintStart_toEndOf="@id/uber"
-                app:layout_constraintEnd_toStartOf="@id/yelp"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
-                app:icon="@drawable/googlemaps"
-                app:iconSize="@dimen/button_size"
-                app:iconGravity="textStart"
-                app:iconTint="@android:color/transparent"
-                app:iconTintMode="add"
-                android:gravity="center"
-                android:layout_marginEnd="@dimen/card_button_space"
-                android:layout_marginStart="@dimen/card_button_space"
-                android:text="@string/map"
-                app:cornerRadius="@dimen/button_radius"
-                android:textAppearance="@style/ButtonTextAppearance"
-                android:textColor="@color/button_text_color"
-                android:layout_marginTop="@dimen/button_top_margin"/>
+                android:gravity='center'
+                android:id='@+id/maps'
+                android:layout_height='wrap_content'
+                android:layout_marginEnd='@dimen/card_button_space'
+                android:layout_marginStart='@dimen/card_button_space'
+                android:layout_marginTop='@dimen/button_top_margin'
+                android:layout_width='wrap_content'
+                android:text='@string/map'
+                android:textAppearance='@style/ButtonTextAppearance'
+                android:textColor='@color/button_text_color'
+                app:cornerRadius='@dimen/button_radius'
+                app:icon='@drawable/googlemaps'
+                app:iconGravity='textStart'
+                app:iconSize='@dimen/button_size'
+                app:iconTint='@android:color/transparent'
+                app:iconTintMode='add'
+                app:layout_constraintEnd_toStartOf='@id/yelp'
+                app:layout_constraintStart_toEndOf='@id/uber'
+                app:layout_constraintTop_toBottomOf='@id/thumbnail'
+                style='@style/Widget.MaterialComponents.Button.OutlinedButton.Icon'/>
 
         <com.google.android.material.button.MaterialButton
-                android:id="@+id/yelp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/thumbnail"
-                app:layout_constraintStart_toEndOf="@id/maps"
-                app:layout_constraintEnd_toEndOf="parent"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
-                app:icon="@drawable/yelp"
-                app:iconTint="@android:color/transparent"
-                app:iconTintMode="add"
-                app:iconSize="@dimen/button_size"
-                app:iconGravity="textStart"
-                android:gravity="center"
-                android:layout_marginEnd="@dimen/card_button_space"
-                android:layout_marginStart="@dimen/card_button_space"
-                android:text="@string/yelp"
-                app:cornerRadius="@dimen/button_radius"
-                android:textAppearance="@style/ButtonTextAppearance"
-                android:textColor="@color/button_text_color"
-                android:layout_marginTop="@dimen/button_top_margin"/>
-
+                android:gravity='center'
+                android:id='@+id/yelp'
+                android:layout_height='wrap_content'
+                android:layout_marginEnd='@dimen/card_button_space'
+                android:layout_marginStart='@dimen/card_button_space'
+                android:layout_marginTop='@dimen/button_top_margin'
+                android:layout_width='wrap_content'
+                android:text='@string/yelp'
+                android:textAppearance='@style/ButtonTextAppearance'
+                android:textColor='@color/button_text_color'
+                app:cornerRadius='@dimen/button_radius'
+                app:icon='@drawable/yelp'
+                app:iconGravity='textStart'
+                app:iconSize='@dimen/button_size'
+                app:iconTint='@android:color/transparent'
+                app:iconTintMode='add'
+                app:layout_constraintEnd_toEndOf='parent'
+                app:layout_constraintStart_toEndOf='@id/maps'
+                app:layout_constraintTop_toBottomOf='@id/thumbnail'
+                style='@style/Widget.MaterialComponents.Button.OutlinedButton.Icon'/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </androidx.cardview.widget.CardView>
