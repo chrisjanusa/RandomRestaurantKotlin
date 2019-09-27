@@ -5,6 +5,7 @@
         android:id="@+id/cardMapLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingBottom="@dimen/_5sdp"
         android:animateLayoutChanges="true">
 
 
@@ -20,7 +21,7 @@
             android:id="@+id/restaurantContainer"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            layout="@layout/restaurant_card"
+            layout="@layout/overlay"
             android:layout_gravity="bottom"
             android:layout_marginLeft="@dimen/randomizer_side_margin"
             android:layout_marginRight="@dimen/randomizer_side_margin"

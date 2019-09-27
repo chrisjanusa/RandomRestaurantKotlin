@@ -97,4 +97,5 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         //TODO: open the menu to open in other apps
         return false
     }
+
 }

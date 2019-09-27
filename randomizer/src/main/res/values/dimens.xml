@@ -1,4 +1,4 @@
 <resources>
     <dimen name="randomizer_side_margin">@dimen/_5sdp</dimen>
-    <dimen name="randomizer_bottom_margin">@dimen/_50sdp</dimen>
+    <dimen name="randomizer_bottom_margin">@dimen/_35sdp</dimen>
 </resources>

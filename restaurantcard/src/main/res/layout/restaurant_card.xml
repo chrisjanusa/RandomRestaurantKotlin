@@ -11,10 +11,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="@dimen/_10sdp"
-            android:paddingBottom="@dimen/_5sdp"
-            android:paddingStart="@dimen/_4sdp"
-            android:paddingEnd="@dimen/_4sdp">
+            android:paddingTop="@dimen/restaurant_padding_top"
+            android:paddingBottom="@dimen/restaurant_padding_bottom"
+            android:paddingStart="@dimen/restaurant_padding_sides"
+            android:paddingEnd="@dimen/restaurant_padding_sides">
 
 
         <ImageView
@@ -82,8 +82,9 @@
                 android:rating="3.5"
                 android:numStars="5"
                 style="?android:attr/ratingBarStyleSmall"
-                app:layout_constraintBottom_toTopOf="@+id/categories" android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp"/>
+                app:layout_constraintBottom_toTopOf="@+id/categories"
+                android:layout_marginLeft="@dimen/rating_margin"
+                android:layout_marginStart="@dimen/rating_margin"/>
 
         <TextView
                 android:id="@+id/count"
@@ -94,8 +95,9 @@
                 android:textSize="@dimen/restaurant_details_size"
                 app:layout_constraintStart_toEndOf="@+id/stars"
                 app:layout_constraintTop_toBottomOf="@+id/name"
-                app:layout_constraintBottom_toTopOf="@+id/categories" android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp"/>
+                app:layout_constraintBottom_toTopOf="@+id/categories"
+                android:layout_marginLeft="@dimen/rating_margin"
+                android:layout_marginStart="@dimen/rating_margin"/>
 
         <TextView
                 android:id="@+id/categories"
@@ -118,6 +120,7 @@
                 app:layout_constraintTop_toBottomOf="@id/categories"
                 app:layout_constraintStart_toEndOf="@id/thumbnail"
                 app:layout_constraintBottom_toBottomOf="@id/thumbnail"/>
+
         <com.google.android.material.button.MaterialButton
                 android:id="@+id/uber"
                 android:layout_width="wrap_content"
@@ -129,15 +132,16 @@
                 app:icon="@drawable/uber"
                 app:iconTint="@android:color/transparent"
                 app:iconTintMode="add"
-                app:iconSize="@dimen/_20sdp"
+                app:iconSize="@dimen/button_size"
                 app:iconGravity="textStart"
                 android:gravity="center"
                 android:layout_marginEnd="@dimen/card_button_space"
                 android:layout_marginStart="@dimen/card_button_space"
                 android:text="@string/uber"
-                app:cornerRadius="@dimen/_20sdp"
+                app:cornerRadius="@dimen/button_radius"
                 android:textAppearance="@style/ButtonTextAppearance"
-                android:textColor="#696969" android:layout_marginTop="8dp"/>
+                android:textColor="@color/button_text_color"
+                android:layout_marginTop="@dimen/button_top_margin"/>
 
         <com.google.android.material.button.MaterialButton
                 android:id="@+id/maps"
@@ -148,7 +152,7 @@
                 app:layout_constraintEnd_toStartOf="@id/yelp"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
                 app:icon="@drawable/googlemaps"
-                app:iconSize="@dimen/_20sdp"
+                app:iconSize="@dimen/button_size"
                 app:iconGravity="textStart"
                 app:iconTint="@android:color/transparent"
                 app:iconTintMode="add"
@@ -156,9 +160,10 @@
                 android:layout_marginEnd="@dimen/card_button_space"
                 android:layout_marginStart="@dimen/card_button_space"
                 android:text="@string/map"
-                app:cornerRadius="@dimen/_20sdp"
+                app:cornerRadius="@dimen/button_radius"
                 android:textAppearance="@style/ButtonTextAppearance"
-                android:textColor="#696969" android:layout_marginTop="8dp"/>
+                android:textColor="@color/button_text_color"
+                android:layout_marginTop="@dimen/button_top_margin"/>
 
         <com.google.android.material.button.MaterialButton
                 android:id="@+id/yelp"
@@ -171,15 +176,16 @@
                 app:icon="@drawable/yelp"
                 app:iconTint="@android:color/transparent"
                 app:iconTintMode="add"
-                app:iconSize="@dimen/_20sdp"
+                app:iconSize="@dimen/button_size"
                 app:iconGravity="textStart"
                 android:gravity="center"
                 android:layout_marginEnd="@dimen/card_button_space"
                 android:layout_marginStart="@dimen/card_button_space"
                 android:text="@string/yelp"
-                app:cornerRadius="@dimen/_20sdp"
+                app:cornerRadius="@dimen/button_radius"
                 android:textAppearance="@style/ButtonTextAppearance"
-                android:textColor="#696969" android:layout_marginTop="8dp"/>
+                android:textColor="@color/button_text_color"
+                android:layout_marginTop="@dimen/button_top_margin"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
