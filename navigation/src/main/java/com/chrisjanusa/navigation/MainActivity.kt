@@ -6,7 +6,13 @@ import android.location.Location
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.navigation.Navigation
+import androidx.navigation.ui.NavigationUI.onNavDestinationSelected
+import androidx.navigation.ui.setupWithNavController
 import com.chrisjanusa.randomizer.RandomizerFragment
+import com.google.android.gms.dynamic.SupportFragmentWrapper
 import kotlinx.android.synthetic.main.activity_main.*
 import mumayank.com.airlocationlibrary.AirLocation
 import kotlin.random.Random
@@ -20,17 +26,21 @@ class MainActivity : AppCompatActivity() {
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
-                setRandomFrag()
+                //setRandomFrag()
+                onNavDestinationSelected(item, Navigation.findNavController(this, R.id.my_nav_host_fragment))
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.navigation_dashboard -> {
-                setCityFrag()
-                return@OnNavigationItemSelectedListener true
+            R.id.navigation_history -> {
+                onNavDestinationSelected(item, Navigation.findNavController(this, R.id.my_nav_host_fragment))
             }
-            R.id.navigation_notifications -> {
-                switchToText("Notifications")
-                return@OnNavigationItemSelectedListener true
-            }
+//            R.id.navigation_favorites -> {
+//                switchToText("fav")
+//                return@OnNavigationItemSelectedListener true
+//            }
+//            R.id.navigation_blocked -> {
+//                switchToText("blocked")
+//                return@OnNavigationItemSelectedListener true
+//            }
         }
         false
     }
@@ -38,8 +48,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        nav_view.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
-
+        nav_view.setupWithNavController(Navigation.findNavController(this, R.id.my_nav_host_fragment))
         setRandomFrag()
     }
 
@@ -53,46 +62,40 @@ class MainActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
-    fun switchToText(text: String){
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.fragment_container, newFragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
-        newFragment.setText(text)
-    }
-
+//    fun switchToText(text: String){
+//        val transaction = supportFragmentManager.beginTransaction()
+//        transaction.replace(R.id.fragment_container, newFragment)
+//        transaction.addToBackStack(null)
+//        transaction.commit()
+//        newFragment.setText(text)
+//    }
+//
     fun setRandomFrag() {
         airLocation = AirLocation(this, true, true, object: AirLocation.Callbacks {
             override fun onSuccess(location: Location) {
-                val transaction = supportFragmentManager.beginTransaction()
-                transaction.replace(R.id.fragment_container, randomizerFrag)
-                transaction.addToBackStack(null)
-                transaction.commit()
-                location.longitude += Random.nextDouble()
                 randomizerFrag.setMap(location)
             }
 
             override fun onFailed(locationFailedEnum: AirLocation.LocationFailedEnum) {
-                //TODO: Handle different types of errors
-                switchToText(locationFailedEnum.name)
+
             }
 
         })
     }
-    fun setCityFrag() {
-        airLocation = AirLocation(this, true, true, object: AirLocation.Callbacks {
-            override fun onSuccess(location: Location) {
-                switchToText(
-                    Geocoder(applicationContext)
-                        .getFromLocation(13.72931,99.30367,1)[0]
-                    .locality)
-            }
-
-            override fun onFailed(locationFailedEnum: AirLocation.LocationFailedEnum) {
-                //TODO: Handle different types of errors
-                switchToText(locationFailedEnum.name)
-            }
-
-        })
-    }
+//    fun setCityFrag() {
+//        airLocation = AirLocation(this, true, true, object: AirLocation.Callbacks {
+//            override fun onSuccess(location: Location) {
+//                switchToText(
+//                    Geocoder(applicationContext)
+//                        .getFromLocation(13.72931,99.30367,1)[0]
+//                    .locality)
+//            }
+//
+//            override fun onFailed(locationFailedEnum: AirLocation.LocationFailedEnum) {
+//                //TODO: Handle different types of errors
+//                switchToText(locationFailedEnum.name)
+//            }
+//
+//        })
+//    }
 }

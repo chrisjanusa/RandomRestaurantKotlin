@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Randomizer</string>
-    <string name="save_to_favorites">Save to favorites</string>
-    <string name="block">Block</string>
     <string name="restaurant_picture">Restaurant picture</string>
-    <string name="fav">Fav</string>
     <string name="uber">Uber</string>
     <string name="yelp">Yelp</string>
     <string name="map">Maps</string>
