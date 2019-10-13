@@ -6,8 +6,8 @@
         android:layout_height="match_parent">
 
     <include
-            android:id="@+id/restaurantCard"
-            android:layout_width="fill_parent"
+            android:id="@+id/search_card"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             layout="@layout/search_card"
             app:layout_constraintTop_toTopOf="parent"

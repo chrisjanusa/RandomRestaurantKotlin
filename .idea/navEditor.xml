@@ -20,13 +20,13 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="tempFragment2">
+                  <entry key="tempFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="70" />
-                            <option name="y" value="70" />
+                            <option name="x" value="-153" />
+                            <option name="y" value="12" />
                           </Point>
                         </option>
                       </LayoutPositions>

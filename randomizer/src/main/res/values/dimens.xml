@@ -6,7 +6,9 @@
     <dimen name="randomizer_radius">@dimen/_20sdp</dimen>
     <dimen name="randomizer_icon_size">@dimen/_25sdp</dimen>
     <dimen name="randomizer_top_margin">@dimen/_10sdp</dimen>
-    <dimen name="location_card_height">@dimen/_20sdp</dimen>
+    <dimen name="location_card_height">@dimen/_35sdp</dimen>
+    <dimen name="location_and_filter_height">@dimen/_75sdp</dimen>
+    <dimen name="filter_height">@dimen/_40sdp</dimen>
     <dimen name="curr_location_icon">@dimen/_10sdp</dimen>
     <dimen name="curr_location_text_size">@dimen/_9ssp</dimen>
     <dimen name="location_radius">@dimen/_10sdp</dimen>
