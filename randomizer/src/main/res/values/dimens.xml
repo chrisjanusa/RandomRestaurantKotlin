@@ -2,7 +2,7 @@
     <dimen name="randomizer_side_margin">@dimen/_5sdp</dimen>
     <dimen name="randomizer_bottom_margin">@dimen/_20sdp</dimen>
     <dimen name="randomizer_text_size">@dimen/_11ssp</dimen>
-    <dimen name="randomizer_button_padding_top">@dimen/_7sdp</dimen>
+    <dimen name="randomizer_button_padding">@dimen/_5sdp</dimen>
     <dimen name="randomizer_radius">@dimen/_20sdp</dimen>
     <dimen name="randomizer_icon_size">@dimen/_25sdp</dimen>
     <dimen name="randomizer_top_margin">@dimen/_10sdp</dimen>
@@ -13,5 +13,6 @@
     <dimen name="divider_space">@dimen/_3sdp</dimen>
     <dimen name="location_space">@dimen/_10sdp</dimen>
     <dimen name="location_side_margin">@dimen/_10sdp</dimen>
+    <dimen name="location_top_margin">@dimen/_35sdp</dimen>
     <dimen name="location_edit_text">@dimen/_14ssp</dimen>
 </resources>

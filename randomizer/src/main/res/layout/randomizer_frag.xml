@@ -21,9 +21,7 @@
             android:layout_height="wrap_content"
             layout="@layout/top_overlay"
             android:layout_gravity="top"
-            android:layout_marginLeft="@dimen/randomizer_side_margin"
-            android:layout_marginRight="@dimen/randomizer_side_margin"
-            android:layout_marginTop="@dimen/randomizer_bottom_margin"/>
+            android:layout_marginTop="@dimen/location_top_margin"/>
 
     <include
             android:id="@+id/restaurantContainer"

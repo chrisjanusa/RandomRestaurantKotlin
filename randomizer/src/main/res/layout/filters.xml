@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<HorizontalScrollView
+        xmlns:android='http://schemas.android.com/apk/res/android'
+        xmlns:app='http://schemas.android.com/apk/res-auto'
+        android:id="@+id/filters"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <com.google.android.material.button.MaterialButton
+                android:id='@+id/open_now'
+                style="@style/FilterAppearance"
+                android:text="@string/open_now"
+        />
+        <com.google.android.material.button.MaterialButton
+                android:id='@+id/categories'
+                style="@style/FilterAppearance"
+                android:text="@string/categories"
+                app:icon="@drawable/expand"
+        />
+        <com.google.android.material.button.MaterialButton
+                android:id='@+id/price'
+                style="@style/FilterAppearance"
+                android:text="@string/price"
+                app:icon="@drawable/expand"
+        />
+        <com.google.android.material.button.MaterialButton
+                android:id='@+id/distance'
+                style="@style/FilterAppearance"
+                android:text="@string/max_distance"
+                app:icon="@drawable/expand"
+        />
+        <com.google.android.material.button.MaterialButton
+                android:id='@+id/favorites_only'
+                style="@style/FilterAppearance"
+                android:text="@string/favorites_only"
+        />
+    </LinearLayout>
+</HorizontalScrollView>

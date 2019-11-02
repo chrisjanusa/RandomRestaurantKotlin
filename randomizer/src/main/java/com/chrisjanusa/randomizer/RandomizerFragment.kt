@@ -12,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.DrawableRes
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.*
@@ -21,17 +20,7 @@ import kotlinx.android.synthetic.main.bottom_overlay.*
 import kotlinx.android.synthetic.main.randomizer_frag.*
 import kotlinx.android.synthetic.main.search_card.*
 import mumayank.com.airlocationlibrary.AirLocation
-import android.view.inputmethod.InputMethodManager.HIDE_IMPLICIT_ONLY
 import android.widget.EditText
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.core.content.ContextCompat.getSystemService
-
-
-
-
-
-
 
 class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
@@ -60,7 +49,6 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
             mapView.onResume()
             mapView.getMapAsync(this)
         }
-        icon = getDefaultMarker()
     }
 
     private fun gpsChange() {

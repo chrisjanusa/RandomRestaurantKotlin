@@ -1,4 +1,4 @@
-package com.chrisjanusa.navigation
+package com.chrisjanusa.findmefood
 
 import android.os.Bundle
 import android.view.LayoutInflater

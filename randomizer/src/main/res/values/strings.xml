@@ -4,4 +4,8 @@
     <string name="default_location">Unknown</string>
     <string name="enter_location">Enter Location...</string>
     <string name="open_now">Open now</string>
+    <string name="categories">Categories</string>
+    <string name="price">Price</string>
+    <string name="max_distance">Max Distance</string>
+    <string name="favorites_only">Favorites Only</string>
 </resources>

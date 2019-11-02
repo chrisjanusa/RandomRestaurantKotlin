@@ -28,8 +28,9 @@
             android:gravity="center"
             android:text="@string/randomize"
             android:textSize="@dimen/randomizer_text_size"
-            android:paddingTop="@dimen/randomizer_button_padding_top"
             app:cornerRadius="@dimen/randomizer_radius"
+            android:paddingTop="@dimen/randomizer_button_padding"
+            android:paddingBottom="@dimen/randomizer_button_padding"
             android:onClick="randomize"/>
 
 

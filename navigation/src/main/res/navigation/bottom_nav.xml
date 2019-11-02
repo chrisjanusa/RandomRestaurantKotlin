@@ -11,7 +11,7 @@
               tools:layout="@layout/randomizer_frag"/>
 
     <fragment android:id="@+id/tempFragment"
-              android:name="com.chrisjanusa.navigation.TempFragment"
+              android:name="com.chrisjanusa.findmefood.TempFragment"
               android:label="TempFragment"
               tools:layout="@layout/temp_frag"/>
 </navigation>

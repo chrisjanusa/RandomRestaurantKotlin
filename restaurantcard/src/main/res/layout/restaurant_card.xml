@@ -89,7 +89,8 @@
                 app:layout_constraintBottom_toTopOf='@+id/categories'
                 app:layout_constraintStart_toEndOf='@+id/rating'
                 app:layout_constraintTop_toBottomOf='@+id/name'
-                style='?android:attr/ratingBarStyleSmall'/>
+                style='?android:attr/ratingBarStyleSmall'
+                android:progressTint="@color/colorPrimary"/>
 
         <TextView
                 android:id='@+id/count'
