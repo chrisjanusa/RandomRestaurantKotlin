@@ -1,4 +1,4 @@
-package com.chrisjanusa.findmefood
+package com.chrisjanusa.tempfrag
 
 import android.os.Bundle
 import android.view.LayoutInflater
