@@ -10,6 +10,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import com.chrisjanusa.randomizer.RandomizerFragment
+import com.chrisjanusa.tempfrag.TempFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import mumayank.com.airlocationlibrary.AirLocation
 

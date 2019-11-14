@@ -7,6 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/navigation/navigation.iml" filepath="$PROJECT_DIR$/navigation/navigation.iml" />
       <module fileurl="file://$PROJECT_DIR$/randomizer/randomizer.iml" filepath="$PROJECT_DIR$/randomizer/randomizer.iml" />
       <module fileurl="file://$PROJECT_DIR$/restaurantcard/restaurantcard.iml" filepath="$PROJECT_DIR$/restaurantcard/restaurantcard.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tempfrag/tempfrag.iml" filepath="$PROJECT_DIR$/tempfrag/tempfrag.iml" />
     </modules>
   </component>
 </project>
