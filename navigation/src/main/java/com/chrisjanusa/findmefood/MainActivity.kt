@@ -18,30 +18,7 @@ import mumayank.com.airlocationlibrary.AirLocation
 class MainActivity : AppCompatActivity() {
 
     private var airLocation: AirLocation? = null
-    private val newFragment = TempFragment()
     private val randomizerFrag = RandomizerFragment()
-
-    private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.navigation_home -> {
-                //setRandomFrag()
-                onNavDestinationSelected(item, Navigation.findNavController(this, R.id.my_nav_host_fragment))
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_history -> {
-                onNavDestinationSelected(item, Navigation.findNavController(this, R.id.my_nav_host_fragment))
-            }
-//            R.id.navigation_favorites -> {
-//                switchToText("fav")
-//                return@OnNavigationItemSelectedListener true
-//            }
-//            R.id.navigation_blocked -> {
-//                switchToText("blocked")
-//                return@OnNavigationItemSelectedListener true
-//            }
-        }
-        false
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
