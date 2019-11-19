@@ -1,10 +1,10 @@
 package com.chrisjanusa.randomizer
 
 import android.content.Context
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
-import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,8 +19,15 @@ import com.google.android.gms.maps.model.*
 import kotlinx.android.synthetic.main.bottom_overlay.*
 import kotlinx.android.synthetic.main.randomizer_frag.*
 import kotlinx.android.synthetic.main.search_card.*
-import mumayank.com.airlocationlibrary.AirLocation
 import android.widget.EditText
+import androidx.lifecycle.Observer
+import com.chrisjanusa.randomizer.actions.gpsActions.GpsClickAction
+import com.chrisjanusa.randomizer.actions.permissionActions.PermissionReceivedAction
+import com.chrisjanusa.randomizer.helpers.ActionHelper.sendAction
+import com.chrisjanusa.randomizer.helpers.LocationHelper
+import com.chrisjanusa.randomizer.helpers.LocationHelper.PERMISSION_ID
+import com.chrisjanusa.randomizer.models.RandomizerState
+import com.chrisjanusa.randomizer.models.RandomizerViewModel
 
 class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
@@ -28,8 +35,8 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
     private var loc: LatLng? = null
     private val ZOOM_LEVEL = 16f
     private var curr: LatLng? = null
-    private var icon : BitmapDescriptor? = null
-    private var airLocation: AirLocation? = null
+    private var icon: BitmapDescriptor? = null
+    private val randomizerViewModel = RandomizerViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,9 +48,11 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        render(randomizerViewModel.state.value!!)
         random.setOnClickListener { randomize() }
         current.setOnClickListener { focusLocation() }
         gps_button.setOnClickListener { gpsChange() }
+        randomizerViewModel.state.observe(this, Observer<RandomizerState>(render))
         if (mapView != null) {
             mapView.onCreate(null)
             mapView.onResume()
@@ -51,28 +60,29 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         }
     }
 
+    val render = fun(newState: RandomizerState) {
+        gps_button.isChecked = newState.gpsOn
+        current.text = newState.locationText
+        if (newState.askForPermission) {
+            LocationHelper.requestPermissions(this)
+        }
+        if (newState.askForLocationSetting) {
+
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == PERMISSION_ID) {
+            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                sendAction(PermissionReceivedAction(activity!!, randomizerViewModel), randomizerViewModel)
+            }
+        }
+    }
+
+
     private fun gpsChange() {
-        if(gps_button.isChecked) {
-            airLocation = AirLocation(activity!!, true, true, object : AirLocation.Callbacks {
-                override fun onSuccess(location: Location) {
-                    current.text = Geocoder(context)
-                        .getFromLocation(location.latitude,location.longitude,1)[0]
-                    .locality
-                    loc = location.latLang()
-                    setMap()
-                }
-
-                override fun onFailed(locationFailedEnum: AirLocation.LocationFailedEnum) {
-
-                }
-
-            })
-        }
-        else{
-            loc = LatLng(47.620422, -122.349358)
-            setMap()
-            current.text = "Space Needle"
-        }
+        sendAction(GpsClickAction(activity!!, randomizerViewModel), randomizerViewModel)
     }
 
     fun setMap(location: Location) {
@@ -82,15 +92,17 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
 
     private fun setMap() {
         if (mapView != null) {
-            if (icon == null){
+            if (icon == null) {
                 icon = getDefaultMarker()
             }
             if (curr != loc) {
                 map.clear()
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, ZOOM_LEVEL))
-                map.addMarker(MarkerOptions()
-                    .position(loc!!)
-                    .icon(icon))
+                map.addMarker(
+                    MarkerOptions()
+                        .position(loc!!)
+                        .icon(icon)
+                )
             }
         }
     }
@@ -102,16 +114,19 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         map.uiSettings.isMapToolbarEnabled = false
         if (loc != null) {
             setMap()
-        }
-        else{
-            setCurrent()
+        } else {
+            loc = LatLng(47.620422, -122.349358)
+            setMap()
         }
     }
 
-    private fun vectorToBitmap(@DrawableRes id : Int): BitmapDescriptor {
-        val vectorDrawable: Drawable = ResourcesCompat.getDrawable(resources, id, null) ?: return BitmapDescriptorFactory.defaultMarker()
-        val bitmap = Bitmap.createBitmap(vectorDrawable.intrinsicWidth,
-            vectorDrawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+    private fun vectorToBitmap(@DrawableRes id: Int): BitmapDescriptor {
+        val vectorDrawable: Drawable =
+            ResourcesCompat.getDrawable(resources, id, null) ?: return BitmapDescriptorFactory.defaultMarker()
+        val bitmap = Bitmap.createBitmap(
+            vectorDrawable.intrinsicWidth,
+            vectorDrawable.intrinsicHeight, Bitmap.Config.ARGB_8888
+        )
         val canvas = Canvas(bitmap)
         vectorDrawable.setBounds(0, 0, canvas.width, canvas.height)
         vectorDrawable.draw(canvas)
@@ -122,44 +137,73 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         return false
     }
 
-    fun getDefaultMarker() : BitmapDescriptor {
+    fun getDefaultMarker(): BitmapDescriptor {
         return vectorToBitmap(R.drawable.marker)
     }
 
-    fun randomize(){
+    fun randomize() {
         loc = LatLng(47.620422, -122.349358)
         setMap()
     }
 
-    fun focusLocation(){
+    fun focusLocation() {
         user_input.showKeyboardAndFocus()
     }
 
-    fun setCurrent() {
-        airLocation = AirLocation(activity!!, true, true, object: AirLocation.Callbacks {
-            override fun onSuccess(location: Location) {
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(location.latitude, location.longitude), ZOOM_LEVEL))
-            }
-
-            override fun onFailed(locationFailedEnum: AirLocation.LocationFailedEnum) {
-
-            }
-
-        })
-    }
-
-    fun EditText.showKeyboardAndFocus(){
+    fun EditText.showKeyboardAndFocus() {
         this.requestFocus()
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
         imm!!.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
     }
 
-    fun EditText.loseFocus(){
+    fun EditText.loseFocus() {
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
         imm!!.hideSoftInputFromWindow(this.windowToken, 0)
     }
 
-    fun Location.latLang() : LatLng{
+    fun Location.latLang(): LatLng {
         return LatLng(this.latitude, this.longitude)
     }
+
+    //    private fun gpsChange() {
+//        if(gps_button.isChecked) {
+//            airLocation = AirLocation(activity!!, true, true, object : AirLocation.Callbacks {
+//                override fun onSuccess(location: Location) {
+//                    current.text = Geocoder(context)
+//                        .getFromLocation(location.latitude,location.longitude,1)[0]
+//                        .locality
+//                    loc = location.latLang()
+//                    setMap()
+//                }
+//
+//                override fun onFailed(locationFailedEnum: AirLocation.LocationFailedEnum) {
+//
+//                }
+//
+//            })
+//        }
+//        else{
+//            loc = LatLng(47.620422, -122.349358)
+//            setMap()
+//            current.text = "Space Needle"
+//        }
+//    }
+
+//    fun setCurrent() {
+//        airLocation = AirLocation(activity!!, true, true, object : AirLocation.Callbacks {
+//            override fun onSuccess(location: Location) {
+//                map.moveCamera(
+//                    CameraUpdateFactory.newLatLngZoom(
+//                        LatLng(location.latitude, location.longitude),
+//                        ZOOM_LEVEL
+//                    )
+//                )
+//            }
+//
+//            override fun onFailed(locationFailedEnum: AirLocation.LocationFailedEnum) {
+//
+//            }
+//
+//        })
+//    }
 }
