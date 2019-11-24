@@ -2,10 +2,11 @@ package com.chrisjanusa.randomizer.models
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.chrisjanusa.randomizer.actions.BaseAction
-import com.chrisjanusa.randomizer.actions.BaseUpdater
+import androidx.lifecycle.viewModelScope
+import com.chrisjanusa.randomizer.actions.base.BaseAction
+import com.chrisjanusa.randomizer.events.BaseEvent
+import com.chrisjanusa.randomizer.actions.base.BaseUpdater
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -13,9 +14,10 @@ import kotlinx.coroutines.withContext
 
 class RandomizerViewModel : ViewModel() {
     val state = MutableLiveData<RandomizerState>(RandomizerState())
-    private val channel = Channel<BaseUpdater>(Channel.UNLIMITED)
+    private val updateChannel = Channel<BaseUpdater>(Channel.UNLIMITED)
+    val eventChannel = Channel<BaseEvent>(Channel.UNLIMITED)
     init {
-        GlobalScope.launch {
+        viewModelScope.launch {
             monitorChannel()
         }
     }
@@ -27,12 +29,12 @@ class RandomizerViewModel : ViewModel() {
     }
 
     private suspend fun monitorChannel() {
-        for (updater in channel) {
+        for (updater in updateChannel) {
             update(updater)
         }
     }
 
     suspend fun performAction(action : BaseAction) {
-        action.performAction(state, channel)
+        action.performAction(state, updateChannel, eventChannel)
     }
 }

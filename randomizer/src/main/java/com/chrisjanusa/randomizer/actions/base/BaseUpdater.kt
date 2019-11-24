@@ -1,4 +1,4 @@
-package com.chrisjanusa.randomizer.actions
+package com.chrisjanusa.randomizer.actions.base
 
 import com.chrisjanusa.randomizer.models.RandomizerState
 

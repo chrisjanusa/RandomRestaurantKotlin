@@ -21,13 +21,14 @@ import kotlinx.android.synthetic.main.randomizer_frag.*
 import kotlinx.android.synthetic.main.search_card.*
 import android.widget.EditText
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.chrisjanusa.randomizer.actions.gpsActions.GpsClickAction
-import com.chrisjanusa.randomizer.actions.permissionActions.PermissionReceivedAction
+import com.chrisjanusa.randomizer.actions.gpsActions.PermissionReceivedAction
 import com.chrisjanusa.randomizer.helpers.ActionHelper.sendAction
-import com.chrisjanusa.randomizer.helpers.LocationHelper
 import com.chrisjanusa.randomizer.helpers.LocationHelper.PERMISSION_ID
 import com.chrisjanusa.randomizer.models.RandomizerState
 import com.chrisjanusa.randomizer.models.RandomizerViewModel
+import kotlinx.coroutines.launch
 
 class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
@@ -37,6 +38,7 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
     private var curr: LatLng? = null
     private var icon: BitmapDescriptor? = null
     private val randomizerViewModel = RandomizerViewModel()
+    private val frag = this
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,6 +55,11 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         current.setOnClickListener { focusLocation() }
         gps_button.setOnClickListener { gpsChange() }
         randomizerViewModel.state.observe(this, Observer<RandomizerState>(render))
+        lifecycleScope.launch {
+            for (event in randomizerViewModel.eventChannel) {
+                event.handleEvent(frag)
+            }
+        }
         if (mapView != null) {
             mapView.onCreate(null)
             mapView.onResume()
@@ -63,19 +70,17 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
     val render = fun(newState: RandomizerState) {
         gps_button.isChecked = newState.gpsOn
         current.text = newState.locationText
-        if (newState.askForPermission) {
-            LocationHelper.requestPermissions(this)
-        }
-        if (newState.askForLocationSetting) {
-
-        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PERMISSION_ID) {
             if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                sendAction(PermissionReceivedAction(activity!!, randomizerViewModel), randomizerViewModel)
+                sendAction(
+                    PermissionReceivedAction(
+                        activity!!,
+                        randomizerViewModel
+                    ), randomizerViewModel)
             }
         }
     }
