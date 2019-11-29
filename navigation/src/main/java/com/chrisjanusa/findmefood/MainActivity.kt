@@ -4,13 +4,10 @@ import android.content.Intent
 import android.location.Location
 import android.os.Bundle
 import android.view.WindowManager
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
-import androidx.navigation.ui.NavigationUI.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import com.chrisjanusa.randomizer.RandomizerFragment
-import com.chrisjanusa.tempfrag.TempFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import mumayank.com.airlocationlibrary.AirLocation
 
@@ -36,19 +33,6 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        airLocation?.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    }
-
-//    fun switchToText(text: String){
-//        val transaction = supportFragmentManager.beginTransaction()
-//        transaction.replace(R.id.fragment_container, newFragment)
-//        transaction.addToBackStack(null)
-//        transaction.commit()
-//        newFragment.setText(text)
-//    }
-//
     fun setRandomFrag() {
         airLocation = AirLocation(this, true, true, object: AirLocation.Callbacks {
             override fun onSuccess(location: Location) {
@@ -61,20 +45,4 @@ class MainActivity : AppCompatActivity() {
 
         })
     }
-//    fun setCityFrag() {
-//        airLocation = AirLocation(this, true, true, object: AirLocation.Callbacks {
-//            override fun onSuccess(location: Location) {
-//                switchToText(
-//                    Geocoder(applicationContext)
-//                        .getFromLocation(13.72931,99.30367,1)[0]
-//                    .locality)
-//            }
-//
-//            override fun onFailed(locationFailedEnum: AirLocation.LocationFailedEnum) {
-//                //TODO: Handle different types of errors
-//                switchToText(locationFailedEnum.name)
-//            }
-//
-//        })
-//    }
 }
