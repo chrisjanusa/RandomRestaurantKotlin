@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.navigation.Navigation
 import androidx.navigation.ui.setupWithNavController
 import com.chrisjanusa.randomizer.filter_fragments.OverlayFragmentManager
+import com.chrisjanusa.randomizer.filter_fragments.ShadeFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -21,6 +22,12 @@ class MainActivity : OverlayFragmentManager, AppCompatActivity() {
                 R.anim.slidein_bottom, R.anim.slideout_bottom)
             .replace(R.id.overlay_fragment, fragment, OVERLAY_TAG)
             .addToBackStack(OVERLAY_TAG)
+            .commit()
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.fadein, R.anim.fadeout,
+                R.anim.fadein, R.anim.fadeout)
+            .replace(R.id.shade_fragment, ShadeFragment())
+            .addToBackStack(null)
             .commit()
     }
 
