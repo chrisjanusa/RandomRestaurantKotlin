@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.graphics.ColorFilter
 import android.graphics.drawable.Drawable
 import android.location.Location
 import android.os.Bundle
@@ -26,12 +25,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
 import com.chrisjanusa.randomizer.actions.filter.ClickSelectionFilterAction
+import com.chrisjanusa.randomizer.actions.filter.favorites.FavoriteClickedAction
+import com.chrisjanusa.randomizer.actions.filter.open_now.OpenNowClickedAction
 import com.chrisjanusa.randomizer.actions.gpsActions.GpsClickAction
 import com.chrisjanusa.randomizer.actions.gpsActions.PermissionReceivedAction
 import com.chrisjanusa.randomizer.actions.init.InitAction
 import com.chrisjanusa.randomizer.helpers.ActionHelper.sendAction
 import com.chrisjanusa.randomizer.helpers.FilterHelper
-import com.chrisjanusa.randomizer.helpers.FilterHelper.priceToDisplayString
 import com.chrisjanusa.randomizer.helpers.LocationHelper.PERMISSION_ID
 import com.chrisjanusa.randomizer.helpers.PreferenceHelper
 import com.chrisjanusa.randomizer.models.RandomizerState
@@ -72,6 +72,8 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         random.setOnClickListener { randomize() }
         current.setOnClickListener { focusLocation() }
         gps_button.setOnClickListener { gpsChange() }
+        open_now.setOnClickListener { clickOpenNow() }
+        favorites_only.setOnClickListener { clickFavoritesOnly() }
         price.setOnClickListener { clickSelectionFilter(FilterHelper.Filter.Price) }
 
         randomizerViewModel.state.observe(this, Observer<RandomizerState>(render))
@@ -89,8 +91,16 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         }
     }
 
+    private fun clickFavoritesOnly() {
+        sendAction(FavoriteClickedAction(), randomizerViewModel)
+    }
+
     private fun clickSelectionFilter(filter: FilterHelper.Filter) {
         sendAction(ClickSelectionFilterAction(filter), randomizerViewModel)
+    }
+
+    private fun clickOpenNow() {
+        sendAction(OpenNowClickedAction(), randomizerViewModel)
     }
 
     override fun onResume() {
@@ -110,6 +120,22 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
             setMap(newState.location)
         }
         renderPriceButton(newState.priceText)
+        renderBooleanButton(newState.openNowSelected, open_now)
+        renderBooleanButton(newState.favoriteOnlySelected, favorites_only)
+    }
+
+    private fun renderBooleanButton(
+        selected: Boolean,
+        button: MaterialButton
+    ) {
+        if (selected) {
+            button.setBackgroundColor(ContextCompat.getColor(context!!, R.color.filter_background_selected))
+            button.setTextColor(ContextCompat.getColor(context!!, R.color.filter_text_selected))
+        }
+        else {
+            button.setBackgroundColor(ContextCompat.getColor(context!!, R.color.filter_background_not_selected))
+            button.setTextColor(ContextCompat.getColor(context!!, R.color.filter_text_not_selected))
+        }
     }
 
     private fun renderPriceButton(priceText: String) {
