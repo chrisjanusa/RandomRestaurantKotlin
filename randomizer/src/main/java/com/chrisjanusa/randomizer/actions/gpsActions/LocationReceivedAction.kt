@@ -20,6 +20,6 @@ class LocationReceivedAction(private val location: Location, private val context
         val locationName = Geocoder(context)
             .getFromLocation(location.latitude, location.longitude, 1)[0]
             .locality
-        updateChannel.send(LocationUpdater(locationName))
+        updateChannel.send(LocationUpdater(locationName, location))
     }
 }

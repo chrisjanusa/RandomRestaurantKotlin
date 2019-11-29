@@ -24,8 +24,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.chrisjanusa.randomizer.actions.gpsActions.GpsClickAction
 import com.chrisjanusa.randomizer.actions.gpsActions.PermissionReceivedAction
+import com.chrisjanusa.randomizer.actions.init.InitAction
 import com.chrisjanusa.randomizer.helpers.ActionHelper.sendAction
 import com.chrisjanusa.randomizer.helpers.LocationHelper.PERMISSION_ID
+import com.chrisjanusa.randomizer.helpers.PreferenceHelper
 import com.chrisjanusa.randomizer.models.RandomizerState
 import com.chrisjanusa.randomizer.models.RandomizerViewModel
 import kotlinx.coroutines.launch
@@ -50,21 +52,35 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        render(randomizerViewModel.state.value!!)
+
         random.setOnClickListener { randomize() }
         current.setOnClickListener { focusLocation() }
         gps_button.setOnClickListener { gpsChange() }
+
         randomizerViewModel.state.observe(this, Observer<RandomizerState>(render))
+
         lifecycleScope.launch {
             for (event in randomizerViewModel.eventChannel) {
                 event.handleEvent(frag)
             }
         }
+
         if (mapView != null) {
             mapView.onCreate(null)
             mapView.onResume()
             mapView.getMapAsync(this)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val preferenceData = PreferenceHelper.retrieveState(activity?.getPreferences(Context.MODE_PRIVATE))
+        sendAction(InitAction(preferenceData), randomizerViewModel)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        PreferenceHelper.saveState(randomizerViewModel.state.value!!, activity?.getPreferences(Context.MODE_PRIVATE))
     }
 
     val render = fun(newState: RandomizerState) {
@@ -169,46 +185,4 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
     fun Location.latLang(): LatLng {
         return LatLng(this.latitude, this.longitude)
     }
-
-    //    private fun gpsChange() {
-//        if(gps_button.isChecked) {
-//            airLocation = AirLocation(activity!!, true, true, object : AirLocation.Callbacks {
-//                override fun onSuccess(location: Location) {
-//                    current.text = Geocoder(context)
-//                        .getFromLocation(location.latitude,location.longitude,1)[0]
-//                        .locality
-//                    loc = location.latLang()
-//                    setMap()
-//                }
-//
-//                override fun onFailed(locationFailedEnum: AirLocation.LocationFailedEnum) {
-//
-//                }
-//
-//            })
-//        }
-//        else{
-//            loc = LatLng(47.620422, -122.349358)
-//            setMap()
-//            current.text = "Space Needle"
-//        }
-//    }
-
-//    fun setCurrent() {
-//        airLocation = AirLocation(activity!!, true, true, object : AirLocation.Callbacks {
-//            override fun onSuccess(location: Location) {
-//                map.moveCamera(
-//                    CameraUpdateFactory.newLatLngZoom(
-//                        LatLng(location.latitude, location.longitude),
-//                        ZOOM_LEVEL
-//                    )
-//                )
-//            }
-//
-//            override fun onFailed(locationFailedEnum: AirLocation.LocationFailedEnum) {
-//
-//            }
-//
-//        })
-//    }
 }
