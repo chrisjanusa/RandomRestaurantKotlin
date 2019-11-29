@@ -8,4 +8,10 @@
     <string name="price">Price</string>
     <string name="max_distance">Max Distance</string>
     <string name="favorites_only">Favorites Only</string>
+    <string name="price_1">$</string>
+    <string name="price_2">$$</string>
+    <string name="price_3">$$$</string>
+    <string name="price_4">$$$$</string>
+    <string name="confirm">Apply Filter</string>
+    <string name="cancel">Cancel</string>
 </resources>

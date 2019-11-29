@@ -3,5 +3,8 @@
     <color name="filter_background_selected">#C62828</color>
     <color name="filter_background_not_selected">#FFFFFF</color>
     <color name="filter_text_selected">#FFFFFF</color>
-    <color name="filter_text_not_selected">#C62828</color>
+    <color name="filter_overlay_background">#FFFFFF</color>
+    <color name="filter_overlay_outer_background">#4D696969</color>
+    <color name="filter_text_not_selected">#696969</color>
+    <color name="filter_overlay_text">#C62828</color>
 </resources>

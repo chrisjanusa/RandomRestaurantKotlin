@@ -1,10 +1,10 @@
-package com.chrisjanusa.randomizer.actions.init
+package com.chrisjanusa.randomizer.actions.filter.price
 
 import com.chrisjanusa.randomizer.actions.base.BaseUpdater
 import com.chrisjanusa.randomizer.models.RandomizerState
 
-class InitUpdater(val gpsOn: Boolean, val priceText : String) :BaseUpdater {
+class Price3Updater(val selected: Boolean) : BaseUpdater {
     override fun performUpdate(prevState: RandomizerState): RandomizerState {
-        return prevState.copy(gpsOn = gpsOn, priceText = priceText)
+        return prevState.copy(price3TempSelected = selected)
     }
 }

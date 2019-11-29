@@ -21,16 +21,22 @@ import kotlinx.android.synthetic.main.randomizer_frag.*
 import kotlinx.android.synthetic.main.search_card.*
 import android.widget.EditText
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
+import com.chrisjanusa.randomizer.actions.filter.ClickSelectionFilterAction
 import com.chrisjanusa.randomizer.actions.gpsActions.GpsClickAction
 import com.chrisjanusa.randomizer.actions.gpsActions.PermissionReceivedAction
 import com.chrisjanusa.randomizer.actions.init.InitAction
 import com.chrisjanusa.randomizer.helpers.ActionHelper.sendAction
+import com.chrisjanusa.randomizer.helpers.FilterHelper
+import com.chrisjanusa.randomizer.helpers.FilterHelper.priceToDisplayString
 import com.chrisjanusa.randomizer.helpers.LocationHelper.PERMISSION_ID
 import com.chrisjanusa.randomizer.helpers.PreferenceHelper
 import com.chrisjanusa.randomizer.models.RandomizerState
 import com.chrisjanusa.randomizer.models.RandomizerViewModel
 import kotlinx.coroutines.launch
+import kotlinx.android.synthetic.main.filters.*
+
 
 class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
@@ -39,8 +45,15 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
     private val ZOOM_LEVEL = 16f
     private var curr: LatLng? = null
     private var icon: BitmapDescriptor? = null
-    private val randomizerViewModel = RandomizerViewModel()
+    private lateinit var randomizerViewModel : RandomizerViewModel
     private val frag = this
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        randomizerViewModel = activity?.run {
+            ViewModelProviders.of(this)[RandomizerViewModel::class.java]
+        } ?: throw Exception("Invalid Activity")
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,6 +69,7 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         random.setOnClickListener { randomize() }
         current.setOnClickListener { focusLocation() }
         gps_button.setOnClickListener { gpsChange() }
+        price.setOnClickListener { clickSelectionFilter(FilterHelper.Filter.Price) }
 
         randomizerViewModel.state.observe(this, Observer<RandomizerState>(render))
 
@@ -72,10 +86,13 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         }
     }
 
+    private fun clickSelectionFilter(filter: FilterHelper.Filter) {
+        sendAction(ClickSelectionFilterAction(filter), randomizerViewModel)
+    }
+
     override fun onResume() {
         super.onResume()
-        val preferenceData = PreferenceHelper.retrieveState(activity?.getPreferences(Context.MODE_PRIVATE))
-        sendAction(InitAction(preferenceData), randomizerViewModel)
+        sendAction(InitAction(activity), randomizerViewModel)
     }
 
     override fun onPause() {
@@ -83,9 +100,13 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         PreferenceHelper.saveState(randomizerViewModel.state.value!!, activity?.getPreferences(Context.MODE_PRIVATE))
     }
 
-    val render = fun(newState: RandomizerState) {
+    private val render = fun(newState: RandomizerState) {
         gps_button.isChecked = newState.gpsOn
         current.text = newState.locationText
+        if(newState.location != null){
+            setMap(newState.location)
+        }
+        price.text = newState.priceText
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -104,6 +125,7 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
 
     private fun gpsChange() {
         sendAction(GpsClickAction(activity!!, randomizerViewModel), randomizerViewModel)
+
     }
 
     fun setMap(location: Location) {

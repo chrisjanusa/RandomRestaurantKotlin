@@ -6,10 +6,13 @@ import com.chrisjanusa.randomizer.models.RandomizerState
 
 object PreferenceHelper {
     private const val gpsOn = "gpsOn"
+    private const val priceSelected = "priceSelected"
+
     fun saveState(state: RandomizerState, preferences: SharedPreferences?) {
         if (preferences != null) {
             with(preferences.edit()) {
                 putBoolean(gpsOn, state.gpsOn)
+                putString(priceSelected, state.priceText)
                 apply()
             }
         }
@@ -19,6 +22,7 @@ object PreferenceHelper {
         if (preferences == null) {
             return null
         }
-        return PreferenceData((preferences.getBoolean(gpsOn, true)))
+        return PreferenceData(preferences.getBoolean(gpsOn, true),
+            preferences.getString(priceSelected, FilterHelper.defaultPriceTitle)!!)
     }
 }

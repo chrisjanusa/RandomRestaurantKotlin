@@ -15,4 +15,10 @@
     <dimen name="location_side_margin">@dimen/_10sdp</dimen>
     <dimen name="location_top_margin">@dimen/_35sdp</dimen>
     <dimen name="location_edit_text">@dimen/_14ssp</dimen>
+    <dimen name="filter_overlay_side_margin">@dimen/_10sdp</dimen>
+    <dimen name="filter_overlay_top_margin">@dimen/_10sdp</dimen>
+    <dimen name="filter_title_text_size">@dimen/_15ssp</dimen>
+    <dimen name="price_width">@dimen/_60sdp</dimen>
+    <dimen name="price_text_size">@dimen/_15ssp</dimen>
+    <dimen name="filter_confirm_text_size">@dimen/_12ssp</dimen>
 </resources>

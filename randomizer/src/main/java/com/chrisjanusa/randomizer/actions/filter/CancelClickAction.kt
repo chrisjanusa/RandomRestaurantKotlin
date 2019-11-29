@@ -1,26 +1,21 @@
-package com.chrisjanusa.randomizer.actions.init
+package com.chrisjanusa.randomizer.actions.filter
 
-import android.app.Activity
-import android.content.Context
 import androidx.lifecycle.LiveData
 import com.chrisjanusa.randomizer.actions.base.BaseAction
 import com.chrisjanusa.randomizer.actions.base.BaseUpdater
 import com.chrisjanusa.randomizer.events.BaseEvent
-import com.chrisjanusa.randomizer.helpers.PreferenceHelper
+import com.chrisjanusa.randomizer.events.CloseFilterEvent
+import com.chrisjanusa.randomizer.helpers.FilterHelper
 import com.chrisjanusa.randomizer.models.RandomizerState
 import kotlinx.coroutines.channels.Channel
 
-class InitAction(private val activity: Activity?) : BaseAction {
+class CancelClickAction : BaseAction {
     override suspend fun performAction(
         currentState: LiveData<RandomizerState>,
         updateChannel: Channel<BaseUpdater>,
         eventChannel: Channel<BaseEvent>
     ) {
-        val preferenceData = PreferenceHelper.retrieveState(activity?.getPreferences(Context.MODE_PRIVATE))
-
-        if (preferenceData != null) {
-            updateChannel.send(InitUpdater(preferenceData.gpsOn, preferenceData.priceSelected))
-        }
+        eventChannel.send(CloseFilterEvent())
+        updateChannel.send(FilterOpenUpdater(FilterHelper.Filter.None))
     }
-
 }
