@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.ColorFilter
 import android.graphics.drawable.Drawable
 import android.location.Location
 import android.os.Bundle
@@ -20,6 +21,7 @@ import kotlinx.android.synthetic.main.bottom_overlay.*
 import kotlinx.android.synthetic.main.randomizer_frag.*
 import kotlinx.android.synthetic.main.search_card.*
 import android.widget.EditText
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
@@ -34,6 +36,7 @@ import com.chrisjanusa.randomizer.helpers.LocationHelper.PERMISSION_ID
 import com.chrisjanusa.randomizer.helpers.PreferenceHelper
 import com.chrisjanusa.randomizer.models.RandomizerState
 import com.chrisjanusa.randomizer.models.RandomizerViewModel
+import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.launch
 import kotlinx.android.synthetic.main.filters.*
 
@@ -106,7 +109,21 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         if(newState.location != null){
             setMap(newState.location)
         }
-        price.text = newState.priceText
+        renderPriceButton(newState.priceText)
+    }
+
+    private fun renderPriceButton(priceText: String) {
+        price.text = priceText
+        if (priceText != FilterHelper.defaultPriceTitle) {
+            price.setBackgroundColor(ContextCompat.getColor(context!!, R.color.filter_background_selected))
+            price.setTextColor(ContextCompat.getColor(context!!, R.color.filter_text_selected))
+            (price as MaterialButton).setIconTintResource(R.color.filter_text_selected)
+        }
+        else {
+            price.setBackgroundColor(ContextCompat.getColor(context!!, R.color.filter_background_not_selected))
+            price.setTextColor(ContextCompat.getColor(context!!, R.color.filter_text_not_selected))
+            (price as MaterialButton).setIconTintResource(R.color.filter_text_not_selected)
+        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
