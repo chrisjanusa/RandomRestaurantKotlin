@@ -1,6 +1,7 @@
 package com.chrisjanusa.randomizer.helpers
 
 import android.content.SharedPreferences
+import com.chrisjanusa.randomizer.helpers.PriceHelper.defaultPriceTitle
 import com.chrisjanusa.randomizer.models.PreferenceData
 import com.chrisjanusa.randomizer.models.RandomizerState
 
@@ -23,6 +24,6 @@ object PreferenceHelper {
             return null
         }
         return PreferenceData(preferences.getBoolean(gpsOn, true),
-            preferences.getString(priceSelected, FilterHelper.defaultPriceTitle)!!)
+            preferences.getString(priceSelected, defaultPriceTitle)!!)
     }
 }

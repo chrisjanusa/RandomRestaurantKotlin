@@ -31,9 +31,12 @@ import com.chrisjanusa.randomizer.actions.gpsActions.GpsClickAction
 import com.chrisjanusa.randomizer.actions.gpsActions.PermissionReceivedAction
 import com.chrisjanusa.randomizer.actions.init.InitAction
 import com.chrisjanusa.randomizer.helpers.ActionHelper.sendAction
+import com.chrisjanusa.randomizer.helpers.DistanceHelepr.defaultDistance
+import com.chrisjanusa.randomizer.helpers.DistanceHelepr.distanceToDisplayString
 import com.chrisjanusa.randomizer.helpers.FilterHelper
 import com.chrisjanusa.randomizer.helpers.LocationHelper.PERMISSION_ID
 import com.chrisjanusa.randomizer.helpers.PreferenceHelper
+import com.chrisjanusa.randomizer.helpers.PriceHelper.defaultPriceTitle
 import com.chrisjanusa.randomizer.models.RandomizerState
 import com.chrisjanusa.randomizer.models.RandomizerViewModel
 import com.google.android.material.button.MaterialButton
@@ -74,6 +77,7 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         gps_button.setOnClickListener { gpsChange() }
         open_now.setOnClickListener { clickOpenNow() }
         favorites_only.setOnClickListener { clickFavoritesOnly() }
+        distance.setOnClickListener { clickSelectionFilter(FilterHelper.Filter.Distance) }
         price.setOnClickListener { clickSelectionFilter(FilterHelper.Filter.Price) }
 
         randomizerViewModel.state.observe(this, Observer<RandomizerState>(render))
@@ -120,8 +124,23 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
             setMap(newState.location)
         }
         renderPriceButton(newState.priceText)
+        renderDistanceButton(newState.maxMilesSelected)
         renderBooleanButton(newState.openNowSelected, open_now)
         renderBooleanButton(newState.favoriteOnlySelected, favorites_only)
+    }
+
+    private fun renderDistanceButton(maxMilesSelected: Float) {
+        distance.text = distanceToDisplayString(maxMilesSelected)
+        if (maxMilesSelected != defaultDistance) {
+            distance.setBackgroundColor(ContextCompat.getColor(context!!, R.color.filter_background_selected))
+            distance.setTextColor(ContextCompat.getColor(context!!, R.color.filter_text_selected))
+            (distance as MaterialButton).setIconTintResource(R.color.filter_text_selected)
+        }
+        else {
+            distance.setBackgroundColor(ContextCompat.getColor(context!!, R.color.filter_background_not_selected))
+            distance.setTextColor(ContextCompat.getColor(context!!, R.color.filter_text_not_selected))
+            (distance as MaterialButton).setIconTintResource(R.color.filter_text_not_selected)
+        }
     }
 
     private fun renderBooleanButton(
@@ -140,7 +159,7 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
 
     private fun renderPriceButton(priceText: String) {
         price.text = priceText
-        if (priceText != FilterHelper.defaultPriceTitle) {
+        if (priceText != defaultPriceTitle) {
             price.setBackgroundColor(ContextCompat.getColor(context!!, R.color.filter_background_selected))
             price.setTextColor(ContextCompat.getColor(context!!, R.color.filter_text_selected))
             (price as MaterialButton).setIconTintResource(R.color.filter_text_selected)

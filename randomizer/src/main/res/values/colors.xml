@@ -7,4 +7,5 @@
     <color name="filter_overlay_outer_background">#73696969</color>
     <color name="filter_text_not_selected">#696969</color>
     <color name="filter_overlay_text">#C62828</color>
+    <color name="slider_bar_color">#C62828</color>
 </resources>

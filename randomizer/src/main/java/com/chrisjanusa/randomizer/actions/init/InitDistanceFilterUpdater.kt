@@ -1,10 +1,10 @@
-package com.chrisjanusa.randomizer.actions.filter.price
+package com.chrisjanusa.randomizer.actions.init
 
 import com.chrisjanusa.randomizer.actions.base.BaseUpdater
 import com.chrisjanusa.randomizer.models.RandomizerState
 
-class SelectedPriceUpdater(private val priceText: String) : BaseUpdater {
+class InitDistanceFilterUpdater(private val maxMiles: Float) : BaseUpdater {
     override fun performUpdate(prevState: RandomizerState): RandomizerState {
-        return prevState.copy(priceText = priceText)
+        return prevState.copy(tempMaxMiles = maxMiles)
     }
 }

@@ -39,6 +39,10 @@
         <item name="cornerRadius">@dimen/button_radius</item>
     </style>
 
+    <style name="Slider" parent="Widget.MaterialComponents.Slider">
+        <item name="android:gravity">center</item>
+    </style>
+
     <style name="FilterConfirmAppearance" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:gravity">center</item>
         <item name="android:layout_height">wrap_content</item>
@@ -52,10 +56,5 @@
         <item name="cornerRadius">@dimen/button_radius</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textColor">@color/filter_overlay_text</item>
-    </style>
-
-    <style name="AnimationPopup">
-        <item name="android:windowEnterAnimation">@anim/slidein_bottom</item>
-        <item name="android:windowExitAnimation">@anim/slideout_bottom</item>
     </style>
 </resources>
