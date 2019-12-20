@@ -14,4 +14,5 @@
     <string name="price_4">$$$$</string>
     <string name="confirm">Apply Filter</string>
     <string name="cancel">Cancel</string>
+    <string name="reset">Reset</string>
 </resources>

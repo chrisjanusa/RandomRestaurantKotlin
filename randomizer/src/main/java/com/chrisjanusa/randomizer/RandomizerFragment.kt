@@ -30,13 +30,12 @@ import com.chrisjanusa.randomizer.actions.filter.open_now.OpenNowClickedAction
 import com.chrisjanusa.randomizer.actions.gpsActions.GpsClickAction
 import com.chrisjanusa.randomizer.actions.gpsActions.PermissionReceivedAction
 import com.chrisjanusa.randomizer.actions.init.InitAction
+import com.chrisjanusa.randomizer.helpers.*
 import com.chrisjanusa.randomizer.helpers.ActionHelper.sendAction
-import com.chrisjanusa.randomizer.helpers.DistanceHelepr.defaultDistance
-import com.chrisjanusa.randomizer.helpers.DistanceHelepr.distanceToDisplayString
-import com.chrisjanusa.randomizer.helpers.FilterHelper
+import com.chrisjanusa.randomizer.helpers.DistanceHelper.distanceToDisplayString
 import com.chrisjanusa.randomizer.helpers.LocationHelper.PERMISSION_ID
-import com.chrisjanusa.randomizer.helpers.PreferenceHelper
 import com.chrisjanusa.randomizer.helpers.PriceHelper.defaultPriceTitle
+import com.chrisjanusa.randomizer.helpers.RestrictionHelper.Restriction
 import com.chrisjanusa.randomizer.models.RandomizerState
 import com.chrisjanusa.randomizer.models.RandomizerViewModel
 import com.google.android.material.button.MaterialButton
@@ -79,6 +78,7 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         favorites_only.setOnClickListener { clickFavoritesOnly() }
         distance.setOnClickListener { clickSelectionFilter(FilterHelper.Filter.Distance) }
         price.setOnClickListener { clickSelectionFilter(FilterHelper.Filter.Price) }
+        restrictions.setOnClickListener { clickSelectionFilter(FilterHelper.Filter.Restriction) }
 
         randomizerViewModel.state.observe(this, Observer<RandomizerState>(render))
 
@@ -124,23 +124,28 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
             setMap(newState.location)
         }
         renderPriceButton(newState.priceText)
+        renderRestrictionButton(newState.restriction)
         renderDistanceButton(newState.maxMilesSelected)
         renderBooleanButton(newState.openNowSelected, open_now)
         renderBooleanButton(newState.favoriteOnlySelected, favorites_only)
     }
 
+    private fun renderRestrictionButton(restriction: Restriction) {
+        val  selected = !RestrictionHelper.isDefault(restriction)
+        restrictions.text = if (selected) restriction.display else RestrictionHelper.defaultRestrictionTitle
+        context?.let { FilterHelper.renderFilterStyle(restrictions,selected,it) }
+    }
+
     private fun renderDistanceButton(maxMilesSelected: Float) {
-        distance.text = distanceToDisplayString(maxMilesSelected)
-        if (maxMilesSelected != defaultDistance) {
-            distance.setBackgroundColor(ContextCompat.getColor(context!!, R.color.filter_background_selected))
-            distance.setTextColor(ContextCompat.getColor(context!!, R.color.filter_text_selected))
-            (distance as MaterialButton).setIconTintResource(R.color.filter_text_selected)
-        }
-        else {
-            distance.setBackgroundColor(ContextCompat.getColor(context!!, R.color.filter_background_not_selected))
-            distance.setTextColor(ContextCompat.getColor(context!!, R.color.filter_text_not_selected))
-            (distance as MaterialButton).setIconTintResource(R.color.filter_text_not_selected)
-        }
+        val  selected = !DistanceHelper.isDefault(maxMilesSelected)
+        distance.text = if (selected) distanceToDisplayString(maxMilesSelected) else DistanceHelper.defaultDistanceTitle
+        context?.let { FilterHelper.renderFilterStyle(distance,selected,it) }
+    }
+
+    private fun renderPriceButton(priceText: String) {
+        val  selected = priceText != defaultPriceTitle
+        price.text = priceText
+        context?.let { FilterHelper.renderFilterStyle(price,selected,it) }
     }
 
     private fun renderBooleanButton(
@@ -154,20 +159,6 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         else {
             button.setBackgroundColor(ContextCompat.getColor(context!!, R.color.filter_background_not_selected))
             button.setTextColor(ContextCompat.getColor(context!!, R.color.filter_text_not_selected))
-        }
-    }
-
-    private fun renderPriceButton(priceText: String) {
-        price.text = priceText
-        if (priceText != defaultPriceTitle) {
-            price.setBackgroundColor(ContextCompat.getColor(context!!, R.color.filter_background_selected))
-            price.setTextColor(ContextCompat.getColor(context!!, R.color.filter_text_selected))
-            (price as MaterialButton).setIconTintResource(R.color.filter_text_selected)
-        }
-        else {
-            price.setBackgroundColor(ContextCompat.getColor(context!!, R.color.filter_background_not_selected))
-            price.setTextColor(ContextCompat.getColor(context!!, R.color.filter_text_not_selected))
-            (price as MaterialButton).setIconTintResource(R.color.filter_text_not_selected)
         }
     }
 

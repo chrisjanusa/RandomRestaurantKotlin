@@ -20,5 +20,7 @@
     <dimen name="filter_title_text_size">@dimen/_15ssp</dimen>
     <dimen name="price_width">@dimen/_60sdp</dimen>
     <dimen name="price_text_size">@dimen/_15ssp</dimen>
+    <dimen name="restriction_width">@dimen/_100sdp</dimen>
+    <dimen name="restriction_text_size">@dimen/_12ssp</dimen>
     <dimen name="filter_confirm_text_size">@dimen/_12ssp</dimen>
 </resources>

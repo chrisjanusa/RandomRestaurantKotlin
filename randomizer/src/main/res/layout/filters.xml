@@ -22,6 +22,12 @@
                 app:icon="@drawable/expand"
         />
         <com.google.android.material.button.MaterialButton
+                android:id='@+id/restrictions'
+                style="@style/FilterAppearance"
+                android:text="Food Restrictions"
+                app:icon="@drawable/expand"
+        />
+        <com.google.android.material.button.MaterialButton
                 android:id='@+id/price'
                 style="@style/FilterAppearance"
                 android:text="@string/price"

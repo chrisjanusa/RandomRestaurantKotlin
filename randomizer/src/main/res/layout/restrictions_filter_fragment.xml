@@ -20,44 +20,44 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginStart="@dimen/filter_overlay_side_margin"
                 android:layout_marginTop="@dimen/filter_overlay_top_margin"
-                android:text="@string/price"
+                android:text="Food Restrictions"
                 android:textSize="@dimen/filter_title_text_size"
                 android:textColor="@color/filter_overlay_text"
         />
         <com.google.android.material.button.MaterialButton
-                android:id='@+id/price1'
-                style="@style/PriceButtonAppearance"
-                android:text="@string/price_1"
+                android:id='@+id/vegan'
+                style="@style/RestrictionButtonAppearance"
+                android:text="Vegan"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/title"
-                android:layout_marginStart="@dimen/filter_overlay_side_margin"
-                android:layout_marginTop="@dimen/filter_overlay_top_margin"
-        />
-        <com.google.android.material.button.MaterialButton
-                android:id='@+id/price2'
-                style="@style/PriceButtonAppearance"
-                android:text="@string/price_2"
-                app:layout_constraintStart_toEndOf="@id/price1"
-                app:layout_constraintEnd_toStartOf="@id/price3"
+                app:layout_constraintEnd_toStartOf="@id/vegetarian"
                 app:layout_constraintTop_toBottomOf="@id/title"
                 android:layout_marginTop="@dimen/filter_overlay_top_margin"
         />
         <com.google.android.material.button.MaterialButton
-                android:id='@+id/price3'
-                style="@style/PriceButtonAppearance"
-                android:text="@string/price_3"
-                app:layout_constraintStart_toEndOf="@id/price2"
-                app:layout_constraintEnd_toStartOf="@id/price4"
-                app:layout_constraintTop_toBottomOf="@id/title"
-                android:layout_marginTop="@dimen/filter_overlay_top_margin"
-        />
-        <com.google.android.material.button.MaterialButton
-                android:id='@+id/price4'
-                style="@style/PriceButtonAppearance"
-                android:text="@string/price_4"
+                android:id='@+id/vegetarian'
+                style="@style/RestrictionButtonAppearance"
+                android:text="Vegetarian"
+                app:layout_constraintStart_toEndOf="@id/vegan"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/title"
-                android:layout_marginEnd="@dimen/filter_overlay_side_margin"
+                android:layout_marginTop="@dimen/filter_overlay_top_margin"
+        />
+        <com.google.android.material.button.MaterialButton
+                android:id='@+id/halal'
+                style="@style/RestrictionButtonAppearance"
+                android:text="Halal"
+                app:layout_constraintStart_toStartOf="@id/vegan"
+                app:layout_constraintEnd_toEndOf="@id/vegan"
+                app:layout_constraintTop_toBottomOf="@id/vegan"
+                android:layout_marginTop="@dimen/filter_overlay_top_margin"
+        />
+        <com.google.android.material.button.MaterialButton
+                android:id='@+id/kosher'
+                style="@style/RestrictionButtonAppearance"
+                android:text="Kosher"
+                app:layout_constraintStart_toStartOf="@id/vegetarian"
+                app:layout_constraintEnd_toEndOf="@id/vegetarian"
+                app:layout_constraintTop_toBottomOf="@id/vegetarian"
                 android:layout_marginTop="@dimen/filter_overlay_top_margin"
         />
         <include
@@ -66,7 +66,7 @@
                 android:layout_height="wrap_content"
                 layout="@layout/confirmation_buttons"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/price4"
+                app:layout_constraintTop_toBottomOf="@id/kosher"
                 android:layout_marginTop="@dimen/filter_overlay_top_margin"
                 android:layout_marginBottom="@dimen/filter_overlay_top_margin"
                 android:layout_marginEnd="@dimen/filter_overlay_side_margin"

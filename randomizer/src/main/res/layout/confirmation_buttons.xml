@@ -4,6 +4,17 @@
         android:layout_width="match_parent" android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto">
     <com.google.android.material.button.MaterialButton
+            android:id='@+id/reset'
+            android:text="@string/reset"
+            style="@style/FilterConfirmAppearance"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/filter_overlay_top_margin"
+            android:layout_marginBottom="@dimen/filter_overlay_top_margin"
+            android:layout_marginStart="@dimen/filter_overlay_side_margin"
+    />
+    <com.google.android.material.button.MaterialButton
             android:id='@+id/cancel'
             android:text="@string/cancel"
             style="@style/FilterConfirmAppearance"

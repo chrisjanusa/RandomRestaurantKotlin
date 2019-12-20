@@ -1,10 +1,10 @@
 package com.chrisjanusa.randomizer.models
 
 import android.location.Location
-import com.chrisjanusa.randomizer.helpers.DistanceHelepr.defaultDistance
-import com.chrisjanusa.randomizer.helpers.FilterHelper
+import com.chrisjanusa.randomizer.helpers.DistanceHelper.defaultDistance
 import com.chrisjanusa.randomizer.helpers.FilterHelper.Filter
 import com.chrisjanusa.randomizer.helpers.PriceHelper.defaultPriceTitle
+import com.chrisjanusa.randomizer.helpers.RestrictionHelper.Restriction
 
 data class RandomizerState (
     val gpsOn: Boolean = true,
@@ -24,5 +24,8 @@ data class RandomizerState (
     val favoriteOnlySelected: Boolean = false,
 
     val maxMilesSelected: Float = defaultDistance,
-    val tempMaxMiles: Float = defaultDistance
+    val tempMaxMiles: Float = defaultDistance,
+
+    val restrictionTempSelected: Restriction = Restriction.None,
+    val restriction: Restriction = Restriction.None
 )

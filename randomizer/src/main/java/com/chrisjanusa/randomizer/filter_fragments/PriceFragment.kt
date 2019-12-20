@@ -17,6 +17,7 @@ import com.chrisjanusa.randomizer.helpers.FilterHelper
 import com.chrisjanusa.randomizer.models.RandomizerState
 import com.chrisjanusa.randomizer.models.RandomizerViewModel
 import com.google.android.material.button.MaterialButton
+import kotlinx.android.synthetic.main.confirmation_buttons.*
 import kotlinx.android.synthetic.main.price_filter_fragment.*
 
 class PriceFragment : Fragment() {
