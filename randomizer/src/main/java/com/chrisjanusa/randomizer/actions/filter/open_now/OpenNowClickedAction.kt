@@ -13,6 +13,8 @@ class OpenNowClickedAction : BaseAction {
         updateChannel: Channel<BaseUpdater>,
         eventChannel: Channel<BaseEvent>
     ) {
-        updateChannel.send(OpenNowUpdater(!currentState.value!!.openNowSelected))
+        currentState.value?.run {
+            updateChannel.send(OpenNowUpdater(!openNowSelected))
+        }
     }
 }

@@ -13,6 +13,8 @@ class FavoriteClickedAction : BaseAction {
         updateChannel: Channel<BaseUpdater>,
         eventChannel: Channel<BaseEvent>
     ) {
-        updateChannel.send(FavoriteUpdater(!currentState.value!!.favoriteOnlySelected))
+        currentState.value?.run {
+            updateChannel.send(FavoriteUpdater(!favoriteOnlySelected))
+        }
     }
 }

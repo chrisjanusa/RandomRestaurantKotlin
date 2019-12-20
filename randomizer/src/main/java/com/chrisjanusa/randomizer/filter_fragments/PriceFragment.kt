@@ -14,9 +14,9 @@ import com.chrisjanusa.randomizer.actions.filter.price.PriceChangeAction
 import com.chrisjanusa.randomizer.actions.init.InitPriceFilterAction
 import com.chrisjanusa.randomizer.helpers.ActionHelper.sendAction
 import com.chrisjanusa.randomizer.helpers.FilterHelper
+import com.chrisjanusa.randomizer.helpers.FilterHelper.renderButtonStyle
 import com.chrisjanusa.randomizer.models.RandomizerState
 import com.chrisjanusa.randomizer.models.RandomizerViewModel
-import com.google.android.material.button.MaterialButton
 import kotlinx.android.synthetic.main.confirmation_buttons.*
 import kotlinx.android.synthetic.main.price_filter_fragment.*
 
@@ -60,20 +60,11 @@ class PriceFragment : Fragment() {
     }
 
     private val render = fun(newState: RandomizerState) {
-        renderPriceStyle(price1, newState.price1TempSelected)
-        renderPriceStyle(price2, newState.price2TempSelected)
-        renderPriceStyle(price3, newState.price3TempSelected)
-        renderPriceStyle(price4, newState.price4TempSelected)
-    }
-
-    private fun renderPriceStyle(button: MaterialButton, selected: Boolean) {
-        if (selected) {
-            button.setBackgroundColor(ContextCompat.getColor(context!!, R.color.filter_background_selected))
-            button.setTextColor(ContextCompat.getColor(context!!, R.color.filter_text_selected))
-        }
-        else {
-            button.setBackgroundColor(ContextCompat.getColor(context!!, R.color.filter_background_not_selected))
-            button.setTextColor(ContextCompat.getColor(context!!, R.color.filter_text_not_selected))
+        context?.let {
+            renderButtonStyle(price1, newState.price1TempSelected, it)
+            renderButtonStyle(price2, newState.price2TempSelected, it)
+            renderButtonStyle(price3, newState.price3TempSelected, it)
+            renderButtonStyle(price4, newState.price4TempSelected, it)
         }
     }
 }

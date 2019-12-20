@@ -50,7 +50,7 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
     private val ZOOM_LEVEL = 16f
     private var curr: LatLng? = null
     private var icon: BitmapDescriptor? = null
-    private lateinit var randomizerViewModel : RandomizerViewModel
+    private lateinit var randomizerViewModel: RandomizerViewModel
     private val frag = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -88,10 +88,10 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
             }
         }
 
-        if (mapView != null) {
-            mapView.onCreate(null)
-            mapView.onResume()
-            mapView.getMapAsync(this)
+        mapView?.let{
+            it.onCreate(null)
+            it.onResume()
+            it.getMapAsync(this)
         }
     }
 
@@ -114,14 +114,19 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
 
     override fun onPause() {
         super.onPause()
-        PreferenceHelper.saveState(randomizerViewModel.state.value!!, activity?.getPreferences(Context.MODE_PRIVATE))
+        randomizerViewModel.state.value?.let {
+            PreferenceHelper.saveState(
+                it,
+                activity?.getPreferences(Context.MODE_PRIVATE)
+            )
+        }
     }
 
     private val render = fun(newState: RandomizerState) {
         gps_button.isChecked = newState.gpsOn
         current.text = newState.locationText
-        if(newState.location != null){
-            setMap(newState.location)
+        newState.location?.let{
+            setMap(it)
         }
         renderPriceButton(newState.priceText)
         renderRestrictionButton(newState.restriction)
@@ -131,34 +136,35 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
     }
 
     private fun renderRestrictionButton(restriction: Restriction) {
-        val  selected = !RestrictionHelper.isDefault(restriction)
+        val selected = !RestrictionHelper.isDefault(restriction)
         restrictions.text = if (selected) restriction.display else RestrictionHelper.defaultRestrictionTitle
-        context?.let { FilterHelper.renderFilterStyle(restrictions,selected,it) }
+        context?.let { FilterHelper.renderFilterStyle(restrictions, selected, it) }
     }
 
     private fun renderDistanceButton(maxMilesSelected: Float) {
-        val  selected = !DistanceHelper.isDefault(maxMilesSelected)
+        val selected = !DistanceHelper.isDefault(maxMilesSelected)
         distance.text = if (selected) distanceToDisplayString(maxMilesSelected) else DistanceHelper.defaultDistanceTitle
-        context?.let { FilterHelper.renderFilterStyle(distance,selected,it) }
+        context?.let { FilterHelper.renderFilterStyle(distance, selected, it) }
     }
 
     private fun renderPriceButton(priceText: String) {
-        val  selected = priceText != defaultPriceTitle
+        val selected = priceText != defaultPriceTitle
         price.text = priceText
-        context?.let { FilterHelper.renderFilterStyle(price,selected,it) }
+        context?.let { FilterHelper.renderFilterStyle(price, selected, it) }
     }
 
     private fun renderBooleanButton(
         selected: Boolean,
         button: MaterialButton
     ) {
-        if (selected) {
-            button.setBackgroundColor(ContextCompat.getColor(context!!, R.color.filter_background_selected))
-            button.setTextColor(ContextCompat.getColor(context!!, R.color.filter_text_selected))
-        }
-        else {
-            button.setBackgroundColor(ContextCompat.getColor(context!!, R.color.filter_background_not_selected))
-            button.setTextColor(ContextCompat.getColor(context!!, R.color.filter_text_not_selected))
+        context?.let {
+            if (selected) {
+                button.setBackgroundColor(ContextCompat.getColor(it, R.color.filter_background_selected))
+                button.setTextColor(ContextCompat.getColor(it, R.color.filter_text_selected))
+            } else {
+                button.setBackgroundColor(ContextCompat.getColor(it, R.color.filter_background_not_selected))
+                button.setTextColor(ContextCompat.getColor(it, R.color.filter_text_not_selected))
+            }
         }
     }
 
@@ -166,18 +172,18 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PERMISSION_ID) {
             if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                sendAction(
-                    PermissionReceivedAction(
-                        activity!!,
-                        randomizerViewModel
-                    ), randomizerViewModel)
+                activity?.let {
+                    sendAction(PermissionReceivedAction(it, randomizerViewModel), randomizerViewModel)
+                }
             }
         }
     }
 
 
     private fun gpsChange() {
-        sendAction(GpsClickAction(activity!!, randomizerViewModel), randomizerViewModel)
+        activity?.let {
+            sendAction(GpsClickAction(it, randomizerViewModel), randomizerViewModel)
+        }
 
     }
 
@@ -188,18 +194,16 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
 
     private fun setMap() {
         if (mapView != null) {
-            if (icon == null) {
-                icon = getDefaultMarker()
-            }
-            if (curr != loc) {
+            icon = icon ?: getDefaultMarker()
+            curr = loc?.takeUnless { curr == loc }?.also {
                 map.clear()
-                map.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, ZOOM_LEVEL))
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(it, ZOOM_LEVEL))
                 map.addMarker(
                     MarkerOptions()
-                        .position(loc!!)
+                        .position(it)
                         .icon(icon)
                 )
-            }
+            } ?: curr
         }
     }
 
@@ -208,12 +212,8 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         map = googleMap
         map.setOnMarkerClickListener(this)
         map.uiSettings.isMapToolbarEnabled = false
-        if (loc != null) {
-            setMap()
-        } else {
-            loc = LatLng(47.620422, -122.349358)
-            setMap()
-        }
+        loc = loc ?: LatLng(47.620422, -122.349358)
+        setMap()
     }
 
     private fun vectorToBitmap(@DrawableRes id: Int): BitmapDescriptor {
@@ -249,12 +249,16 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
     fun EditText.showKeyboardAndFocus() {
         this.requestFocus()
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-        imm!!.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
+        imm?.let {
+            it.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
+        }
     }
 
     fun EditText.loseFocus() {
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-        imm!!.hideSoftInputFromWindow(this.windowToken, 0)
+        imm?.let {
+            it.hideSoftInputFromWindow(this.windowToken, 0)
+        }
     }
 
     fun Location.latLang(): LatLng {

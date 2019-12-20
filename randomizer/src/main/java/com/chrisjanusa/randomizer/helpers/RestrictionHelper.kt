@@ -11,5 +11,15 @@ object RestrictionHelper {
         object None : Restriction("none", "")
     }
 
+    fun restrictionFromIdentifier(identifier: String) : Restriction{
+        return when(identifier) {
+            Restriction.Vegan.identifier -> Restriction.Vegan
+            Restriction.Vegetarian.identifier -> Restriction.Vegetarian
+            Restriction.Halal.identifier -> Restriction.Halal
+            Restriction.Kosher.identifier -> Restriction.Kosher
+            else -> Restriction.None
+        }
+    }
+
     fun isDefault(restriction: Restriction) = restriction == Restriction.None
 }

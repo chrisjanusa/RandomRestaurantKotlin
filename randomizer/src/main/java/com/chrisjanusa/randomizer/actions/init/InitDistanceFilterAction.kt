@@ -13,7 +13,9 @@ class InitDistanceFilterAction : BaseAction {
         updateChannel: Channel<BaseUpdater>,
         eventChannel: Channel<BaseEvent>
     ) {
-        updateChannel.send(InitDistanceFilterUpdater(currentState.value!!.maxMilesSelected))
+        currentState.value?.run {
+            updateChannel.send(InitDistanceFilterUpdater(maxMilesSelected))
+        }
     }
 
 }

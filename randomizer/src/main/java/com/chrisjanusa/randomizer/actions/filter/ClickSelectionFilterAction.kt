@@ -16,16 +16,17 @@ class ClickSelectionFilterAction(val filter : FilterHelper.Filter) : BaseAction 
         updateChannel: Channel<BaseUpdater>,
         eventChannel: Channel<BaseEvent>
     ) {
-        if (currentState.value!!.filterOpen != filter) {
-            updateChannel.send(FilterOpenUpdater(filter))
-            val filterFragment = FilterHelper.getFilterFragment(filter)
-            if (filterFragment != null) {
-                eventChannel.send(OpenFilterEvent(filterFragment))
+        currentState.value?.run {
+            if (filterOpen != filter) {
+                updateChannel.send(FilterOpenUpdater(filter))
+                val filterFragment = FilterHelper.getFilterFragment(filter)
+                if (filterFragment != null) {
+                    eventChannel.send(OpenFilterEvent(filterFragment))
+                }
+            } else {
+                eventChannel.send(CloseFilterEvent())
+                updateChannel.send(FilterOpenUpdater(FilterHelper.Filter.None))
             }
-        }
-        else {
-            eventChannel.send(CloseFilterEvent())
-            updateChannel.send(FilterOpenUpdater(FilterHelper.Filter.None))
         }
     }
 }
