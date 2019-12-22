@@ -97,7 +97,6 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="strokeWidth">@dimen/_2sdp</item>
         <item name="strokeColor">@color/outline</item>
-        <item name="layout_gravity">fill_horizontal</item>
         <item name="android:layout_margin">@dimen/_5sdp</item>
         <item name="cardCornerRadius">@dimen/_8sdp</item>
         <item name="rippleColor">@color/filter_background_selected</item>
