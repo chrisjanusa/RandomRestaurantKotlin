@@ -1,6 +1,7 @@
 package com.chrisjanusa.randomizer.models
 
 import android.location.Location
+import com.chrisjanusa.randomizer.helpers.CategoryHelper
 import com.chrisjanusa.randomizer.helpers.DistanceHelper.defaultDistance
 import com.chrisjanusa.randomizer.helpers.FilterHelper.Filter
 import com.chrisjanusa.randomizer.helpers.PriceHelper.defaultPriceTitle
@@ -27,5 +28,9 @@ data class RandomizerState (
     val tempMaxMiles: Float = defaultDistance,
 
     val restrictionTempSelected: Restriction = Restriction.None,
-    val restriction: Restriction = Restriction.None
+    val restriction: Restriction = Restriction.None,
+
+    val categorySet: HashSet<CategoryHelper.Category> = HashSet(),
+    val categoryString: String = "",
+    val categoryTempSet: HashSet<CategoryHelper.Category> = HashSet()
 )

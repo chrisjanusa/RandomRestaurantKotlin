@@ -9,7 +9,7 @@ import android.location.Location
 import android.os.Looper
 import androidx.core.app.ActivityCompat
 import com.chrisjanusa.randomizer.actions.gpsActions.LocationReceivedAction
-import com.chrisjanusa.randomizer.events.LocationEvent
+import com.chrisjanusa.randomizer.events.LocationFailedEvent
 import com.chrisjanusa.randomizer.events.PermissionEvent
 import com.chrisjanusa.randomizer.helpers.ActionHelper.sendAction
 import com.chrisjanusa.randomizer.helpers.ActionHelper.sendEvent
@@ -42,13 +42,13 @@ object LocationHelper {
                             })
 
                         } else {
-                            sendEvent(LocationEvent(settingsTask), randomizerViewModel)
+                            sendEvent(LocationFailedEvent(settingsTask), randomizerViewModel)
                         }
                     }
-                    } else {
-                        sendAction(LocationReceivedAction(location, context), randomizerViewModel)
-                    }
+                } else {
+                    sendAction(LocationReceivedAction(location, context), randomizerViewModel)
                 }
+            }
         } else {
             sendEvent(getLocationPermissionEvent(), randomizerViewModel)
         }
@@ -66,8 +66,10 @@ object LocationHelper {
     }
 
     @SuppressLint("MissingPermission")
-    private fun makeLocationRequest(locationRequest: LocationRequest, mFusedLocationClient: FusedLocationProviderClient,
-                                    callback: LocationCallback) {
+    private fun makeLocationRequest(
+        locationRequest: LocationRequest, mFusedLocationClient: FusedLocationProviderClient,
+        callback: LocationCallback
+    ) {
         mFusedLocationClient.requestLocationUpdates(
             locationRequest, callback,
             Looper.myLooper()

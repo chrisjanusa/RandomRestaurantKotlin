@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.graphics.drawable.Drawable
 import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -32,6 +31,10 @@ import com.chrisjanusa.randomizer.actions.gpsActions.PermissionReceivedAction
 import com.chrisjanusa.randomizer.actions.init.InitAction
 import com.chrisjanusa.randomizer.helpers.*
 import com.chrisjanusa.randomizer.helpers.ActionHelper.sendAction
+import com.chrisjanusa.randomizer.helpers.FilterHelper.Filter
+import com.chrisjanusa.randomizer.helpers.CategoryHelper.Category
+import com.chrisjanusa.randomizer.helpers.CategoryHelper.defaultCategoryTitle
+import com.chrisjanusa.randomizer.helpers.CategoryHelper.saveToDisplayString
 import com.chrisjanusa.randomizer.helpers.DistanceHelper.distanceToDisplayString
 import com.chrisjanusa.randomizer.helpers.LocationHelper.PERMISSION_ID
 import com.chrisjanusa.randomizer.helpers.PriceHelper.defaultPriceTitle
@@ -70,15 +73,15 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         random.setOnClickListener { randomize() }
         current.setOnClickListener { focusLocation() }
         gps_button.setOnClickListener { gpsChange() }
         open_now.setOnClickListener { clickOpenNow() }
         favorites_only.setOnClickListener { clickFavoritesOnly() }
-        distance.setOnClickListener { clickSelectionFilter(FilterHelper.Filter.Distance) }
-        price.setOnClickListener { clickSelectionFilter(FilterHelper.Filter.Price) }
-        restrictions.setOnClickListener { clickSelectionFilter(FilterHelper.Filter.Restriction) }
+        distance.setOnClickListener { clickSelectionFilter(Filter.Distance) }
+        price.setOnClickListener { clickSelectionFilter(Filter.Price) }
+        restrictions.setOnClickListener { clickSelectionFilter(Filter.Restriction) }
+        categories.setOnClickListener { clickSelectionFilter(Filter.Category) }
 
         randomizerViewModel.state.observe(this, Observer<RandomizerState>(render))
 
@@ -88,7 +91,7 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
             }
         }
 
-        mapView?.let{
+        mapView?.let {
             it.onCreate(null)
             it.onResume()
             it.getMapAsync(this)
@@ -99,7 +102,7 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         sendAction(FavoriteClickedAction(), randomizerViewModel)
     }
 
-    private fun clickSelectionFilter(filter: FilterHelper.Filter) {
+    private fun clickSelectionFilter(filter: Filter) {
         sendAction(ClickSelectionFilterAction(filter), randomizerViewModel)
     }
 
@@ -125,7 +128,7 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
     private val render = fun(newState: RandomizerState) {
         gps_button.isChecked = newState.gpsOn
         current.text = newState.locationText
-        newState.location?.let{
+        newState.location?.let {
             setMap(it)
         }
         renderPriceButton(newState.priceText)
@@ -133,6 +136,7 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         renderDistanceButton(newState.maxMilesSelected)
         renderBooleanButton(newState.openNowSelected, open_now)
         renderBooleanButton(newState.favoriteOnlySelected, favorites_only)
+        renderCategoryButton(newState.categoryString, newState.categorySet)
     }
 
     private fun renderRestrictionButton(restriction: Restriction) {
@@ -151,6 +155,12 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         val selected = priceText != defaultPriceTitle
         price.text = priceText
         context?.let { FilterHelper.renderFilterStyle(price, selected, it) }
+    }
+
+    private fun renderCategoryButton(categoryText: String, categorySet: HashSet<Category>) {
+        val selected = categorySet.isNotEmpty()
+        categories.text = defaultCategoryTitle.takeUnless { categorySet.isNotEmpty() } ?: saveToDisplayString(categoryText)
+        context?.let { FilterHelper.renderFilterStyle(categories, selected, it) }
     }
 
     private fun renderBooleanButton(
@@ -217,7 +227,7 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
     }
 
     private fun vectorToBitmap(@DrawableRes id: Int): BitmapDescriptor {
-        val vectorDrawable: Drawable =
+        val vectorDrawable =
             ResourcesCompat.getDrawable(resources, id, null) ?: return BitmapDescriptorFactory.defaultMarker()
         val bitmap = Bitmap.createBitmap(
             vectorDrawable.intrinsicWidth,

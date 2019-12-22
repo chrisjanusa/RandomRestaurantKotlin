@@ -9,9 +9,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.chrisjanusa.randomizer.R
 import com.chrisjanusa.randomizer.actions.filter.restriction.ApplyRestrictionAction
+import com.chrisjanusa.randomizer.actions.filter.restriction.ResetRestrictionAction
 import com.chrisjanusa.randomizer.actions.filter.restriction.RestrictionChangeAction
 import com.chrisjanusa.randomizer.actions.init.InitRestrictionFilterAction
 import com.chrisjanusa.randomizer.helpers.ActionHelper
+import com.chrisjanusa.randomizer.helpers.ActionHelper.sendAction
 import com.chrisjanusa.randomizer.helpers.FilterHelper.renderButtonStyle
 import com.chrisjanusa.randomizer.helpers.FilterHelper.onCancelFilterClick
 import com.chrisjanusa.randomizer.helpers.RestrictionHelper.Restriction
@@ -40,8 +42,10 @@ class RestrictionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        confirm.setOnClickListener { ActionHelper.sendAction(ApplyRestrictionAction(), randomizerViewModel) }
+        confirm.setOnClickListener { sendAction(ApplyRestrictionAction(), randomizerViewModel) }
         cancel.setOnClickListener { onCancelFilterClick(randomizerViewModel) }
+        reset.setOnClickListener { sendAction(ResetRestrictionAction(), randomizerViewModel) }
+
         halal.setOnClickListener { restrictionClick(Restriction.Halal) }
         vegan.setOnClickListener { restrictionClick(Restriction.Vegan) }
         vegetarian.setOnClickListener { restrictionClick(Restriction.Vegetarian) }

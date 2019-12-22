@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.chrisjanusa.randomizer.R
 import com.chrisjanusa.randomizer.actions.filter.distance.ApplyDistanceAction
 import com.chrisjanusa.randomizer.actions.filter.distance.DistanceChangeAction
+import com.chrisjanusa.randomizer.actions.filter.distance.ResetDistanceAction
 import com.chrisjanusa.randomizer.actions.init.InitDistanceFilterAction
 import com.chrisjanusa.randomizer.helpers.ActionHelper.sendAction
 import com.chrisjanusa.randomizer.helpers.DistanceHelper.defaultDistance
@@ -21,9 +22,8 @@ import com.chrisjanusa.randomizer.helpers.FilterHelper
 import com.chrisjanusa.randomizer.models.RandomizerState
 import com.chrisjanusa.randomizer.models.RandomizerViewModel
 import com.ramotion.fluidslider.FluidSlider
+import kotlinx.android.synthetic.main.confirmation_buttons.*
 import kotlinx.android.synthetic.main.distance_filter_fragment.*
-import kotlinx.android.synthetic.main.confirmation_buttons.cancel
-import kotlinx.android.synthetic.main.confirmation_buttons.confirm
 
 class DistanceFragment : Fragment() {
     private lateinit var randomizerViewModel : RandomizerViewModel
@@ -47,6 +47,7 @@ class DistanceFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         confirm.setOnClickListener { sendAction(ApplyDistanceAction(), randomizerViewModel) }
         cancel.setOnClickListener { FilterHelper.onCancelFilterClick(randomizerViewModel) }
+        reset.setOnClickListener { sendAction(ResetDistanceAction(), randomizerViewModel) }
 
         val slider = distance as FluidSlider
         slider.positionListener = { pos -> slider.bubbleText = "%.1f".format(percentToDistance(pos))}

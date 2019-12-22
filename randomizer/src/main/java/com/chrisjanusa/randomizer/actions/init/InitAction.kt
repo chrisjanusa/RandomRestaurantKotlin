@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import com.chrisjanusa.randomizer.actions.base.BaseAction
 import com.chrisjanusa.randomizer.actions.base.BaseUpdater
 import com.chrisjanusa.randomizer.events.BaseEvent
+import com.chrisjanusa.randomizer.helpers.CategoryHelper
 import com.chrisjanusa.randomizer.helpers.PreferenceHelper
 import com.chrisjanusa.randomizer.helpers.RestrictionHelper
 import com.chrisjanusa.randomizer.models.RandomizerState
@@ -21,6 +22,7 @@ class InitAction(private val activity: Activity?) : BaseAction {
 
         preferenceData?.run {
             val restrictionObject = RestrictionHelper.restrictionFromIdentifier(restriction)
+            val categorySet = CategoryHelper.setFromSaveString(categoryString)
             updateChannel.send(
                 InitUpdater(
                     gpsOn,
@@ -28,7 +30,9 @@ class InitAction(private val activity: Activity?) : BaseAction {
                     favoriteOnlySelected,
                     maxMilesSelected,
                     restrictionObject,
-                    priceSelected
+                    priceSelected,
+                    categoryString,
+                    categorySet
                 )
             )
         }

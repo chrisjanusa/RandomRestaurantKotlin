@@ -19,9 +19,8 @@ class ClickSelectionFilterAction(val filter : FilterHelper.Filter) : BaseAction 
         currentState.value?.run {
             if (filterOpen != filter) {
                 updateChannel.send(FilterOpenUpdater(filter))
-                val filterFragment = FilterHelper.getFilterFragment(filter)
-                if (filterFragment != null) {
-                    eventChannel.send(OpenFilterEvent(filterFragment))
+                filter.fragment?.let{
+                    eventChannel.send(OpenFilterEvent(it))
                 }
             } else {
                 eventChannel.send(CloseFilterEvent())

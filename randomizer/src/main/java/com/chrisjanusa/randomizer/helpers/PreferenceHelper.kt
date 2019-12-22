@@ -13,17 +13,19 @@ object PreferenceHelper {
         object FavoriteOnlySelected : StateObject("favoriteOnlySelected")
         object MaxMilesSelected : StateObject("maxMilesSelected")
         object Restriction : StateObject("restriction")
+        object Category : StateObject("category")
     }
 
     fun saveState(state: RandomizerState, preferences: SharedPreferences?) {
-        if (preferences != null) {
-            with(preferences.edit()) {
+        preferences?.let {
+            with(it.edit()) {
                 putBoolean(StateObject.GpsOn.key, state.gpsOn)
                 putBoolean(StateObject.OpenNowSelected.key, state.openNowSelected)
                 putBoolean(StateObject.FavoriteOnlySelected.key, state.favoriteOnlySelected)
                 putFloat(StateObject.MaxMilesSelected.key, state.maxMilesSelected)
                 putString(StateObject.Restriction.key, state.restriction.identifier)
                 putString(StateObject.PriceSelected.key, state.priceText)
+                putString(StateObject.Category.key, state.categoryString)
                 apply()
             }
         }
@@ -38,7 +40,8 @@ object PreferenceHelper {
                 getFloat(StateObject.MaxMilesSelected.key, DistanceHelper.defaultDistance),
                 getString(StateObject.Restriction.key, RestrictionHelper.Restriction.None.identifier)
                     ?: RestrictionHelper.Restriction.None.identifier,
-                getString(StateObject.PriceSelected.key, defaultPriceTitle) ?: defaultPriceTitle
+                getString(StateObject.PriceSelected.key, defaultPriceTitle) ?: defaultPriceTitle,
+                getString(StateObject.Category.key, "") ?: ""
 
             )
         }

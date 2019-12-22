@@ -1,6 +1,7 @@
 package com.chrisjanusa.randomizer.actions.init
 
 import com.chrisjanusa.randomizer.actions.base.BaseUpdater
+import com.chrisjanusa.randomizer.helpers.CategoryHelper.Category
 import com.chrisjanusa.randomizer.helpers.RestrictionHelper
 import com.chrisjanusa.randomizer.models.RandomizerState
 
@@ -10,7 +11,9 @@ class InitUpdater(
     private val favoriteOnlySelected: Boolean,
     private val maxMilesSelected: Float,
     private val restriction: RestrictionHelper.Restriction,
-    private val priceText: String
+    private val priceText: String,
+    private val categoryString: String,
+    private val categorySet: HashSet<Category>
 ) : BaseUpdater {
     override fun performUpdate(prevState: RandomizerState): RandomizerState {
         return prevState.copy(
@@ -19,7 +22,9 @@ class InitUpdater(
             openNowSelected = openNowSelected,
             favoriteOnlySelected = favoriteOnlySelected,
             maxMilesSelected = maxMilesSelected,
-            restriction = restriction
+            restriction = restriction,
+            categoryString = categoryString,
+            categorySet = categorySet
         )
     }
 }

@@ -23,4 +23,5 @@
     <dimen name="restriction_width">@dimen/_100sdp</dimen>
     <dimen name="restriction_text_size">@dimen/_12ssp</dimen>
     <dimen name="filter_confirm_text_size">@dimen/_12ssp</dimen>
+    <dimen name="category_icon_size">@dimen/_20sdp</dimen>
 </resources>
