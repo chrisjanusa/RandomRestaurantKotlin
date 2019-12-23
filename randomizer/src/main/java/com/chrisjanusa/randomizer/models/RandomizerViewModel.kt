@@ -24,7 +24,9 @@ class RandomizerViewModel : ViewModel() {
 
     private suspend fun update(updater: BaseUpdater) {
         withContext(Dispatchers.Main) {
-            state.value = updater.performUpdate(state.value!!)
+            state.value?.let {
+                state.value = updater.performUpdate(it)
+            }
         }
     }
 

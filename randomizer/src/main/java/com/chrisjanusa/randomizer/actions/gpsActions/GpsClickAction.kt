@@ -19,12 +19,13 @@ class GpsClickAction(
         updateChannel: Channel<BaseUpdater>,
         eventChannel: Channel<BaseEvent>
     ) {
-        if (currentState.value!!.gpsOn) {
-            updateChannel.send(GpsStatusUpdater(false, "Unknown"))
-        }
-        else {
-            updateChannel.send(GpsStatusUpdater(true, "Locating"))
-            requestLocation(activity, randomizerViewModel)
+        currentState.value?.run {
+            if (gpsOn) {
+                updateChannel.send(GpsStatusUpdater(false, "Unknown"))
+            } else {
+                updateChannel.send(GpsStatusUpdater(true, "Locating"))
+                requestLocation(activity, randomizerViewModel)
+            }
         }
     }
 }

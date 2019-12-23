@@ -1,21 +1,37 @@
 package com.chrisjanusa.findmefood
 
-import android.content.Intent
-import android.location.Location
 import android.os.Bundle
+import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.Navigation
 import androidx.navigation.ui.setupWithNavController
-import com.chrisjanusa.randomizer.RandomizerFragment
+import com.chrisjanusa.randomizer.filter_fragments.OverlayFragmentManager
+import com.chrisjanusa.randomizer.filter_fragments.ShadeFragment
 import kotlinx.android.synthetic.main.activity_main.*
-import mumayank.com.airlocationlibrary.AirLocation
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : OverlayFragmentManager, AppCompatActivity() {
+    private  val OVERLAY_TAG = "OVERLAY"
 
-    private var airLocation: AirLocation? = null
-    private val randomizerFrag = RandomizerFragment()
+    override fun onFilterSelected(fragment: Fragment) {
+        supportFragmentManager.popBackStack(OVERLAY_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.slidein_bottom, R.anim.slideout_bottom,
+                R.anim.slidein_bottom, R.anim.slideout_bottom)
+            .replace(R.id.overlay_fragment, fragment, OVERLAY_TAG)
+            .setCustomAnimations(R.anim.fadein, R.anim.fadeout,
+                R.anim.fadein, R.anim.fadeout)
+            .replace(R.id.shade_fragment, ShadeFragment())
+            .addToBackStack(OVERLAY_TAG)
+            .commit()
+    }
+
+    override fun onFilterClosed() {
+        supportFragmentManager.popBackStack(OVERLAY_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,24 +41,5 @@ class MainActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
         nav_view.setupWithNavController(Navigation.findNavController(this, R.id.my_nav_host_fragment))
-        setRandomFrag()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        airLocation?.onActivityResult(requestCode, resultCode, data)
-        super.onActivityResult(requestCode, resultCode, data)
-    }
-
-    fun setRandomFrag() {
-        airLocation = AirLocation(this, true, true, object: AirLocation.Callbacks {
-            override fun onSuccess(location: Location) {
-                randomizerFrag.setMap(location)
-            }
-
-            override fun onFailed(locationFailedEnum: AirLocation.LocationFailedEnum) {
-
-            }
-
-        })
     }
 }

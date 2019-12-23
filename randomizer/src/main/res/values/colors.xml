@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="filter_background_selected">#C62828</color>
+    <color name="filter_background_selected">#c95353</color>
     <color name="filter_background_not_selected">#FFFFFF</color>
     <color name="filter_text_selected">#FFFFFF</color>
-    <color name="filter_text_not_selected">#C62828</color>
+    <color name="filter_overlay_background">#FFFFFF</color>
+    <color name="outline">#F6F6F6</color>
+    <color name="filter_overlay_outer_background">#73696969</color>
+    <color name="filter_text_not_selected">#696969</color>
+    <color name="filter_overlay_text">#c95353</color>
+    <color name="slider_bar_color">#c95353</color>
+    <color name="filter_icon_not_selected">#c95353</color>
+    <color name="filter_icon_selected">#FFFFFF</color>
 </resources>

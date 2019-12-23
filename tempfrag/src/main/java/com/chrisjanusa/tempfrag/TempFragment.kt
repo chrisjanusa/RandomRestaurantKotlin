@@ -25,13 +25,10 @@ class TempFragment : Fragment() {
         message.text = display
     }
 
-    fun setText(text : String){
-        if(message != null) {
-            message.text = text
-            display = text
+    fun setText(text: String) {
+        message?.let {
+            it.text = text
         }
-        else{
-            display = text
-        }
+        display = text
     }
 }
