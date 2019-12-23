@@ -1,15 +1,14 @@
 package com.chrisjanusa.findmefood
 
 import android.os.Bundle
-import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.Navigation
 import androidx.navigation.ui.setupWithNavController
-import com.chrisjanusa.randomizer.filter_fragments.OverlayFragmentManager
-import com.chrisjanusa.randomizer.filter_fragments.ShadeFragment
+import com.chrisjanusa.base_filters.fragment.OverlayFragmentManager
+import com.chrisjanusa.base_filters.fragment.ShadeFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 

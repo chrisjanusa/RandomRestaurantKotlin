@@ -13,10 +13,9 @@ import com.chrisjanusa.randomizer.actions.filter.price.PriceChangeAction
 import com.chrisjanusa.randomizer.actions.filter.price.ResetPriceAction
 import com.chrisjanusa.randomizer.actions.init.InitPriceFilterAction
 import com.chrisjanusa.randomizer.helpers.ActionHelper.sendAction
-import com.chrisjanusa.randomizer.helpers.FilterHelper
 import com.chrisjanusa.randomizer.helpers.FilterHelper.renderButtonStyle
-import com.chrisjanusa.randomizer.models.RandomizerState
-import com.chrisjanusa.randomizer.models.RandomizerViewModel
+import com.chrisjanusa.base_randomizer.RandomizerState
+import com.chrisjanusa.base_randomizer.RandomizerViewModel
 import kotlinx.android.synthetic.main.confirmation_buttons.*
 import kotlinx.android.synthetic.main.price_filter_fragment.*
 

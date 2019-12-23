@@ -15,9 +15,8 @@ import com.chrisjanusa.randomizer.actions.init.InitCategoryFilterAction
 import com.chrisjanusa.randomizer.helpers.ActionHelper.sendAction
 import com.chrisjanusa.randomizer.helpers.CategoryHelper.Category
 import com.chrisjanusa.randomizer.helpers.CategoryHelper.renderCardStyle
-import com.chrisjanusa.randomizer.helpers.FilterHelper
-import com.chrisjanusa.randomizer.models.RandomizerState
-import com.chrisjanusa.randomizer.models.RandomizerViewModel
+import com.chrisjanusa.base_randomizer.RandomizerState
+import com.chrisjanusa.base_randomizer.RandomizerViewModel
 import kotlinx.android.synthetic.main.categories.*
 import kotlinx.android.synthetic.main.confirmation_buttons.*
 

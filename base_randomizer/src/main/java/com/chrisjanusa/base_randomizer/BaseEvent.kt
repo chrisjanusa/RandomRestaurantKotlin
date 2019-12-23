@@ -1,4 +1,4 @@
-package com.chrisjanusa.randomizer.events
+package com.chrisjanusa.base_randomizer
 
 import androidx.fragment.app.Fragment
 

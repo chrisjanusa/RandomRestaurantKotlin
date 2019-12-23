@@ -1,11 +1,11 @@
-package com.chrisjanusa.randomizer.filter_fragments
+package com.chrisjanusa.base_filters.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.chrisjanusa.randomizer.R
+import com.chrisjanusa.base_filters.R
 
 class ShadeFragment : Fragment() {
     override fun onCreateView(

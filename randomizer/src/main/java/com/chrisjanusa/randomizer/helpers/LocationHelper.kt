@@ -13,7 +13,7 @@ import com.chrisjanusa.randomizer.events.LocationFailedEvent
 import com.chrisjanusa.randomizer.events.PermissionEvent
 import com.chrisjanusa.randomizer.helpers.ActionHelper.sendAction
 import com.chrisjanusa.randomizer.helpers.ActionHelper.sendEvent
-import com.chrisjanusa.randomizer.models.RandomizerViewModel
+import com.chrisjanusa.base_randomizer.RandomizerViewModel
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.Task
 

@@ -1,10 +1,10 @@
 package com.chrisjanusa.randomizer.actions.filter.category
 
-import com.chrisjanusa.randomizer.actions.base.BaseUpdater
 import com.chrisjanusa.randomizer.helpers.CategoryHelper
-import com.chrisjanusa.randomizer.models.RandomizerState
+import com.chrisjanusa.base_randomizer.RandomizerState
 
-class TempCategoryUpdater(private val categorySet: HashSet<CategoryHelper.Category>) : BaseUpdater {
+class TempCategoryUpdater(private val categorySet: HashSet<CategoryHelper.Category>) :
+    com.chrisjanusa.base_randomizer.BaseUpdater {
     override fun performUpdate(prevState: RandomizerState): RandomizerState {
         return prevState.copy(categoryTempSet = categorySet)
     }

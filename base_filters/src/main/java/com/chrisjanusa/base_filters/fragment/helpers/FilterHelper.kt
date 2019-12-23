@@ -1,17 +1,12 @@
-package com.chrisjanusa.randomizer.helpers
+package com.chrisjanusa.base_filters.fragment.helpers
 
 import android.content.Context
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
-import com.chrisjanusa.randomizer.R
-import com.chrisjanusa.randomizer.actions.filter.CancelClickAction
-import com.chrisjanusa.randomizer.filter_fragments.CategoryFragment
-import com.chrisjanusa.randomizer.filter_fragments.DistanceFragment
-import com.chrisjanusa.randomizer.filter_fragments.PriceFragment
-import com.chrisjanusa.randomizer.filter_fragments.RestrictionFragment
-import com.chrisjanusa.randomizer.models.RandomizerViewModel
+import com.chrisjanusa.base_filters.R
+import com.chrisjanusa.base_filters.fragment.filters.CancelClickAction
+import com.chrisjanusa.base_randomizer.RandomizerViewModel
+import com.chrisjanusa.randomizer.helpers.ActionHelper
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.card.MaterialCardView
 
 object FilterHelper {
     fun onCancelFilterClick(randomizerViewModel: RandomizerViewModel){
@@ -43,14 +38,5 @@ object FilterHelper {
             button.setIconTintResource(R.color.filter_text_not_selected)
             button.setStrokeColorResource(R.color.outline)
         }
-    }
-
-
-    sealed class Filter(val fragment: Fragment?) {
-        object None : Filter(null)
-        object Price : Filter(PriceFragment())
-        object Category : Filter(CategoryFragment())
-        object Distance : Filter(DistanceFragment())
-        object Restriction : Filter(RestrictionFragment())
     }
 }

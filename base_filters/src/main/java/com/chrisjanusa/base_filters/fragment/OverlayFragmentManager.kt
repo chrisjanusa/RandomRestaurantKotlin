@@ -1,4 +1,4 @@
-package com.chrisjanusa.randomizer.filter_fragments
+package com.chrisjanusa.base_filters.fragment
 
 import androidx.fragment.app.Fragment
 

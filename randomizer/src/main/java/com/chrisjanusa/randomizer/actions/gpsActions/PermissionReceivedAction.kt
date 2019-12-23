@@ -2,20 +2,17 @@ package com.chrisjanusa.randomizer.actions.gpsActions
 
 import android.app.Activity
 import androidx.lifecycle.LiveData
-import com.chrisjanusa.randomizer.actions.base.BaseAction
-import com.chrisjanusa.randomizer.events.BaseEvent
-import com.chrisjanusa.randomizer.actions.base.BaseUpdater
 import com.chrisjanusa.randomizer.helpers.LocationHelper.requestLocation
-import com.chrisjanusa.randomizer.models.RandomizerState
-import com.chrisjanusa.randomizer.models.RandomizerViewModel
+import com.chrisjanusa.base_randomizer.RandomizerState
+import com.chrisjanusa.base_randomizer.RandomizerViewModel
 import kotlinx.coroutines.channels.Channel
 
 class PermissionReceivedAction(private val activity: Activity, private val randomizerViewModel: RandomizerViewModel) :
-    BaseAction {
+    com.chrisjanusa.base_randomizer.BaseAction {
     override suspend fun performAction(
         currentState: LiveData<RandomizerState>,
-        updateChannel: Channel<BaseUpdater>,
-        eventChannel: Channel<BaseEvent>
+        updateChannel: Channel<com.chrisjanusa.base_randomizer.BaseUpdater>,
+        eventChannel: Channel<com.chrisjanusa.base_randomizer.BaseEvent>
     ) {
         requestLocation(activity, randomizerViewModel)
     }

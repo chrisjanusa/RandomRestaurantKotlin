@@ -23,7 +23,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
-import com.chrisjanusa.randomizer.actions.filter.ClickSelectionFilterAction
+import com.chrisjanusa.base_filters.fragment.filters.ClickSelectionFilterAction
 import com.chrisjanusa.randomizer.actions.filter.favorites.FavoriteClickedAction
 import com.chrisjanusa.randomizer.actions.filter.open_now.OpenNowClickedAction
 import com.chrisjanusa.randomizer.actions.gpsActions.GpsClickAction
@@ -39,8 +39,8 @@ import com.chrisjanusa.randomizer.helpers.DistanceHelper.distanceToDisplayString
 import com.chrisjanusa.randomizer.helpers.LocationHelper.PERMISSION_ID
 import com.chrisjanusa.randomizer.helpers.PriceHelper.defaultPriceTitle
 import com.chrisjanusa.randomizer.helpers.RestrictionHelper.Restriction
-import com.chrisjanusa.randomizer.models.RandomizerState
-import com.chrisjanusa.randomizer.models.RandomizerViewModel
+import com.chrisjanusa.base_randomizer.RandomizerState
+import com.chrisjanusa.base_randomizer.RandomizerViewModel
 import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.launch
 import kotlinx.android.synthetic.main.filters.*

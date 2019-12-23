@@ -12,15 +12,11 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
     }
 
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 
@@ -29,17 +25,15 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
     implementation 'com.intuit.ssp:ssp-android:1.0.6'
-    implementation "com.google.android.material:material:1.2.0-alpha01"
     implementation 'com.ramotion.fluidslider:fluid-slider:0.3.1'
     implementation project(":restaurantcard")
+    implementation project(":base_filters")
+    implementation project(':base_randomizer')
     api 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    api "androidx.core:core-ktx:1.1.0"
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.google.android.gms:play-services-location:17.0.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0'

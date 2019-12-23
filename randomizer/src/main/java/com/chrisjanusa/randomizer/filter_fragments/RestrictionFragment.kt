@@ -17,8 +17,8 @@ import com.chrisjanusa.randomizer.helpers.ActionHelper.sendAction
 import com.chrisjanusa.randomizer.helpers.FilterHelper.renderButtonStyle
 import com.chrisjanusa.randomizer.helpers.FilterHelper.onCancelFilterClick
 import com.chrisjanusa.randomizer.helpers.RestrictionHelper.Restriction
-import com.chrisjanusa.randomizer.models.RandomizerState
-import com.chrisjanusa.randomizer.models.RandomizerViewModel
+import com.chrisjanusa.base_randomizer.RandomizerState
+import com.chrisjanusa.base_randomizer.RandomizerViewModel
 import kotlinx.android.synthetic.main.confirmation_buttons.*
 import kotlinx.android.synthetic.main.restrictions_filter_fragment.*
 

@@ -1,9 +1,8 @@
 package com.chrisjanusa.randomizer.actions.init
 
-import com.chrisjanusa.randomizer.actions.base.BaseUpdater
 import com.chrisjanusa.randomizer.helpers.CategoryHelper.Category
 import com.chrisjanusa.randomizer.helpers.RestrictionHelper
-import com.chrisjanusa.randomizer.models.RandomizerState
+import com.chrisjanusa.base_randomizer.RandomizerState
 
 class InitUpdater(
     private val gpsOn: Boolean,
@@ -14,7 +13,7 @@ class InitUpdater(
     private val priceText: String,
     private val categoryString: String,
     private val categorySet: HashSet<Category>
-) : BaseUpdater {
+) : com.chrisjanusa.base_randomizer.BaseUpdater {
     override fun performUpdate(prevState: RandomizerState): RandomizerState {
         return prevState.copy(
             gpsOn = gpsOn,

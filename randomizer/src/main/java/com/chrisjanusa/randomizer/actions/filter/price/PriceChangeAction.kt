@@ -1,17 +1,14 @@
 package com.chrisjanusa.randomizer.actions.filter.price
 
 import androidx.lifecycle.LiveData
-import com.chrisjanusa.randomizer.actions.base.BaseAction
-import com.chrisjanusa.randomizer.actions.base.BaseUpdater
-import com.chrisjanusa.randomizer.events.BaseEvent
-import com.chrisjanusa.randomizer.models.RandomizerState
+import com.chrisjanusa.base_randomizer.RandomizerState
 import kotlinx.coroutines.channels.Channel
 
-class PriceChangeAction(val priceChanged : Int) : BaseAction {
+class PriceChangeAction(val priceChanged : Int) : com.chrisjanusa.base_randomizer.BaseAction {
     override suspend fun performAction(
         currentState: LiveData<RandomizerState>,
-        updateChannel: Channel<BaseUpdater>,
-        eventChannel: Channel<BaseEvent>
+        updateChannel: Channel<com.chrisjanusa.base_randomizer.BaseUpdater>,
+        eventChannel: Channel<com.chrisjanusa.base_randomizer.BaseEvent>
     ) {
         val update = currentState.value?.run {
             when (priceChanged) {

@@ -1,4 +1,4 @@
-package com.chrisjanusa.randomizer.models
+package com.chrisjanusa.base_randomizer
 
 import android.location.Location
 import com.chrisjanusa.randomizer.helpers.CategoryHelper

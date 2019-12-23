@@ -18,9 +18,8 @@ import com.chrisjanusa.randomizer.helpers.DistanceHelper.distanceToPercent
 import com.chrisjanusa.randomizer.helpers.DistanceHelper.maxDistance
 import com.chrisjanusa.randomizer.helpers.DistanceHelper.minDistance
 import com.chrisjanusa.randomizer.helpers.DistanceHelper.percentToDistance
-import com.chrisjanusa.randomizer.helpers.FilterHelper
-import com.chrisjanusa.randomizer.models.RandomizerState
-import com.chrisjanusa.randomizer.models.RandomizerViewModel
+import com.chrisjanusa.base_randomizer.RandomizerState
+import com.chrisjanusa.base_randomizer.RandomizerViewModel
 import com.ramotion.fluidslider.FluidSlider
 import kotlinx.android.synthetic.main.confirmation_buttons.*
 import kotlinx.android.synthetic.main.distance_filter_fragment.*
