@@ -6,11 +6,9 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.location.Location
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import androidx.annotation.DrawableRes
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.*
@@ -19,6 +17,8 @@ import kotlinx.android.synthetic.main.bottom_overlay.*
 import kotlinx.android.synthetic.main.randomizer_frag.*
 import kotlinx.android.synthetic.main.search_card.*
 import android.widget.EditText
+import androidx.annotation.DrawableRes
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -44,6 +44,9 @@ import com.chrisjanusa.randomizer.models.RandomizerViewModel
 import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.launch
 import kotlinx.android.synthetic.main.filters.*
+import com.seatgeek.placesautocomplete.model.AddressComponentType
+import com.seatgeek.placesautocomplete.model.PlaceDetails
+import com.seatgeek.placesautocomplete.DetailsCallback
 
 
 class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
@@ -83,6 +86,42 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         restrictions.setOnClickListener { clickSelectionFilter(Filter.Restriction) }
         categories.setOnClickListener { clickSelectionFilter(Filter.Category) }
 
+        user_input.setOnPlaceSelectedListener { place ->
+            user_input.getDetailsFor(place, object : DetailsCallback {
+                override fun onSuccess(details: PlaceDetails) {
+                    for (component in details.address_components) {
+                        for (type in component.types) {
+                            if (type == AddressComponentType.LOCALITY) {
+                                current.text = component.long_name
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(failure: Throwable) {
+                }
+            })
+            loseFocus(user_input)
+        }
+
+        user_input.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                openUserInput()
+            }
+            else{
+                closeUserInput()
+            }
+        }
+
+        user_input.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                loseFocus(user_input)
+                true
+            } else {
+                false
+            }
+        }
+
         randomizerViewModel.state.observe(this, Observer<RandomizerState>(render))
 
         lifecycleScope.launch {
@@ -96,6 +135,36 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
             it.onResume()
             it.getMapAsync(this)
         }
+    }
+
+    private fun openUserInput() {
+        user_input.layoutParams = ConstraintLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        removeView(search_icon)
+        removeView(gps_button)
+        removeView(divider_line)
+        removeView(current)
+        user_input.showDropDown()
+    }
+
+    private fun closeUserInput() {
+        val layoutParams = ConstraintLayout.LayoutParams(
+            resources.getDimensionPixelSize(R.dimen.location_search_default_width),
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        layoutParams.startToEnd = R.id.search_icon
+        user_input.layoutParams = layoutParams
+        user_input.setSelection(0)
+        search_icon.visibility = View.VISIBLE
+        gps_button.visibility = View.VISIBLE
+        divider_line.visibility = View.VISIBLE
+        current.visibility = View.VISIBLE
+    }
+
+    private fun removeView(v: View) {
+        v.visibility = View.GONE
     }
 
     private fun clickFavoritesOnly() {
@@ -159,7 +228,8 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
 
     private fun renderCategoryButton(categoryText: String, categorySet: HashSet<Category>) {
         val selected = categorySet.isNotEmpty()
-        categories.text = defaultCategoryTitle.takeUnless { categorySet.isNotEmpty() } ?: saveToDisplayString(categoryText)
+        categories.text =
+            defaultCategoryTitle.takeUnless { categorySet.isNotEmpty() } ?: saveToDisplayString(categoryText)
         context?.let { FilterHelper.renderFilterStyle(categories, selected, it) }
     }
 
@@ -264,10 +334,11 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         }
     }
 
-    fun EditText.loseFocus() {
-        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+    fun loseFocus(view: View) {
+        view.clearFocus()
+        val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
         imm?.let {
-            it.hideSoftInputFromWindow(this.windowToken, 0)
+            it.hideSoftInputFromWindow(view.windowToken, 0)
         }
     }
 

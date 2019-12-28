@@ -24,6 +24,20 @@ android {
         }
     }
 
+    buildTypes.each {
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file("local.properties").newDataInputStream())
+        def yelpApiKey = properties.getProperty("yelp_api_key", "")
+        def googleApiKey = properties.getProperty("google_api_key", "")
+
+        it.buildConfigField 'String', "YELP_API_KEY", yelpApiKey
+        it.buildConfigField 'String', "GOOGLE_API_KEY", googleApiKey
+
+        it.resValue 'string', "yelp_api_key", yelpApiKey
+        it.resValue 'string', "google_api_key", googleApiKey
+
+    }
+
 }
 
 dependencies {
@@ -44,6 +58,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:17.0.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.2.0-rc02'
+    implementation 'com.seatgeek:placesautocomplete:0.3-SNAPSHOT'
 }
 repositories {
     mavenCentral()
