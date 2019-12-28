@@ -16,7 +16,6 @@ import com.google.android.gms.maps.model.*
 import kotlinx.android.synthetic.main.bottom_overlay.*
 import kotlinx.android.synthetic.main.randomizer_frag.*
 import kotlinx.android.synthetic.main.search_card.*
-import android.widget.EditText
 import androidx.annotation.DrawableRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -101,7 +100,7 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
                 override fun onFailure(failure: Throwable) {
                 }
             })
-            loseFocus(user_input)
+            loseFocusLocation()
         }
 
         user_input.setOnFocusChangeListener { _, hasFocus ->
@@ -115,12 +114,15 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
 
         user_input.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                loseFocus(user_input)
+                loseFocusLocation()
                 true
             } else {
                 false
             }
         }
+
+        back_icon.setOnClickListener { loseFocusLocation() }
+        search_icon.setOnClickListener { focusLocation() }
 
         randomizerViewModel.state.observe(this, Observer<RandomizerState>(render))
 
@@ -138,10 +140,15 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
     }
 
     private fun openUserInput() {
-        user_input.layoutParams = ConstraintLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
+        val layoutParams = ConstraintLayout.LayoutParams(
+            0,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
+        layoutParams.startToEnd = R.id.back_icon
+        layoutParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
+        layoutParams.matchConstraintDefaultWidth = ConstraintLayout.LayoutParams.MATCH_CONSTRAINT_SPREAD
+        user_input.layoutParams = layoutParams
+        addView(back_icon)
         removeView(search_icon)
         removeView(gps_button)
         removeView(divider_line)
@@ -157,14 +164,19 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         layoutParams.startToEnd = R.id.search_icon
         user_input.layoutParams = layoutParams
         user_input.setSelection(0)
-        search_icon.visibility = View.VISIBLE
-        gps_button.visibility = View.VISIBLE
-        divider_line.visibility = View.VISIBLE
-        current.visibility = View.VISIBLE
+        removeView(back_icon)
+        addView(search_icon)
+        addView(gps_button)
+        addView(divider_line)
+        addView(current)
     }
 
     private fun removeView(v: View) {
         v.visibility = View.GONE
+    }
+
+    private fun addView(v: View) {
+        v.visibility = View.VISIBLE
     }
 
     private fun clickFavoritesOnly() {
@@ -323,23 +335,15 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
     }
 
     fun focusLocation() {
-        user_input.showKeyboardAndFocus()
-    }
-
-    fun EditText.showKeyboardAndFocus() {
-        this.requestFocus()
-        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-        imm?.let {
-            it.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
-        }
-    }
-
-    fun loseFocus(view: View) {
-        view.clearFocus()
+        user_input.requestFocus()
         val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-        imm?.let {
-            it.hideSoftInputFromWindow(view.windowToken, 0)
-        }
+        imm?.showSoftInput(user_input, InputMethodManager.SHOW_IMPLICIT)
+    }
+
+    fun loseFocusLocation() {
+        user_input.clearFocus()
+        val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+        imm?.hideSoftInputFromWindow(user_input.windowToken, 0)
     }
 
     fun Location.latLang(): LatLng {

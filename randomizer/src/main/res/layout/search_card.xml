@@ -13,7 +13,8 @@
             android:layout_height='match_parent'
             android:layout_width='match_parent'
             android:focusable="true"
-            android:focusableInTouchMode="true">
+            android:focusableInTouchMode="true"
+            android:animateLayoutChanges="true">
         <ImageView
                 android:id="@+id/search_icon"
                 android:layout_width="@dimen/divider_line"
@@ -23,6 +24,19 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageView
+                android:id="@+id/back_icon"
+                android:layout_width="@dimen/_26sdp"
+                android:layout_height="@dimen/divider_line"
+                android:src="@drawable/back"
+                android:layout_marginStart="@dimen/location_side_margin"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:paddingEnd="@dimen/_5sdp"
+                android:paddingStart="@dimen/_5sdp"
+                android:visibility="gone"/>
 
         <com.seatgeek.placesautocomplete.PlacesAutocompleteTextView
                 android:id="@+id/user_input"
