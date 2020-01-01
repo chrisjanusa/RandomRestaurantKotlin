@@ -27,4 +27,5 @@
     <string name="seafood">Seafood</string>
     <string name="steak">Steak</string>
     <string name="sushi">Sushi</string>
+    <string name="location_prompt">Enter Location...</string>
 </resources>

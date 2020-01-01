@@ -32,5 +32,7 @@ data class RandomizerState (
 
     val categorySet: HashSet<CategoryHelper.Category> = HashSet(),
     val categoryString: String = "",
-    val categoryTempSet: HashSet<CategoryHelper.Category> = HashSet()
+    val categoryTempSet: HashSet<CategoryHelper.Category> = HashSet(),
+
+    val addressSearchString: String = ""
 )

@@ -1,6 +1,7 @@
 package com.chrisjanusa.randomizer.actions.gpsActions
 
 import android.app.Activity
+import android.location.Location
 import androidx.lifecycle.LiveData
 import com.chrisjanusa.randomizer.actions.base.BaseAction
 import com.chrisjanusa.randomizer.events.BaseEvent
@@ -21,9 +22,11 @@ class GpsClickAction(
     ) {
         currentState.value?.run {
             if (gpsOn) {
-                updateChannel.send(GpsStatusUpdater(false, "Unknown"))
+                updateChannel.send(GpsStatusUpdater(false))
+                updateChannel.send(LocationUpdater("Unknown", Location("")))
             } else {
-                updateChannel.send(GpsStatusUpdater(true, "Locating"))
+                updateChannel.send(GpsStatusUpdater(true))
+                updateChannel.send(LocationUpdater("Locating", Location("")))
                 requestLocation(activity, randomizerViewModel)
             }
         }
