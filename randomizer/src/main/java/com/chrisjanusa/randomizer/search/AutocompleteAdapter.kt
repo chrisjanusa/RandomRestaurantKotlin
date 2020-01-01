@@ -1,17 +1,18 @@
-package com.chrisjanusa.randomizer
+package com.chrisjanusa.randomizer.search
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.chrisjanusa.randomizer.R
 import com.seatgeek.placesautocomplete.PlacesApi
 import com.seatgeek.placesautocomplete.adapter.AbstractPlacesAutocompleteAdapter
 import com.seatgeek.placesautocomplete.history.AutocompleteHistoryManager
 import com.seatgeek.placesautocomplete.model.AutocompleteResultType
 import com.seatgeek.placesautocomplete.model.Place
 
-class TestPlacesAutocompleteAdapter(
+class AutocompleteAdapter(
     context: Context,
     api: PlacesApi,
     resultType: AutocompleteResultType,

@@ -1,5 +1,6 @@
 package com.chrisjanusa.randomizer
 
+import android.animation.LayoutTransition
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -8,7 +9,6 @@ import android.location.Location
 import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.*
@@ -17,7 +17,6 @@ import kotlinx.android.synthetic.main.bottom_overlay.*
 import kotlinx.android.synthetic.main.randomizer_frag.*
 import kotlinx.android.synthetic.main.search_card.*
 import androidx.annotation.DrawableRes
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -40,10 +39,11 @@ import com.chrisjanusa.randomizer.helpers.PriceHelper.defaultPriceTitle
 import com.chrisjanusa.randomizer.helpers.RestrictionHelper.Restriction
 import com.chrisjanusa.randomizer.models.RandomizerState
 import com.chrisjanusa.randomizer.models.RandomizerViewModel
+import com.chrisjanusa.randomizer.search.actions.*
+import com.chrisjanusa.randomizer.search.events.SearchClosedEvent
 import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.launch
 import kotlinx.android.synthetic.main.filters.*
-import com.seatgeek.placesautocomplete.model.AddressComponentType
 import com.seatgeek.placesautocomplete.model.PlaceDetails
 import com.seatgeek.placesautocomplete.DetailsCallback
 
@@ -76,7 +76,13 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         random.setOnClickListener { randomize() }
-        current.setOnClickListener { focusLocation() }
+        current.setOnClickListener {
+            sendAction(
+                SearchGainFocusAction(
+                    randomizerViewModel.state.value?.addressSearchString ?: ""
+                ), randomizerViewModel
+            )
+        }
         gps_button.setOnClickListener { gpsChange() }
         open_now.setOnClickListener { clickOpenNow() }
         favorites_only.setOnClickListener { clickFavoritesOnly() }
@@ -86,43 +92,78 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         categories.setOnClickListener { clickSelectionFilter(Filter.Category) }
 
         user_input.setOnPlaceSelectedListener { place ->
+            sendAction(SearchFinishedAction(user_input.text.toString()), randomizerViewModel)
             user_input.getDetailsFor(place, object : DetailsCallback {
                 override fun onSuccess(details: PlaceDetails) {
-                    for (component in details.address_components) {
-                        for (type in component.types) {
-                            if (type == AddressComponentType.LOCALITY) {
-                                current.text = component.long_name
-                            }
-                        }
+                    context?.let {
+                        sendAction(LocationChosenAction(details, it), randomizerViewModel)
                     }
                 }
 
                 override fun onFailure(failure: Throwable) {
+
                 }
             })
-            loseFocusLocation()
-        }
 
-        user_input.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                openUserInput()
-            }
-            else{
-                closeUserInput()
-            }
         }
 
         user_input.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                loseFocusLocation()
+                sendAction(SearchFinishedAction(user_input.text.toString()), randomizerViewModel)
                 true
             } else {
                 false
             }
         }
 
-        back_icon.setOnClickListener { loseFocusLocation() }
-        search_icon.setOnClickListener { focusLocation() }
+        user_input.setOnTouchListener { _, _ ->
+            sendAction(
+                SearchGainFocusAction(
+                    randomizerViewModel.state.value?.addressSearchString ?: ""
+                ), randomizerViewModel
+            )
+            true
+        }
+
+        // Detect when user_input has finished being expanded or closed
+        search_bar.layoutTransition.addTransitionListener(object : LayoutTransition.TransitionListener {
+            override fun startTransition(
+                transition: LayoutTransition?,
+                container: ViewGroup?,
+                view: View?,
+                transitionType: Int
+            ) {
+
+            }
+
+            override fun endTransition(
+                transition: LayoutTransition?,
+                container: ViewGroup?,
+                view: View?,
+                transitionType: Int
+            ) {
+                if (view?.id == user_input.id && transitionType == LayoutTransition.CHANGE_APPEARING) {
+                    sendAction(SearchOpenedAction(), randomizerViewModel)
+                }
+                if (view?.id == user_input.id && transitionType == LayoutTransition.CHANGE_DISAPPEARING) {
+                    sendAction(SearchClosedAction(), randomizerViewModel)
+                }
+            }
+        })
+
+        back_icon.setOnClickListener {
+            sendAction(
+                SearchFinishedAction(user_input.text.toString()),
+                randomizerViewModel
+            )
+        }
+        search_icon.setOnClickListener {
+            sendAction(
+                SearchGainFocusAction(
+                    randomizerViewModel.state.value?.addressSearchString ?: ""
+                ), randomizerViewModel
+            )
+        }
 
         randomizerViewModel.state.observe(this, Observer<RandomizerState>(render))
 
@@ -137,46 +178,6 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
             it.onResume()
             it.getMapAsync(this)
         }
-    }
-
-    private fun openUserInput() {
-        val layoutParams = ConstraintLayout.LayoutParams(
-            0,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-        layoutParams.startToEnd = R.id.back_icon
-        layoutParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
-        layoutParams.matchConstraintDefaultWidth = ConstraintLayout.LayoutParams.MATCH_CONSTRAINT_SPREAD
-        user_input.layoutParams = layoutParams
-        addView(back_icon)
-        removeView(search_icon)
-        removeView(gps_button)
-        removeView(divider_line)
-        removeView(current)
-        user_input.showDropDown()
-    }
-
-    private fun closeUserInput() {
-        val layoutParams = ConstraintLayout.LayoutParams(
-            resources.getDimensionPixelSize(R.dimen.location_search_default_width),
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-        layoutParams.startToEnd = R.id.search_icon
-        user_input.layoutParams = layoutParams
-        user_input.setSelection(0)
-        removeView(back_icon)
-        addView(search_icon)
-        addView(gps_button)
-        addView(divider_line)
-        addView(current)
-    }
-
-    private fun removeView(v: View) {
-        v.visibility = View.GONE
-    }
-
-    private fun addView(v: View) {
-        v.visibility = View.VISIBLE
     }
 
     private fun clickFavoritesOnly() {
@@ -332,18 +333,6 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
     fun randomize() {
         loc = LatLng(47.620422, -122.349358)
         setMap()
-    }
-
-    fun focusLocation() {
-        user_input.requestFocus()
-        val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-        imm?.showSoftInput(user_input, InputMethodManager.SHOW_IMPLICIT)
-    }
-
-    fun loseFocusLocation() {
-        user_input.clearFocus()
-        val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-        imm?.hideSoftInputFromWindow(user_input.windowToken, 0)
     }
 
     fun Location.latLang(): LatLng {

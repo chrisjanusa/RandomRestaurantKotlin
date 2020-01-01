@@ -10,6 +10,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent">
     <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/search_bar"
             android:layout_height='match_parent'
             android:layout_width='match_parent'
             android:focusable="true"
@@ -47,15 +48,14 @@
                 app:layout_constraintStart_toEndOf="@id/search_icon"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:padding="16dp"
-                android:hint="Enter Location..."
+                android:hint="@string/location_prompt"
                 app:pacv_languageCode="en"
                 app:pacv_googleMapsApiKey="@string/google_api_key"
-                app:pacv_adapterClass="com.chrisjanusa.randomizer.TestPlacesAutocompleteAdapter"
+                app:pacv_adapterClass="com.chrisjanusa.randomizer.search.AutocompleteAdapter"
                 android:singleLine="true"
                 android:ellipsize="end"
-                android:scrollHorizontally="true"
                 android:dropDownVerticalOffset="0dp"
-                android:selectAllOnFocus="true"
+                android:background="@null"
         />
 
         <ToggleButton
