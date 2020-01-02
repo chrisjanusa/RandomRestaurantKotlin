@@ -36,13 +36,16 @@ import com.chrisjanusa.randomizer.filter_category.CategoryHelper.Category
 import com.chrisjanusa.randomizer.filter_category.CategoryHelper.defaultCategoryTitle
 import com.chrisjanusa.randomizer.filter_category.CategoryHelper.saveToDisplayString
 import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.distanceToDisplayString
-import com.chrisjanusa.randomizer.location_gps.LocationHelper.PERMISSION_ID
+import com.chrisjanusa.randomizer.location_gps.GpsHelper.PERMISSION_ID
 import com.chrisjanusa.randomizer.filter_price.PriceHelper.defaultPriceTitle
 import com.chrisjanusa.randomizer.filter_restriction.RestrictionHelper
 import com.chrisjanusa.randomizer.filter_restriction.RestrictionHelper.Restriction
 import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
 import com.chrisjanusa.randomizer.location_search.actions.*
+import com.chrisjanusa.randomizer.location_shared.updaters.LocationHelper.defaultLocation
+import com.chrisjanusa.randomizer.location_shared.updaters.LocationHelper.defaultMapLocation
+import com.chrisjanusa.randomizer.location_shared.updaters.LocationHelper.isDefault
 import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.launch
 import kotlinx.android.synthetic.main.filters.*
@@ -52,7 +55,7 @@ import com.seatgeek.placesautocomplete.DetailsCallback
 
 class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
-    private lateinit var map: GoogleMap
+    private var map: GoogleMap? = null
     private var loc: LatLng? = null
     private val ZOOM_LEVEL = 16f
     private var curr: LatLng? = null
@@ -212,9 +215,7 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
     private val render = fun(newState: RandomizerState) {
         gps_button.isChecked = newState.gpsOn
         current.text = newState.locationText
-        newState.location?.let {
-            setMap(it)
-        }
+        setMap(newState.location.takeUnless { isDefault(it) } ?: defaultMapLocation)
         renderPriceButton(newState.priceText)
         renderRestrictionButton(newState.restriction)
         renderDistanceButton(newState.maxMilesSelected)
@@ -272,7 +273,8 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
                         PermissionReceivedAction(
                             it,
                             randomizerViewModel
-                        ), randomizerViewModel)
+                        ), randomizerViewModel
+                    )
                 }
             }
         }
@@ -292,12 +294,12 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
     }
 
     private fun setMap() {
-        if (mapView != null) {
+        map?.run {
             icon = icon ?: getDefaultMarker()
             curr = loc?.takeUnless { curr == loc }?.also {
-                map.clear()
-                map.animateCamera(CameraUpdateFactory.newLatLngZoom(it, ZOOM_LEVEL))
-                map.addMarker(
+                clear()
+                animateCamera(CameraUpdateFactory.newLatLngZoom(it, ZOOM_LEVEL))
+                addMarker(
                     MarkerOptions()
                         .position(it)
                         .icon(icon)
@@ -309,9 +311,11 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
     override fun onMapReady(googleMap: GoogleMap?) {
         googleMap ?: return
         map = googleMap
-        map.setOnMarkerClickListener(this)
-        map.uiSettings.isMapToolbarEnabled = false
-        loc = loc ?: LatLng(47.620422, -122.349358)
+        map?.let {
+            it.setOnMarkerClickListener(this)
+            it.uiSettings.isMapToolbarEnabled = false
+        }
+        loc = loc ?: defaultMapLocation.latLang()
         setMap()
     }
 
@@ -337,7 +341,7 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
     }
 
     fun randomize() {
-        loc = LatLng(47.620422, -122.349358)
+        loc = defaultMapLocation.latLang()
         setMap()
     }
 

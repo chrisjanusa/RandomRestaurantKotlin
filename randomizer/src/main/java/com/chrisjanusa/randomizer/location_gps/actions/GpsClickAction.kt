@@ -8,9 +8,12 @@ import com.chrisjanusa.randomizer.base.interfaces.BaseEvent
 import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
 import com.chrisjanusa.randomizer.location_shared.updaters.GpsStatusUpdater
 import com.chrisjanusa.randomizer.location_shared.updaters.LocationUpdater
-import com.chrisjanusa.randomizer.location_gps.LocationHelper.requestLocation
+import com.chrisjanusa.randomizer.location_gps.GpsHelper.requestLocation
 import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
+import com.chrisjanusa.randomizer.location_shared.updaters.LocationHelper.calculatingLocationText
+import com.chrisjanusa.randomizer.location_shared.updaters.LocationHelper.defaultLocation
+import com.chrisjanusa.randomizer.location_shared.updaters.LocationHelper.defaultLocationText
 import kotlinx.coroutines.channels.Channel
 
 class GpsClickAction(
@@ -27,16 +30,16 @@ class GpsClickAction(
                 updateChannel.send(GpsStatusUpdater(false))
                 updateChannel.send(
                     LocationUpdater(
-                        "Unknown",
-                        Location("")
+                        defaultLocationText,
+                        defaultLocation
                     )
                 )
             } else {
                 updateChannel.send(GpsStatusUpdater(true))
                 updateChannel.send(
                     LocationUpdater(
-                        "Locating",
-                        Location("")
+                        calculatingLocationText,
+                        location
                     )
                 )
                 requestLocation(activity, randomizerViewModel)
