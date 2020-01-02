@@ -51,7 +51,7 @@
                 android:hint="@string/location_prompt"
                 app:pacv_languageCode="en"
                 app:pacv_googleMapsApiKey="@string/google_api_key"
-                app:pacv_adapterClass="com.chrisjanusa.randomizer.search.AutocompleteAdapter"
+                app:pacv_adapterClass="com.chrisjanusa.randomizer.location_search.AutocompleteAdapter"
                 android:singleLine="true"
                 android:ellipsize="end"
                 android:dropDownVerticalOffset="0dp"

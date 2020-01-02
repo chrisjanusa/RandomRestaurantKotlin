@@ -21,26 +21,28 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
-import com.chrisjanusa.randomizer.actions.filter.ClickSelectionFilterAction
-import com.chrisjanusa.randomizer.actions.filter.favorites.FavoriteClickedAction
-import com.chrisjanusa.randomizer.actions.filter.open_now.OpenNowClickedAction
-import com.chrisjanusa.randomizer.actions.gpsActions.GpsClickAction
-import com.chrisjanusa.randomizer.actions.gpsActions.PermissionReceivedAction
-import com.chrisjanusa.randomizer.actions.init.InitAction
-import com.chrisjanusa.randomizer.helpers.*
-import com.chrisjanusa.randomizer.helpers.ActionHelper.sendAction
-import com.chrisjanusa.randomizer.helpers.FilterHelper.Filter
-import com.chrisjanusa.randomizer.helpers.CategoryHelper.Category
-import com.chrisjanusa.randomizer.helpers.CategoryHelper.defaultCategoryTitle
-import com.chrisjanusa.randomizer.helpers.CategoryHelper.saveToDisplayString
-import com.chrisjanusa.randomizer.helpers.DistanceHelper.distanceToDisplayString
-import com.chrisjanusa.randomizer.helpers.LocationHelper.PERMISSION_ID
-import com.chrisjanusa.randomizer.helpers.PriceHelper.defaultPriceTitle
-import com.chrisjanusa.randomizer.helpers.RestrictionHelper.Restriction
-import com.chrisjanusa.randomizer.models.RandomizerState
-import com.chrisjanusa.randomizer.models.RandomizerViewModel
-import com.chrisjanusa.randomizer.search.actions.*
-import com.chrisjanusa.randomizer.search.events.SearchClosedEvent
+import com.chrisjanusa.randomizer.filter_base.actions.ClickSelectionFilterAction
+import com.chrisjanusa.randomizer.filter_boolean.actions.FavoriteClickedAction
+import com.chrisjanusa.randomizer.filter_boolean.actions.OpenNowClickedAction
+import com.chrisjanusa.randomizer.location_gps.actions.GpsClickAction
+import com.chrisjanusa.randomizer.location_gps.actions.PermissionReceivedAction
+import com.chrisjanusa.randomizer.base.init.InitAction
+import com.chrisjanusa.randomizer.filter_base.FilterHelper
+import com.chrisjanusa.randomizer.base.ActionHelper.sendAction
+import com.chrisjanusa.randomizer.base.preferences.PreferenceHelper
+import com.chrisjanusa.randomizer.filter_base.FilterHelper.Filter
+import com.chrisjanusa.randomizer.filter_distance.DistanceHelper
+import com.chrisjanusa.randomizer.filter_category.CategoryHelper.Category
+import com.chrisjanusa.randomizer.filter_category.CategoryHelper.defaultCategoryTitle
+import com.chrisjanusa.randomizer.filter_category.CategoryHelper.saveToDisplayString
+import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.distanceToDisplayString
+import com.chrisjanusa.randomizer.location_gps.LocationHelper.PERMISSION_ID
+import com.chrisjanusa.randomizer.filter_price.PriceHelper.defaultPriceTitle
+import com.chrisjanusa.randomizer.filter_restriction.RestrictionHelper
+import com.chrisjanusa.randomizer.filter_restriction.RestrictionHelper.Restriction
+import com.chrisjanusa.randomizer.base.models.RandomizerState
+import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
+import com.chrisjanusa.randomizer.location_search.actions.*
 import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.launch
 import kotlinx.android.synthetic.main.filters.*
@@ -266,7 +268,11 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         if (requestCode == PERMISSION_ID) {
             if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                 activity?.let {
-                    sendAction(PermissionReceivedAction(it, randomizerViewModel), randomizerViewModel)
+                    sendAction(
+                        PermissionReceivedAction(
+                            it,
+                            randomizerViewModel
+                        ), randomizerViewModel)
                 }
             }
         }
