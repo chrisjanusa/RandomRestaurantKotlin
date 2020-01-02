@@ -13,6 +13,7 @@
             android:id="@+id/search_bar"
             android:layout_height='match_parent'
             android:layout_width='match_parent'
+            android:padding="@dimen/location_side_padding"
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:animateLayoutChanges="true">
@@ -21,7 +22,6 @@
                 android:layout_width="@dimen/divider_line"
                 android:layout_height="@dimen/divider_line"
                 android:src="@drawable/search"
-                android:layout_marginStart="@dimen/location_side_margin"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
@@ -31,12 +31,11 @@
                 android:layout_width="@dimen/_26sdp"
                 android:layout_height="@dimen/divider_line"
                 android:src="@drawable/back"
-                android:layout_marginStart="@dimen/location_side_margin"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:paddingEnd="@dimen/_5sdp"
-                android:paddingStart="@dimen/_5sdp"
+                android:paddingEnd="@dimen/back_button_padding"
+                android:paddingStart="@dimen/back_button_padding"
                 android:visibility="gone"/>
 
         <com.seatgeek.placesautocomplete.PlacesAutocompleteTextView
@@ -47,7 +46,8 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toEndOf="@id/search_icon"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:padding="16dp"
+                android:paddingStart="@dimen/location_space"
+                android:paddingEnd="@dimen/location_space"
                 android:hint="@string/location_prompt"
                 app:pacv_languageCode="en"
                 app:pacv_googleMapsApiKey="@string/google_api_key"
@@ -76,31 +76,50 @@
                 android:layout_width="1dp"
                 android:layout_height="@dimen/divider_line"
                 android:background="@android:color/darker_gray"
-                android:layout_marginEnd="@dimen/location_space"
                 android:layout_marginStart="@dimen/location_space"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toEndOf="@id/gps_button"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <com.google.android.material.button.MaterialButton
-                android:id="@+id/current"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/current_location"
+                android:layout_height='wrap_content'
+                android:layout_width='0dp'
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toEndOf="@id/divider_line"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                app:icon="@drawable/location"
-                app:iconSize="@dimen/curr_location_icon"
-                app:iconGravity="textStart"
-                app:iconTint="@android:color/darker_gray"
-                android:gravity="center"
-                android:text="@string/default_location"
-                android:textSize="@dimen/curr_location_text_size"
-                android:textColor="@android:color/darker_gray"
-                android:textAppearance='@style/ButtonTextAppearance'
-                app:cornerRadius="@dimen/location_radius"
-                android:onClick="focusLocation"/>
+                android:layout_marginStart="@dimen/location_space"
+                android:layout_marginEnd="@dimen/location_space"
+                android:clickable="true"
+                android:focusable="true"
+                android:animateLayoutChanges="true">
+            <ImageView
+                    android:id="@+id/location_icon"
+                    android:layout_width="@dimen/curr_location_icon"
+                    android:layout_height="@dimen/curr_location_icon"
+                    android:src="@drawable/location"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
 
+            <TextView
+                    android:id="@+id/current_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/location_icon"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginStart="@dimen/location_text_start_margin"
+                    android:gravity="start|center_vertical"
+                    android:text="@string/default_location"
+                    android:textSize="@dimen/curr_location_text_size"
+                    android:textColor="@android:color/darker_gray"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:textAppearance='@style/ButtonTextAppearance'
+            />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

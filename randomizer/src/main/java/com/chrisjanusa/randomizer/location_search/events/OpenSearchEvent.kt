@@ -26,7 +26,7 @@ class OpenSearchEvent(private val addressSearchText : String) : BaseEvent {
                 SearchHelper.removeView(search_icon)
                 SearchHelper.removeView(gps_button)
                 SearchHelper.removeView(divider_line)
-                SearchHelper.removeView(current)
+                SearchHelper.removeView(current_location)
 
                 user_input.setText(addressSearchText)
                 user_input.selectAll()

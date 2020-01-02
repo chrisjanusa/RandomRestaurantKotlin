@@ -33,7 +33,7 @@ class CloseSearchEvent : BaseEvent {
                 SearchHelper.addView(search_icon)
                 SearchHelper.addView(gps_button)
                 SearchHelper.addView(divider_line)
-                SearchHelper.addView(current)
+                SearchHelper.addView(current_location)
             }
         }
     }
