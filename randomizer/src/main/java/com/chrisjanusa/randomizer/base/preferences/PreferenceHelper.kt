@@ -15,6 +15,8 @@ object PreferenceHelper {
         object MaxMilesSelected : StateObject("maxMilesSelected")
         object Restriction : StateObject("restriction")
         object Category : StateObject("category")
+        object Latitude : StateObject("curr_lat")
+        object Longitude : StateObject("curr_lng")
     }
 
     fun saveState(state: RandomizerState, preferences: SharedPreferences?) {
@@ -27,6 +29,10 @@ object PreferenceHelper {
                 putString(PreferenceHelper.StateObject.Restriction.key, state.restriction.identifier)
                 putString(PreferenceHelper.StateObject.PriceSelected.key, state.priceText)
                 putString(PreferenceHelper.StateObject.Category.key, state.categoryString)
+                state.location?.run {
+                    putFloat(PreferenceHelper.StateObject.Latitude.key, latitude.toFloat())
+                    putFloat(PreferenceHelper.StateObject.Longitude.key, longitude.toFloat())
+                }
                 apply()
             }
         }
@@ -42,8 +48,9 @@ object PreferenceHelper {
                 getString(PreferenceHelper.StateObject.Restriction.key, RestrictionHelper.Restriction.None.identifier)
                     ?: RestrictionHelper.Restriction.None.identifier,
                 getString(PreferenceHelper.StateObject.PriceSelected.key, defaultPriceTitle) ?: defaultPriceTitle,
-                getString(PreferenceHelper.StateObject.Category.key, "") ?: ""
-
+                getString(PreferenceHelper.StateObject.Category.key, "") ?: "",
+                getFloat(PreferenceHelper.StateObject.Latitude.key, 200f),
+                getFloat(PreferenceHelper.StateObject.Longitude.key, 200f)
             )
         }
     }

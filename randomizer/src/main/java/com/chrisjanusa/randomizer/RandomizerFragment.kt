@@ -52,7 +52,7 @@ import com.seatgeek.placesautocomplete.DetailsCallback
 
 class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
-    private lateinit var map: GoogleMap
+    private var map: GoogleMap? = null
     private var loc: LatLng? = null
     private val ZOOM_LEVEL = 16f
     private var curr: LatLng? = null
@@ -272,7 +272,8 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
                         PermissionReceivedAction(
                             it,
                             randomizerViewModel
-                        ), randomizerViewModel)
+                        ), randomizerViewModel
+                    )
                 }
             }
         }
@@ -292,12 +293,12 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
     }
 
     private fun setMap() {
-        if (mapView != null) {
+        map?.run {
             icon = icon ?: getDefaultMarker()
             curr = loc?.takeUnless { curr == loc }?.also {
-                map.clear()
-                map.animateCamera(CameraUpdateFactory.newLatLngZoom(it, ZOOM_LEVEL))
-                map.addMarker(
+                clear()
+                animateCamera(CameraUpdateFactory.newLatLngZoom(it, ZOOM_LEVEL))
+                addMarker(
                     MarkerOptions()
                         .position(it)
                         .icon(icon)
@@ -309,8 +310,10 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
     override fun onMapReady(googleMap: GoogleMap?) {
         googleMap ?: return
         map = googleMap
-        map.setOnMarkerClickListener(this)
-        map.uiSettings.isMapToolbarEnabled = false
+        map?.let {
+            it.setOnMarkerClickListener(this)
+            it.uiSettings.isMapToolbarEnabled = false
+        }
         loc = loc ?: LatLng(47.620422, -122.349358)
         setMap()
     }

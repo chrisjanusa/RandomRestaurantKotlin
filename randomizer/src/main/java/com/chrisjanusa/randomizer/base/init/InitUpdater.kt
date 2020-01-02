@@ -1,5 +1,6 @@
 package com.chrisjanusa.randomizer.base.init
 
+import android.location.Location
 import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
 import com.chrisjanusa.randomizer.filter_category.CategoryHelper.Category
 import com.chrisjanusa.randomizer.filter_restriction.RestrictionHelper
@@ -13,7 +14,9 @@ class InitUpdater(
     private val restriction: RestrictionHelper.Restriction,
     private val priceText: String,
     private val categoryString: String,
-    private val categorySet: HashSet<Category>
+    private val categorySet: HashSet<Category>,
+    private val location: Location,
+    private val locationText: String
 ) : BaseUpdater {
     override fun performUpdate(prevState: RandomizerState): RandomizerState {
         return prevState.copy(
@@ -24,7 +27,9 @@ class InitUpdater(
             maxMilesSelected = maxMilesSelected,
             restriction = restriction,
             categoryString = categoryString,
-            categorySet = categorySet
+            categorySet = categorySet,
+            location = location,
+            locationText = locationText
         )
     }
 }
