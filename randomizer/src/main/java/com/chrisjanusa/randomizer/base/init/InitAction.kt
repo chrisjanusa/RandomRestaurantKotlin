@@ -12,6 +12,9 @@ import com.chrisjanusa.randomizer.base.preferences.PreferenceHelper
 import com.chrisjanusa.randomizer.filter_category.CategoryHelper
 import com.chrisjanusa.randomizer.filter_restriction.RestrictionHelper
 import com.chrisjanusa.randomizer.base.models.RandomizerState
+import com.chrisjanusa.randomizer.location_shared.updaters.LocationHelper.defaultLocation
+import com.chrisjanusa.randomizer.location_shared.updaters.LocationHelper.defaultLocationText
+import com.chrisjanusa.randomizer.location_shared.updaters.LocationHelper.isDefault
 import kotlinx.coroutines.channels.Channel
 
 class InitAction(private val activity: Activity?) : BaseAction {
@@ -27,30 +30,50 @@ class InitAction(private val activity: Activity?) : BaseAction {
             val restrictionObject = RestrictionHelper.restrictionFromIdentifier(restriction)
             val categorySet = CategoryHelper.setFromSaveString(categoryString)
             val location = Location("")
-            location.longitude = curr_lng.toDouble().takeUnless { curr_lng > 180 } ?: -122.349358
-            location.latitude = curr_lat.toDouble().takeUnless { curr_lat > 180 } ?: 47.620422
-            val locationName = activity?.let {
-                val locationList = Geocoder(it).getFromLocation(location.latitude, location.longitude, 1)
-                if (locationList.size >0){
-                    locationList[0].locality
-                } else {
-                    null
-                }
-            } ?: "Unknown"
-            updateChannel.send(
-                InitUpdater(
-                    gpsOn,
-                    openNowSelected,
-                    favoriteOnlySelected,
-                    maxMilesSelected,
-                    restrictionObject,
-                    priceSelected,
-                    categoryString,
-                    categorySet,
-                    location,
-                    locationName
+            location.longitude = curr_lng
+            location.latitude = curr_lat
+
+            if (isDefault(location)) {
+                updateChannel.send(
+                    InitUpdater(
+                        gpsOn,
+                        openNowSelected,
+                        favoriteOnlySelected,
+                        maxMilesSelected,
+                        restrictionObject,
+                        priceSelected,
+                        categoryString,
+                        categorySet,
+                        defaultLocation,
+                        defaultLocationText
+                    )
                 )
-            )
+            } else {
+
+                val locationName = activity?.let {
+                    val locationList = Geocoder(it).getFromLocation(location.latitude, location.longitude, 1)
+                    if (locationList.size > 0) {
+                        locationList[0].locality
+                    } else {
+                        null
+                    }
+                } ?: "Unknown"
+
+                updateChannel.send(
+                    InitUpdater(
+                        gpsOn,
+                        openNowSelected,
+                        favoriteOnlySelected,
+                        maxMilesSelected,
+                        restrictionObject,
+                        priceSelected,
+                        categoryString,
+                        categorySet,
+                        location,
+                        locationName
+                    )
+                )
+            }
         }
     }
 

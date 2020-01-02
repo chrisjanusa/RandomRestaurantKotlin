@@ -17,7 +17,7 @@ import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.Task
 
-object LocationHelper {
+object GpsHelper {
     const val PERMISSION_ID = 42
     const val LOCATION_ID = 7
 

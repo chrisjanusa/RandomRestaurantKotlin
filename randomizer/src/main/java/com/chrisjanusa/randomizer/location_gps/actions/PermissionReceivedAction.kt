@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import com.chrisjanusa.randomizer.base.interfaces.BaseAction
 import com.chrisjanusa.randomizer.base.interfaces.BaseEvent
 import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
-import com.chrisjanusa.randomizer.location_gps.LocationHelper.requestLocation
+import com.chrisjanusa.randomizer.location_gps.GpsHelper.requestLocation
 import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
 import kotlinx.coroutines.channels.Channel

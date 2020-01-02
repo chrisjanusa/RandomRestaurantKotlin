@@ -6,11 +6,13 @@ import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.defaultDistance
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.Filter
 import com.chrisjanusa.randomizer.filter_price.PriceHelper.defaultPriceTitle
 import com.chrisjanusa.randomizer.filter_restriction.RestrictionHelper.Restriction
+import com.chrisjanusa.randomizer.location_shared.updaters.LocationHelper.defaultLocation
+import com.chrisjanusa.randomizer.location_shared.updaters.LocationHelper.defaultLocationText
 
 data class RandomizerState (
     val gpsOn: Boolean = true,
-    val locationText: String = "Test",
-    val location: Location? = null,
+    val locationText: String = defaultLocationText,
+    val location: Location = defaultLocation,
 
     val filterOpen: Filter = Filter.None,
 

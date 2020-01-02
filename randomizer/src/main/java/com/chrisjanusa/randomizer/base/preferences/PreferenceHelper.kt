@@ -5,6 +5,8 @@ import com.chrisjanusa.randomizer.filter_distance.DistanceHelper
 import com.chrisjanusa.randomizer.filter_price.PriceHelper.defaultPriceTitle
 import com.chrisjanusa.randomizer.filter_restriction.RestrictionHelper
 import com.chrisjanusa.randomizer.base.models.RandomizerState
+import com.chrisjanusa.randomizer.location_shared.updaters.LocationHelper.defaultLat
+import com.chrisjanusa.randomizer.location_shared.updaters.LocationHelper.defaultLng
 
 object PreferenceHelper {
     sealed class StateObject(val key: String) {
@@ -49,8 +51,8 @@ object PreferenceHelper {
                     ?: RestrictionHelper.Restriction.None.identifier,
                 getString(PreferenceHelper.StateObject.PriceSelected.key, defaultPriceTitle) ?: defaultPriceTitle,
                 getString(PreferenceHelper.StateObject.Category.key, "") ?: "",
-                getFloat(PreferenceHelper.StateObject.Latitude.key, 200f),
-                getFloat(PreferenceHelper.StateObject.Longitude.key, 200f)
+                getFloat(PreferenceHelper.StateObject.Latitude.key, defaultLat.toFloat()).toDouble(),
+                getFloat(PreferenceHelper.StateObject.Longitude.key, defaultLng.toFloat()).toDouble()
             )
         }
     }
