@@ -43,7 +43,6 @@ import com.chrisjanusa.randomizer.filter_restriction.RestrictionHelper.Restricti
 import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
 import com.chrisjanusa.randomizer.location_search.actions.*
-import com.chrisjanusa.randomizer.location_shared.updaters.LocationHelper.defaultLocation
 import com.chrisjanusa.randomizer.location_shared.updaters.LocationHelper.defaultMapLocation
 import com.chrisjanusa.randomizer.location_shared.updaters.LocationHelper.isDefault
 import com.google.android.material.button.MaterialButton
@@ -81,7 +80,7 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         random.setOnClickListener { randomize() }
-        current.setOnClickListener {
+        current_location.setOnClickListener {
             sendAction(
                 SearchGainFocusAction(
                     randomizerViewModel.state.value?.addressSearchString ?: ""
@@ -214,7 +213,7 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
 
     private val render = fun(newState: RandomizerState) {
         gps_button.isChecked = newState.gpsOn
-        current.text = newState.locationText
+        current_text.text = newState.locationText
         setMap(newState.location.takeUnless { isDefault(it) } ?: defaultMapLocation)
         renderPriceButton(newState.priceText)
         renderRestrictionButton(newState.restriction)
