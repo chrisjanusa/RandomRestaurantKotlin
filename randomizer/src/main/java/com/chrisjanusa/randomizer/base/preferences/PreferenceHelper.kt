@@ -5,8 +5,8 @@ import com.chrisjanusa.randomizer.filter_distance.DistanceHelper
 import com.chrisjanusa.randomizer.filter_price.PriceHelper.defaultPriceTitle
 import com.chrisjanusa.randomizer.filter_restriction.RestrictionHelper
 import com.chrisjanusa.randomizer.base.models.RandomizerState
-import com.chrisjanusa.randomizer.location_shared.updaters.LocationHelper.defaultLat
-import com.chrisjanusa.randomizer.location_shared.updaters.LocationHelper.defaultLng
+import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLat
+import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLng
 
 object PreferenceHelper {
     sealed class StateObject(val key: String) {

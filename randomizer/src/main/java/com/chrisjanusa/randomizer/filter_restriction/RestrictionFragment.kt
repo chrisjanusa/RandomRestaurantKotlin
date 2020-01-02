@@ -12,8 +12,7 @@ import com.chrisjanusa.randomizer.filter_restriction.actions.ApplyRestrictionAct
 import com.chrisjanusa.randomizer.filter_restriction.actions.ResetRestrictionAction
 import com.chrisjanusa.randomizer.filter_restriction.actions.RestrictionChangeAction
 import com.chrisjanusa.randomizer.filter_restriction.actions.InitRestrictionFilterAction
-import com.chrisjanusa.randomizer.base.ActionHelper
-import com.chrisjanusa.randomizer.base.ActionHelper.sendAction
+import com.chrisjanusa.randomizer.base.CommunicationHelper.sendAction
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.renderButtonStyle
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.onCancelFilterClick
 import com.chrisjanusa.randomizer.filter_restriction.RestrictionHelper.Restriction
@@ -56,11 +55,11 @@ class RestrictionFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        ActionHelper.sendAction(InitRestrictionFilterAction(), randomizerViewModel)
+        sendAction(InitRestrictionFilterAction(), randomizerViewModel)
     }
 
     private fun restrictionClick(restriction: Restriction) {
-        ActionHelper.sendAction(
+        sendAction(
             RestrictionChangeAction(
                 restriction
             ), randomizerViewModel)

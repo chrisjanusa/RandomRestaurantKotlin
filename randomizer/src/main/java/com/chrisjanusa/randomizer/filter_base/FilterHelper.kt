@@ -8,14 +8,14 @@ import com.chrisjanusa.randomizer.filter_category.CategoryFragment
 import com.chrisjanusa.randomizer.filter_distance.DistanceFragment
 import com.chrisjanusa.randomizer.filter_price.PriceFragment
 import com.chrisjanusa.randomizer.filter_restriction.RestrictionFragment
-import com.chrisjanusa.randomizer.base.ActionHelper
+import com.chrisjanusa.randomizer.base.CommunicationHelper.sendAction
 import com.chrisjanusa.randomizer.filter_base.actions.CancelClickAction
 import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
 import com.google.android.material.button.MaterialButton
 
 object FilterHelper {
     fun onCancelFilterClick(randomizerViewModel: RandomizerViewModel){
-        ActionHelper.sendAction(CancelClickAction(), randomizerViewModel)
+        sendAction(CancelClickAction(), randomizerViewModel)
     }
 
     fun renderButtonStyle(button: MaterialButton, selected: Boolean, context: Context) {
