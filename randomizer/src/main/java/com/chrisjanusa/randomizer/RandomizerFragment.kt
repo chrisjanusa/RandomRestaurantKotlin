@@ -28,7 +28,7 @@ import com.chrisjanusa.randomizer.location_gps.actions.GpsClickAction
 import com.chrisjanusa.randomizer.location_gps.actions.PermissionReceivedAction
 import com.chrisjanusa.randomizer.base.init.InitAction
 import com.chrisjanusa.randomizer.filter_base.FilterHelper
-import com.chrisjanusa.randomizer.base.ActionHelper.sendAction
+import com.chrisjanusa.randomizer.base.CommunicationHelper.sendAction
 import com.chrisjanusa.randomizer.base.preferences.PreferenceHelper
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.Filter
 import com.chrisjanusa.randomizer.filter_distance.DistanceHelper
@@ -43,8 +43,9 @@ import com.chrisjanusa.randomizer.filter_restriction.RestrictionHelper.Restricti
 import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
 import com.chrisjanusa.randomizer.location_search.actions.*
-import com.chrisjanusa.randomizer.location_shared.updaters.LocationHelper.defaultMapLocation
-import com.chrisjanusa.randomizer.location_shared.updaters.LocationHelper.isDefault
+import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultMapLocation
+import com.chrisjanusa.randomizer.location_base.LocationHelper.isDefault
+import com.chrisjanusa.randomizer.location_gps.actions.PermissionDeniedAction
 import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.launch
 import kotlinx.android.synthetic.main.filters.*
@@ -67,6 +68,7 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         randomizerViewModel = activity?.run {
             ViewModelProviders.of(this)[RandomizerViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
+        sendAction(InitAction(activity), randomizerViewModel)
     }
 
     override fun onCreateView(
@@ -196,13 +198,8 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         sendAction(OpenNowClickedAction(), randomizerViewModel)
     }
 
-    override fun onResume() {
-        super.onResume()
-        sendAction(InitAction(activity), randomizerViewModel)
-    }
-
-    override fun onPause() {
-        super.onPause()
+    override fun onStop() {
+        super.onStop()
         randomizerViewModel.state.value?.let {
             PreferenceHelper.saveState(
                 it,
@@ -268,13 +265,10 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         if (requestCode == PERMISSION_ID) {
             if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                 activity?.let {
-                    sendAction(
-                        PermissionReceivedAction(
-                            it,
-                            randomizerViewModel
-                        ), randomizerViewModel
-                    )
+                    sendAction(PermissionReceivedAction(it), randomizerViewModel)
                 }
+            } else {
+                sendAction(PermissionDeniedAction(), randomizerViewModel)
             }
         }
     }
@@ -282,7 +276,7 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
 
     private fun gpsChange() {
         activity?.let {
-            sendAction(GpsClickAction(it, randomizerViewModel), randomizerViewModel)
+            sendAction(GpsClickAction(it), randomizerViewModel)
         }
 
     }

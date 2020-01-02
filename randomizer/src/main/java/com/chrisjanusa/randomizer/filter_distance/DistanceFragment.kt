@@ -9,7 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.chrisjanusa.randomizer.R
 import com.chrisjanusa.randomizer.filter_distance.actions.InitDistanceFilterAction
-import com.chrisjanusa.randomizer.base.ActionHelper.sendAction
+import com.chrisjanusa.randomizer.base.CommunicationHelper.sendAction
 import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.defaultDistance
 import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.distanceToPercent
 import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.maxDistance

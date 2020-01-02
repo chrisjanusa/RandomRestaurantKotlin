@@ -12,9 +12,14 @@ import com.chrisjanusa.randomizer.base.preferences.PreferenceHelper
 import com.chrisjanusa.randomizer.filter_category.CategoryHelper
 import com.chrisjanusa.randomizer.filter_restriction.RestrictionHelper
 import com.chrisjanusa.randomizer.base.models.RandomizerState
-import com.chrisjanusa.randomizer.location_shared.updaters.LocationHelper.defaultLocation
-import com.chrisjanusa.randomizer.location_shared.updaters.LocationHelper.defaultLocationText
-import com.chrisjanusa.randomizer.location_shared.updaters.LocationHelper.isDefault
+import com.chrisjanusa.randomizer.location_gps.GpsHelper
+import com.chrisjanusa.randomizer.location_search.updaters.LastManualLocationUpdater
+import com.chrisjanusa.randomizer.location_base.updaters.GpsStatusUpdater
+import com.chrisjanusa.randomizer.location_base.LocationHelper
+import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLocation
+import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLocationText
+import com.chrisjanusa.randomizer.location_base.LocationHelper.isDefault
+import com.chrisjanusa.randomizer.location_base.updaters.LocationTextUpdater
 import kotlinx.coroutines.channels.Channel
 
 class InitAction(private val activity: Activity?) : BaseAction {
@@ -49,14 +54,9 @@ class InitAction(private val activity: Activity?) : BaseAction {
                     )
                 )
             } else {
-
-                val locationName = activity?.let {
-                    val locationList = Geocoder(it).getFromLocation(location.latitude, location.longitude, 1)
-                    if (locationList.size > 0) {
-                        locationList[0].locality
-                    } else {
-                        null
-                    }
+                val locationName = activity?.let { activity ->
+                    Geocoder(activity).getFromLocation(location.latitude, location.longitude, 1)
+                        .getOrNull(0)?.locality
                 } ?: "Unknown"
 
                 updateChannel.send(
@@ -73,6 +73,15 @@ class InitAction(private val activity: Activity?) : BaseAction {
                         locationName
                     )
                 )
+
+                if (!gpsOn) {
+                    updateChannel.send(LastManualLocationUpdater(locationName, location))
+                }
+            }
+
+            if (gpsOn) {
+                updateChannel.send(LocationTextUpdater(LocationHelper.calculatingLocationText))
+                activity?.let { GpsHelper.requestLocation(it, updateChannel, eventChannel) }
             }
         }
     }

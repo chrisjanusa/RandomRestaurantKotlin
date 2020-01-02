@@ -1,4 +1,4 @@
-package com.chrisjanusa.randomizer.location_shared.updaters
+package com.chrisjanusa.randomizer.location_base
 
 import android.location.Location
 
@@ -12,20 +12,20 @@ object LocationHelper {
     private const val spaceNeedleLng = -122.349358
 
     val defaultLocation : Location
-        get() = run {
+        get() {
             val location = Location("")
             location.latitude = defaultLat
             location.longitude = defaultLng
-            location
+            return  location
         }
 
 
     val defaultMapLocation : Location
-        get() = run {
+        get() {
             val location = Location("")
             location.latitude = spaceNeedleLat
             location.longitude = spaceNeedleLng
-            location
+            return location
         }
 
     fun isDefault(location: Location) : Boolean =

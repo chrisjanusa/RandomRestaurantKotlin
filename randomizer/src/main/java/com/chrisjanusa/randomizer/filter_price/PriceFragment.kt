@@ -12,7 +12,7 @@ import com.chrisjanusa.randomizer.filter_price.actions.InitPriceFilterAction
 import com.chrisjanusa.randomizer.filter_price.actions.ApplyPriceAction
 import com.chrisjanusa.randomizer.filter_price.actions.PriceChangeAction
 import com.chrisjanusa.randomizer.filter_price.actions.ResetPriceAction
-import com.chrisjanusa.randomizer.base.ActionHelper.sendAction
+import com.chrisjanusa.randomizer.base.CommunicationHelper.sendAction
 import com.chrisjanusa.randomizer.filter_base.FilterHelper
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.renderButtonStyle
 import com.chrisjanusa.randomizer.base.models.RandomizerState

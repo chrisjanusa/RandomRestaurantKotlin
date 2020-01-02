@@ -12,7 +12,7 @@ import com.chrisjanusa.randomizer.filter_category.actions.ApplyCategoryAction
 import com.chrisjanusa.randomizer.filter_category.actions.CategoryChangeAction
 import com.chrisjanusa.randomizer.filter_category.actions.ResetCategoryAction
 import com.chrisjanusa.randomizer.filter_category.actions.InitCategoryFilterAction
-import com.chrisjanusa.randomizer.base.ActionHelper.sendAction
+import com.chrisjanusa.randomizer.base.CommunicationHelper.sendAction
 import com.chrisjanusa.randomizer.filter_category.CategoryHelper.Category
 import com.chrisjanusa.randomizer.filter_category.CategoryHelper.renderCardStyle
 import com.chrisjanusa.randomizer.filter_base.FilterHelper
