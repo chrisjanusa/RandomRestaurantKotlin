@@ -11,11 +11,16 @@ import com.chrisjanusa.randomizer.filter_restriction.RestrictionFragment
 import com.chrisjanusa.randomizer.base.CommunicationHelper.sendAction
 import com.chrisjanusa.randomizer.filter_base.actions.CancelClickAction
 import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
+import com.chrisjanusa.randomizer.filter_base.actions.ClickSelectionFilterAction
 import com.google.android.material.button.MaterialButton
 
 object FilterHelper {
     fun onCancelFilterClick(randomizerViewModel: RandomizerViewModel){
         sendAction(CancelClickAction(), randomizerViewModel)
+    }
+
+    fun clickSelectionFilter(filter: Filter, randomizerViewModel: RandomizerViewModel) {
+        sendAction(ClickSelectionFilterAction(filter), randomizerViewModel)
     }
 
     fun renderButtonStyle(button: MaterialButton, selected: Boolean, context: Context) {

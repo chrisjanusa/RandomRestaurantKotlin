@@ -1,37 +1,8 @@
 package com.chrisjanusa.randomizer.filter_category
 
-import android.content.Context
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.core.content.ContextCompat
-import com.chrisjanusa.randomizer.R
-import com.google.android.material.card.MaterialCardView
 import java.lang.StringBuilder
 
 object CategoryHelper {
-    const val defaultCategoryTitle = "Categories"
-
-    fun renderCardStyle(card: MaterialCardView, text: TextView, icon: ImageView, selected: Boolean, context: Context) {
-        if (selected) {
-            val background = ContextCompat.getColor(context, R.color.filter_background_selected)
-            card.setCardBackgroundColor(background)
-            card.strokeColor = background
-            text.setTextColor(ContextCompat.getColor(context, R.color.filter_text_selected))
-            val color = ContextCompat.getColor(context, R.color.filter_icon_selected)
-            icon.setColorFilter(color)
-        } else {
-            card.setCardBackgroundColor(ContextCompat.getColor(context, R.color.filter_background_not_selected))
-            card.strokeColor = ContextCompat.getColor(context, R.color.outline)
-            text.setTextColor(ContextCompat.getColor(context, R.color.filter_text_not_selected))
-            val color = ContextCompat.getColor(context, R.color.filter_icon_not_selected)
-            icon.setColorFilter(color)
-        }
-    }
-
-    fun saveToDisplayString(saveString: String): String =
-        saveString.takeUnless { it.length > 20 } ?: saveString.substring(0..16) + "..."
-
-
     fun HashSet<Category>.toSaveString(): String {
         val out = StringBuilder()
         for (category in this.iterator()) {
@@ -45,18 +16,18 @@ object CategoryHelper {
         val set = HashSet<Category>()
         for (category in categoryString.split(", ")) {
             val catString = when (category) {
-                CategoryHelper.Category.American.identifier -> CategoryHelper.Category.American
-                CategoryHelper.Category.Asian.identifier -> CategoryHelper.Category.Asian
-                CategoryHelper.Category.Bbq.identifier -> CategoryHelper.Category.Bbq
-                CategoryHelper.Category.Deli.identifier -> CategoryHelper.Category.Deli
-                CategoryHelper.Category.Dessert.identifier -> CategoryHelper.Category.Dessert
-                CategoryHelper.Category.Italian.identifier -> CategoryHelper.Category.Italian
-                CategoryHelper.Category.Indian.identifier -> CategoryHelper.Category.Indian
-                CategoryHelper.Category.Pizza.identifier -> CategoryHelper.Category.Pizza
-                CategoryHelper.Category.Mexican.identifier -> CategoryHelper.Category.Mexican
-                CategoryHelper.Category.Seafood.identifier -> CategoryHelper.Category.Seafood
-                CategoryHelper.Category.Steak.identifier -> CategoryHelper.Category.Steak
-                CategoryHelper.Category.Sushi.identifier -> CategoryHelper.Category.Sushi
+                Category.American.identifier -> Category.American
+                Category.Asian.identifier -> Category.Asian
+                Category.Bbq.identifier -> Category.Bbq
+                Category.Deli.identifier -> Category.Deli
+                Category.Dessert.identifier -> Category.Dessert
+                Category.Italian.identifier -> Category.Italian
+                Category.Indian.identifier -> Category.Indian
+                Category.Pizza.identifier -> Category.Pizza
+                Category.Mexican.identifier -> Category.Mexican
+                Category.Seafood.identifier -> Category.Seafood
+                Category.Steak.identifier -> Category.Steak
+                Category.Sushi.identifier -> Category.Sushi
                 else -> null
             }
             catString?.let { set.add(it) }

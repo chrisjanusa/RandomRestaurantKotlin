@@ -9,12 +9,12 @@ import com.chrisjanusa.randomizer.base.interfaces.BaseAction
 import com.chrisjanusa.randomizer.base.interfaces.BaseEvent
 import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
 import com.chrisjanusa.randomizer.base.preferences.PreferenceHelper
-import com.chrisjanusa.randomizer.filter_category.CategoryHelper
+import com.chrisjanusa.randomizer.filter_category.CategoryUIManager
 import com.chrisjanusa.randomizer.filter_restriction.RestrictionHelper
 import com.chrisjanusa.randomizer.base.models.RandomizerState
+import com.chrisjanusa.randomizer.filter_category.CategoryHelper.setFromSaveString
 import com.chrisjanusa.randomizer.location_gps.GpsHelper
 import com.chrisjanusa.randomizer.location_search.updaters.LastManualLocationUpdater
-import com.chrisjanusa.randomizer.location_base.updaters.GpsStatusUpdater
 import com.chrisjanusa.randomizer.location_base.LocationHelper
 import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLocation
 import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLocationText
@@ -33,7 +33,7 @@ class InitAction(private val activity: Activity?) : BaseAction {
 
         preferenceData?.run {
             val restrictionObject = RestrictionHelper.restrictionFromIdentifier(restriction)
-            val categorySet = CategoryHelper.setFromSaveString(categoryString)
+            val categorySet = setFromSaveString(categoryString)
             val location = Location("")
             location.longitude = curr_lng
             location.latitude = curr_lat
