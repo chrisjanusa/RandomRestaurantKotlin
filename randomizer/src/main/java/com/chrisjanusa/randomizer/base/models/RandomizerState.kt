@@ -6,16 +6,19 @@ import com.chrisjanusa.randomizer.filter_category.CategoryHelper.Category
 import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.defaultDistance
 import com.chrisjanusa.randomizer.filter_price.PriceHelper.defaultPriceTitle
 import com.chrisjanusa.randomizer.filter_restriction.RestrictionHelper.Restriction
-import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLocation
+import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLat
+import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLng
 import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLocationText
 
 data class RandomizerState(
     val gpsOn: Boolean = true,
     val locationText: String = defaultLocationText,
-    val location: Location = defaultLocation,
+    val currLat: Double = defaultLat,
+    val currLng: Double = defaultLng,
 
     val addressSearchString: String = "",
-    val lastManualLocation: Location = defaultLocation,
+    val lastManualLat: Double = defaultLat,
+    val lastManualLng: Double = defaultLng,
     val lastManualLocationText: String = defaultLocationText,
 
     val filterOpen: Filter = Filter.None,

@@ -15,7 +15,8 @@ class InitUpdater(
     private val priceText: String,
     private val categoryString: String,
     private val categorySet: HashSet<Category>,
-    private val location: Location,
+    private val currLat: Double,
+    private val currLng: Double,
     private val locationText: String
 ) : BaseUpdater {
     override fun performUpdate(prevState: RandomizerState): RandomizerState {
@@ -28,7 +29,8 @@ class InitUpdater(
             restriction = restriction,
             categoryString = categoryString,
             categorySet = categorySet,
-            location = location,
+            currLat = currLat,
+            currLng = currLng,
             locationText = locationText
         )
     }
