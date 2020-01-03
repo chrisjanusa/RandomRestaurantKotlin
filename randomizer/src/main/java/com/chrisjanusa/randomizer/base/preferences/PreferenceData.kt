@@ -8,6 +8,6 @@ data class PreferenceData(
     val restriction: String,
     val priceSelected: String,
     val categoryString: String,
-    val curr_lat: Double,
-    val curr_lng: Double
+    val currLat: Double,
+    val currLng: Double
 )

@@ -16,7 +16,6 @@ import com.chrisjanusa.randomizer.base.interfaces.BaseEvent
 import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
 import com.chrisjanusa.randomizer.base.models.MapUpdate
 import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLocationText
-import com.chrisjanusa.randomizer.location_base.LocationHelper.latLang
 import com.chrisjanusa.randomizer.location_base.updaters.GpsStatusUpdater
 import com.chrisjanusa.randomizer.location_base.updaters.LocationTextUpdater
 import com.chrisjanusa.randomizer.location_base.updaters.LocationUpdater
@@ -90,11 +89,13 @@ object GpsHelper {
         updateChannel: Channel<BaseUpdater>,
         mapChannel: Channel<MapUpdate>
     ) {
-        val locationName = Geocoder(context)
-            .getFromLocation(location.latitude, location.longitude, 1)[0]
-            .locality
-        sendMap(MapUpdate(location.latLang(), false), mapChannel)
-        sendUpdate(LocationUpdater(locationName, location), updateChannel)
+        location.run {
+            val locationName = Geocoder(context)
+                .getFromLocation(latitude, longitude, 1)[0]
+                .locality
+            sendMap(MapUpdate(latitude, longitude, false), mapChannel)
+            sendUpdate(LocationUpdater(locationName, latitude, longitude), updateChannel)
+        }
     }
 
     // Is not called unless permissions have been checked
