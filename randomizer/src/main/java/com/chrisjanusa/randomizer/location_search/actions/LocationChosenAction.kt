@@ -12,17 +12,21 @@ import com.chrisjanusa.randomizer.base.interfaces.BaseEvent
 import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLat
 import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLng
+import com.chrisjanusa.randomizer.location_base.LocationHelper.latLang
 import com.chrisjanusa.randomizer.location_search.updaters.LastManualLocationUpdater
+import com.chrisjanusa.randomizer.base.models.MapUpdate
 import com.seatgeek.placesautocomplete.model.AddressComponentType
 import com.seatgeek.placesautocomplete.model.PlaceDetails
 import kotlinx.coroutines.channels.Channel
+
 
 class LocationChosenAction(private val details: PlaceDetails, private val context: Context) :
     BaseAction {
     override suspend fun performAction(
         currentState: LiveData<RandomizerState>,
         updateChannel: Channel<BaseUpdater>,
-        eventChannel: Channel<BaseEvent>
+        eventChannel: Channel<BaseEvent>,
+        mapChannel: Channel<MapUpdate>
     ) {
         details.run {
             var text = "Error"
@@ -40,6 +44,7 @@ class LocationChosenAction(private val details: PlaceDetails, private val contex
             location.latitude = address?.latitude ?: defaultLat
             location.longitude = address?.longitude ?: defaultLng
 
+            mapChannel.send(MapUpdate(location.latLang(), false))
             updateChannel.send(LocationUpdater(text, location))
             updateChannel.send(LastManualLocationUpdater(text, location))
             updateChannel.send(GpsStatusUpdater(false))

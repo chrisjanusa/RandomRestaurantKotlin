@@ -2,18 +2,13 @@ package com.chrisjanusa.randomizer
 
 import android.content.Context
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.location.Location
 import android.os.Bundle
 import android.view.*
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
 import kotlinx.android.synthetic.main.bottom_overlay.*
 import kotlinx.android.synthetic.main.randomizer_frag.*
-import androidx.annotation.DrawableRes
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
@@ -30,7 +25,10 @@ import com.chrisjanusa.randomizer.filter_distance.DistanceUIManager
 import com.chrisjanusa.randomizer.filter_price.PriceUIManager
 import com.chrisjanusa.randomizer.filter_restriction.RestrictionUIManager
 import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultMapLocation
+import com.chrisjanusa.randomizer.location_base.LocationHelper.latLang
+import com.chrisjanusa.randomizer.location_base.LocationHelper.zoomLevel
 import com.chrisjanusa.randomizer.location_base.LocationUIManager
+import com.chrisjanusa.randomizer.location_base.LocationUIManager.getDefaultMarker
 import com.chrisjanusa.randomizer.location_gps.GpsUIManager
 import com.chrisjanusa.randomizer.location_gps.actions.PermissionDeniedAction
 import com.chrisjanusa.randomizer.location_search.SearchUIManager
@@ -40,8 +38,6 @@ import kotlinx.coroutines.launch
 class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private var map: GoogleMap? = null
-    private var loc: LatLng? = null
-    private val ZOOM_LEVEL = 16f
     private var curr: LatLng? = null
     private var icon: BitmapDescriptor? = null
     private lateinit var randomizerViewModel: RandomizerViewModel
@@ -58,9 +54,8 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        randomizerViewModel = activity?.run {
-            ViewModelProviders.of(this)[RandomizerViewModel::class.java]
-        } ?: throw Exception("Invalid Activity")
+        randomizerViewModel = activity?.run { ViewModelProviders.of(this)[RandomizerViewModel::class.java] }
+            ?: throw Exception("Invalid Activity")
         sendAction(InitAction(activity), randomizerViewModel)
     }
 
@@ -74,6 +69,7 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         for (uiManager in featureUIManagers) {
             uiManager.init(randomizerViewModel, this)
         }
@@ -86,12 +82,6 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
             for (event in randomizerViewModel.eventChannel) {
                 event.handleEvent(frag)
             }
-        }
-
-        mapView?.let {
-            it.onCreate(null)
-            it.onResume()
-            it.getMapAsync(this)
         }
     }
 
@@ -121,22 +111,18 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         }
     }
 
-    fun setMap(location: Location) {
-        loc = location.latLang()
-        setMap()
-    }
-
-    private fun setMap() {
+    private fun setMap(location: LatLng, addMarker: Boolean) {
         map?.run {
-            icon = icon ?: getDefaultMarker()
-            curr = loc?.takeUnless { curr == loc }?.also {
+            curr = location.takeUnless { curr == location }?.also {
                 clear()
-                animateCamera(CameraUpdateFactory.newLatLngZoom(it, ZOOM_LEVEL))
-                addMarker(
-                    MarkerOptions()
-                        .position(it)
-                        .icon(icon)
-                )
+                animateCamera(CameraUpdateFactory.newLatLngZoom(it, zoomLevel))
+                if (addMarker) {
+                    addMarker(
+                        MarkerOptions()
+                            .position(it)
+                            .icon(icon)
+                    )
+                }
             } ?: curr
         }
     }
@@ -148,37 +134,19 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
             it.setOnMarkerClickListener(this)
             it.uiSettings.isMapToolbarEnabled = false
         }
-        loc = loc ?: defaultMapLocation.latLang()
-        setMap()
-    }
-
-    private fun vectorToBitmap(@DrawableRes id: Int): BitmapDescriptor {
-        val vectorDrawable =
-            ResourcesCompat.getDrawable(resources, id, null) ?: return BitmapDescriptorFactory.defaultMarker()
-        val bitmap = Bitmap.createBitmap(
-            vectorDrawable.intrinsicWidth,
-            vectorDrawable.intrinsicHeight, Bitmap.Config.ARGB_8888
-        )
-        val canvas = Canvas(bitmap)
-        vectorDrawable.setBounds(0, 0, canvas.width, canvas.height)
-        vectorDrawable.draw(canvas)
-        return BitmapDescriptorFactory.fromBitmap(bitmap)
+        icon = getDefaultMarker(this)
+        lifecycleScope.launch {
+            for (update in randomizerViewModel.mapChannel) {
+                setMap(update.location, update.addMarker)
+            }
+        }
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {
         return false
     }
 
-    fun getDefaultMarker(): BitmapDescriptor {
-        return vectorToBitmap(R.drawable.marker)
-    }
-
-    fun randomize() {
-        loc = defaultMapLocation.latLang()
-        setMap()
-    }
-
-    fun Location.latLang(): LatLng {
-        return LatLng(this.latitude, this.longitude)
+    private fun randomize() {
+        setMap(defaultMapLocation.latLang(), true)
     }
 }

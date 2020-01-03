@@ -1,6 +1,8 @@
 package com.chrisjanusa.randomizer.location_base
 
 import android.location.Location
+import com.chrisjanusa.randomizer.base.models.MapUpdate
+import com.google.android.gms.maps.model.LatLng
 
 object LocationHelper {
     const val defaultLocationText = "Unknown"
@@ -10,6 +12,8 @@ object LocationHelper {
     const val defaultLng = 200.0
     private const val spaceNeedleLat = 47.620422
     private const val spaceNeedleLng = -122.349358
+
+    val zoomLevel = 16f
 
     val defaultLocation : Location
         get() {
@@ -27,6 +31,8 @@ object LocationHelper {
             location.longitude = spaceNeedleLng
             return location
         }
+
+    fun Location.latLang(): LatLng = LatLng(this.latitude, this.longitude)
 
     fun isDefault(location: Location) : Boolean =
         defaultLat == location.latitude && defaultLng == location.longitude

@@ -8,13 +8,15 @@ import com.chrisjanusa.randomizer.filter_base.events.CloseFilterEvent
 import com.chrisjanusa.randomizer.filter_base.FilterHelper
 import com.chrisjanusa.randomizer.filter_base.updaters.FilterOpenUpdater
 import com.chrisjanusa.randomizer.base.models.RandomizerState
+import com.chrisjanusa.randomizer.base.models.MapUpdate
 import kotlinx.coroutines.channels.Channel
 
 class CancelClickAction : BaseAction {
     override suspend fun performAction(
         currentState: LiveData<RandomizerState>,
         updateChannel: Channel<BaseUpdater>,
-        eventChannel: Channel<BaseEvent>
+        eventChannel: Channel<BaseEvent>,
+        mapChannel: Channel<MapUpdate>
     ) {
         eventChannel.send(CloseFilterEvent())
         updateChannel.send(FilterOpenUpdater(FilterHelper.Filter.None))

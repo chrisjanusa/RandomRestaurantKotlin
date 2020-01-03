@@ -8,13 +8,15 @@ import com.chrisjanusa.randomizer.filter_price.PriceHelper
 import com.chrisjanusa.randomizer.filter_price.PriceHelper.Price
 import com.chrisjanusa.randomizer.filter_price.updaters.InitPriceFilterUpdater
 import com.chrisjanusa.randomizer.base.models.RandomizerState
+import com.chrisjanusa.randomizer.base.models.MapUpdate
 import kotlinx.coroutines.channels.Channel
 
 class InitPriceFilterAction : BaseAction {
     override suspend fun performAction(
         currentState: LiveData<RandomizerState>,
         updateChannel: Channel<BaseUpdater>,
-        eventChannel: Channel<BaseEvent>
+        eventChannel: Channel<BaseEvent>,
+        mapChannel: Channel<MapUpdate>
     ) {
         val currPriceList = PriceHelper.priceFromDisplayString(currentState.value?.priceText ?: PriceHelper.defaultPriceTitle)
          updateChannel.send(

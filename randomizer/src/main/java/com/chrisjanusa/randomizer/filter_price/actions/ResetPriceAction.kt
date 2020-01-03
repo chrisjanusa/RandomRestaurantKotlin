@@ -9,13 +9,15 @@ import com.chrisjanusa.randomizer.filter_price.updaters.Price2Updater
 import com.chrisjanusa.randomizer.filter_price.updaters.Price3Updater
 import com.chrisjanusa.randomizer.filter_price.updaters.Price4Updater
 import com.chrisjanusa.randomizer.base.models.RandomizerState
+import com.chrisjanusa.randomizer.base.models.MapUpdate
 import kotlinx.coroutines.channels.Channel
 
 class ResetPriceAction  : BaseAction {
     override suspend fun performAction(
         currentState: LiveData<RandomizerState>,
         updateChannel: Channel<BaseUpdater>,
-        eventChannel: Channel<BaseEvent>
+        eventChannel: Channel<BaseEvent>,
+        mapChannel: Channel<MapUpdate>
     ) {
         currentState.value?.run {
             updateChannel.send(Price1Updater(false))
