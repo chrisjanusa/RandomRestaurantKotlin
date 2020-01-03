@@ -17,6 +17,7 @@ import com.chrisjanusa.randomizer.filter_price.actions.ApplyPriceAction
 import com.chrisjanusa.randomizer.filter_price.actions.InitPriceFilterAction
 import com.chrisjanusa.randomizer.filter_price.actions.PriceChangeAction
 import com.chrisjanusa.randomizer.filter_price.actions.ResetPriceAction
+import com.chrisjanusa.randomizer.filter_price.PriceHelper.Price
 import kotlinx.android.synthetic.main.confirmation_buttons.*
 import kotlinx.android.synthetic.main.price_filter_fragment.*
 
@@ -43,10 +44,10 @@ class PriceFragment : Fragment() {
         confirm.setOnClickListener { sendAction(ApplyPriceAction(), randomizerViewModel) }
         cancel.setOnClickListener { FilterHelper.onCancelFilterClick(randomizerViewModel) }
         reset.setOnClickListener { sendAction(ResetPriceAction(), randomizerViewModel) }
-        price1.setOnClickListener { priceClick(1) }
-        price2.setOnClickListener { priceClick(2) }
-        price3.setOnClickListener { priceClick(3) }
-        price4.setOnClickListener { priceClick(4) }
+        price1.setOnClickListener { priceClick(Price.One) }
+        price2.setOnClickListener { priceClick(Price.Two) }
+        price3.setOnClickListener { priceClick(Price.Three) }
+        price4.setOnClickListener { priceClick(Price.Four) }
 
         randomizerViewModel.state.observe(this, Observer<RandomizerState>(render))
     }
@@ -56,16 +57,16 @@ class PriceFragment : Fragment() {
         sendAction(InitPriceFilterAction(), randomizerViewModel)
     }
 
-    private fun priceClick(price: Int) {
+    private fun priceClick(price: Price) {
         sendAction(PriceChangeAction(price), randomizerViewModel)
     }
 
     private val render = fun(newState: RandomizerState) {
         context?.let {
-            renderButtonStyle(price1, newState.price1TempSelected, it)
-            renderButtonStyle(price2, newState.price2TempSelected, it)
-            renderButtonStyle(price3, newState.price3TempSelected, it)
-            renderButtonStyle(price4, newState.price4TempSelected, it)
+            renderButtonStyle(price1, newState.priceTempSet.contains(Price.One), it)
+            renderButtonStyle(price2, newState.priceTempSet.contains(Price.Two), it)
+            renderButtonStyle(price3, newState.priceTempSet.contains(Price.Three), it)
+            renderButtonStyle(price4, newState.priceTempSet.contains(Price.Four), it)
         }
     }
 }

@@ -1,7 +1,12 @@
 package com.chrisjanusa.randomizer.filter_category
 
 object CategoryHelper {
+    const val defaultCategoryTitle = "Categories"
+
     fun HashSet<Category>.toSaveString(): String {
+        if (this.isEmpty()) {
+            return defaultCategoryTitle
+        }
         val out = StringBuilder()
         for (category in this.iterator()) {
             out.append(category.identifier)

@@ -12,11 +12,11 @@ import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.Filter
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.clickSelectionFilter
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.renderFilterStyle
+import com.chrisjanusa.randomizer.filter_category.CategoryHelper.defaultCategoryTitle
 import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.filters.*
 
 object CategoryUIManager : FeatureUIManager {
-    private const val defaultCategoryTitle = "Categories"
 
     override fun init(randomizerViewModel: RandomizerViewModel, fragment: RandomizerFragment) {
         fragment.run {
@@ -26,10 +26,8 @@ object CategoryUIManager : FeatureUIManager {
 
     override fun render(state: RandomizerState, fragment: RandomizerFragment) {
         fragment.run {
-            val selected = state.categorySet.isNotEmpty()
-            categories.text =
-                defaultCategoryTitle.takeUnless { state.categorySet.isNotEmpty() }
-                    ?: toDisplayString(state.categoryString)
+            val selected = state.categoryString != defaultCategoryTitle
+            categories.text = toDisplayString(state.categoryString)
             context?.let { renderFilterStyle(categories, selected, it) }
         }
     }

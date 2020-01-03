@@ -17,11 +17,7 @@ class InitCategoryFilterAction : BaseAction {
         mapChannel: Channel<MapUpdate>
     ) {
         currentState.value?.run {
-            updateChannel.send(
-                TempCategoryUpdater(
-                    categorySet
-                )
-            )
+            updateChannel.send(TempCategoryUpdater(categorySet))
         }
     }
 

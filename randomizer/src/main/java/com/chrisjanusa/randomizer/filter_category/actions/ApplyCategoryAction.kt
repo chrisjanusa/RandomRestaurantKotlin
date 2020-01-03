@@ -21,12 +21,7 @@ class ApplyCategoryAction : BaseAction {
         mapChannel: Channel<MapUpdate>
     ) {
         currentState.value?.run {
-            updateChannel.send(
-                SelectedCategoryUpdater(
-                    categoryTempSet,
-                    categoryTempSet.toSaveString()
-                )
-            )
+            updateChannel.send(SelectedCategoryUpdater(categoryTempSet, categoryTempSet.toSaveString()))
         }
         eventChannel.send(CloseFilterEvent())
         updateChannel.send(FilterOpenUpdater(FilterHelper.Filter.None))

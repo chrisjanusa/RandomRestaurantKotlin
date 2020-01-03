@@ -2,6 +2,7 @@ package com.chrisjanusa.randomizer.filter_price
 
 object PriceHelper {
     const val defaultPriceTitle = "Price"
+    private const val delimiter = ", "
 
 
     sealed class Price(val text: String, val num: Int) {
@@ -11,14 +12,18 @@ object PriceHelper {
         object Four : Price("$$$$", 4)
     }
 
-    fun priceToDisplayString(list: List<Price>): String {
-        return if (list.isEmpty()) {
+    private val priceList = listOf(Price.One, Price.Two, Price.Three, Price.Four)
+
+    fun HashSet<Price>.toSaveString(): String {
+        return if (this.isEmpty()) {
             defaultPriceTitle
         } else {
             val builder = StringBuilder()
-            for (price in list) {
-                builder.append(price.text)
-                builder.append(", ")
+            for (price in priceList) {
+                if (this.contains(price)) {
+                    builder.append(price.text)
+                    builder.append(delimiter)
+                }
             }
             builder.deleteCharAt(builder.lastIndex)
             builder.deleteCharAt(builder.lastIndex)
@@ -26,12 +31,12 @@ object PriceHelper {
         }
     }
 
-    fun priceFromDisplayString(curr: String): List<Price> {
+    fun priceFromDisplayString(curr: String): HashSet<Price> {
         return if (defaultPriceTitle == curr) {
-            ArrayList()
+            HashSet()
         } else {
-            val selected = ArrayList<Price>()
-            for (price in curr.split(", ")) {
+            val selected = HashSet<Price>()
+            for (price in curr.split(delimiter.toRegex())) {
                 when (price) {
                     PriceHelper.Price.One.text -> selected.add(PriceHelper.Price.One)
                     PriceHelper.Price.Two.text -> selected.add(PriceHelper.Price.Two)

@@ -8,7 +8,7 @@ import com.chrisjanusa.randomizer.base.models.MapUpdate
 import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.filter_price.PriceHelper
 import com.chrisjanusa.randomizer.filter_price.PriceHelper.Price
-import com.chrisjanusa.randomizer.filter_price.updaters.InitPriceFilterUpdater
+import com.chrisjanusa.randomizer.filter_price.updaters.TempPriceUpdater
 import kotlinx.coroutines.channels.Channel
 
 class InitPriceFilterAction : BaseAction {
@@ -20,12 +20,7 @@ class InitPriceFilterAction : BaseAction {
     ) {
         val currPriceList =
             PriceHelper.priceFromDisplayString(currentState.value?.priceText ?: PriceHelper.defaultPriceTitle)
-        updateChannel.send(
-            InitPriceFilterUpdater(
-                currPriceList.contains(Price.One), currPriceList.contains(Price.Two),
-                currPriceList.contains(Price.Three), currPriceList.contains(Price.Four)
-            )
-        )
+        updateChannel.send(TempPriceUpdater(currPriceList))
     }
 
 }

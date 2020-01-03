@@ -11,7 +11,7 @@ import com.chrisjanusa.randomizer.base.models.MapUpdate
 import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.base.preferences.PreferenceHelper
 import com.chrisjanusa.randomizer.filter_category.CategoryHelper.setFromSaveString
-import com.chrisjanusa.randomizer.filter_restriction.RestrictionHelper
+import com.chrisjanusa.randomizer.filter_restriction.RestrictionHelper.restrictionFromIdentifier
 import com.chrisjanusa.randomizer.location_base.LocationHelper
 import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLocationText
 import com.chrisjanusa.randomizer.location_base.LocationHelper.isDefault
@@ -29,11 +29,10 @@ class InitAction(private val activity: Activity?) : BaseAction {
         eventChannel: Channel<BaseEvent>,
         mapChannel: Channel<MapUpdate>
     ) {
-        val preferenceData =
-            PreferenceHelper.retrieveState(activity?.getPreferences(Context.MODE_PRIVATE))
+        val preferenceData = PreferenceHelper.retrieveState(activity?.getPreferences(Context.MODE_PRIVATE))
 
         preferenceData?.run {
-            val restrictionObject = RestrictionHelper.restrictionFromIdentifier(restriction)
+            val restrictionObject = restrictionFromIdentifier(restriction)
             val categorySet = setFromSaveString(categoryString)
 
             if (isDefault(currLat, currLng)) {
@@ -54,8 +53,11 @@ class InitAction(private val activity: Activity?) : BaseAction {
                 )
                 mapChannel.send(MapUpdate(spaceNeedleLat, spaceNeedleLng, false))
             } else {
-                val locationName = activity?.let { activity ->
-                    Geocoder(activity).getFromLocation(currLat, currLng, 1).getOrNull(0)?.locality
+                val locationName = activity?.let {
+                    Geocoder(it)
+                        .getFromLocation(currLat, currLng, 1)
+                        .getOrNull(0)
+                        ?.locality
                 } ?: "Unknown"
 
                 updateChannel.send(
@@ -74,9 +76,7 @@ class InitAction(private val activity: Activity?) : BaseAction {
                     )
                 )
                 mapChannel.send(MapUpdate(currLat, currLng, false))
-                if (!gpsOn) {
-                    updateChannel.send(LastManualLocationUpdater(locationName))
-                }
+                if (!gpsOn) updateChannel.send(LastManualLocationUpdater(locationName))
             }
 
             if (gpsOn) {
