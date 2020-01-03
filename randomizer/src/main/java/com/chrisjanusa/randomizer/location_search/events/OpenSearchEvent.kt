@@ -9,9 +9,9 @@ import com.chrisjanusa.randomizer.base.interfaces.BaseEvent
 import com.chrisjanusa.randomizer.location_search.SearchHelper
 import kotlinx.android.synthetic.main.search_card.*
 
-class OpenSearchEvent(private val addressSearchText : String) : BaseEvent {
+class OpenSearchEvent(private val addressSearchText: String) : BaseEvent {
     override fun handleEvent(fragment: Fragment) {
-        if (fragment is RandomizerFragment){
+        if (fragment is RandomizerFragment) {
             fragment.run {
                 val layoutParams = ConstraintLayout.LayoutParams(
                     0,

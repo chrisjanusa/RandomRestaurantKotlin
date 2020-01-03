@@ -1,10 +1,10 @@
 package com.chrisjanusa.randomizer.base.preferences
 
 import android.content.SharedPreferences
+import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.filter_distance.DistanceHelper
 import com.chrisjanusa.randomizer.filter_price.PriceHelper.defaultPriceTitle
 import com.chrisjanusa.randomizer.filter_restriction.RestrictionHelper
-import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLat
 import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLng
 
@@ -31,7 +31,7 @@ object PreferenceHelper {
                 putString(PreferenceHelper.StateObject.Restriction.key, state.restriction.identifier)
                 putString(PreferenceHelper.StateObject.PriceSelected.key, state.priceText)
                 putString(PreferenceHelper.StateObject.Category.key, state.categoryString)
-                state.location?.run {
+                state.location.run {
                     putFloat(PreferenceHelper.StateObject.Latitude.key, latitude.toFloat())
                     putFloat(PreferenceHelper.StateObject.Longitude.key, longitude.toFloat())
                 }

@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.search_card.*
 
 class SearchOpenedEvent : BaseEvent {
     override fun handleEvent(fragment: Fragment) {
-        if (fragment is RandomizerFragment){
+        if (fragment is RandomizerFragment) {
             fragment.run {
                 user_input.requestFocus()
                 user_input.showDropDown()

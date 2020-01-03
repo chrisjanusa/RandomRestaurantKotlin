@@ -9,16 +9,19 @@ import android.location.Geocoder
 import android.location.Location
 import android.os.Looper
 import androidx.core.app.ActivityCompat
-import com.chrisjanusa.randomizer.location_gps.events.LocationFailedEvent
-import com.chrisjanusa.randomizer.location_gps.events.PermissionEvent
 import com.chrisjanusa.randomizer.base.CommunicationHelper.sendEvent
+import com.chrisjanusa.randomizer.base.CommunicationHelper.sendMap
 import com.chrisjanusa.randomizer.base.CommunicationHelper.sendUpdate
 import com.chrisjanusa.randomizer.base.interfaces.BaseEvent
 import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
+import com.chrisjanusa.randomizer.base.models.MapUpdate
 import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLocationText
+import com.chrisjanusa.randomizer.location_base.LocationHelper.latLang
 import com.chrisjanusa.randomizer.location_base.updaters.GpsStatusUpdater
 import com.chrisjanusa.randomizer.location_base.updaters.LocationTextUpdater
 import com.chrisjanusa.randomizer.location_base.updaters.LocationUpdater
+import com.chrisjanusa.randomizer.location_gps.events.LocationFailedEvent
+import com.chrisjanusa.randomizer.location_gps.events.PermissionEvent
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.Task
 import kotlinx.coroutines.channels.Channel
@@ -52,16 +55,28 @@ object GpsHelper {
 
     // Suppress since it is check in the if
     @SuppressLint("MissingPermission")
-    fun requestLocation(activity: Activity, updateChannel: Channel<BaseUpdater>, eventChannel: Channel<BaseEvent>) {
+    fun requestLocation(
+        activity: Activity,
+        updateChannel: Channel<BaseUpdater>,
+        eventChannel: Channel<BaseEvent>,
+        mapChannel: Channel<MapUpdate>
+    ) {
         val context: Context = activity.applicationContext ?: return
         val mFusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
         if (checkLocationPermissions(context)) {
             mFusedLocationClient.lastLocation.addOnCompleteListener(activity) { task ->
                 val location: Location? = task.result
                 if (location == null) {
-                    makeLocationRequest(activity, context, mFusedLocationClient, updateChannel, eventChannel)
+                    makeLocationRequest(
+                        activity,
+                        context,
+                        mFusedLocationClient,
+                        updateChannel,
+                        eventChannel,
+                        mapChannel
+                    )
                 } else {
-                    receiveLocation(context, location, updateChannel)
+                    receiveLocation(context, location, updateChannel, mapChannel)
                 }
             }
         } else {
@@ -69,10 +84,16 @@ object GpsHelper {
         }
     }
 
-    private fun receiveLocation(context: Context, location: Location, updateChannel: Channel<BaseUpdater>) {
+    private fun receiveLocation(
+        context: Context,
+        location: Location,
+        updateChannel: Channel<BaseUpdater>,
+        mapChannel: Channel<MapUpdate>
+    ) {
         val locationName = Geocoder(context)
             .getFromLocation(location.latitude, location.longitude, 1)[0]
             .locality
+        sendMap(MapUpdate(location.latLang(), false), mapChannel)
         sendUpdate(LocationUpdater(locationName, location), updateChannel)
     }
 
@@ -83,14 +104,19 @@ object GpsHelper {
         context: Context,
         mFusedLocationClient: FusedLocationProviderClient,
         updateChannel: Channel<BaseUpdater>,
-        eventChannel: Channel<BaseEvent>
+        eventChannel: Channel<BaseEvent>,
+        mapChannel: Channel<MapUpdate>
     ) {
         val request = newLocationRequest
         isLocationEnabled(context, request)
             .addOnCompleteListener(activity) { settingsTask ->
                 if (settingsTask.isSuccessful) {
                     mFusedLocationClient
-                        .requestLocationUpdates(request, getLocationCallback(context, updateChannel), Looper.myLooper())
+                        .requestLocationUpdates(
+                            request,
+                            getLocationCallback(context, updateChannel, mapChannel),
+                            Looper.myLooper()
+                        )
                 } else {
                     sendUpdate(LocationTextUpdater(defaultLocationText), updateChannel)
                     sendUpdate(GpsStatusUpdater(false), updateChannel)
@@ -105,10 +131,14 @@ object GpsHelper {
         return client.checkLocationSettings(builder.build())
     }
 
-    private fun getLocationCallback(context: Context, updateChannel: Channel<BaseUpdater>) : LocationCallback =
+    private fun getLocationCallback(
+        context: Context,
+        updateChannel: Channel<BaseUpdater>,
+        mapChannel: Channel<MapUpdate>
+    ): LocationCallback =
         object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
-                receiveLocation(context, locationResult.lastLocation, updateChannel)
+                receiveLocation(context, locationResult.lastLocation, updateChannel, mapChannel)
             }
         }
 

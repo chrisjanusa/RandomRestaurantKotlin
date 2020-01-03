@@ -5,17 +5,16 @@ object PriceHelper {
 
 
     sealed class Price(val text: String, val num: Int) {
-        object One : Price("$",1)
-        object Two : Price("$$",2)
-        object Three : Price("$$$",3)
-        object Four : Price("$$$$",4)
+        object One : Price("$", 1)
+        object Two : Price("$$", 2)
+        object Three : Price("$$$", 3)
+        object Four : Price("$$$$", 4)
     }
 
-    fun priceToDisplayString(list : List<Price>) : String {
+    fun priceToDisplayString(list: List<Price>): String {
         return if (list.isEmpty()) {
             defaultPriceTitle
-        }
-        else{
+        } else {
             val builder = StringBuilder()
             for (price in list) {
                 builder.append(price.text)
@@ -27,11 +26,10 @@ object PriceHelper {
         }
     }
 
-    fun priceFromDisplayString(curr : String) : List<Price> {
-        return if (defaultPriceTitle == curr){
+    fun priceFromDisplayString(curr: String): List<Price> {
+        return if (defaultPriceTitle == curr) {
             ArrayList()
-        }
-        else{
+        } else {
             val selected = ArrayList<Price>()
             for (price in curr.split(", ")) {
                 when (price) {

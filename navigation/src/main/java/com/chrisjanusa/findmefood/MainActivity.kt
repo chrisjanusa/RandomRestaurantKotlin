@@ -13,16 +13,20 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : OverlayFragmentManager, AppCompatActivity() {
-    private  val OVERLAY_TAG = "OVERLAY"
+    private val OVERLAY_TAG = "OVERLAY"
 
     override fun onFilterSelected(fragment: Fragment) {
         supportFragmentManager.popBackStack(OVERLAY_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         supportFragmentManager.beginTransaction()
-            .setCustomAnimations(R.anim.slidein_bottom, R.anim.slideout_bottom,
-                R.anim.slidein_bottom, R.anim.slideout_bottom)
+            .setCustomAnimations(
+                R.anim.slidein_bottom, R.anim.slideout_bottom,
+                R.anim.slidein_bottom, R.anim.slideout_bottom
+            )
             .replace(R.id.overlay_fragment, fragment, OVERLAY_TAG)
-            .setCustomAnimations(R.anim.fadein, R.anim.fadeout,
-                R.anim.fadein, R.anim.fadeout)
+            .setCustomAnimations(
+                R.anim.fadein, R.anim.fadeout,
+                R.anim.fadein, R.anim.fadeout
+            )
             .replace(R.id.shade_fragment, ShadeFragment())
             .addToBackStack(OVERLAY_TAG)
             .commit()

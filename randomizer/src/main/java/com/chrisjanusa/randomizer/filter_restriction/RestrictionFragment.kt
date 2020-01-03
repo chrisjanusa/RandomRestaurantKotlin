@@ -8,16 +8,16 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.chrisjanusa.randomizer.R
-import com.chrisjanusa.randomizer.filter_restriction.actions.ApplyRestrictionAction
-import com.chrisjanusa.randomizer.filter_restriction.actions.ResetRestrictionAction
-import com.chrisjanusa.randomizer.filter_restriction.actions.RestrictionChangeAction
-import com.chrisjanusa.randomizer.filter_restriction.actions.InitRestrictionFilterAction
 import com.chrisjanusa.randomizer.base.CommunicationHelper.sendAction
-import com.chrisjanusa.randomizer.filter_base.FilterHelper.renderButtonStyle
-import com.chrisjanusa.randomizer.filter_base.FilterHelper.onCancelFilterClick
-import com.chrisjanusa.randomizer.filter_restriction.RestrictionHelper.Restriction
 import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
+import com.chrisjanusa.randomizer.filter_base.FilterHelper.onCancelFilterClick
+import com.chrisjanusa.randomizer.filter_base.FilterHelper.renderButtonStyle
+import com.chrisjanusa.randomizer.filter_restriction.RestrictionHelper.Restriction
+import com.chrisjanusa.randomizer.filter_restriction.actions.ApplyRestrictionAction
+import com.chrisjanusa.randomizer.filter_restriction.actions.InitRestrictionFilterAction
+import com.chrisjanusa.randomizer.filter_restriction.actions.ResetRestrictionAction
+import com.chrisjanusa.randomizer.filter_restriction.actions.RestrictionChangeAction
 import kotlinx.android.synthetic.main.confirmation_buttons.*
 import kotlinx.android.synthetic.main.restrictions_filter_fragment.*
 
@@ -62,7 +62,8 @@ class RestrictionFragment : Fragment() {
         sendAction(
             RestrictionChangeAction(
                 restriction
-            ), randomizerViewModel)
+            ), randomizerViewModel
+        )
     }
 
     private val render = fun(newState: RandomizerState) {

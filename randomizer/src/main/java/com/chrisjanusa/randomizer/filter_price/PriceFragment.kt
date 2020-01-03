@@ -8,20 +8,20 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.chrisjanusa.randomizer.R
-import com.chrisjanusa.randomizer.filter_price.actions.InitPriceFilterAction
-import com.chrisjanusa.randomizer.filter_price.actions.ApplyPriceAction
-import com.chrisjanusa.randomizer.filter_price.actions.PriceChangeAction
-import com.chrisjanusa.randomizer.filter_price.actions.ResetPriceAction
 import com.chrisjanusa.randomizer.base.CommunicationHelper.sendAction
-import com.chrisjanusa.randomizer.filter_base.FilterHelper
-import com.chrisjanusa.randomizer.filter_base.FilterHelper.renderButtonStyle
 import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
+import com.chrisjanusa.randomizer.filter_base.FilterHelper
+import com.chrisjanusa.randomizer.filter_base.FilterHelper.renderButtonStyle
+import com.chrisjanusa.randomizer.filter_price.actions.ApplyPriceAction
+import com.chrisjanusa.randomizer.filter_price.actions.InitPriceFilterAction
+import com.chrisjanusa.randomizer.filter_price.actions.PriceChangeAction
+import com.chrisjanusa.randomizer.filter_price.actions.ResetPriceAction
 import kotlinx.android.synthetic.main.confirmation_buttons.*
 import kotlinx.android.synthetic.main.price_filter_fragment.*
 
 class PriceFragment : Fragment() {
-    private lateinit var randomizerViewModel : RandomizerViewModel
+    private lateinit var randomizerViewModel: RandomizerViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,10 +43,10 @@ class PriceFragment : Fragment() {
         confirm.setOnClickListener { sendAction(ApplyPriceAction(), randomizerViewModel) }
         cancel.setOnClickListener { FilterHelper.onCancelFilterClick(randomizerViewModel) }
         reset.setOnClickListener { sendAction(ResetPriceAction(), randomizerViewModel) }
-        price1.setOnClickListener {  priceClick(1)}
-        price2.setOnClickListener {  priceClick(2)}
-        price3.setOnClickListener {  priceClick(3)}
-        price4.setOnClickListener {  priceClick(4)}
+        price1.setOnClickListener { priceClick(1) }
+        price2.setOnClickListener { priceClick(2) }
+        price3.setOnClickListener { priceClick(3) }
+        price4.setOnClickListener { priceClick(4) }
 
         randomizerViewModel.state.observe(this, Observer<RandomizerState>(render))
     }
