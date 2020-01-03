@@ -43,7 +43,7 @@ class LocationChosenAction(private val details: PlaceDetails, private val contex
 
             mapChannel.send(MapUpdate(latitude, longitude, false))
             updateChannel.send(LocationUpdater(text, latitude, longitude))
-            updateChannel.send(LastManualLocationUpdater(text, latitude, longitude))
+            updateChannel.send(LastManualLocationUpdater(text))
             updateChannel.send(GpsStatusUpdater(false))
         }
     }
