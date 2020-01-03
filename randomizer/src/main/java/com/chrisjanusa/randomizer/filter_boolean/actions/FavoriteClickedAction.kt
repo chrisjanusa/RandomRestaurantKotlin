@@ -1,12 +1,12 @@
 package com.chrisjanusa.randomizer.filter_boolean.actions
 
 import androidx.lifecycle.LiveData
-import com.chrisjanusa.randomizer.filter_boolean.updaters.FavoriteUpdater
 import com.chrisjanusa.randomizer.base.interfaces.BaseAction
-import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
 import com.chrisjanusa.randomizer.base.interfaces.BaseEvent
-import com.chrisjanusa.randomizer.base.models.RandomizerState
+import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
 import com.chrisjanusa.randomizer.base.models.MapUpdate
+import com.chrisjanusa.randomizer.base.models.RandomizerState
+import com.chrisjanusa.randomizer.filter_boolean.updaters.FavoriteUpdater
 import kotlinx.coroutines.channels.Channel
 
 class FavoriteClickedAction : BaseAction {

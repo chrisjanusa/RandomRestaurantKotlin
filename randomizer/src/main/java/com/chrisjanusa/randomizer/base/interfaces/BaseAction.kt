@@ -1,8 +1,8 @@
 package com.chrisjanusa.randomizer.base.interfaces
 
 import androidx.lifecycle.LiveData
-import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.base.models.MapUpdate
+import com.chrisjanusa.randomizer.base.models.RandomizerState
 import kotlinx.coroutines.channels.Channel
 
 interface BaseAction {

@@ -1,13 +1,13 @@
 package com.chrisjanusa.randomizer.filter_category.actions
 
 import androidx.lifecycle.LiveData
-import com.chrisjanusa.randomizer.filter_category.updaters.TempCategoryUpdater
 import com.chrisjanusa.randomizer.base.interfaces.BaseAction
-import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
 import com.chrisjanusa.randomizer.base.interfaces.BaseEvent
-import com.chrisjanusa.randomizer.filter_category.CategoryHelper.Category
-import com.chrisjanusa.randomizer.base.models.RandomizerState
+import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
 import com.chrisjanusa.randomizer.base.models.MapUpdate
+import com.chrisjanusa.randomizer.base.models.RandomizerState
+import com.chrisjanusa.randomizer.filter_category.CategoryHelper.Category
+import com.chrisjanusa.randomizer.filter_category.updaters.TempCategoryUpdater
 import kotlinx.coroutines.channels.Channel
 
 class CategoryChangeAction(private val category: Category) : BaseAction {
@@ -22,8 +22,7 @@ class CategoryChangeAction(private val category: Category) : BaseAction {
             val curr = HashSet(it)
             if (curr.contains(category)) {
                 curr.remove(category)
-            }
-            else{
+            } else {
                 curr.add(category)
             }
             updateChannel.send(TempCategoryUpdater(curr))

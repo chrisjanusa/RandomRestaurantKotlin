@@ -9,11 +9,11 @@ object DistanceHelper {
     const val maxDistance = 20.0f
     private const val totalDistance = maxDistance - minDistance
 
-    fun distanceToDisplayString(distance : Float) = "%.1f Miles".format(distance)
+    fun distanceToDisplayString(distance: Float) = "%.1f Miles".format(distance)
 
-    fun isDefault(distance: Float) = (distance*10).roundToInt() == (defaultDistance *10).roundToInt()
+    fun isDefault(distance: Float) = (distance * 10).roundToInt() == (defaultDistance * 10).roundToInt()
 
-    fun percentToDistance(percent : Float) = minDistance + (totalDistance * percent)
+    fun percentToDistance(percent: Float) = minDistance + (totalDistance * percent)
 
-    fun distanceToPercent(distance : Float) =  (distance - minDistance) / totalDistance
+    fun distanceToPercent(distance: Float) = (distance - minDistance) / totalDistance
 }

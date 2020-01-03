@@ -9,20 +9,20 @@ import android.location.Geocoder
 import android.location.Location
 import android.os.Looper
 import androidx.core.app.ActivityCompat
-import com.chrisjanusa.randomizer.location_gps.events.LocationFailedEvent
-import com.chrisjanusa.randomizer.location_gps.events.PermissionEvent
 import com.chrisjanusa.randomizer.base.CommunicationHelper.sendEvent
 import com.chrisjanusa.randomizer.base.CommunicationHelper.sendMap
 import com.chrisjanusa.randomizer.base.CommunicationHelper.sendUpdate
 import com.chrisjanusa.randomizer.base.interfaces.BaseEvent
 import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
+import com.chrisjanusa.randomizer.base.models.MapUpdate
 import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLocationText
 import com.chrisjanusa.randomizer.location_base.LocationHelper.latLang
 import com.chrisjanusa.randomizer.location_base.updaters.GpsStatusUpdater
 import com.chrisjanusa.randomizer.location_base.updaters.LocationTextUpdater
 import com.chrisjanusa.randomizer.location_base.updaters.LocationUpdater
+import com.chrisjanusa.randomizer.location_gps.events.LocationFailedEvent
+import com.chrisjanusa.randomizer.location_gps.events.PermissionEvent
 import com.google.android.gms.location.*
-import com.chrisjanusa.randomizer.base.models.MapUpdate
 import com.google.android.gms.tasks.Task
 import kotlinx.coroutines.channels.Channel
 

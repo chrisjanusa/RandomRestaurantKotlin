@@ -3,7 +3,7 @@ package com.chrisjanusa.randomizer.filter_restriction
 object RestrictionHelper {
     const val defaultRestrictionTitle = "Food Restrictions"
 
-    sealed class Restriction(val identifier : String, val display: String) {
+    sealed class Restriction(val identifier: String, val display: String) {
         object Vegan : Restriction("vegan", "Vegan")
         object Vegetarian : Restriction("vegetarian", "Vegetarian")
         object Halal : Restriction("halal", "Halal")
@@ -11,8 +11,8 @@ object RestrictionHelper {
         object None : Restriction("none", "")
     }
 
-    fun restrictionFromIdentifier(identifier: String) : Restriction {
-        return when(identifier) {
+    fun restrictionFromIdentifier(identifier: String): Restriction {
+        return when (identifier) {
             RestrictionHelper.Restriction.Vegan.identifier -> RestrictionHelper.Restriction.Vegan
             RestrictionHelper.Restriction.Vegetarian.identifier -> RestrictionHelper.Restriction.Vegetarian
             RestrictionHelper.Restriction.Halal.identifier -> RestrictionHelper.Restriction.Halal

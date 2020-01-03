@@ -1,7 +1,5 @@
 package com.chrisjanusa.randomizer.filter_category
 
-import java.lang.StringBuilder
-
 object CategoryHelper {
     fun HashSet<Category>.toSaveString(): String {
         val out = StringBuilder()

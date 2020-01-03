@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.chrisjanusa.randomizer.base.interfaces.BaseAction
 import com.chrisjanusa.randomizer.base.interfaces.BaseEvent
 import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
-import com.chrisjanusa.randomizer.base.models.MapUpdate
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
@@ -35,7 +34,7 @@ class RandomizerViewModel : ViewModel() {
         }
     }
 
-    suspend fun performAction(action : BaseAction) {
+    suspend fun performAction(action: BaseAction) {
         action.performAction(state, updateChannel, eventChannel, mapChannel)
     }
 }

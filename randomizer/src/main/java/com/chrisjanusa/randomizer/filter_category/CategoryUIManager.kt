@@ -37,7 +37,13 @@ object CategoryUIManager : FeatureUIManager {
     private fun toDisplayString(text: String): String =
         text.takeUnless { it.length > 20 } ?: text.substring(0..16) + "..."
 
-    fun renderCategoryOptionCardStyle(card: MaterialCardView, text: TextView, icon: ImageView, selected: Boolean, context: Context) {
+    fun renderCategoryOptionCardStyle(
+        card: MaterialCardView,
+        text: TextView,
+        icon: ImageView,
+        selected: Boolean,
+        context: Context
+    ) {
         if (selected) {
             val background = ContextCompat.getColor(context, R.color.filter_background_selected)
             card.setCardBackgroundColor(background)

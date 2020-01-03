@@ -4,7 +4,6 @@ import com.chrisjanusa.randomizer.RandomizerFragment
 import com.chrisjanusa.randomizer.base.interfaces.FeatureUIManager
 import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
-import com.chrisjanusa.randomizer.filter_base.FilterHelper
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.Filter
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.clickSelectionFilter
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.renderFilterStyle

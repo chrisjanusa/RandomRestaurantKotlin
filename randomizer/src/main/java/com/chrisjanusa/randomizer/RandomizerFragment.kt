@@ -3,22 +3,18 @@ package com.chrisjanusa.randomizer
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.google.android.gms.maps.*
-import com.google.android.gms.maps.model.*
-import kotlinx.android.synthetic.main.bottom_overlay.*
-import kotlinx.android.synthetic.main.randomizer_frag.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
-import com.chrisjanusa.randomizer.location_gps.actions.PermissionReceivedAction
-import com.chrisjanusa.randomizer.base.init.InitAction
 import com.chrisjanusa.randomizer.base.CommunicationHelper.sendAction
-import com.chrisjanusa.randomizer.base.preferences.PreferenceHelper
-import com.chrisjanusa.randomizer.location_gps.GpsHelper.PERMISSION_ID
+import com.chrisjanusa.randomizer.base.init.InitAction
 import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
+import com.chrisjanusa.randomizer.base.preferences.PreferenceHelper
 import com.chrisjanusa.randomizer.filter_boolean.BooleanFilterUIManager
 import com.chrisjanusa.randomizer.filter_category.CategoryUIManager
 import com.chrisjanusa.randomizer.filter_distance.DistanceUIManager
@@ -29,9 +25,19 @@ import com.chrisjanusa.randomizer.location_base.LocationHelper.latLang
 import com.chrisjanusa.randomizer.location_base.LocationHelper.zoomLevel
 import com.chrisjanusa.randomizer.location_base.LocationUIManager
 import com.chrisjanusa.randomizer.location_base.LocationUIManager.getDefaultMarker
+import com.chrisjanusa.randomizer.location_gps.GpsHelper.PERMISSION_ID
 import com.chrisjanusa.randomizer.location_gps.GpsUIManager
 import com.chrisjanusa.randomizer.location_gps.actions.PermissionDeniedAction
+import com.chrisjanusa.randomizer.location_gps.actions.PermissionReceivedAction
 import com.chrisjanusa.randomizer.location_search.SearchUIManager
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
+import kotlinx.android.synthetic.main.bottom_overlay.*
 import kotlinx.coroutines.launch
 
 

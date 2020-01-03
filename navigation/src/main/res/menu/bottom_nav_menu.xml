@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
             android:id="@+id/navigation_home"
@@ -12,13 +12,13 @@
             android:title="@string/history"/>
 
     <!--<item-->
-            <!--android:id="@+id/navigation_favorites"-->
-            <!--android:icon="@drawable/star_selected"-->
-            <!--android:title="@string/favorites"/>-->
+    <!--android:id="@+id/navigation_favorites"-->
+    <!--android:icon="@drawable/star_selected"-->
+    <!--android:title="@string/favorites"/>-->
 
     <!--<item-->
-            <!--android:id="@+id/navigation_blocked"-->
-            <!--android:icon="@drawable/block_selected"-->
-            <!--android:title="@string/blocked"/>-->
+    <!--android:id="@+id/navigation_blocked"-->
+    <!--android:icon="@drawable/block_selected"-->
+    <!--android:title="@string/blocked"/>-->
 
 </menu>

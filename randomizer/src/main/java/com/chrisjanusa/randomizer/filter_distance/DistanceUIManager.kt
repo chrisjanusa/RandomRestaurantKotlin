@@ -20,7 +20,8 @@ object DistanceUIManager : FeatureUIManager {
     override fun render(state: RandomizerState, fragment: RandomizerFragment) {
         fragment.run {
             val selected = !DistanceHelper.isDefault(state.maxMilesSelected)
-            distance.text = if (selected) DistanceHelper.distanceToDisplayString(state.maxMilesSelected) else DistanceHelper.defaultDistanceTitle
+            distance.text =
+                if (selected) DistanceHelper.distanceToDisplayString(state.maxMilesSelected) else DistanceHelper.defaultDistanceTitle
             context?.let { renderFilterStyle(distance, selected, it) }
         }
     }
