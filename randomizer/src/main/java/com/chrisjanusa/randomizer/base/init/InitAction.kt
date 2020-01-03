@@ -75,7 +75,7 @@ class InitAction(private val activity: Activity?) : BaseAction {
                 )
                 mapChannel.send(MapUpdate(currLat, currLng, false))
                 if (!gpsOn) {
-                    updateChannel.send(LastManualLocationUpdater(locationName, currLat, currLng))
+                    updateChannel.send(LastManualLocationUpdater(locationName))
                 }
             }
 

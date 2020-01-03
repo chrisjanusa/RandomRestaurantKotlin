@@ -1,6 +1,5 @@
 package com.chrisjanusa.randomizer.base.models
 
-import android.location.Location
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.Filter
 import com.chrisjanusa.randomizer.filter_category.CategoryHelper.Category
 import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.defaultDistance
@@ -17,8 +16,6 @@ data class RandomizerState(
     val currLng: Double = defaultLng,
 
     val addressSearchString: String = "",
-    val lastManualLat: Double = defaultLat,
-    val lastManualLng: Double = defaultLng,
     val lastManualLocationText: String = defaultLocationText,
 
     val filterOpen: Filter = Filter.None,
