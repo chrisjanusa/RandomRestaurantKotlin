@@ -48,6 +48,7 @@ object SearchUIManager : FeatureUIManager {
                 sendAction(SearchFinishedAction(user_input.text.toString()), randomizerViewModel)
             }
 
+            // Close search bar if user hits enter
             user_input.setOnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     sendAction(SearchFinishedAction(user_input.text.toString()), randomizerViewModel)
@@ -77,6 +78,7 @@ object SearchUIManager : FeatureUIManager {
 
     private fun initTransitionListeners(randomizerViewModel: RandomizerViewModel, fragment: RandomizerFragment) {
         fragment.run {
+            // Listen for when the search bar has finished opening or closing to send off that event
             search_bar.layoutTransition.addTransitionListener(object : LayoutTransition.TransitionListener {
                 override fun startTransition(
                     transition: LayoutTransition?,

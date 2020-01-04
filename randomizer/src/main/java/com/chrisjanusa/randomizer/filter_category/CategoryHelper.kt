@@ -1,18 +1,24 @@
 package com.chrisjanusa.randomizer.filter_category
 
 object CategoryHelper {
+    const val defaultCategoryTitle = "Categories"
+    private const val delimiter = ", "
+
     fun HashSet<Category>.toSaveString(): String {
+        if (this.isEmpty()) {
+            return defaultCategoryTitle
+        }
         val out = StringBuilder()
         for (category in this.iterator()) {
             out.append(category.identifier)
-            out.append(", ")
+            out.append(delimiter)
         }
         return out.dropLast(2).toString()
     }
 
     fun setFromSaveString(categoryString: String): HashSet<Category> {
         val set = HashSet<Category>()
-        for (category in categoryString.split(", ")) {
+        for (category in categoryString.split(delimiter.toRegex())) {
             val catString = when (category) {
                 Category.American.identifier -> Category.American
                 Category.Asian.identifier -> Category.Asian
@@ -30,6 +36,7 @@ object CategoryHelper {
             }
             catString?.let { set.add(it) }
         }
+
         return set
     }
 
@@ -37,7 +44,6 @@ object CategoryHelper {
         object American : Category("American", "newamerican,tradamerican")
         object Asian :
             Category("Asian", "chinese,japanese,korean,thai,ramen,dumplings,hkcafe,panasian,taiwanese,asianfusion")
-
         object Bbq : Category("BBQ", "bbq")
         object Deli : Category("Deli", "delis,sandwiches")
         object Dessert : Category("Dessert", "desserts")

@@ -2,6 +2,7 @@ package com.chrisjanusa.randomizer.filter_price
 
 object PriceHelper {
     const val defaultPriceTitle = "Price"
+    private const val delimiter = ", "
 
 
     sealed class Price(val text: String, val num: Int) {
@@ -11,35 +12,32 @@ object PriceHelper {
         object Four : Price("$$$$", 4)
     }
 
-    fun priceToDisplayString(list: List<Price>): String {
-        return if (list.isEmpty()) {
-            defaultPriceTitle
-        } else {
-            val builder = StringBuilder()
-            for (price in list) {
-                builder.append(price.text)
-                builder.append(", ")
-            }
-            builder.deleteCharAt(builder.lastIndex)
-            builder.deleteCharAt(builder.lastIndex)
-            builder.toString()
+    private val priceList = listOf(Price.One, Price.Two, Price.Three, Price.Four)
+
+    fun HashSet<Price>.toSaveString(): String {
+        if (isEmpty()) {
+            return defaultPriceTitle
         }
+        val builder = StringBuilder()
+        priceList.forEach { if (contains(it)) builder.append(it.text + delimiter) }
+        builder.deleteCharAt(builder.lastIndex)
+        builder.deleteCharAt(builder.lastIndex)
+        return builder.toString()
     }
 
-    fun priceFromDisplayString(curr: String): List<Price> {
-        return if (defaultPriceTitle == curr) {
-            ArrayList()
-        } else {
-            val selected = ArrayList<Price>()
-            for (price in curr.split(", ")) {
-                when (price) {
-                    PriceHelper.Price.One.text -> selected.add(PriceHelper.Price.One)
-                    PriceHelper.Price.Two.text -> selected.add(PriceHelper.Price.Two)
-                    PriceHelper.Price.Three.text -> selected.add(PriceHelper.Price.Three)
-                    PriceHelper.Price.Four.text -> selected.add(PriceHelper.Price.Four)
-                }
-            }
-            selected
+    fun priceFromDisplayString(curr: String): HashSet<Price> {
+        if (defaultPriceTitle == curr) {
+            return HashSet()
         }
+        val selected = HashSet<Price>()
+        for (price in curr.split(delimiter.toRegex())) {
+            when (price) {
+                Price.One.text -> selected.add(Price.One)
+                Price.Two.text -> selected.add(Price.Two)
+                Price.Three.text -> selected.add(Price.Three)
+                Price.Four.text -> selected.add(Price.Four)
+            }
+        }
+        return selected
     }
 }

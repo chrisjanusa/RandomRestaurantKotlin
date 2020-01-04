@@ -1,5 +1,7 @@
 package com.chrisjanusa.randomizer.base
 
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProviders
 import com.chrisjanusa.randomizer.base.interfaces.BaseAction
 import com.chrisjanusa.randomizer.base.interfaces.BaseEvent
 import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
@@ -33,4 +35,8 @@ object CommunicationHelper {
             mapChannel.send(coordinates)
         }
     }
+
+    fun getViewModel(fragActivity: FragmentActivity) =
+        ViewModelProviders.of(fragActivity)[RandomizerViewModel::class.java]
+
 }

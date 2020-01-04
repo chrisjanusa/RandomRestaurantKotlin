@@ -6,7 +6,7 @@ import com.chrisjanusa.randomizer.base.interfaces.BaseEvent
 import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
 import com.chrisjanusa.randomizer.base.models.MapUpdate
 import com.chrisjanusa.randomizer.base.models.RandomizerState
-import com.chrisjanusa.randomizer.filter_distance.DistanceHelper
+import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.defaultDistance
 import com.chrisjanusa.randomizer.filter_distance.updaters.TempDistanceUpdater
 import kotlinx.coroutines.channels.Channel
 
@@ -18,11 +18,7 @@ class ResetDistanceAction : BaseAction {
         mapChannel: Channel<MapUpdate>
     ) {
         currentState.value?.run {
-            updateChannel.send(
-                TempDistanceUpdater(
-                    DistanceHelper.defaultDistance
-                )
-            )
+            updateChannel.send(TempDistanceUpdater(defaultDistance))
         }
     }
 }

@@ -7,6 +7,9 @@ import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.Filter
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.clickSelectionFilter
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.renderFilterStyle
+import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.defaultDistanceTitle
+import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.distanceToDisplayString
+import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.isDefault
 import kotlinx.android.synthetic.main.filters.*
 
 object DistanceUIManager : FeatureUIManager {
@@ -19,9 +22,8 @@ object DistanceUIManager : FeatureUIManager {
 
     override fun render(state: RandomizerState, fragment: RandomizerFragment) {
         fragment.run {
-            val selected = !DistanceHelper.isDefault(state.maxMilesSelected)
-            distance.text =
-                if (selected) DistanceHelper.distanceToDisplayString(state.maxMilesSelected) else DistanceHelper.defaultDistanceTitle
+            val selected = !isDefault(state.maxMilesSelected)
+            distance.text = if (selected) distanceToDisplayString(state.maxMilesSelected) else defaultDistanceTitle
             context?.let { renderFilterStyle(distance, selected, it) }
         }
     }

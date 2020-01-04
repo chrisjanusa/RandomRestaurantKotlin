@@ -1,8 +1,10 @@
 package com.chrisjanusa.randomizer.base.models
 
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.Filter
+import com.chrisjanusa.randomizer.filter_category.CategoryHelper.defaultCategoryTitle
 import com.chrisjanusa.randomizer.filter_category.CategoryHelper.Category
 import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.defaultDistance
+import com.chrisjanusa.randomizer.filter_price.PriceHelper.Price
 import com.chrisjanusa.randomizer.filter_price.PriceHelper.defaultPriceTitle
 import com.chrisjanusa.randomizer.filter_restriction.RestrictionHelper.Restriction
 import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLat
@@ -18,13 +20,10 @@ data class RandomizerState(
     val addressSearchString: String = "",
     val lastManualLocationText: String = defaultLocationText,
 
-    val filterOpen: Filter = Filter.None,
+    val filterOpen: Filter? = null,
 
     val priceText: String = defaultPriceTitle,
-    val price1TempSelected: Boolean = false,
-    val price2TempSelected: Boolean = false,
-    val price3TempSelected: Boolean = false,
-    val price4TempSelected: Boolean = false,
+    val priceTempSet: HashSet<Price> = HashSet(),
 
     val openNowSelected: Boolean = false,
 
@@ -37,6 +36,6 @@ data class RandomizerState(
     val restriction: Restriction = Restriction.None,
 
     val categorySet: HashSet<Category> = HashSet(),
-    val categoryString: String = "",
+    val categoryString: String = defaultCategoryTitle,
     val categoryTempSet: HashSet<Category> = HashSet()
 )

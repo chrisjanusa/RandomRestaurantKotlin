@@ -20,11 +20,7 @@ class RestrictionChangeAction(private val restrictionChanged: Restriction) :
     ) {
         val newRestrictionSelection =
             restrictionChanged.takeUnless { it == currentState.value?.restrictionTempSelected } ?: Restriction.None
-        updateChannel.send(
-            TempRestrictionUpdater(
-                newRestrictionSelection
-            )
-        )
+        updateChannel.send(TempRestrictionUpdater(newRestrictionSelection))
     }
 
 }

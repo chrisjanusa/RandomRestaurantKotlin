@@ -6,7 +6,6 @@ import com.chrisjanusa.randomizer.base.interfaces.BaseEvent
 import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
 import com.chrisjanusa.randomizer.base.models.MapUpdate
 import com.chrisjanusa.randomizer.base.models.RandomizerState
-import com.chrisjanusa.randomizer.filter_base.FilterHelper
 import com.chrisjanusa.randomizer.filter_base.events.CloseFilterEvent
 import com.chrisjanusa.randomizer.filter_base.updaters.FilterOpenUpdater
 import com.chrisjanusa.randomizer.filter_category.CategoryHelper.toSaveString
@@ -21,14 +20,9 @@ class ApplyCategoryAction : BaseAction {
         mapChannel: Channel<MapUpdate>
     ) {
         currentState.value?.run {
-            updateChannel.send(
-                SelectedCategoryUpdater(
-                    categoryTempSet,
-                    categoryTempSet.toSaveString()
-                )
-            )
+            updateChannel.send(SelectedCategoryUpdater(categoryTempSet, categoryTempSet.toSaveString()))
         }
         eventChannel.send(CloseFilterEvent())
-        updateChannel.send(FilterOpenUpdater(FilterHelper.Filter.None))
+        updateChannel.send(FilterOpenUpdater(null))
     }
 }

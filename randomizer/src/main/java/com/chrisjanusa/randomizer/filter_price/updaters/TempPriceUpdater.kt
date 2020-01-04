@@ -2,9 +2,11 @@ package com.chrisjanusa.randomizer.filter_price.updaters
 
 import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
 import com.chrisjanusa.randomizer.base.models.RandomizerState
+import com.chrisjanusa.randomizer.filter_price.PriceHelper
 
-class Price2Updater(val selected: Boolean) : BaseUpdater {
+class TempPriceUpdater(private val priceSet: HashSet<PriceHelper.Price>) : BaseUpdater {
     override fun performUpdate(prevState: RandomizerState): RandomizerState {
-        return prevState.copy(price2TempSelected = selected)
+        return prevState.copy(priceTempSet = priceSet)
     }
+
 }

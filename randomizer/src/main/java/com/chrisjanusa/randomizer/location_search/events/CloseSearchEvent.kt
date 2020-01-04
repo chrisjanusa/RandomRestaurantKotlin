@@ -15,8 +15,8 @@ class CloseSearchEvent : BaseEvent {
     override fun handleEvent(fragment: Fragment) {
         if (fragment is RandomizerFragment) {
             fragment.run {
-                user_input.clearFocus()
                 // Remove focus from search and close keyboard
+                user_input.clearFocus()
                 val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
                 imm?.hideSoftInputFromWindow(user_input.windowToken, 0)
 

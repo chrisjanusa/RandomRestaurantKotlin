@@ -4,8 +4,10 @@ import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
 import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.filter_category.CategoryHelper.Category
 
-class TempCategoryUpdater(private val categoryTempSet: HashSet<Category>) : BaseUpdater {
+class TempCategoryRemoveUpdater(private val category: Category) : BaseUpdater {
     override fun performUpdate(prevState: RandomizerState): RandomizerState {
-        return prevState.copy(categoryTempSet = categoryTempSet)
+        val newSet = prevState.categoryTempSet
+        newSet.remove(category)
+        return prevState.copy(categoryTempSet = newSet)
     }
 }

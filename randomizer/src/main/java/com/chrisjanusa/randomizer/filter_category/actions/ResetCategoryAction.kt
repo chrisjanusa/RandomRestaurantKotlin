@@ -17,11 +17,7 @@ class ResetCategoryAction : BaseAction {
         mapChannel: Channel<MapUpdate>
     ) {
         currentState.value?.run {
-            updateChannel.send(
-                TempCategoryUpdater(
-                    HashSet()
-                )
-            )
+            updateChannel.send(TempCategoryUpdater(HashSet()))
         }
     }
 }

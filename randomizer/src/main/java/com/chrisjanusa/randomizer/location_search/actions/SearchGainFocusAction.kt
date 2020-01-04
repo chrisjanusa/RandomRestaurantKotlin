@@ -9,8 +9,7 @@ import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.location_search.events.OpenSearchEvent
 import kotlinx.coroutines.channels.Channel
 
-class SearchGainFocusAction(private val addressSearchText: String) :
-    BaseAction {
+class SearchGainFocusAction(private val addressSearchText: String) : BaseAction {
     override suspend fun performAction(
         currentState: LiveData<RandomizerState>,
         updateChannel: Channel<BaseUpdater>,

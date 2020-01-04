@@ -1,7 +1,7 @@
 package com.chrisjanusa.randomizer.filter_boolean
 
 import android.content.Context
-import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getColor
 import com.chrisjanusa.randomizer.R
 import com.chrisjanusa.randomizer.RandomizerFragment
 import com.chrisjanusa.randomizer.base.CommunicationHelper.sendAction
@@ -32,11 +32,11 @@ object BooleanFilterUIManager : FeatureUIManager {
 
     private fun renderBooleanButton(selected: Boolean, button: MaterialButton, context: Context) {
         if (selected) {
-            button.setBackgroundColor(ContextCompat.getColor(context, R.color.filter_background_selected))
-            button.setTextColor(ContextCompat.getColor(context, R.color.filter_text_selected))
+            button.setBackgroundColor(getColor(context, R.color.filter_background_selected))
+            button.setTextColor(getColor(context, R.color.filter_text_selected))
         } else {
-            button.setBackgroundColor(ContextCompat.getColor(context, R.color.filter_background_not_selected))
-            button.setTextColor(ContextCompat.getColor(context, R.color.filter_text_not_selected))
+            button.setBackgroundColor(getColor(context, R.color.filter_background_not_selected))
+            button.setTextColor(getColor(context, R.color.filter_text_not_selected))
         }
     }
 }
