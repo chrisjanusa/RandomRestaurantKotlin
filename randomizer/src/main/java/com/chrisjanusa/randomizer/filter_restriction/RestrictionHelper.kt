@@ -13,13 +13,13 @@ object RestrictionHelper {
 
     fun restrictionFromIdentifier(identifier: String): Restriction {
         return when (identifier) {
-            RestrictionHelper.Restriction.Vegan.identifier -> RestrictionHelper.Restriction.Vegan
-            RestrictionHelper.Restriction.Vegetarian.identifier -> RestrictionHelper.Restriction.Vegetarian
-            RestrictionHelper.Restriction.Halal.identifier -> RestrictionHelper.Restriction.Halal
-            RestrictionHelper.Restriction.Kosher.identifier -> RestrictionHelper.Restriction.Kosher
-            else -> RestrictionHelper.Restriction.None
+            Restriction.Vegan.identifier -> Restriction.Vegan
+            Restriction.Vegetarian.identifier -> Restriction.Vegetarian
+            Restriction.Halal.identifier -> Restriction.Halal
+            Restriction.Kosher.identifier -> Restriction.Kosher
+            else -> Restriction.None
         }
     }
 
-    fun isDefault(restriction: Restriction) = restriction == RestrictionHelper.Restriction.None
+    fun isDefault(restriction: Restriction) = restriction == Restriction.None
 }

@@ -17,11 +17,7 @@ class InitRestrictionFilterAction : BaseAction {
         mapChannel: Channel<MapUpdate>
     ) {
         currentState.value?.run {
-            updateChannel.send(
-                TempRestrictionUpdater(
-                    restriction
-                )
-            )
+            updateChannel.send(TempRestrictionUpdater(restriction))
         }
     }
 

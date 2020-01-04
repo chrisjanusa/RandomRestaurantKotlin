@@ -8,8 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
+import com.chrisjanusa.randomizer.base.CommunicationHelper.getViewModel
 import com.chrisjanusa.randomizer.base.CommunicationHelper.sendAction
 import com.chrisjanusa.randomizer.base.init.InitAction
 import com.chrisjanusa.randomizer.base.models.RandomizerState
@@ -60,9 +60,7 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        randomizerViewModel = activity?.let {
-            ViewModelProviders.of(it)[RandomizerViewModel::class.java]
-        } ?: throw Exception("Invalid Activity")
+        randomizerViewModel = activity?.let { getViewModel(it) } ?: throw Exception("Invalid Activity")
 
         sendAction(InitAction(activity), randomizerViewModel)
     }
@@ -105,10 +103,8 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PERMISSION_ID) {
-            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                activity?.let {
-                    sendAction(PermissionReceivedAction(it), randomizerViewModel)
-                }
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                activity?.let { sendAction(PermissionReceivedAction(it), randomizerViewModel) }
             } else {
                 sendAction(PermissionDeniedAction(), randomizerViewModel)
             }

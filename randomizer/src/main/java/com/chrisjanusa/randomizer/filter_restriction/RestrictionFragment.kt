@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.chrisjanusa.randomizer.R
+import com.chrisjanusa.randomizer.base.CommunicationHelper.getViewModel
 import com.chrisjanusa.randomizer.base.CommunicationHelper.sendAction
 import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
@@ -26,16 +26,10 @@ class RestrictionFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        randomizerViewModel = activity?.run {
-            ViewModelProviders.of(this)[RandomizerViewModel::class.java]
-        } ?: throw Exception("Invalid Activity")
+        randomizerViewModel = activity?.let { getViewModel(it) } ?: throw Exception("Invalid Activity")
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.restrictions_filter_fragment, container, false)
     }
 
@@ -59,11 +53,7 @@ class RestrictionFragment : Fragment() {
     }
 
     private fun restrictionClick(restriction: Restriction) {
-        sendAction(
-            RestrictionChangeAction(
-                restriction
-            ), randomizerViewModel
-        )
+        sendAction(RestrictionChangeAction(restriction), randomizerViewModel)
     }
 
     private val render = fun(newState: RandomizerState) {

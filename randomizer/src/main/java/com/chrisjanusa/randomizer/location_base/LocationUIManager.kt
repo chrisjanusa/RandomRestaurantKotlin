@@ -6,7 +6,7 @@ import androidx.annotation.DrawableRes
 import androidx.core.content.res.ResourcesCompat
 import com.chrisjanusa.randomizer.R
 import com.chrisjanusa.randomizer.RandomizerFragment
-import com.chrisjanusa.randomizer.base.CommunicationHelper
+import com.chrisjanusa.randomizer.base.CommunicationHelper.sendAction
 import com.chrisjanusa.randomizer.base.interfaces.FeatureUIManager
 import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
@@ -21,7 +21,7 @@ object LocationUIManager : FeatureUIManager {
     override fun init(randomizerViewModel: RandomizerViewModel, fragment: RandomizerFragment) {
         fragment.run {
             current_location.setOnClickListener {
-                CommunicationHelper.sendAction(
+                sendAction(
                     SearchGainFocusAction(randomizerViewModel.state.value?.addressSearchString ?: ""),
                     randomizerViewModel
                 )

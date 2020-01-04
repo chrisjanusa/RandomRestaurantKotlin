@@ -61,22 +61,13 @@ object GpsHelper {
         mapChannel: Channel<MapUpdate>
     ) {
         val context: Context = activity.applicationContext ?: return
-        val mFusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
+        val gpsClient = LocationServices.getFusedLocationProviderClient(context)
         if (checkLocationPermissions(context)) {
-            mFusedLocationClient.lastLocation.addOnCompleteListener(activity) { task ->
-                val location: Location? = task.result
-                if (location == null) {
-                    makeLocationRequest(
-                        activity,
-                        context,
-                        mFusedLocationClient,
-                        updateChannel,
-                        eventChannel,
-                        mapChannel
-                    )
-                } else {
-                    receiveLocation(context, location, updateChannel, mapChannel)
+            gpsClient.lastLocation.addOnCompleteListener(activity) { task ->
+                task.result?.let {
+                    receiveLocation(context, it, updateChannel, mapChannel)
                 }
+                    ?: makeLocationRequest(activity, context, gpsClient, updateChannel, eventChannel, mapChannel)
             }
         } else {
             sendEvent(locationPermissionEvent, eventChannel)
@@ -103,7 +94,7 @@ object GpsHelper {
     private fun makeLocationRequest(
         activity: Activity,
         context: Context,
-        mFusedLocationClient: FusedLocationProviderClient,
+        gpsClient: FusedLocationProviderClient,
         updateChannel: Channel<BaseUpdater>,
         eventChannel: Channel<BaseEvent>,
         mapChannel: Channel<MapUpdate>
@@ -112,7 +103,7 @@ object GpsHelper {
         isLocationEnabled(context, request)
             .addOnCompleteListener(activity) { settingsTask ->
                 if (settingsTask.isSuccessful) {
-                    mFusedLocationClient
+                    gpsClient
                         .requestLocationUpdates(
                             request,
                             getLocationCallback(context, updateChannel, mapChannel),

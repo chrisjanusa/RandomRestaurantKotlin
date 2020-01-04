@@ -11,8 +11,5 @@ object LocationHelper {
 
     const val zoomLevel = 16f
 
-    fun calculateMapLat(lat: Double) = if (lat == defaultLat) spaceNeedleLat else lat
-    fun calculateMapLng(lng: Double) = if (lng == defaultLat) spaceNeedleLng else lng
-
     fun isDefault(lat: Double, lng: Double): Boolean = defaultLat == lat && defaultLng == lng
 }

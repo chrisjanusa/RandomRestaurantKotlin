@@ -18,8 +18,7 @@ import com.seatgeek.placesautocomplete.model.PlaceDetails
 import kotlinx.coroutines.channels.Channel
 
 
-class LocationChosenAction(private val details: PlaceDetails, private val context: Context) :
-    BaseAction {
+class LocationChosenAction(private val details: PlaceDetails, private val context: Context) : BaseAction {
     override suspend fun performAction(
         currentState: LiveData<RandomizerState>,
         updateChannel: Channel<BaseUpdater>,
@@ -38,6 +37,7 @@ class LocationChosenAction(private val details: PlaceDetails, private val contex
 
             val address = Geocoder(context).getFromLocationName(formatted_address, 1)
                 .getOrNull(0)
+            // TODO: On null send error event
             val latitude = address?.latitude ?: defaultLat
             val longitude = address?.longitude ?: defaultLng
 

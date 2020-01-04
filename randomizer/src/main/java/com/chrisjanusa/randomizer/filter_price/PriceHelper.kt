@@ -15,36 +15,29 @@ object PriceHelper {
     private val priceList = listOf(Price.One, Price.Two, Price.Three, Price.Four)
 
     fun HashSet<Price>.toSaveString(): String {
-        return if (this.isEmpty()) {
-            defaultPriceTitle
-        } else {
-            val builder = StringBuilder()
-            for (price in priceList) {
-                if (this.contains(price)) {
-                    builder.append(price.text)
-                    builder.append(delimiter)
-                }
-            }
-            builder.deleteCharAt(builder.lastIndex)
-            builder.deleteCharAt(builder.lastIndex)
-            builder.toString()
+        if (isEmpty()) {
+            return defaultPriceTitle
         }
+        val builder = StringBuilder()
+        priceList.forEach { if (contains(it)) builder.append(it.text + delimiter) }
+        builder.deleteCharAt(builder.lastIndex)
+        builder.deleteCharAt(builder.lastIndex)
+        return builder.toString()
     }
 
     fun priceFromDisplayString(curr: String): HashSet<Price> {
-        return if (defaultPriceTitle == curr) {
-            HashSet()
-        } else {
-            val selected = HashSet<Price>()
-            for (price in curr.split(delimiter.toRegex())) {
-                when (price) {
-                    PriceHelper.Price.One.text -> selected.add(PriceHelper.Price.One)
-                    PriceHelper.Price.Two.text -> selected.add(PriceHelper.Price.Two)
-                    PriceHelper.Price.Three.text -> selected.add(PriceHelper.Price.Three)
-                    PriceHelper.Price.Four.text -> selected.add(PriceHelper.Price.Four)
-                }
-            }
-            selected
+        if (defaultPriceTitle == curr) {
+            return HashSet()
         }
+        val selected = HashSet<Price>()
+        for (price in curr.split(delimiter.toRegex())) {
+            when (price) {
+                Price.One.text -> selected.add(Price.One)
+                Price.Two.text -> selected.add(Price.Two)
+                Price.Three.text -> selected.add(Price.Three)
+                Price.Four.text -> selected.add(Price.Four)
+            }
+        }
+        return selected
     }
 }

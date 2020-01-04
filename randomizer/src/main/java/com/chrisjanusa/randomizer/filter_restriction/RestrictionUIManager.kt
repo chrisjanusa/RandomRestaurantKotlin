@@ -7,6 +7,8 @@ import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.Filter
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.clickSelectionFilter
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.renderFilterStyle
+import com.chrisjanusa.randomizer.filter_restriction.RestrictionHelper.defaultRestrictionTitle
+import com.chrisjanusa.randomizer.filter_restriction.RestrictionHelper.isDefault
 import kotlinx.android.synthetic.main.filters.*
 
 object RestrictionUIManager : FeatureUIManager {
@@ -19,8 +21,8 @@ object RestrictionUIManager : FeatureUIManager {
 
     override fun render(state: RandomizerState, fragment: RandomizerFragment) {
         fragment.run {
-            val selected = !RestrictionHelper.isDefault(state.restriction)
-            restrictions.text = if (selected) state.restriction.display else RestrictionHelper.defaultRestrictionTitle
+            val selected = !isDefault(state.restriction)
+            restrictions.text = if (selected) state.restriction.display else defaultRestrictionTitle
             context?.let { renderFilterStyle(restrictions, selected, it) }
         }
     }
