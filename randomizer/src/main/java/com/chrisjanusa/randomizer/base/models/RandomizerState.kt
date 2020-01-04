@@ -20,7 +20,7 @@ data class RandomizerState(
     val addressSearchString: String = "",
     val lastManualLocationText: String = defaultLocationText,
 
-    val filterOpen: Filter = Filter.None,
+    val filterOpen: Filter? = null,
 
     val priceText: String = defaultPriceTitle,
     val priceTempSet: HashSet<Price> = HashSet(),

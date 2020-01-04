@@ -24,6 +24,6 @@ class ApplyPriceAction : BaseAction {
             updateChannel.send(SelectedPriceUpdater(priceTempSet.toSaveString()))
         }
         eventChannel.send(CloseFilterEvent())
-        updateChannel.send(FilterOpenUpdater(Filter.None))
+        updateChannel.send(FilterOpenUpdater(null))
     }
 }

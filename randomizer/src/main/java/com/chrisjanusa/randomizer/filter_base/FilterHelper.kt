@@ -50,8 +50,7 @@ object FilterHelper {
     }
 
 
-    sealed class Filter(val fragment: Fragment?) {
-        object None : Filter(null)
+    sealed class Filter(val fragment: Fragment) {
         object Price : Filter(PriceFragment())
         object Category : Filter(CategoryFragment())
         object Distance : Filter(DistanceFragment())

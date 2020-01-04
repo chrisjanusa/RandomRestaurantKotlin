@@ -6,13 +6,13 @@ import com.chrisjanusa.randomizer.base.interfaces.BaseEvent
 import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
 import com.chrisjanusa.randomizer.base.models.MapUpdate
 import com.chrisjanusa.randomizer.base.models.RandomizerState
-import com.chrisjanusa.randomizer.filter_base.FilterHelper
+import com.chrisjanusa.randomizer.filter_base.FilterHelper.Filter
 import com.chrisjanusa.randomizer.filter_base.events.CloseFilterEvent
 import com.chrisjanusa.randomizer.filter_base.events.OpenFilterEvent
 import com.chrisjanusa.randomizer.filter_base.updaters.FilterOpenUpdater
 import kotlinx.coroutines.channels.Channel
 
-class ClickSelectionFilterAction(val filter: FilterHelper.Filter) :
+class ClickSelectionFilterAction(val filter: Filter) :
     BaseAction {
     override suspend fun performAction(
         currentState: LiveData<RandomizerState>,
@@ -23,12 +23,10 @@ class ClickSelectionFilterAction(val filter: FilterHelper.Filter) :
         currentState.value?.run {
             if (filterOpen != filter) {
                 updateChannel.send(FilterOpenUpdater(filter))
-                filter.fragment?.let {
-                    eventChannel.send(OpenFilterEvent(it))
-                }
+                eventChannel.send(OpenFilterEvent(filter.fragment))
             } else {
                 eventChannel.send(CloseFilterEvent())
-                updateChannel.send(FilterOpenUpdater(FilterHelper.Filter.None))
+                updateChannel.send(FilterOpenUpdater(null))
             }
         }
     }
