@@ -18,7 +18,6 @@ class CategoryChangeAction(private val category: Category) : BaseAction {
         eventChannel: Channel<BaseEvent>,
         mapChannel: Channel<MapUpdate>
     ) {
-
         currentState.value?.categoryTempSet?.let {
             val curr = HashSet(it)
             val updater =
