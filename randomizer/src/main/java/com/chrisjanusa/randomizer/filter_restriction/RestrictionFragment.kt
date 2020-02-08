@@ -20,6 +20,7 @@ import com.chrisjanusa.randomizer.filter_restriction.actions.ResetRestrictionAct
 import com.chrisjanusa.randomizer.filter_restriction.actions.RestrictionChangeAction
 import kotlinx.android.synthetic.main.confirmation_buttons.*
 import kotlinx.android.synthetic.main.restrictions_filter_fragment.*
+import kotlinx.android.synthetic.main.restrictions_filter_fragment.shade
 
 class RestrictionFragment : Fragment() {
     private lateinit var randomizerViewModel: RandomizerViewModel
@@ -35,6 +36,7 @@ class RestrictionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        shade.setOnClickListener { onCancelFilterClick(randomizerViewModel) }
         confirm.setOnClickListener { sendAction(ApplyRestrictionAction(), randomizerViewModel) }
         cancel.setOnClickListener { onCancelFilterClick(randomizerViewModel) }
         reset.setOnClickListener { sendAction(ResetRestrictionAction(), randomizerViewModel) }

@@ -20,6 +20,7 @@ import com.chrisjanusa.randomizer.filter_category.actions.InitCategoryFilterActi
 import com.chrisjanusa.randomizer.filter_category.actions.ResetCategoryAction
 import kotlinx.android.synthetic.main.categories.*
 import kotlinx.android.synthetic.main.confirmation_buttons.*
+import kotlinx.android.synthetic.main.price_filter_fragment.*
 
 class CategoryFragment : Fragment() {
     private lateinit var randomizerViewModel: RandomizerViewModel
@@ -35,6 +36,7 @@ class CategoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        shade.setOnClickListener { onCancelFilterClick(randomizerViewModel) }
         confirm.setOnClickListener { sendAction(ApplyCategoryAction(), randomizerViewModel) }
         cancel.setOnClickListener { onCancelFilterClick(randomizerViewModel) }
         reset.setOnClickListener { sendAction(ResetCategoryAction(), randomizerViewModel) }

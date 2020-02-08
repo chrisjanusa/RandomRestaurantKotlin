@@ -11,7 +11,7 @@ import com.chrisjanusa.randomizer.base.CommunicationHelper.getViewModel
 import com.chrisjanusa.randomizer.base.CommunicationHelper.sendAction
 import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
-import com.chrisjanusa.randomizer.filter_base.FilterHelper
+import com.chrisjanusa.randomizer.filter_base.FilterHelper.onCancelFilterClick
 import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.defaultDistance
 import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.distanceToPercent
 import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.maxDistance
@@ -24,6 +24,7 @@ import com.chrisjanusa.randomizer.filter_distance.actions.ResetDistanceAction
 import com.ramotion.fluidslider.FluidSlider
 import kotlinx.android.synthetic.main.confirmation_buttons.*
 import kotlinx.android.synthetic.main.distance_filter_fragment.*
+import kotlinx.android.synthetic.main.distance_filter_fragment.shade
 
 class DistanceFragment : Fragment() {
     private lateinit var randomizerViewModel: RandomizerViewModel
@@ -39,8 +40,9 @@ class DistanceFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        shade.setOnClickListener { onCancelFilterClick(randomizerViewModel) }
         confirm.setOnClickListener { sendAction(ApplyDistanceAction(), randomizerViewModel) }
-        cancel.setOnClickListener { FilterHelper.onCancelFilterClick(randomizerViewModel) }
+        cancel.setOnClickListener { onCancelFilterClick(randomizerViewModel) }
         reset.setOnClickListener { sendAction(ResetDistanceAction(), randomizerViewModel) }
 
         val slider = distance as FluidSlider
