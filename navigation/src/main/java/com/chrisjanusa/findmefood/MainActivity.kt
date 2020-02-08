@@ -16,7 +16,6 @@ class MainActivity : OverlayFragmentManager, AppCompatActivity() {
     private val overlayTag = "OVERLAY"
 
     override fun onFilterSelected(fragment: Fragment) {
-        supportFragmentManager.popBackStackImmediate(overlayTag, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         supportFragmentManager.beginTransaction()
             .setCustomAnimations(
                 R.anim.slidein_bottom, R.anim.slideout_bottom,
