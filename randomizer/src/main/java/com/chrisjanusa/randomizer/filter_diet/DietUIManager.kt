@@ -1,4 +1,4 @@
-package com.chrisjanusa.randomizer.filter_restriction
+package com.chrisjanusa.randomizer.filter_diet
 
 import com.chrisjanusa.randomizer.RandomizerFragment
 import com.chrisjanusa.randomizer.base.interfaces.FeatureUIManager
@@ -7,23 +7,23 @@ import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.Filter
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.clickSelectionFilter
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.renderFilterStyle
-import com.chrisjanusa.randomizer.filter_restriction.RestrictionHelper.defaultRestrictionTitle
-import com.chrisjanusa.randomizer.filter_restriction.RestrictionHelper.isDefault
+import com.chrisjanusa.randomizer.filter_diet.DietHelper.defaultDietTitle
+import com.chrisjanusa.randomizer.filter_diet.DietHelper.isDefault
 import kotlinx.android.synthetic.main.filters.*
 
-object RestrictionUIManager : FeatureUIManager {
+object DietUIManager : FeatureUIManager {
 
     override fun init(randomizerViewModel: RandomizerViewModel, fragment: RandomizerFragment) {
         fragment.run {
-            restrictions.setOnClickListener { clickSelectionFilter(Filter.Restriction, randomizerViewModel) }
+            diet.setOnClickListener { clickSelectionFilter(Filter.Diet, randomizerViewModel) }
         }
     }
 
     override fun render(state: RandomizerState, fragment: RandomizerFragment) {
         fragment.run {
-            val selected = !isDefault(state.restriction)
-            restrictions.text = if (selected) state.restriction.display else defaultRestrictionTitle
-            context?.let { renderFilterStyle(restrictions, selected, it) }
+            val selected = !isDefault(state.diet)
+            diet.text = if (selected) state.diet.display else defaultDietTitle
+            context?.let { renderFilterStyle(diet, selected, it) }
         }
     }
 }

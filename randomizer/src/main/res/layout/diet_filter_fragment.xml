@@ -24,19 +24,44 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginStart="@dimen/filter_overlay_side_margin"
                 android:layout_marginTop="@dimen/filter_overlay_top_margin"
-                android:text="Category"
+                android:text="@string/diet"
                 android:textSize="@dimen/filter_title_text_size"
                 android:textColor="@color/filter_overlay_text"
         />
-        <include
-                android:id="@+id/grid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@+id/title"
-                app:layout_constraintTop_toBottomOf="@+id/title"
-                layout="@layout/categories"
-                android:layout_marginEnd="@dimen/filter_overlay_side_margin"
-                android:layout_marginStart="@dimen/filter_overlay_side_margin"
+        <com.google.android.material.button.MaterialButton
+                android:id='@+id/vegan'
+                style="@style/DietButtonAppearance"
+                android:text="Vegan"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/vegetarian"
+                app:layout_constraintTop_toBottomOf="@id/title"
+                android:layout_marginTop="@dimen/filter_overlay_top_margin"
+        />
+        <com.google.android.material.button.MaterialButton
+                android:id='@+id/vegetarian'
+                style="@style/DietButtonAppearance"
+                android:text="Vegetarian"
+                app:layout_constraintStart_toEndOf="@id/vegan"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title"
+                android:layout_marginTop="@dimen/filter_overlay_top_margin"
+        />
+        <com.google.android.material.button.MaterialButton
+                android:id='@+id/halal'
+                style="@style/DietButtonAppearance"
+                android:text="Halal"
+                app:layout_constraintStart_toStartOf="@id/vegan"
+                app:layout_constraintEnd_toEndOf="@id/vegan"
+                app:layout_constraintTop_toBottomOf="@id/vegan"
+                android:layout_marginTop="@dimen/filter_overlay_top_margin"
+        />
+        <com.google.android.material.button.MaterialButton
+                android:id='@+id/kosher'
+                style="@style/DietButtonAppearance"
+                android:text="Kosher"
+                app:layout_constraintStart_toStartOf="@id/vegetarian"
+                app:layout_constraintEnd_toEndOf="@id/vegetarian"
+                app:layout_constraintTop_toBottomOf="@id/vegetarian"
                 android:layout_marginTop="@dimen/filter_overlay_top_margin"
         />
         <include
@@ -45,11 +70,11 @@
                 android:layout_height="wrap_content"
                 layout="@layout/confirmation_buttons"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/grid"
+                app:layout_constraintTop_toBottomOf="@id/kosher"
                 android:layout_marginTop="@dimen/filter_overlay_top_margin"
                 android:layout_marginBottom="@dimen/filter_overlay_top_margin"
                 android:layout_marginEnd="@dimen/filter_overlay_side_margin"
         />
     </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
 
+</androidx.constraintlayout.widget.ConstraintLayout>

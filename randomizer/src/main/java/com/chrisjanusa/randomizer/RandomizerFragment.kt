@@ -16,10 +16,10 @@ import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
 import com.chrisjanusa.randomizer.base.preferences.PreferenceHelper
 import com.chrisjanusa.randomizer.filter_boolean.BooleanFilterUIManager
-import com.chrisjanusa.randomizer.filter_category.CategoryUIManager
+import com.chrisjanusa.randomizer.filter_cuisine.CuisineUIManager
 import com.chrisjanusa.randomizer.filter_distance.DistanceUIManager
 import com.chrisjanusa.randomizer.filter_price.PriceUIManager
-import com.chrisjanusa.randomizer.filter_restriction.RestrictionUIManager
+import com.chrisjanusa.randomizer.filter_diet.DietUIManager
 import com.chrisjanusa.randomizer.location_base.LocationHelper.spaceNeedleLat
 import com.chrisjanusa.randomizer.location_base.LocationHelper.spaceNeedleLng
 import com.chrisjanusa.randomizer.location_base.LocationHelper.zoomLevel
@@ -48,10 +48,10 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
     private lateinit var randomizerViewModel: RandomizerViewModel
     private val featureUIManagers = listOf(
         BooleanFilterUIManager,
-        CategoryUIManager,
+        CuisineUIManager,
         DistanceUIManager,
         PriceUIManager,
-        RestrictionUIManager,
+        DietUIManager,
         LocationUIManager,
         GpsUIManager,
         SearchUIManager

@@ -10,8 +10,8 @@ import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
 import com.chrisjanusa.randomizer.base.models.MapUpdate
 import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.base.preferences.PreferenceHelper
-import com.chrisjanusa.randomizer.filter_category.CategoryHelper.setFromSaveString
-import com.chrisjanusa.randomizer.filter_restriction.RestrictionHelper.restrictionFromIdentifier
+import com.chrisjanusa.randomizer.filter_cuisine.CuisineHelper.setFromSaveString
+import com.chrisjanusa.randomizer.filter_diet.DietHelper.dietFromIdentifier
 import com.chrisjanusa.randomizer.location_base.LocationHelper
 import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLocationText
 import com.chrisjanusa.randomizer.location_base.LocationHelper.isDefault
@@ -32,8 +32,8 @@ class InitAction(private val activity: Activity?) : BaseAction {
         val preferenceData = PreferenceHelper.retrieveState(activity?.getPreferences(Context.MODE_PRIVATE))
 
         preferenceData?.run {
-            val restrictionObject = restrictionFromIdentifier(restriction)
-            val categorySet = setFromSaveString(categoryString)
+            val dietObject = dietFromIdentifier(diet)
+            val cuisineSet = setFromSaveString(cuisineString)
 
             if (isDefault(currLat, currLng)) {
                 updateChannel.send(
@@ -42,10 +42,10 @@ class InitAction(private val activity: Activity?) : BaseAction {
                         openNowSelected,
                         favoriteOnlySelected,
                         maxMilesSelected,
-                        restrictionObject,
+                        dietObject,
                         priceSelected,
-                        categoryString,
-                        categorySet,
+                        cuisineString,
+                        cuisineSet,
                         currLat,
                         currLng,
                         defaultLocationText
@@ -66,10 +66,10 @@ class InitAction(private val activity: Activity?) : BaseAction {
                         openNowSelected,
                         favoriteOnlySelected,
                         maxMilesSelected,
-                        restrictionObject,
+                        dietObject,
                         priceSelected,
-                        categoryString,
-                        categorySet,
+                        cuisineString,
+                        cuisineSet,
                         currLat,
                         currLng,
                         locationName

@@ -21,10 +21,10 @@
     <dimen name="filter_title_text_size">@dimen/_15ssp</dimen>
     <dimen name="price_width">@dimen/_60sdp</dimen>
     <dimen name="price_text_size">@dimen/_15ssp</dimen>
-    <dimen name="restriction_width">@dimen/_100sdp</dimen>
-    <dimen name="restriction_text_size">@dimen/_12ssp</dimen>
+    <dimen name="diet_width">@dimen/_100sdp</dimen>
+    <dimen name="diet_text_size">@dimen/_12ssp</dimen>
     <dimen name="filter_confirm_text_size">@dimen/_12ssp</dimen>
-    <dimen name="category_icon_size">@dimen/_20sdp</dimen>
+    <dimen name="cuisine_icon_size">@dimen/_20sdp</dimen>
     <dimen name="location_search_default_width">@dimen/_135sdp</dimen>
     <dimen name="location_text_start_margin">@dimen/_1sdp</dimen>
 </resources>

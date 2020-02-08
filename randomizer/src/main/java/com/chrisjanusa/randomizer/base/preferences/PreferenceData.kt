@@ -5,9 +5,9 @@ data class PreferenceData(
     val openNowSelected: Boolean,
     val favoriteOnlySelected: Boolean,
     val maxMilesSelected: Float,
-    val restriction: String,
+    val diet: String,
     val priceSelected: String,
-    val categoryString: String,
+    val cuisineString: String,
     val currLat: Double,
     val currLng: Double
 )

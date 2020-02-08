@@ -7,17 +7,17 @@
         android:layout_height="wrap_content"
 >
     <com.google.android.material.card.MaterialCardView
-            style="@style/CategoryCard"
+            style="@style/CuisineCard"
             android:id="@+id/american"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toStartOf="@id/asian"
             app:layout_constraintStart_toStartOf="parent"
     >
         <androidx.constraintlayout.widget.ConstraintLayout
-                style="@style/CategoryConstraint"
+                style="@style/CuisineConstraint"
         >
             <ImageView
-                    style="@style/CategoryIcon"
+                    style="@style/CuisineIcon"
                     android:id="@+id/american_icon"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toTopOf="@id/american_description"
@@ -26,7 +26,7 @@
                     android:src="@drawable/american"
             />
             <TextView
-                    style="@style/CategoryText"
+                    style="@style/CuisineText"
                     android:id="@+id/american_description"
                     app:layout_constraintTop_toBottomOf="@id/american_icon"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -37,17 +37,17 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
     <com.google.android.material.card.MaterialCardView
-            style="@style/CategoryCard"
+            style="@style/CuisineCard"
             android:id="@+id/asian"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toStartOf="@id/bbq"
             app:layout_constraintStart_toEndOf="@id/american"
     >
         <androidx.constraintlayout.widget.ConstraintLayout
-                style="@style/CategoryConstraint"
+                style="@style/CuisineConstraint"
         >
             <ImageView
-                    style="@style/CategoryIcon"
+                    style="@style/CuisineIcon"
                     android:id="@+id/asian_icon"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toTopOf="@id/asian_description"
@@ -56,7 +56,7 @@
                     android:src="@drawable/asian"
             />
             <TextView
-                    style="@style/CategoryText"
+                    style="@style/CuisineText"
                     android:id="@+id/asian_description"
                     app:layout_constraintTop_toBottomOf="@id/asian_icon"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -67,17 +67,17 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
     <com.google.android.material.card.MaterialCardView
-            style="@style/CategoryCard"
+            style="@style/CuisineCard"
             android:id="@+id/bbq"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/asian"
     >
         <androidx.constraintlayout.widget.ConstraintLayout
-                style="@style/CategoryConstraint"
+                style="@style/CuisineConstraint"
         >
             <ImageView
-                    style="@style/CategoryIcon"
+                    style="@style/CuisineIcon"
                     android:id="@+id/bbq_icon"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toTopOf="@id/bbq_description"
@@ -86,7 +86,7 @@
                     android:src="@drawable/bbq"
             />
             <TextView
-                    style="@style/CategoryText"
+                    style="@style/CuisineText"
                     android:id="@+id/bbq_description"
                     app:layout_constraintTop_toBottomOf="@id/bbq_icon"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -97,17 +97,17 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
     <com.google.android.material.card.MaterialCardView
-            style="@style/CategoryCard"
+            style="@style/CuisineCard"
             android:id="@+id/deli"
             app:layout_constraintTop_toBottomOf="@id/american"
             app:layout_constraintEnd_toStartOf="@id/desserts"
             app:layout_constraintStart_toStartOf="parent"
     >
         <androidx.constraintlayout.widget.ConstraintLayout
-                style="@style/CategoryConstraint"
+                style="@style/CuisineConstraint"
         >
             <ImageView
-                    style="@style/CategoryIcon"
+                    style="@style/CuisineIcon"
                     android:id="@+id/deli_icon"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toTopOf="@id/deli_description"
@@ -116,7 +116,7 @@
                     android:src="@drawable/deli"
             />
             <TextView
-                    style="@style/CategoryText"
+                    style="@style/CuisineText"
                     android:id="@+id/deli_description"
                     app:layout_constraintTop_toBottomOf="@id/deli_icon"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -127,17 +127,17 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
     <com.google.android.material.card.MaterialCardView
-            style="@style/CategoryCard"
+            style="@style/CuisineCard"
             android:id="@+id/desserts"
             app:layout_constraintTop_toBottomOf="@id/asian"
             app:layout_constraintEnd_toStartOf="@id/italian"
             app:layout_constraintStart_toEndOf="@id/deli"
     >
         <androidx.constraintlayout.widget.ConstraintLayout
-                style="@style/CategoryConstraint"
+                style="@style/CuisineConstraint"
         >
             <ImageView
-                    style="@style/CategoryIcon"
+                    style="@style/CuisineIcon"
                     android:id="@+id/desserts_icon"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toTopOf="@id/desserts_description"
@@ -146,7 +146,7 @@
                     android:src="@drawable/desserts"
             />
             <TextView
-                    style="@style/CategoryText"
+                    style="@style/CuisineText"
                     android:id="@+id/desserts_description"
                     app:layout_constraintTop_toBottomOf="@id/desserts_icon"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -157,17 +157,17 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
     <com.google.android.material.card.MaterialCardView
-            style="@style/CategoryCard"
+            style="@style/CuisineCard"
             android:id="@+id/italian"
             app:layout_constraintTop_toBottomOf="@id/bbq"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/desserts"
     >
         <androidx.constraintlayout.widget.ConstraintLayout
-                style="@style/CategoryConstraint"
+                style="@style/CuisineConstraint"
         >
             <ImageView
-                    style="@style/CategoryIcon"
+                    style="@style/CuisineIcon"
                     android:id="@+id/italian_icon"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toTopOf="@id/italian_description"
@@ -176,7 +176,7 @@
                     android:src="@drawable/italian"
             />
             <TextView
-                    style="@style/CategoryText"
+                    style="@style/CuisineText"
                     android:id="@+id/italian_description"
                     app:layout_constraintTop_toBottomOf="@id/italian_icon"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -187,17 +187,17 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
     <com.google.android.material.card.MaterialCardView
-            style="@style/CategoryCard"
+            style="@style/CuisineCard"
             android:id="@+id/indian"
             app:layout_constraintTop_toBottomOf="@id/deli"
             app:layout_constraintEnd_toStartOf="@id/mexican"
             app:layout_constraintStart_toStartOf="parent"
     >
         <androidx.constraintlayout.widget.ConstraintLayout
-                style="@style/CategoryConstraint"
+                style="@style/CuisineConstraint"
         >
             <ImageView
-                    style="@style/CategoryIcon"
+                    style="@style/CuisineIcon"
                     android:id="@+id/indian_icon"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toTopOf="@id/indian_description"
@@ -206,7 +206,7 @@
                     android:src="@drawable/indian"
             />
             <TextView
-                    style="@style/CategoryText"
+                    style="@style/CuisineText"
                     android:id="@+id/indian_description"
                     app:layout_constraintTop_toBottomOf="@id/indian_icon"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -217,17 +217,17 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
     <com.google.android.material.card.MaterialCardView
-            style="@style/CategoryCard"
+            style="@style/CuisineCard"
             android:id="@+id/mexican"
             app:layout_constraintTop_toBottomOf="@id/desserts"
             app:layout_constraintEnd_toStartOf="@id/pizza"
             app:layout_constraintStart_toEndOf="@id/indian"
     >
         <androidx.constraintlayout.widget.ConstraintLayout
-                style="@style/CategoryConstraint"
+                style="@style/CuisineConstraint"
         >
             <ImageView
-                    style="@style/CategoryIcon"
+                    style="@style/CuisineIcon"
                     android:id="@+id/mexican_icon"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toTopOf="@id/mexican_description"
@@ -236,7 +236,7 @@
                     android:src="@drawable/mexican"
             />
             <TextView
-                    style="@style/CategoryText"
+                    style="@style/CuisineText"
                     android:id="@+id/mexican_description"
                     app:layout_constraintTop_toBottomOf="@id/mexican_icon"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -247,17 +247,17 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
     <com.google.android.material.card.MaterialCardView
-            style="@style/CategoryCard"
+            style="@style/CuisineCard"
             android:id="@+id/pizza"
             app:layout_constraintTop_toBottomOf="@id/italian"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/mexican"
     >
         <androidx.constraintlayout.widget.ConstraintLayout
-                style="@style/CategoryConstraint"
+                style="@style/CuisineConstraint"
         >
             <ImageView
-                    style="@style/CategoryIcon"
+                    style="@style/CuisineIcon"
                     android:id="@+id/pizza_icon"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toTopOf="@id/pizza_description"
@@ -266,7 +266,7 @@
                     android:src="@drawable/pizza"
             />
             <TextView
-                    style="@style/CategoryText"
+                    style="@style/CuisineText"
                     android:id="@+id/pizza_description"
                     app:layout_constraintTop_toBottomOf="@id/pizza_icon"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -277,17 +277,17 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
     <com.google.android.material.card.MaterialCardView
-            style="@style/CategoryCard"
+            style="@style/CuisineCard"
             android:id="@+id/seafood"
             app:layout_constraintTop_toBottomOf="@id/indian"
             app:layout_constraintEnd_toStartOf="@id/steak"
             app:layout_constraintStart_toStartOf="parent"
     >
         <androidx.constraintlayout.widget.ConstraintLayout
-                style="@style/CategoryConstraint"
+                style="@style/CuisineConstraint"
         >
             <ImageView
-                    style="@style/CategoryIcon"
+                    style="@style/CuisineIcon"
                     android:id="@+id/seafood_icon"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toTopOf="@id/seafood_description"
@@ -296,7 +296,7 @@
                     android:src="@drawable/seafood"
             />
             <TextView
-                    style="@style/CategoryText"
+                    style="@style/CuisineText"
                     android:id="@+id/seafood_description"
                     app:layout_constraintTop_toBottomOf="@id/seafood_icon"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -307,17 +307,17 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
     <com.google.android.material.card.MaterialCardView
-            style="@style/CategoryCard"
+            style="@style/CuisineCard"
             android:id="@+id/steak"
             app:layout_constraintTop_toBottomOf="@id/mexican"
             app:layout_constraintEnd_toStartOf="@id/sushi"
             app:layout_constraintStart_toEndOf="@id/seafood"
     >
         <androidx.constraintlayout.widget.ConstraintLayout
-                style="@style/CategoryConstraint"
+                style="@style/CuisineConstraint"
         >
             <ImageView
-                    style="@style/CategoryIcon"
+                    style="@style/CuisineIcon"
                     android:id="@+id/steak_icon"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toTopOf="@id/steak_description"
@@ -326,7 +326,7 @@
                     android:src="@drawable/steak"
             />
             <TextView
-                    style="@style/CategoryText"
+                    style="@style/CuisineText"
                     android:id="@+id/steak_description"
                     app:layout_constraintTop_toBottomOf="@id/steak_icon"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -337,17 +337,17 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
     <com.google.android.material.card.MaterialCardView
-            style="@style/CategoryCard"
+            style="@style/CuisineCard"
             android:id="@+id/sushi"
             app:layout_constraintTop_toBottomOf="@id/pizza"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/steak"
     >
         <androidx.constraintlayout.widget.ConstraintLayout
-                style="@style/CategoryConstraint"
+                style="@style/CuisineConstraint"
         >
             <ImageView
-                    style="@style/CategoryIcon"
+                    style="@style/CuisineIcon"
                     android:id="@+id/sushi_icon"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toTopOf="@id/sushi_description"
@@ -356,7 +356,7 @@
                     android:src="@drawable/sushi"
             />
             <TextView
-                    style="@style/CategoryText"
+                    style="@style/CuisineText"
                     android:id="@+id/sushi_description"
                     app:layout_constraintTop_toBottomOf="@id/sushi_icon"
                     app:layout_constraintBottom_toBottomOf="parent"
