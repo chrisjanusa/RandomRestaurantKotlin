@@ -1,8 +1,8 @@
 package com.chrisjanusa.randomizer.base.models
 
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.Filter
-import com.chrisjanusa.randomizer.filter_category.CategoryHelper.defaultCategoryTitle
-import com.chrisjanusa.randomizer.filter_category.CategoryHelper.Category
+import com.chrisjanusa.randomizer.filter_cuisine.CuisineHelper.defaultCuisineTitle
+import com.chrisjanusa.randomizer.filter_cuisine.CuisineHelper.Cuisine
 import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.defaultDistance
 import com.chrisjanusa.randomizer.filter_price.PriceHelper.Price
 import com.chrisjanusa.randomizer.filter_price.PriceHelper.defaultPriceTitle
@@ -35,7 +35,7 @@ data class RandomizerState(
     val dietTempSelected: Diet = Diet.None,
     val diet: Diet = Diet.None,
 
-    val categorySet: HashSet<Category> = HashSet(),
-    val categoryString: String = defaultCategoryTitle,
-    val categoryTempSet: HashSet<Category> = HashSet()
+    val cuisineSet: HashSet<Cuisine> = HashSet(),
+    val cuisineString: String = defaultCuisineTitle,
+    val cuisineTempSet: HashSet<Cuisine> = HashSet()
 )

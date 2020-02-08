@@ -16,7 +16,7 @@ object PreferenceHelper {
         object FavoriteOnlySelected : StateObject("favoriteOnlySelected")
         object MaxMilesSelected : StateObject("maxMilesSelected")
         object Diet : StateObject("diet")
-        object Category : StateObject("category")
+        object Cuisine : StateObject("cuisine")
         object Latitude : StateObject("currLat")
         object Longitude : StateObject("currLng")
     }
@@ -30,7 +30,7 @@ object PreferenceHelper {
                 putFloat(PreferenceHelper.StateObject.MaxMilesSelected.key, state.maxMilesSelected)
                 putString(PreferenceHelper.StateObject.Diet.key, state.diet.identifier)
                 putString(PreferenceHelper.StateObject.PriceSelected.key, state.priceText)
-                putString(PreferenceHelper.StateObject.Category.key, state.categoryString)
+                putString(PreferenceHelper.StateObject.Cuisine.key, state.cuisineString)
                 putFloat(PreferenceHelper.StateObject.Latitude.key, state.currLat.toFloat())
                 putFloat(PreferenceHelper.StateObject.Longitude.key, state.currLng.toFloat())
                 apply()
@@ -48,7 +48,7 @@ object PreferenceHelper {
                 getString(PreferenceHelper.StateObject.Diet.key, DietHelper.Diet.None.identifier)
                     ?: DietHelper.Diet.None.identifier,
                 getString(PreferenceHelper.StateObject.PriceSelected.key, defaultPriceTitle) ?: defaultPriceTitle,
-                getString(PreferenceHelper.StateObject.Category.key, "") ?: "",
+                getString(PreferenceHelper.StateObject.Cuisine.key, "") ?: "",
                 getFloat(PreferenceHelper.StateObject.Latitude.key, defaultLat.toFloat()).toDouble(),
                 getFloat(PreferenceHelper.StateObject.Longitude.key, defaultLng.toFloat()).toDouble()
             )

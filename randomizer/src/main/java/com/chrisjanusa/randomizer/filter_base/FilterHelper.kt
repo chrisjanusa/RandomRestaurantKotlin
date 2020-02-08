@@ -8,7 +8,7 @@ import com.chrisjanusa.randomizer.base.CommunicationHelper.sendAction
 import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
 import com.chrisjanusa.randomizer.filter_base.actions.CancelClickAction
 import com.chrisjanusa.randomizer.filter_base.actions.ClickSelectionFilterAction
-import com.chrisjanusa.randomizer.filter_category.CategoryFragment
+import com.chrisjanusa.randomizer.filter_cuisine.CuisineFragment
 import com.chrisjanusa.randomizer.filter_distance.DistanceFragment
 import com.chrisjanusa.randomizer.filter_price.PriceFragment
 import com.chrisjanusa.randomizer.filter_diet.DietFragment
@@ -52,7 +52,7 @@ object FilterHelper {
 
     sealed class Filter(val fragment: Fragment) {
         object Price : Filter(PriceFragment())
-        object Category : Filter(CategoryFragment())
+        object Cuisine : Filter(CuisineFragment())
         object Distance : Filter(DistanceFragment())
         object Diet : Filter(DietFragment())
     }

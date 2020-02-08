@@ -7,7 +7,7 @@ data class PreferenceData(
     val maxMilesSelected: Float,
     val diet: String,
     val priceSelected: String,
-    val categoryString: String,
+    val cuisineString: String,
     val currLat: Double,
     val currLng: Double
 )

@@ -16,9 +16,9 @@
                 android:text="@string/open_now"
         />
         <com.google.android.material.button.MaterialButton
-                android:id='@+id/categories'
+                android:id='@+id/cuisines'
                 style="@style/FilterAppearance"
-                android:text="@string/categories"
+                android:text="@string/cuisines"
                 app:icon="@drawable/expand"
         />
         <com.google.android.material.button.MaterialButton

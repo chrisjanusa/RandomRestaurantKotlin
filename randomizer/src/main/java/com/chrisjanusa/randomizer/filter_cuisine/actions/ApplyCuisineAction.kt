@@ -1,4 +1,4 @@
-package com.chrisjanusa.randomizer.filter_category.actions
+package com.chrisjanusa.randomizer.filter_cuisine.actions
 
 import androidx.lifecycle.LiveData
 import com.chrisjanusa.randomizer.base.interfaces.BaseAction
@@ -8,11 +8,11 @@ import com.chrisjanusa.randomizer.base.models.MapUpdate
 import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.filter_base.events.CloseFilterEvent
 import com.chrisjanusa.randomizer.filter_base.updaters.FilterOpenUpdater
-import com.chrisjanusa.randomizer.filter_category.CategoryHelper.toSaveString
-import com.chrisjanusa.randomizer.filter_category.updaters.SelectedCategoryUpdater
+import com.chrisjanusa.randomizer.filter_cuisine.CuisineHelper.toSaveString
+import com.chrisjanusa.randomizer.filter_cuisine.updaters.SelectedCuisineUpdater
 import kotlinx.coroutines.channels.Channel
 
-class ApplyCategoryAction : BaseAction {
+class ApplyCuisineAction : BaseAction {
     override suspend fun performAction(
         currentState: LiveData<RandomizerState>,
         updateChannel: Channel<BaseUpdater>,
@@ -20,7 +20,7 @@ class ApplyCategoryAction : BaseAction {
         mapChannel: Channel<MapUpdate>
     ) {
         currentState.value?.run {
-            updateChannel.send(SelectedCategoryUpdater(categoryTempSet, categoryTempSet.toSaveString()))
+            updateChannel.send(SelectedCuisineUpdater(cuisineTempSet, cuisineTempSet.toSaveString()))
         }
         eventChannel.send(CloseFilterEvent())
         updateChannel.send(FilterOpenUpdater(null))

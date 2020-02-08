@@ -24,7 +24,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginStart="@dimen/filter_overlay_side_margin"
                 android:layout_marginTop="@dimen/filter_overlay_top_margin"
-                android:text="Category"
+                android:text="Cuisine"
                 android:textSize="@dimen/filter_title_text_size"
                 android:textColor="@color/filter_overlay_text"
         />
@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="@+id/title"
                 app:layout_constraintTop_toBottomOf="@+id/title"
-                layout="@layout/categories"
+                layout="@layout/cuisines"
                 android:layout_marginEnd="@dimen/filter_overlay_side_margin"
                 android:layout_marginStart="@dimen/filter_overlay_side_margin"
                 android:layout_marginTop="@dimen/filter_overlay_top_margin"

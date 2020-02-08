@@ -9,7 +9,7 @@ Deciding where to eat takes forever. Either your friends / family can never agre
 If you don't like the place it finds, swipe it to the left to get a new one. Found one you like? Click it to open it in Yelp, Uber, or Google Maps straiht from the app. Got a place that you're thinking about, but not quite sure? Add it to your saved list by clicking the star icon to access it later.
 
 Features:
- - Filter your searches by entering a category or type of food.
+ - Filter your searches by entering a cuisine or type of food.
  - Filter by dietary restrictions (vegetarian, vegan, halal, kosher)
  - Filter your searches by price range ($, $$, $$$, $$$$).
  - Filter by restaurants that are currently open. 
