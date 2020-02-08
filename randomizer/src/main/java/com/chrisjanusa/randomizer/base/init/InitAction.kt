@@ -11,7 +11,7 @@ import com.chrisjanusa.randomizer.base.models.MapUpdate
 import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.base.preferences.PreferenceHelper
 import com.chrisjanusa.randomizer.filter_category.CategoryHelper.setFromSaveString
-import com.chrisjanusa.randomizer.filter_restriction.RestrictionHelper.restrictionFromIdentifier
+import com.chrisjanusa.randomizer.filter_diet.DietHelper.dietFromIdentifier
 import com.chrisjanusa.randomizer.location_base.LocationHelper
 import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLocationText
 import com.chrisjanusa.randomizer.location_base.LocationHelper.isDefault
@@ -32,7 +32,7 @@ class InitAction(private val activity: Activity?) : BaseAction {
         val preferenceData = PreferenceHelper.retrieveState(activity?.getPreferences(Context.MODE_PRIVATE))
 
         preferenceData?.run {
-            val restrictionObject = restrictionFromIdentifier(restriction)
+            val dietObject = dietFromIdentifier(diet)
             val categorySet = setFromSaveString(categoryString)
 
             if (isDefault(currLat, currLng)) {
@@ -42,7 +42,7 @@ class InitAction(private val activity: Activity?) : BaseAction {
                         openNowSelected,
                         favoriteOnlySelected,
                         maxMilesSelected,
-                        restrictionObject,
+                        dietObject,
                         priceSelected,
                         categoryString,
                         categorySet,
@@ -66,7 +66,7 @@ class InitAction(private val activity: Activity?) : BaseAction {
                         openNowSelected,
                         favoriteOnlySelected,
                         maxMilesSelected,
-                        restrictionObject,
+                        dietObject,
                         priceSelected,
                         categoryString,
                         categorySet,

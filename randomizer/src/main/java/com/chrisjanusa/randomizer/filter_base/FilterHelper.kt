@@ -11,7 +11,7 @@ import com.chrisjanusa.randomizer.filter_base.actions.ClickSelectionFilterAction
 import com.chrisjanusa.randomizer.filter_category.CategoryFragment
 import com.chrisjanusa.randomizer.filter_distance.DistanceFragment
 import com.chrisjanusa.randomizer.filter_price.PriceFragment
-import com.chrisjanusa.randomizer.filter_restriction.RestrictionFragment
+import com.chrisjanusa.randomizer.filter_diet.DietFragment
 import com.google.android.material.button.MaterialButton
 
 object FilterHelper {
@@ -54,6 +54,6 @@ object FilterHelper {
         object Price : Filter(PriceFragment())
         object Category : Filter(CategoryFragment())
         object Distance : Filter(DistanceFragment())
-        object Restriction : Filter(RestrictionFragment())
+        object Diet : Filter(DietFragment())
     }
 }

@@ -19,7 +19,7 @@ import com.chrisjanusa.randomizer.filter_boolean.BooleanFilterUIManager
 import com.chrisjanusa.randomizer.filter_category.CategoryUIManager
 import com.chrisjanusa.randomizer.filter_distance.DistanceUIManager
 import com.chrisjanusa.randomizer.filter_price.PriceUIManager
-import com.chrisjanusa.randomizer.filter_restriction.RestrictionUIManager
+import com.chrisjanusa.randomizer.filter_diet.DietUIManager
 import com.chrisjanusa.randomizer.location_base.LocationHelper.spaceNeedleLat
 import com.chrisjanusa.randomizer.location_base.LocationHelper.spaceNeedleLng
 import com.chrisjanusa.randomizer.location_base.LocationHelper.zoomLevel
@@ -51,7 +51,7 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         CategoryUIManager,
         DistanceUIManager,
         PriceUIManager,
-        RestrictionUIManager,
+        DietUIManager,
         LocationUIManager,
         GpsUIManager,
         SearchUIManager

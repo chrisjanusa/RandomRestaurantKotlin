@@ -4,7 +4,7 @@ import android.content.SharedPreferences
 import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.filter_distance.DistanceHelper
 import com.chrisjanusa.randomizer.filter_price.PriceHelper.defaultPriceTitle
-import com.chrisjanusa.randomizer.filter_restriction.RestrictionHelper
+import com.chrisjanusa.randomizer.filter_diet.DietHelper
 import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLat
 import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLng
 
@@ -15,7 +15,7 @@ object PreferenceHelper {
         object OpenNowSelected : StateObject("openNowSelected")
         object FavoriteOnlySelected : StateObject("favoriteOnlySelected")
         object MaxMilesSelected : StateObject("maxMilesSelected")
-        object Restriction : StateObject("restriction")
+        object Diet : StateObject("diet")
         object Category : StateObject("category")
         object Latitude : StateObject("currLat")
         object Longitude : StateObject("currLng")
@@ -28,7 +28,7 @@ object PreferenceHelper {
                 putBoolean(PreferenceHelper.StateObject.OpenNowSelected.key, state.openNowSelected)
                 putBoolean(PreferenceHelper.StateObject.FavoriteOnlySelected.key, state.favoriteOnlySelected)
                 putFloat(PreferenceHelper.StateObject.MaxMilesSelected.key, state.maxMilesSelected)
-                putString(PreferenceHelper.StateObject.Restriction.key, state.restriction.identifier)
+                putString(PreferenceHelper.StateObject.Diet.key, state.diet.identifier)
                 putString(PreferenceHelper.StateObject.PriceSelected.key, state.priceText)
                 putString(PreferenceHelper.StateObject.Category.key, state.categoryString)
                 putFloat(PreferenceHelper.StateObject.Latitude.key, state.currLat.toFloat())
@@ -45,8 +45,8 @@ object PreferenceHelper {
                 getBoolean(PreferenceHelper.StateObject.OpenNowSelected.key, false),
                 getBoolean(PreferenceHelper.StateObject.FavoriteOnlySelected.key, false),
                 getFloat(PreferenceHelper.StateObject.MaxMilesSelected.key, DistanceHelper.defaultDistance),
-                getString(PreferenceHelper.StateObject.Restriction.key, RestrictionHelper.Restriction.None.identifier)
-                    ?: RestrictionHelper.Restriction.None.identifier,
+                getString(PreferenceHelper.StateObject.Diet.key, DietHelper.Diet.None.identifier)
+                    ?: DietHelper.Diet.None.identifier,
                 getString(PreferenceHelper.StateObject.PriceSelected.key, defaultPriceTitle) ?: defaultPriceTitle,
                 getString(PreferenceHelper.StateObject.Category.key, "") ?: "",
                 getFloat(PreferenceHelper.StateObject.Latitude.key, defaultLat.toFloat()).toDouble(),

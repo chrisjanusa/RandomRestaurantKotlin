@@ -1,4 +1,4 @@
-package com.chrisjanusa.randomizer.filter_restriction.actions
+package com.chrisjanusa.randomizer.filter_diet.actions
 
 import androidx.lifecycle.LiveData
 import com.chrisjanusa.randomizer.base.interfaces.BaseAction
@@ -6,11 +6,10 @@ import com.chrisjanusa.randomizer.base.interfaces.BaseEvent
 import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
 import com.chrisjanusa.randomizer.base.models.MapUpdate
 import com.chrisjanusa.randomizer.base.models.RandomizerState
-import com.chrisjanusa.randomizer.filter_restriction.RestrictionHelper.Restriction
-import com.chrisjanusa.randomizer.filter_restriction.updaters.TempRestrictionUpdater
+import com.chrisjanusa.randomizer.filter_diet.updaters.TempDietUpdater
 import kotlinx.coroutines.channels.Channel
 
-class ResetRestrictionAction : BaseAction {
+class InitDietFilterAction : BaseAction {
     override suspend fun performAction(
         currentState: LiveData<RandomizerState>,
         updateChannel: Channel<BaseUpdater>,
@@ -18,7 +17,8 @@ class ResetRestrictionAction : BaseAction {
         mapChannel: Channel<MapUpdate>
     ) {
         currentState.value?.run {
-            updateChannel.send(TempRestrictionUpdater(Restriction.None))
+            updateChannel.send(TempDietUpdater(diet))
         }
     }
+
 }

@@ -6,7 +6,7 @@ import com.chrisjanusa.randomizer.filter_category.CategoryHelper.Category
 import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.defaultDistance
 import com.chrisjanusa.randomizer.filter_price.PriceHelper.Price
 import com.chrisjanusa.randomizer.filter_price.PriceHelper.defaultPriceTitle
-import com.chrisjanusa.randomizer.filter_restriction.RestrictionHelper.Restriction
+import com.chrisjanusa.randomizer.filter_diet.DietHelper.Diet
 import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLat
 import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLng
 import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLocationText
@@ -32,8 +32,8 @@ data class RandomizerState(
     val maxMilesSelected: Float = defaultDistance,
     val tempMaxMiles: Float = defaultDistance,
 
-    val restrictionTempSelected: Restriction = Restriction.None,
-    val restriction: Restriction = Restriction.None,
+    val dietTempSelected: Diet = Diet.None,
+    val diet: Diet = Diet.None,
 
     val categorySet: HashSet<Category> = HashSet(),
     val categoryString: String = defaultCategoryTitle,

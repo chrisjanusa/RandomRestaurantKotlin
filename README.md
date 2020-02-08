@@ -15,7 +15,7 @@ Features:
  - Filter by restaurants that are currently open. 
  - Filter by Distance in blocks from location.
  - Ability to use your GPS for places near you.
- - Abilitt to enter a location manually with autocomplete to search a specific area.
+ - Ability to enter a location manually with autocomplete to search a specific area.
  - Save restaurants to access them later if you want to narrow down your choices.
  - Ability to open the restaurant's page in Yelp, Uber or Google Maps for more information.
  - Displays a mini Google Maps to show where the restaurant is and to get quick directions to it.

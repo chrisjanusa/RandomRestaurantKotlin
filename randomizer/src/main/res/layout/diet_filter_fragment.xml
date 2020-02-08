@@ -24,13 +24,13 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginStart="@dimen/filter_overlay_side_margin"
                 android:layout_marginTop="@dimen/filter_overlay_top_margin"
-                android:text="Food Restrictions"
+                android:text="@string/diet"
                 android:textSize="@dimen/filter_title_text_size"
                 android:textColor="@color/filter_overlay_text"
         />
         <com.google.android.material.button.MaterialButton
                 android:id='@+id/vegan'
-                style="@style/RestrictionButtonAppearance"
+                style="@style/DietButtonAppearance"
                 android:text="Vegan"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/vegetarian"
@@ -39,7 +39,7 @@
         />
         <com.google.android.material.button.MaterialButton
                 android:id='@+id/vegetarian'
-                style="@style/RestrictionButtonAppearance"
+                style="@style/DietButtonAppearance"
                 android:text="Vegetarian"
                 app:layout_constraintStart_toEndOf="@id/vegan"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -48,7 +48,7 @@
         />
         <com.google.android.material.button.MaterialButton
                 android:id='@+id/halal'
-                style="@style/RestrictionButtonAppearance"
+                style="@style/DietButtonAppearance"
                 android:text="Halal"
                 app:layout_constraintStart_toStartOf="@id/vegan"
                 app:layout_constraintEnd_toEndOf="@id/vegan"
@@ -57,7 +57,7 @@
         />
         <com.google.android.material.button.MaterialButton
                 android:id='@+id/kosher'
-                style="@style/RestrictionButtonAppearance"
+                style="@style/DietButtonAppearance"
                 android:text="Kosher"
                 app:layout_constraintStart_toStartOf="@id/vegetarian"
                 app:layout_constraintEnd_toEndOf="@id/vegetarian"

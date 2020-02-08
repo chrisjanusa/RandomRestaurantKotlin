@@ -3,14 +3,14 @@ package com.chrisjanusa.randomizer.base.init
 import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
 import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.filter_category.CategoryHelper.Category
-import com.chrisjanusa.randomizer.filter_restriction.RestrictionHelper
+import com.chrisjanusa.randomizer.filter_diet.DietHelper
 
 class InitUpdater(
     private val gpsOn: Boolean,
     private val openNowSelected: Boolean,
     private val favoriteOnlySelected: Boolean,
     private val maxMilesSelected: Float,
-    private val restriction: RestrictionHelper.Restriction,
+    private val diet: DietHelper.Diet,
     private val priceText: String,
     private val categoryString: String,
     private val categorySet: HashSet<Category>,
@@ -25,7 +25,7 @@ class InitUpdater(
             openNowSelected = openNowSelected,
             favoriteOnlySelected = favoriteOnlySelected,
             maxMilesSelected = maxMilesSelected,
-            restriction = restriction,
+            diet = diet,
             categoryString = categoryString,
             categorySet = categorySet,
             currLat = currLat,
