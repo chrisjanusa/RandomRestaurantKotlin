@@ -6,7 +6,7 @@ import com.chrisjanusa.randomizer.filter_category.CategoryHelper.Category
 
 class TempCategoryAddUpdater(private val category: Category) : BaseUpdater {
     override fun performUpdate(prevState: RandomizerState): RandomizerState {
-        val newSet = prevState.categoryTempSet
+        val newSet = HashSet(prevState.categoryTempSet)
         newSet.add(category)
         return prevState.copy(categoryTempSet = newSet)
     }

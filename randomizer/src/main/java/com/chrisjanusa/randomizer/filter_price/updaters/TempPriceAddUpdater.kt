@@ -6,7 +6,7 @@ import com.chrisjanusa.randomizer.filter_price.PriceHelper
 
 class TempPriceAddUpdater(private val price: PriceHelper.Price) : BaseUpdater {
     override fun performUpdate(prevState: RandomizerState): RandomizerState {
-        val newSet = prevState.priceTempSet
+        val newSet = HashSet(prevState.priceTempSet)
         newSet.add(price)
         return prevState.copy(priceTempSet = newSet)
     }

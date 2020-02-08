@@ -126,6 +126,7 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
     }
 
     override fun onMapReady(googleMap: GoogleMap?) {
+        println("onMapReady")
         googleMap ?: return
         map = googleMap
         icon = getDefaultMarker(this)

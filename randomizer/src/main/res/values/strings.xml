@@ -2,7 +2,6 @@
 <resources>
     <string name="randomize">Randomize</string>
     <string name="default_location">Unknown</string>
-    <string name="enter_location">Enter Location...</string>
     <string name="open_now">Open now</string>
     <string name="categories">Categories</string>
     <string name="price">Price</string>
@@ -27,5 +26,5 @@
     <string name="seafood">Seafood</string>
     <string name="steak">Steak</string>
     <string name="sushi">Sushi</string>
-    <string name="location_prompt">Enter Location...</string>
+    <string name="location_prompt">Enter Location…</string>
 </resources>

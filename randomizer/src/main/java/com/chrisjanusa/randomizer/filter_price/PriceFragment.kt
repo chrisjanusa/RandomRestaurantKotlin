@@ -11,7 +11,7 @@ import com.chrisjanusa.randomizer.base.CommunicationHelper.getViewModel
 import com.chrisjanusa.randomizer.base.CommunicationHelper.sendAction
 import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
-import com.chrisjanusa.randomizer.filter_base.FilterHelper
+import com.chrisjanusa.randomizer.filter_base.FilterHelper.onCancelFilterClick
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.renderButtonStyle
 import com.chrisjanusa.randomizer.filter_price.actions.ApplyPriceAction
 import com.chrisjanusa.randomizer.filter_price.actions.InitPriceFilterAction
@@ -20,6 +20,7 @@ import com.chrisjanusa.randomizer.filter_price.actions.ResetPriceAction
 import com.chrisjanusa.randomizer.filter_price.PriceHelper.Price
 import kotlinx.android.synthetic.main.confirmation_buttons.*
 import kotlinx.android.synthetic.main.price_filter_fragment.*
+import kotlinx.android.synthetic.main.price_filter_fragment.shade
 
 class PriceFragment : Fragment() {
     private lateinit var randomizerViewModel: RandomizerViewModel
@@ -35,8 +36,9 @@ class PriceFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        shade.setOnClickListener { onCancelFilterClick(randomizerViewModel) }
         confirm.setOnClickListener { sendAction(ApplyPriceAction(), randomizerViewModel) }
-        cancel.setOnClickListener { FilterHelper.onCancelFilterClick(randomizerViewModel) }
+        cancel.setOnClickListener { onCancelFilterClick(randomizerViewModel) }
         reset.setOnClickListener { sendAction(ResetPriceAction(), randomizerViewModel) }
         price1.setOnClickListener { priceClick(Price.One) }
         price2.setOnClickListener { priceClick(Price.Two) }
