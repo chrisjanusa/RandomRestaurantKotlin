@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import com.chrisjanusa.randomizer.base.CommunicationHelper.getViewModel
 import com.chrisjanusa.randomizer.base.CommunicationHelper.sendAction
 import com.chrisjanusa.randomizer.base.init.InitAction
+import com.chrisjanusa.randomizer.base.init.InitMapAction
 import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
 import com.chrisjanusa.randomizer.base.preferences.PreferenceHelper
@@ -126,8 +127,8 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
     }
 
     override fun onMapReady(googleMap: GoogleMap?) {
-        println("onMapReady")
         googleMap ?: return
+        sendAction(InitMapAction(), randomizerViewModel)
         map = googleMap
         icon = getDefaultMarker(this)
 

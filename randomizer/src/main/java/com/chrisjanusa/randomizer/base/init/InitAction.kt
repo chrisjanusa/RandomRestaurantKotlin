@@ -15,8 +15,6 @@ import com.chrisjanusa.randomizer.filter_diet.DietHelper.dietFromIdentifier
 import com.chrisjanusa.randomizer.location_base.LocationHelper
 import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLocationText
 import com.chrisjanusa.randomizer.location_base.LocationHelper.isDefault
-import com.chrisjanusa.randomizer.location_base.LocationHelper.spaceNeedleLat
-import com.chrisjanusa.randomizer.location_base.LocationHelper.spaceNeedleLng
 import com.chrisjanusa.randomizer.location_base.updaters.LocationTextUpdater
 import com.chrisjanusa.randomizer.location_gps.GpsHelper.requestLocation
 import com.chrisjanusa.randomizer.location_search.updaters.LastManualLocationUpdater
@@ -34,56 +32,40 @@ class InitAction(private val activity: Activity?) : BaseAction {
         preferenceData?.run {
             val dietObject = dietFromIdentifier(diet)
             val cuisineSet = setFromSaveString(cuisineString)
+            val locationName = if (isDefault(currLat, currLng)) { defaultLocationText } else { getTextFromLatLng(currLat, currLng) }
 
-            if (isDefault(currLat, currLng)) {
-                updateChannel.send(
-                    InitUpdater(
-                        gpsOn,
-                        openNowSelected,
-                        favoriteOnlySelected,
-                        maxMilesSelected,
-                        dietObject,
-                        priceSelected,
-                        cuisineString,
-                        cuisineSet,
-                        currLat,
-                        currLng,
-                        defaultLocationText
-                    )
+            updateChannel.send(
+                InitUpdater(
+                    gpsOn,
+                    openNowSelected,
+                    favoriteOnlySelected,
+                    maxMilesSelected,
+                    dietObject,
+                    priceSelected,
+                    cuisineString,
+                    cuisineSet,
+                    currLat,
+                    currLng,
+                    locationName
                 )
-                mapChannel.send(MapUpdate(spaceNeedleLat, spaceNeedleLng, false))
-            } else {
-                val locationName = activity?.let {
-                    Geocoder(it)
-                        .getFromLocation(currLat, currLng, 1)
-                        .getOrNull(0)
-                        ?.locality
-                } ?: "Unknown"
-
-                updateChannel.send(
-                    InitUpdater(
-                        gpsOn,
-                        openNowSelected,
-                        favoriteOnlySelected,
-                        maxMilesSelected,
-                        dietObject,
-                        priceSelected,
-                        cuisineString,
-                        cuisineSet,
-                        currLat,
-                        currLng,
-                        locationName
-                    )
-                )
-                mapChannel.send(MapUpdate(currLat, currLng, false))
-                if (!gpsOn) updateChannel.send(LastManualLocationUpdater(locationName))
-            }
+            )
 
             if (gpsOn) {
                 updateChannel.send(LocationTextUpdater(LocationHelper.calculatingLocationText))
                 activity?.let { requestLocation(it, updateChannel, eventChannel, mapChannel) }
+            } else {
+                updateChannel.send(LastManualLocationUpdater(locationName))
             }
         }
+    }
+
+    fun getTextFromLatLng(currLat : Double, currLng : Double) : String {
+        return activity?.let {
+            Geocoder(it)
+                .getFromLocation(currLat, currLng, 1)
+                .getOrNull(0)
+                ?.locality
+        } ?: defaultLocationText
     }
 
 }
