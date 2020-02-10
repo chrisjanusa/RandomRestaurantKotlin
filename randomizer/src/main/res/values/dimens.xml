@@ -24,6 +24,7 @@
     <dimen name="diet_width">@dimen/_100sdp</dimen>
     <dimen name="diet_text_size">@dimen/_12ssp</dimen>
     <dimen name="filter_confirm_text_size">@dimen/_12ssp</dimen>
+    <dimen name="filter_x_text_size">@dimen/_16ssp</dimen>
     <dimen name="cuisine_icon_size">@dimen/_20sdp</dimen>
     <dimen name="location_search_default_width">@dimen/_135sdp</dimen>
     <dimen name="location_text_start_margin">@dimen/_1sdp</dimen>

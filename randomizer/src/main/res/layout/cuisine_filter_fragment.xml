@@ -20,13 +20,20 @@
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="@style/TitleAppearance"
+                android:text="@string/diet"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginStart="@dimen/filter_overlay_side_margin"
-                android:layout_marginTop="@dimen/filter_overlay_top_margin"
-                android:text="Cuisine"
-                android:textSize="@dimen/filter_title_text_size"
-                android:textColor="@color/filter_overlay_text"
+
+        />
+        <TextView
+                android:id='@+id/xout'
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TitleAppearance"
+                android:text="@string/xout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
         />
         <include
                 android:id="@+id/grid"

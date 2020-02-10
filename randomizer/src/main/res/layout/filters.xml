@@ -14,6 +14,7 @@
                 android:id='@+id/open_now'
                 style="@style/FilterAppearance"
                 android:text="@string/open_now"
+                app:rippleColor="@android:color/transparent"
         />
         <com.google.android.material.button.MaterialButton
                 android:id='@+id/cuisines'
@@ -43,6 +44,7 @@
                 android:id='@+id/favorites_only'
                 style="@style/FilterAppearance"
                 android:text="@string/favorites_only"
+                app:rippleColor="@android:color/transparent"
         />
     </LinearLayout>
 </HorizontalScrollView>

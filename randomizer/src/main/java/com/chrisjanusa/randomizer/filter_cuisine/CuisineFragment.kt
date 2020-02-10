@@ -20,7 +20,8 @@ import com.chrisjanusa.randomizer.filter_cuisine.actions.InitCuisineFilterAction
 import com.chrisjanusa.randomizer.filter_cuisine.actions.ResetCuisineAction
 import kotlinx.android.synthetic.main.cuisines.*
 import kotlinx.android.synthetic.main.confirmation_buttons.*
-import kotlinx.android.synthetic.main.price_filter_fragment.*
+import kotlinx.android.synthetic.main.price_filter_fragment.shade
+import kotlinx.android.synthetic.main.price_filter_fragment.xout
 
 class CuisineFragment : Fragment() {
     private lateinit var randomizerViewModel: RandomizerViewModel
@@ -38,7 +39,7 @@ class CuisineFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         shade.setOnClickListener { onCancelFilterClick(randomizerViewModel) }
         confirm.setOnClickListener { sendAction(ApplyCuisineAction(), randomizerViewModel) }
-        cancel.setOnClickListener { onCancelFilterClick(randomizerViewModel) }
+        xout.setOnClickListener { onCancelFilterClick(randomizerViewModel) }
         reset.setOnClickListener { sendAction(ResetCuisineAction(), randomizerViewModel) }
 
         american.setOnClickListener { cuisineClick(Cuisine.American) }
