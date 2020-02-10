@@ -6,7 +6,7 @@ import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.Filter
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.clickSelectionFilter
-import com.chrisjanusa.randomizer.filter_base.FilterHelper.renderFilterStyle
+import com.chrisjanusa.randomizer.filter_base.FilterHelper.renderFilterWithIconStyle
 import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.defaultDistanceTitle
 import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.distanceToDisplayString
 import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.isDefault
@@ -24,7 +24,7 @@ object DistanceUIManager : FeatureUIManager {
         fragment.run {
             val selected = !isDefault(state.maxMilesSelected)
             distance.text = if (selected) distanceToDisplayString(state.maxMilesSelected) else defaultDistanceTitle
-            context?.let { renderFilterStyle(distance, selected, it) }
+            context?.let { renderFilterWithIconStyle(distance, selected, it) }
         }
     }
 }

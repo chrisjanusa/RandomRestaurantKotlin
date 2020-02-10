@@ -8,7 +8,7 @@ object DietHelper {
         object Vegetarian : Diet("vegetarian", "Vegetarian")
         object Halal : Diet("halal", "Halal")
         object Kosher : Diet("kosher", "Kosher")
-        object None : Diet("none", "")
+        object None : Diet("none", defaultDietTitle)
     }
 
     fun dietFromIdentifier(identifier: String): Diet {

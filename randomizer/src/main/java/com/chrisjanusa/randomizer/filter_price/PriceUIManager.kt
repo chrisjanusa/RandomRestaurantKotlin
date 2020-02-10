@@ -6,7 +6,8 @@ import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.Filter
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.clickSelectionFilter
-import com.chrisjanusa.randomizer.filter_base.FilterHelper.renderFilterStyle
+import com.chrisjanusa.randomizer.filter_base.FilterHelper.renderFilterWithIconStyle
+import com.chrisjanusa.randomizer.filter_price.PriceHelper.isDefault
 import kotlinx.android.synthetic.main.filters.*
 
 object PriceUIManager : FeatureUIManager {
@@ -19,9 +20,9 @@ object PriceUIManager : FeatureUIManager {
 
     override fun render(state: RandomizerState, fragment: RandomizerFragment) {
         fragment.run {
-            val selected = state.priceText != PriceHelper.defaultPriceTitle
+            val selected = isDefault(state.priceText)
             price.text = state.priceText
-            context?.let { renderFilterStyle(price, selected, it) }
+            context?.let { renderFilterWithIconStyle(price, selected, it) }
         }
     }
 }
