@@ -13,7 +13,14 @@ object DistanceHelper {
 
     fun isDefault(distance: Float) = (distance * 10).roundToInt() == (defaultDistance * 10).roundToInt()
 
-    fun percentToDistance(percent: Float) = minDistance + (totalDistance * percent)
+    fun percentToDistance(percent: Float) : Float {
+        val tempDistance = minDistance + (totalDistance * percent)
+        return when {
+            tempDistance > 10 -> tempDistance.roundToInt().toFloat()
+            tempDistance > 5 -> (tempDistance * 2).roundToInt().toFloat() / 2
+            else -> (tempDistance * 10).roundToInt().toFloat() / 10
+        }
+    }
 
     fun distanceToPercent(distance: Float) = (distance - minDistance) / totalDistance
 }
