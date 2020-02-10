@@ -12,7 +12,6 @@
     <string name="price_3">$$$</string>
     <string name="price_4">$$$$</string>
     <string name="confirm">Apply Filter</string>
-    <string name="cancel">Cancel</string>
     <string name="reset">Reset</string>
     <string name="american">American</string>
     <string name="asian">Asian</string>
@@ -28,4 +27,5 @@
     <string name="sushi">Sushi</string>
     <string name="location_prompt">Enter Location…</string>
     <string name="diet">Diet</string>
+    <string name="xout">X</string>
 </resources>

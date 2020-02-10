@@ -36,19 +36,14 @@ object CuisineUIManager : FeatureUIManager {
         text.takeUnless { it.length > 20 } ?: text.substring(0..16) + "..."
 
     fun renderCuisineCard(card: MaterialCardView, text: TextView, icon: ImageView, chosen: Boolean, context: Context) {
-        if (chosen) {
-            val background = getColor(context, R.color.filter_background_selected)
-            card.setCardBackgroundColor(background)
-            card.strokeColor = background
-            text.setTextColor(getColor(context, R.color.filter_text_selected))
-            val color = getColor(context, R.color.filter_icon_selected)
-            icon.setColorFilter(color)
-        } else {
-            card.setCardBackgroundColor(getColor(context, R.color.filter_background_not_selected))
-            card.strokeColor = getColor(context, R.color.outline)
-            text.setTextColor(getColor(context, R.color.filter_text_not_selected))
-            val color = getColor(context, R.color.filter_icon_not_selected)
-            icon.setColorFilter(color)
-        }
+        val backgroundColor = if (chosen) R.color.filter_background_selected else R.color.filter_background_not_selected
+        val strokeColor = if (chosen) R.color.outline_selected else R.color.outline_not_selected
+        val textColor = if (chosen) R.color.filter_text_selected else R.color.filter_text_not_selected
+
+        card.setCardBackgroundColor(getColor(context, backgroundColor))
+        card.strokeColor = getColor(context, strokeColor)
+        val color = getColor(context, textColor)
+        text.setTextColor(color)
+        icon.setColorFilter(color)
     }
 }

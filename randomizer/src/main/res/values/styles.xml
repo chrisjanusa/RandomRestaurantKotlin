@@ -59,7 +59,7 @@
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="FilterConfirmAppearance" parent="Widget.MaterialComponents.Button.TextButton">
+    <style name="FilterButtonAppearance" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:gravity">center</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
@@ -71,6 +71,31 @@
         <item name="android:textSize">@dimen/filter_confirm_text_size</item>
         <item name="cornerRadius">@dimen/button_radius</item>
         <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/filter_overlay_text</item>
+    </style>
+
+    <style name="FilterApplyAppearance" parent="Widget.MaterialComponents.Button">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:paddingStart">@dimen/_8sdp</item>
+        <item name="android:paddingEnd">@dimen/_8sdp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="enforceTextAppearance">@style/ButtonTextAppearance</item>
+        <item name="android:textSize">@dimen/filter_confirm_text_size</item>
+        <item name="cornerRadius">@dimen/button_radius</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/filter_overlay_background</item>
+    </style>
+
+    <style name="TitleAppearance">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:paddingTop">@dimen/filter_overlay_side_margin</item>
+        <item name="android:paddingLeft">@dimen/filter_overlay_side_margin</item>
+        <item name="android:paddingRight">@dimen/filter_overlay_side_margin</item>
+        <item name="android:textSize">@dimen/filter_title_text_size</item>
         <item name="android:textColor">@color/filter_overlay_text</item>
     </style>
 
@@ -95,8 +120,8 @@
     <style name="CuisineCard" parent="Widget.MaterialComponents.CardView">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="strokeWidth">@dimen/_2sdp</item>
-        <item name="strokeColor">@color/outline</item>
+        <item name="strokeWidth">@dimen/_1sdp</item>
+        <item name="strokeColor">@color/outline_not_selected</item>
         <item name="android:layout_margin">@dimen/_5sdp</item>
         <item name="cardCornerRadius">@dimen/_8sdp</item>
         <item name="rippleColor">@color/filter_background_selected</item>

@@ -1,7 +1,8 @@
 package com.chrisjanusa.randomizer.filter_base
 
 import android.content.Context
-import androidx.core.content.ContextCompat
+import androidx.annotation.ColorRes
+import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.Fragment
 import com.chrisjanusa.randomizer.R
 import com.chrisjanusa.randomizer.base.CommunicationHelper.sendAction
@@ -23,30 +24,33 @@ object FilterHelper {
         sendAction(ClickSelectionFilterAction(filter), randomizerViewModel)
     }
 
-    fun renderButtonStyle(button: MaterialButton, selected: Boolean, context: Context) {
-        if (selected) {
-            button.setBackgroundColor(ContextCompat.getColor(context, R.color.filter_background_selected))
-            button.setTextColor(ContextCompat.getColor(context, R.color.filter_text_selected))
-            button.setStrokeColorResource(R.color.filter_background_selected)
-        } else {
-            button.setBackgroundColor(ContextCompat.getColor(context, R.color.filter_background_not_selected))
-            button.setTextColor(ContextCompat.getColor(context, R.color.filter_text_not_selected))
-            button.setStrokeColorResource(R.color.outline)
-        }
+    fun renderFilterOptionStyle(button: MaterialButton, selected: Boolean, context: Context) {
+        val backgroundColor = if (selected) R.color.filter_background_selected else R.color.filter_background_not_selected
+        val textColor = if (selected) R.color.filter_text_selected else R.color.filter_text_not_selected
+        val strokeColor = if (selected) R.color.outline_selected else R.color.outline_not_selected
+        renderButtonStyle(backgroundColor, textColor, strokeColor, button, context)
     }
 
     fun renderFilterStyle(button: MaterialButton, selected: Boolean, context: Context) {
-        if (selected) {
-            button.setBackgroundColor(ContextCompat.getColor(context, R.color.filter_background_selected))
-            button.setTextColor(ContextCompat.getColor(context, R.color.filter_text_selected))
-            button.setIconTintResource(R.color.filter_text_selected)
-            button.setStrokeColorResource(R.color.filter_background_selected)
-        } else {
-            button.setBackgroundColor(ContextCompat.getColor(context, R.color.filter_background_not_selected))
-            button.setTextColor(ContextCompat.getColor(context, R.color.filter_text_not_selected))
-            button.setIconTintResource(R.color.filter_text_not_selected)
-            button.setStrokeColorResource(R.color.outline)
-        }
+        val backgroundColor = if (selected) R.color.filter_background_selected else R.color.filter_background_not_selected
+        val textColor = if (selected) R.color.filter_text_selected else R.color.filter_text_not_selected
+        val strokeColor = if (selected) R.color.outline_selected else R.color.outline_not_selected
+        renderIconButtonStyle(backgroundColor, textColor, strokeColor, button, context)
+    }
+
+    private fun renderButtonStyle(@ColorRes backgroundColor: Int, @ColorRes textColor: Int, @ColorRes strokeColor: Int,
+                          button: MaterialButton, context: Context)
+    {
+        button.setBackgroundColor(getColor(context, backgroundColor))
+        button.setTextColor(getColor(context, textColor))
+        button.setStrokeColorResource(strokeColor)
+    }
+
+    private fun renderIconButtonStyle(@ColorRes backgroundColor: Int, @ColorRes textColor: Int, @ColorRes strokeColor: Int,
+                          button: MaterialButton, context: Context)
+    {
+        renderButtonStyle(backgroundColor, textColor, strokeColor, button, context)
+        button.setIconTintResource(textColor)
     }
 
 

@@ -42,7 +42,7 @@ class DistanceFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         shade.setOnClickListener { onCancelFilterClick(randomizerViewModel) }
         confirm.setOnClickListener { sendAction(ApplyDistanceAction(), randomizerViewModel) }
-        cancel.setOnClickListener { onCancelFilterClick(randomizerViewModel) }
+        xout.setOnClickListener { onCancelFilterClick(randomizerViewModel) }
         reset.setOnClickListener { sendAction(ResetDistanceAction(), randomizerViewModel) }
 
         val slider = distance as FluidSlider

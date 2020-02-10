@@ -12,7 +12,7 @@ import com.chrisjanusa.randomizer.base.CommunicationHelper.sendAction
 import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.onCancelFilterClick
-import com.chrisjanusa.randomizer.filter_base.FilterHelper.renderButtonStyle
+import com.chrisjanusa.randomizer.filter_base.FilterHelper.renderFilterOptionStyle
 import com.chrisjanusa.randomizer.filter_price.actions.ApplyPriceAction
 import com.chrisjanusa.randomizer.filter_price.actions.InitPriceFilterAction
 import com.chrisjanusa.randomizer.filter_price.actions.PriceChangeAction
@@ -38,7 +38,7 @@ class PriceFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         shade.setOnClickListener { onCancelFilterClick(randomizerViewModel) }
         confirm.setOnClickListener { sendAction(ApplyPriceAction(), randomizerViewModel) }
-        cancel.setOnClickListener { onCancelFilterClick(randomizerViewModel) }
+        xout.setOnClickListener { onCancelFilterClick(randomizerViewModel) }
         reset.setOnClickListener { sendAction(ResetPriceAction(), randomizerViewModel) }
         price1.setOnClickListener { priceClick(Price.One) }
         price2.setOnClickListener { priceClick(Price.Two) }
@@ -59,10 +59,10 @@ class PriceFragment : Fragment() {
 
     private val render = fun(newState: RandomizerState) {
         context?.let {
-            renderButtonStyle(price1, newState.priceTempSet.contains(Price.One), it)
-            renderButtonStyle(price2, newState.priceTempSet.contains(Price.Two), it)
-            renderButtonStyle(price3, newState.priceTempSet.contains(Price.Three), it)
-            renderButtonStyle(price4, newState.priceTempSet.contains(Price.Four), it)
+            renderFilterOptionStyle(price1, newState.priceTempSet.contains(Price.One), it)
+            renderFilterOptionStyle(price2, newState.priceTempSet.contains(Price.Two), it)
+            renderFilterOptionStyle(price3, newState.priceTempSet.contains(Price.Three), it)
+            renderFilterOptionStyle(price4, newState.priceTempSet.contains(Price.Four), it)
         }
     }
 }
