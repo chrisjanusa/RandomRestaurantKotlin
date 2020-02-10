@@ -16,6 +16,8 @@ object CuisineHelper {
         return out.dropLast(2).toString()
     }
 
+    fun isDefault(saveString: String) = saveString == defaultCuisineTitle
+
     fun setFromSaveString(cuisineString: String): HashSet<Cuisine> {
         val set = HashSet<Cuisine>()
         for (cuisine in cuisineString.split(delimiter.toRegex())) {

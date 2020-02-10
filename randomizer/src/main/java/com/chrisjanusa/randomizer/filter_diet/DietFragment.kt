@@ -12,7 +12,7 @@ import com.chrisjanusa.randomizer.base.CommunicationHelper.sendAction
 import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.onCancelFilterClick
-import com.chrisjanusa.randomizer.filter_base.FilterHelper.renderFilterOptionStyle
+import com.chrisjanusa.randomizer.filter_base.FilterHelper.renderFilterStyle
 import com.chrisjanusa.randomizer.filter_diet.DietHelper.Diet
 import com.chrisjanusa.randomizer.filter_diet.actions.ApplyDietAction
 import com.chrisjanusa.randomizer.filter_diet.actions.InitDietFilterAction
@@ -60,10 +60,10 @@ class DietFragment : Fragment() {
 
     private val render = fun(newState: RandomizerState) {
         context?.let {
-            renderFilterOptionStyle(halal, Diet.Halal == newState.dietTempSelected, it)
-            renderFilterOptionStyle(vegan, Diet.Vegan == newState.dietTempSelected, it)
-            renderFilterOptionStyle(vegetarian, Diet.Vegetarian == newState.dietTempSelected, it)
-            renderFilterOptionStyle(kosher, Diet.Kosher == newState.dietTempSelected, it)
+            renderFilterStyle(halal, Diet.Halal == newState.dietTempSelected, it)
+            renderFilterStyle(vegan, Diet.Vegan == newState.dietTempSelected, it)
+            renderFilterStyle(vegetarian, Diet.Vegetarian == newState.dietTempSelected, it)
+            renderFilterStyle(kosher, Diet.Kosher == newState.dietTempSelected, it)
         }
     }
 }

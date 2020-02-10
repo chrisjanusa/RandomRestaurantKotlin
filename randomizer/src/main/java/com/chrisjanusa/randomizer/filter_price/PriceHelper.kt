@@ -25,6 +25,8 @@ object PriceHelper {
         return builder.toString()
     }
 
+    fun isDefault(saveString: String) = saveString == defaultPriceTitle
+
     fun priceFromDisplayString(curr: String): HashSet<Price> {
         if (defaultPriceTitle == curr) {
             return HashSet()

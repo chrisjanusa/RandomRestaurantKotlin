@@ -2,9 +2,10 @@ package com.chrisjanusa.randomizer.base.preferences
 
 import android.content.SharedPreferences
 import com.chrisjanusa.randomizer.base.models.RandomizerState
-import com.chrisjanusa.randomizer.filter_distance.DistanceHelper
+import com.chrisjanusa.randomizer.filter_cuisine.CuisineHelper.defaultCuisineTitle
 import com.chrisjanusa.randomizer.filter_price.PriceHelper.defaultPriceTitle
 import com.chrisjanusa.randomizer.filter_diet.DietHelper
+import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.defaultDistance
 import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLat
 import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLng
 
@@ -42,13 +43,13 @@ object PreferenceHelper {
         return preferences?.run {
             PreferenceData(
                 getBoolean(PreferenceHelper.StateObject.GpsOn.key, true),
-                getBoolean(PreferenceHelper.StateObject.OpenNowSelected.key, false),
+                getBoolean(PreferenceHelper.StateObject.OpenNowSelected.key, true),
                 getBoolean(PreferenceHelper.StateObject.FavoriteOnlySelected.key, false),
-                getFloat(PreferenceHelper.StateObject.MaxMilesSelected.key, DistanceHelper.defaultDistance),
+                getFloat(PreferenceHelper.StateObject.MaxMilesSelected.key, defaultDistance),
                 getString(PreferenceHelper.StateObject.Diet.key, DietHelper.Diet.None.identifier)
                     ?: DietHelper.Diet.None.identifier,
                 getString(PreferenceHelper.StateObject.PriceSelected.key, defaultPriceTitle) ?: defaultPriceTitle,
-                getString(PreferenceHelper.StateObject.Cuisine.key, "") ?: "",
+                getString(PreferenceHelper.StateObject.Cuisine.key, defaultCuisineTitle) ?: "",
                 getFloat(PreferenceHelper.StateObject.Latitude.key, defaultLat.toFloat()).toDouble(),
                 getFloat(PreferenceHelper.StateObject.Longitude.key, defaultLng.toFloat()).toDouble()
             )

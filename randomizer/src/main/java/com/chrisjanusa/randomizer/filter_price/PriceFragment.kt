@@ -12,7 +12,7 @@ import com.chrisjanusa.randomizer.base.CommunicationHelper.sendAction
 import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.onCancelFilterClick
-import com.chrisjanusa.randomizer.filter_base.FilterHelper.renderFilterOptionStyle
+import com.chrisjanusa.randomizer.filter_base.FilterHelper.renderFilterStyle
 import com.chrisjanusa.randomizer.filter_price.actions.ApplyPriceAction
 import com.chrisjanusa.randomizer.filter_price.actions.InitPriceFilterAction
 import com.chrisjanusa.randomizer.filter_price.actions.PriceChangeAction
@@ -59,10 +59,10 @@ class PriceFragment : Fragment() {
 
     private val render = fun(newState: RandomizerState) {
         context?.let {
-            renderFilterOptionStyle(price1, newState.priceTempSet.contains(Price.One), it)
-            renderFilterOptionStyle(price2, newState.priceTempSet.contains(Price.Two), it)
-            renderFilterOptionStyle(price3, newState.priceTempSet.contains(Price.Three), it)
-            renderFilterOptionStyle(price4, newState.priceTempSet.contains(Price.Four), it)
+            renderFilterStyle(price1, newState.priceTempSet.contains(Price.One), it)
+            renderFilterStyle(price2, newState.priceTempSet.contains(Price.Two), it)
+            renderFilterStyle(price3, newState.priceTempSet.contains(Price.Three), it)
+            renderFilterStyle(price4, newState.priceTempSet.contains(Price.Four), it)
         }
     }
 }
