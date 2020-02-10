@@ -20,7 +20,7 @@ object PriceUIManager : FeatureUIManager {
 
     override fun render(state: RandomizerState, fragment: RandomizerFragment) {
         fragment.run {
-            val selected = isDefault(state.priceText)
+            val selected = !isDefault(state.priceText)
             price.text = state.priceText
             context?.let { renderFilterWithIconStyle(price, selected, it) }
         }

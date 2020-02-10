@@ -27,7 +27,7 @@ object CuisineUIManager : FeatureUIManager {
 
     override fun render(state: RandomizerState, fragment: RandomizerFragment) {
         fragment.run {
-            val selected = isDefault(state.cuisineString)
+            val selected = !isDefault(state.cuisineString)
             cuisines.text = toDisplayString(state.cuisineString)
             context?.let { renderFilterWithIconStyle(cuisines, selected, it) }
         }
