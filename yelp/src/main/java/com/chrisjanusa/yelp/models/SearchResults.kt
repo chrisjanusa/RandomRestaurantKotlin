@@ -1,5 +1,6 @@
 package com.chrisjanusa.yelp.models
 
 data class SearchResults(
-    val region : YelpRegion.Region
+    val businesses: List<Businesses>,
+    val region: Region
 )

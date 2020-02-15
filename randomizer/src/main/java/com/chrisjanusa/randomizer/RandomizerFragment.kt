@@ -31,6 +31,7 @@ import com.chrisjanusa.randomizer.location_gps.GpsUIManager
 import com.chrisjanusa.randomizer.location_gps.actions.PermissionDeniedAction
 import com.chrisjanusa.randomizer.location_gps.actions.PermissionReceivedAction
 import com.chrisjanusa.randomizer.location_search.SearchUIManager
+import com.chrisjanusa.randomizer.yelp.YelpUIManager
 import com.google.android.gms.maps.CameraUpdateFactory.newLatLngZoom
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -55,7 +56,8 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         DietUIManager,
         LocationUIManager,
         GpsUIManager,
-        SearchUIManager
+        SearchUIManager,
+        YelpUIManager
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,8 +78,6 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         for (uiManager in featureUIManagers) {
             uiManager.init(randomizerViewModel, this)
         }
-
-        random.setOnClickListener { setMap(spaceNeedleLat, spaceNeedleLng, true) }
 
         randomizerViewModel.state.observe(this, Observer<RandomizerState>(render))
         val frag = this
