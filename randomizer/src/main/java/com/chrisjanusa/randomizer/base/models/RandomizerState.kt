@@ -2,14 +2,15 @@ package com.chrisjanusa.randomizer.base.models
 
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.Filter
 import com.chrisjanusa.randomizer.filter_cuisine.CuisineHelper.Cuisine
-import com.chrisjanusa.randomizer.filter_cuisine.CuisineHelper.defaultCuisineTitle
 import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.defaultDistance
 import com.chrisjanusa.randomizer.filter_price.PriceHelper.Price
-import com.chrisjanusa.randomizer.filter_price.PriceHelper.defaultPriceTitle
 import com.chrisjanusa.randomizer.filter_diet.DietHelper.Diet
 import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLat
 import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLng
 import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLocationText
+import com.chrisjanusa.yelp.models.Restaurant
+import java.util.*
+import kotlin.collections.HashSet
 
 data class RandomizerState(
     val gpsOn: Boolean = true,
@@ -36,5 +37,8 @@ data class RandomizerState(
     val diet: Diet = Diet.None,
 
     val cuisineSet: HashSet<Cuisine> = HashSet(),
-    val cuisineTempSet: HashSet<Cuisine> = HashSet()
+    val cuisineTempSet: HashSet<Cuisine> = HashSet(),
+
+    val currRestaurant: Restaurant? = null,
+    val restaurants: List<Restaurant> = LinkedList()
 )

@@ -6,15 +6,14 @@ import com.chrisjanusa.randomizer.base.interfaces.BaseEvent
 import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
 import com.chrisjanusa.randomizer.base.models.MapUpdate
 import com.chrisjanusa.randomizer.base.models.RandomizerState
-import com.chrisjanusa.randomizer.location_base.updaters.LocationUpdater
-import com.chrisjanusa.randomizer.filter_cuisine.CuisineHelper.toYelpString
-import com.chrisjanusa.randomizer.filter_diet.DietHelper.Diet
-import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.milesToMeters
+import com.chrisjanusa.randomizer.yelp.YelpHelper
+import com.chrisjanusa.randomizer.yelp.YelpHelper.randomRestaurant
 import com.chrisjanusa.randomizer.yelp.events.FinishedLoadingNewRestaurantsEvent
 import com.chrisjanusa.randomizer.yelp.events.StartLoadingNewRestaurantsEvent
-import com.chrisjanusa.yelp.YelpRepository
+import com.chrisjanusa.randomizer.yelp.updaters.AddRestaurantsUpdater
+import com.chrisjanusa.randomizer.yelp.updaters.CurrRestaurantUpdater
+import com.chrisjanusa.randomizer.yelp.updaters.RemoveRestaurantUpdater
 import kotlinx.coroutines.channels.Channel
-import kotlin.math.roundToInt
 
 class RandomizeAction : BaseAction {
     override suspend fun performAction(
@@ -23,39 +22,23 @@ class RandomizeAction : BaseAction {
         eventChannel: Channel<BaseEvent>,
         mapChannel: Channel<MapUpdate>
     ) {
-        currentState.value?.run {
-            eventChannel.send(StartLoadingNewRestaurantsEvent())
-            val categories = when {
-                cuisineSet.isNotEmpty() -> cuisineSet.toYelpString()
-                diet != Diet.None -> diet.identifier
-                else -> null
+        currentState.value?.let { state ->
+            val restaurants = if (state.restaurants.isEmpty()) {
+                updateChannel.send(CurrRestaurantUpdater(null))
+                eventChannel.send(StartLoadingNewRestaurantsEvent())
+                val restaurants = YelpHelper.queryYelp(state)
+                updateChannel.send(AddRestaurantsUpdater(restaurants))
+                eventChannel.send(FinishedLoadingNewRestaurantsEvent())
+                restaurants
+            } else {
+                state.restaurants
             }
-
-            var term = "restaurants"
-            term = if (cuisineSet.isNotEmpty() && diet != Diet.None) "${diet.identifier} $term" else term
-
-            val radius = milesToMeters(maxMilesSelected).roundToInt()
-
-            val price = null
-            val searchResults = YelpRepository.getBusinessSearchResults(
-                latitude = currLat,
-                longitude = currLng,
-                term = term,
-                radius = radius,
-                categories = categories,
-                offset = null,
-                price = price,
-                open_now = true
-            )
-            searchResults.businesses[0].coordinates.run {
-                LocationUpdater(
-                    locationText,
-                    latitude,
-                    longitude
-                )
+            val newRestaurant = randomRestaurant(restaurants)
+            updateChannel.send(CurrRestaurantUpdater(newRestaurant))
+            updateChannel.send(RemoveRestaurantUpdater(newRestaurant))
+            newRestaurant.coordinates.run {
                 mapChannel.send(MapUpdate(latitude, longitude, true))
             }
-            eventChannel.send(FinishedLoadingNewRestaurantsEvent())
         }
     }
 }

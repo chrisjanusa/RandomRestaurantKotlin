@@ -1,6 +1,6 @@
 package com.chrisjanusa.yelp.models
 
-data class Businesses(
+data class Restaurant(
     val alias: String,
     val categories: List<Category> = ArrayList(),
     val coordinates: Coordinates,
@@ -11,6 +11,6 @@ data class Businesses(
     val location: Location = Location(),
     val name: String? = null,
     val price: String? = null,
-    val rating: Int? = null,
+    val rating: Float? = null,
     val review_count: Int? = null
 )
