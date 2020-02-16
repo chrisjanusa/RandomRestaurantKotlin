@@ -10,6 +10,8 @@ import com.chrisjanusa.randomizer.location_base.updaters.LocationUpdater
 import com.chrisjanusa.randomizer.filter_cuisine.CuisineHelper.toYelpString
 import com.chrisjanusa.randomizer.filter_diet.DietHelper.Diet
 import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.milesToMeters
+import com.chrisjanusa.randomizer.yelp.events.FinishedLoadingNewRestaurantsEvent
+import com.chrisjanusa.randomizer.yelp.events.StartLoadingNewRestaurantsEvent
 import com.chrisjanusa.yelp.YelpRepository
 import kotlinx.coroutines.channels.Channel
 import kotlin.math.roundToInt
@@ -22,6 +24,7 @@ class RandomizeAction : BaseAction {
         mapChannel: Channel<MapUpdate>
     ) {
         currentState.value?.run {
+            eventChannel.send(StartLoadingNewRestaurantsEvent())
             val categories = when {
                 cuisineSet.isNotEmpty() -> cuisineSet.toYelpString()
                 diet != Diet.None -> diet.identifier
@@ -52,6 +55,7 @@ class RandomizeAction : BaseAction {
                 )
                 mapChannel.send(MapUpdate(latitude, longitude, true))
             }
+            eventChannel.send(FinishedLoadingNewRestaurantsEvent())
         }
     }
 }

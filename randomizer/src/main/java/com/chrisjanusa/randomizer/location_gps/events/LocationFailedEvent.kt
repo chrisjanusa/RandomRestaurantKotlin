@@ -7,8 +7,7 @@ import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.LocationSettingsResponse
 import com.google.android.gms.tasks.Task
 
-class LocationFailedEvent(private val locationSettingsTask: Task<LocationSettingsResponse>) :
-    BaseEvent {
+class LocationFailedEvent(private val locationSettingsTask: Task<LocationSettingsResponse>) : BaseEvent {
     override fun handleEvent(fragment: Fragment) {
         val exception = locationSettingsTask.exception
         if (exception is ResolvableApiException) {
