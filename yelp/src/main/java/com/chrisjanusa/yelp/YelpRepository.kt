@@ -1,15 +1,35 @@
 package com.chrisjanusa.yelp
 
-import retrofit2.Retrofit
-import retrofit2.converter.jackson.JacksonConverterFactory
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import retrofit2.Retrofit
+import retrofit2.converter.jackson.JacksonConverterFactory
 
 
 object YelpRepository {
     private const val YELP_API_BASE_URL = "https://api.yelp.com/v3/businesses/"
 
-    suspend fun getBusinessSearchResults(latitude : Double, longitude : Double) = getYelpWebService().getBusinessSearchResults(latitude, longitude)
+    suspend fun getBusinessSearchResults(
+        latitude: Double,
+        longitude: Double,
+        term: String = "restaurants",
+        radius: Int = 8047,
+        categories: String? = null,
+        limit: Int = 50,
+        offset: Int? = null,
+        price: Int? = null,
+        open_now: Boolean = true
+    ) = getYelpWebService().getBusinessSearchResults(
+        latitude,
+        longitude,
+        term,
+        radius,
+        categories,
+        limit,
+        offset,
+        price,
+        open_now
+    )
 
     private fun getYelpWebService(): YelpWebService {
         val retrofit = Retrofit.Builder()

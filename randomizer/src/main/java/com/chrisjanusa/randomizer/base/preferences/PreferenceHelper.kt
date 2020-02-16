@@ -3,7 +3,9 @@ package com.chrisjanusa.randomizer.base.preferences
 import android.content.SharedPreferences
 import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.filter_cuisine.CuisineHelper.defaultCuisineTitle
+import com.chrisjanusa.randomizer.filter_cuisine.CuisineHelper.toIdentifierString
 import com.chrisjanusa.randomizer.filter_price.PriceHelper.defaultPriceTitle
+import com.chrisjanusa.randomizer.filter_price.PriceHelper.toSaveString
 import com.chrisjanusa.randomizer.filter_diet.DietHelper
 import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.defaultDistance
 import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLat
@@ -30,8 +32,8 @@ object PreferenceHelper {
                 putBoolean(PreferenceHelper.StateObject.FavoriteOnlySelected.key, state.favoriteOnlySelected)
                 putFloat(PreferenceHelper.StateObject.MaxMilesSelected.key, state.maxMilesSelected)
                 putString(PreferenceHelper.StateObject.Diet.key, state.diet.identifier)
-                putString(PreferenceHelper.StateObject.PriceSelected.key, state.priceText)
-                putString(PreferenceHelper.StateObject.Cuisine.key, state.cuisineString)
+                putString(PreferenceHelper.StateObject.PriceSelected.key, state.priceSet.toSaveString())
+                putString(PreferenceHelper.StateObject.Cuisine.key, state.cuisineSet.toIdentifierString())
                 putFloat(PreferenceHelper.StateObject.Latitude.key, state.currLat.toFloat())
                 putFloat(PreferenceHelper.StateObject.Longitude.key, state.currLng.toFloat())
                 apply()

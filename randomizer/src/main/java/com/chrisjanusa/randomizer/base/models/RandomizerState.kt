@@ -22,7 +22,7 @@ data class RandomizerState(
 
     val filterOpen: Filter? = null,
 
-    val priceText: String = defaultPriceTitle,
+    val priceSet: HashSet<Price> = HashSet(),
     val priceTempSet: HashSet<Price> = HashSet(),
 
     val openNowSelected: Boolean = true,
@@ -36,6 +36,5 @@ data class RandomizerState(
     val diet: Diet = Diet.None,
 
     val cuisineSet: HashSet<Cuisine> = HashSet(),
-    val cuisineString: String = defaultCuisineTitle,
     val cuisineTempSet: HashSet<Cuisine> = HashSet()
 )

@@ -12,6 +12,13 @@ interface YelpWebService {
     @GET("search")
     suspend fun getBusinessSearchResults(
         @Query("latitude") latitude : Double,
-        @Query("longitude") longitude : Double
+        @Query("longitude") longitude : Double,
+        @Query("term") term : String?,
+        @Query("radius") radius : Int?,
+        @Query("categories") categories : String?,
+        @Query("limit") limit : Int?,
+        @Query("offset") offset : Int?,
+        @Query("price") price : Int?,
+        @Query("open_now") open_now : Boolean?
     ) : SearchResults
 }

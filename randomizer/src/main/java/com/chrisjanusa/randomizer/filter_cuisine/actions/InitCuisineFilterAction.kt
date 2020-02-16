@@ -17,7 +17,7 @@ class InitCuisineFilterAction : BaseAction {
         mapChannel: Channel<MapUpdate>
     ) {
         currentState.value?.run {
-            updateChannel.send(TempCuisineUpdater(cuisineSet))
+            updateChannel.send(TempCuisineUpdater(HashSet(cuisineSet)))
         }
     }
 

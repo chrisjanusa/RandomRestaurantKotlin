@@ -8,7 +8,6 @@ import com.chrisjanusa.randomizer.base.models.MapUpdate
 import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.filter_base.events.CloseFilterEvent
 import com.chrisjanusa.randomizer.filter_base.updaters.FilterOpenUpdater
-import com.chrisjanusa.randomizer.filter_cuisine.CuisineHelper.toSaveString
 import com.chrisjanusa.randomizer.filter_cuisine.updaters.SelectedCuisineUpdater
 import kotlinx.coroutines.channels.Channel
 
@@ -20,7 +19,7 @@ class ApplyCuisineAction : BaseAction {
         mapChannel: Channel<MapUpdate>
     ) {
         currentState.value?.run {
-            updateChannel.send(SelectedCuisineUpdater(cuisineTempSet, cuisineTempSet.toSaveString()))
+            updateChannel.send(SelectedCuisineUpdater(HashSet(cuisineTempSet)))
         }
         eventChannel.send(CloseFilterEvent())
         updateChannel.send(FilterOpenUpdater(null))

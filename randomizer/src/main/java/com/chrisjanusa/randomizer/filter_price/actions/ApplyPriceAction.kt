@@ -21,7 +21,7 @@ class ApplyPriceAction : BaseAction {
         mapChannel: Channel<MapUpdate>
     ) {
         currentState.value?.run {
-            updateChannel.send(SelectedPriceUpdater(priceTempSet.toSaveString()))
+            updateChannel.send(SelectedPriceUpdater(priceTempSet))
         }
         eventChannel.send(CloseFilterEvent())
         updateChannel.send(FilterOpenUpdater(null))

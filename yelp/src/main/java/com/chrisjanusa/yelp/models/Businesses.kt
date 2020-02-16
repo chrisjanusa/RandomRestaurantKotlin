@@ -10,10 +10,7 @@ data class Businesses(
     val is_closed: Boolean? = null,
     val location: Location = Location(),
     val name: String? = null,
-    val phone: String? = null,
     val price: String? = null,
     val rating: Int? = null,
-    val review_count: Int? = null,
-    val transactions: List<String> = ArrayList(),
-    val url: String? = null
+    val review_count: Int? = null
 )
