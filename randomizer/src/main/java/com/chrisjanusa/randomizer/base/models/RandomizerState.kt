@@ -9,6 +9,7 @@ import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLat
 import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLng
 import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLocationText
 import com.chrisjanusa.yelp.models.Restaurant
+import kotlinx.coroutines.Job
 import java.util.*
 import kotlin.collections.HashSet
 
@@ -41,5 +42,6 @@ data class RandomizerState(
 
     val currRestaurant: Restaurant? = null,
     val restaurants: List<Restaurant> = LinkedList(),
-    val restaurantCacheValid: Boolean = true
+    val restaurantCacheValid: Boolean = true,
+    val lastCacheUpdateJob: Job? = null
 )

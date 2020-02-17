@@ -11,6 +11,8 @@ import com.chrisjanusa.randomizer.yelp.YelpHelper.randomRestaurant
 import com.chrisjanusa.randomizer.yelp.events.FinishedLoadingNewRestaurantsEvent
 import com.chrisjanusa.randomizer.yelp.events.StartLoadingNewRestaurantsEvent
 import com.chrisjanusa.randomizer.yelp.updaters.*
+import com.chrisjanusa.yelp.models.Restaurant
+import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 
 class RandomizeAction : BaseAction {
@@ -21,16 +23,28 @@ class RandomizeAction : BaseAction {
         mapChannel: Channel<MapUpdate>
     ) {
         currentState.value?.let { state ->
+            val channel = Channel<List<Restaurant>>(Channel.UNLIMITED)
             val restaurants = if (state.restaurants.isEmpty() || !state.restaurantCacheValid) {
+                state.lastCacheUpdateJob?.cancel()
                 updateChannel.send(CurrRestaurantUpdater(null))
                 updateChannel.send(ClearRestaurantCacheUpdater())
                 updateChannel.send(RestaurantCacheValidityUpdater(true))
                 eventChannel.send(StartLoadingNewRestaurantsEvent())
-                val restaurants = queryYelp(state)
+                val job = GlobalScope.launch {  queryYelp(state, channel) }
+                updateChannel.send(CacheJobUpdater(job))
+                val restaurants = channel.receive()
+                if (restaurants.isEmpty()) {
+                    //TODO throw error event
+                    println("RETURNED 0 RESTAURANTS")
+                    updateChannel.send(CurrRestaurantUpdater(state.currRestaurant))
+                    eventChannel.send(FinishedLoadingNewRestaurantsEvent())
+                    return
+                }
                 updateChannel.send(AddRestaurantsUpdater(restaurants))
                 eventChannel.send(FinishedLoadingNewRestaurantsEvent())
                 restaurants
             } else {
+                channel.close()
                 state.restaurants
             }
             val newRestaurant = randomRestaurant(restaurants)
@@ -39,6 +53,10 @@ class RandomizeAction : BaseAction {
             newRestaurant.coordinates.run {
                 mapChannel.send(MapUpdate(latitude, longitude, true))
             }
+            for (restaurantList in channel) {
+                updateChannel.send(AddRestaurantsUpdater(restaurantList))
+            }
+
         }
     }
 }

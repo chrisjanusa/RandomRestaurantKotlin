@@ -16,7 +16,7 @@ object YelpRepository {
         radius: Int = 8047,
         categories: String? = null,
         limit: Int = 50,
-        offset: Int? = null,
+        offset: Int,
         price: String? = null,
         open_now: Boolean = true
     ) = getYelpWebService().getBusinessSearchResults(
