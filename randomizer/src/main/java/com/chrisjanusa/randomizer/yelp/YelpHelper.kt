@@ -3,7 +3,8 @@ package com.chrisjanusa.randomizer.yelp
 import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.filter_cuisine.CuisineHelper.toYelpString
 import com.chrisjanusa.randomizer.filter_diet.DietHelper
-import com.chrisjanusa.randomizer.filter_distance.DistanceHelper
+import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.milesToMeters
+import com.chrisjanusa.randomizer.filter_price.PriceHelper.setToYelpString
 import com.chrisjanusa.yelp.YelpRepository
 import com.chrisjanusa.yelp.models.Restaurant
 import kotlin.math.roundToInt
@@ -20,9 +21,10 @@ object YelpHelper {
             var term = "restaurants"
             term = if (cuisineSet.isNotEmpty() && diet != DietHelper.Diet.None) "${diet.identifier} $term" else term
 
-            val radius = DistanceHelper.milesToMeters(maxMilesSelected).roundToInt()
+            val radius = milesToMeters(maxMilesSelected).roundToInt()
 
-            val price = null
+            val price = setToYelpString(priceSet)
+            println(price)
             return YelpRepository.getBusinessSearchResults(
                 latitude = currLat,
                 longitude = currLng,
@@ -31,7 +33,7 @@ object YelpHelper {
                 categories = categories,
                 offset = null,
                 price = price,
-                limit = 2,
+                limit = 50,
                 open_now = openNowSelected
             ).businesses
         }

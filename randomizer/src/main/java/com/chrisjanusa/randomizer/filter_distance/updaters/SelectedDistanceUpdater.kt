@@ -6,6 +6,6 @@ import com.chrisjanusa.randomizer.base.models.RandomizerState
 class SelectedDistanceUpdater(private val newMaxMiles: Float) :
     BaseUpdater {
     override fun performUpdate(prevState: RandomizerState): RandomizerState {
-        return prevState.copy(maxMilesSelected = newMaxMiles)
+        return prevState.copy(maxMilesSelected = newMaxMiles, restaurantCacheValid = false)
     }
 }

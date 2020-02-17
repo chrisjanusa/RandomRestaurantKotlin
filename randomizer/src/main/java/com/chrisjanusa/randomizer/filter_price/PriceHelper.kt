@@ -20,9 +20,7 @@ object PriceHelper {
         }
         val builder = StringBuilder()
         priceList.forEach { if (contains(it)) builder.append(it.text + delimiter) }
-        builder.deleteCharAt(builder.lastIndex)
-        builder.deleteCharAt(builder.lastIndex)
-        return builder.toString()
+        return builder.dropLast(2).toString()
     }
 
     fun priceFromSaveString(curr: String): HashSet<Price> {
@@ -39,5 +37,16 @@ object PriceHelper {
             }
         }
         return selected
+    }
+
+    fun setToYelpString(prices : HashSet<Price>): String? {
+        if(prices.isEmpty()) return null
+        val yelpString = StringBuilder()
+        for (price in prices) {
+            yelpString.append(price.num)
+            yelpString.append(",")
+        }
+
+        return yelpString.dropLast(1).toString()
     }
 }

@@ -18,7 +18,7 @@ interface YelpWebService {
         @Query("categories") categories : String?,
         @Query("limit") limit : Int?,
         @Query("offset") offset : Int?,
-        @Query("price") price : Int?,
+        @Query("price") price : String?,
         @Query("open_now") open_now : Boolean?
     ) : SearchResults
 }

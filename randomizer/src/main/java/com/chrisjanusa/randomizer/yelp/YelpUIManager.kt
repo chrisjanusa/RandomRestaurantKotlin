@@ -1,10 +1,11 @@
 package com.chrisjanusa.randomizer.yelp
 
 import android.view.View
+import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.fragment.app.FragmentActivity
+import com.bumptech.glide.Glide
 import com.chrisjanusa.randomizer.R
 import com.chrisjanusa.randomizer.RandomizerFragment
 import com.chrisjanusa.randomizer.base.CommunicationHelper.sendAction
@@ -19,8 +20,6 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import kotlinx.android.synthetic.main.bottom_overlay.*
 
 object YelpUIManager : FeatureUIManager {
-    private const val openString = "Open Now"
-    private const val closedString = "Currently Closed"
     private const val delimiter = " | "
 
     override fun init(randomizerViewModel: RandomizerViewModel, fragment: RandomizerFragment) {
@@ -30,7 +29,7 @@ object YelpUIManager : FeatureUIManager {
     override fun render(state: RandomizerState, fragment: RandomizerFragment) {
         fragment.activity?.run {
             if (state.currRestaurant != null) {
-                renderCard(state.currRestaurant, this)
+                renderCard(state.currRestaurant, fragment)
                 findViewById<ShimmerFrameLayout>(R.id.shimmer_card_layout).visibility = View.GONE
                 findViewById<ConstraintLayout>(R.id.card_layout).visibility = View.VISIBLE
 
@@ -41,8 +40,13 @@ object YelpUIManager : FeatureUIManager {
         }
     }
 
-    private fun renderCard(restaurant: Restaurant, activity: FragmentActivity) {
-        activity.run {
+    private fun renderCard(restaurant: Restaurant, fragment: RandomizerFragment) {
+        fragment.activity?.run {
+            Glide.with(fragment)
+                .load(restaurant.image_url)
+                .centerCrop()
+                .placeholder(R.drawable.image_placeholder)
+                .into(findViewById(R.id.thumbnail))
             findViewById<TextView>(R.id.name).text = restaurant.name
             val rating = restaurant.rating ?: 0f
             findViewById<TextView>(R.id.rating).text = "%.1f".format(rating)
@@ -62,7 +66,7 @@ object YelpUIManager : FeatureUIManager {
         return displayString.dropLast(2).toString()
     }
 
-    private fun restaurantToPriceDistanceString(restaurant: Restaurant) : String {
+    private fun restaurantToPriceDistanceString(restaurant: Restaurant): String {
         val priceDistanceString = StringBuilder()
         restaurant.price?.let { priceDistanceString.append("$it$delimiter") }
         restaurant.distance?.let { priceDistanceString.append("%.2f mi away$delimiter".format(metersToMiles(it))) }

@@ -6,6 +6,6 @@ import com.chrisjanusa.randomizer.filter_diet.DietHelper.Diet
 
 class SelectedDietUpdater(private val diet: Diet) : BaseUpdater {
     override fun performUpdate(prevState: RandomizerState): RandomizerState {
-        return prevState.copy(diet = diet)
+        return prevState.copy(diet = diet, restaurantCacheValid = false)
     }
 }

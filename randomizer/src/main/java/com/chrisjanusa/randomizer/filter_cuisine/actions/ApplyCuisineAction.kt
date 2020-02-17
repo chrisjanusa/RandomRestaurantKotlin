@@ -19,7 +19,7 @@ class ApplyCuisineAction : BaseAction {
         mapChannel: Channel<MapUpdate>
     ) {
         currentState.value?.run {
-            updateChannel.send(SelectedCuisineUpdater(HashSet(cuisineTempSet)))
+            if (cuisineSet != cuisineTempSet) updateChannel.send(SelectedCuisineUpdater(HashSet(cuisineTempSet)))
         }
         eventChannel.send(CloseFilterEvent())
         updateChannel.send(FilterOpenUpdater(null))

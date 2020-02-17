@@ -17,7 +17,7 @@ object YelpRepository {
         categories: String? = null,
         limit: Int = 50,
         offset: Int? = null,
-        price: Int? = null,
+        price: String? = null,
         open_now: Boolean = true
     ) = getYelpWebService().getBusinessSearchResults(
         latitude,
