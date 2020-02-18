@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/transparent"
+    android:layout_marginStart="@dimen/dialog_margin"
+    android:layout_marginEnd="@dimen/dialog_margin"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
@@ -51,8 +53,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:paddingLeft="@dimen/dialog_text_padding"
-                    android:paddingRight="@dimen/dialog_text_padding"
+                    android:paddingLeft="@dimen/dialog_padding"
+                    android:paddingRight="@dimen/dialog_padding"
                     android:text="@string/no_restaurants_found_title"
                     android:textAlignment="center"
                     android:textColor="#000000"
@@ -63,10 +65,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/title"
-                    android:layout_marginTop="@dimen/dialog_text_padding"
+                    android:layout_marginTop="@dimen/dialog_padding"
                     android:gravity="center"
-                    android:paddingLeft="@dimen/dialog_text_padding"
-                    android:paddingRight="@dimen/dialog_text_padding"
+                    android:paddingLeft="@dimen/dialog_padding"
+                    android:paddingRight="@dimen/dialog_padding"
                     android:text="@string/no_restaurants_error_message"
                     android:textAlignment="center"
                     android:textSize="@dimen/dialog_message_size" />
