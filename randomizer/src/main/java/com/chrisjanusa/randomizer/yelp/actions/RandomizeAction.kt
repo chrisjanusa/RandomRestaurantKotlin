@@ -9,6 +9,7 @@ import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.yelp.YelpHelper.queryYelp
 import com.chrisjanusa.randomizer.yelp.YelpHelper.randomRestaurant
 import com.chrisjanusa.randomizer.yelp.events.FinishedLoadingNewRestaurantsEvent
+import com.chrisjanusa.randomizer.yelp.events.NoRestaurantsErrorEvent
 import com.chrisjanusa.randomizer.yelp.events.StartLoadingNewRestaurantsEvent
 import com.chrisjanusa.randomizer.yelp.updaters.*
 import com.chrisjanusa.yelp.models.Restaurant
@@ -34,8 +35,7 @@ class RandomizeAction : BaseAction {
                 updateChannel.send(CacheJobUpdater(job))
                 val restaurants = channel.receive()
                 if (restaurants.isEmpty()) {
-                    //TODO throw error event
-                    println("RETURNED 0 RESTAURANTS")
+                    eventChannel.send(NoRestaurantsErrorEvent())
                     updateChannel.send(CurrRestaurantUpdater(state.currRestaurant))
                     eventChannel.send(FinishedLoadingNewRestaurantsEvent())
                     return

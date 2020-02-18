@@ -28,4 +28,7 @@
     <string name="location_prompt">Enter Location…</string>
     <string name="diet">Diet</string>
     <string name="xout">X</string>
+    <string name="ok">OK</string>
+    <string name="no_restaurants_error_message">No Restaurants were found.\nPlease remove some filters or extend the search distance.</string>
+    <string name="no_restaurants_found_title">No Restaurants Found</string>
 </resources>

@@ -21,4 +21,5 @@
     <dimen name="placeholderRatingTextWidth">@dimen/_120sdp</dimen>
     <dimen name="placeholderCuisineTextWidth">@dimen/_200sdp</dimen>
     <dimen name="placeholderPriceTextWidth">@dimen/_180sdp</dimen>
+    <dimen name="dialog_padding_sides">@dimen/_20sdp</dimen>
 </resources>
