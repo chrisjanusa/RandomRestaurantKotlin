@@ -6,10 +6,11 @@ data class Restaurant(
     val coordinates: Coordinates,
     val distance: Double? = null,
     val id: String,
+    val url: String,
     val image_url: String? = null,
     val is_closed: Boolean? = null,
     val location: Location = Location(),
-    val name: String? = null,
+    val name: String,
     val price: String? = null,
     val rating: Float? = null,
     val review_count: Int? = null

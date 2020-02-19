@@ -12,11 +12,15 @@ import com.chrisjanusa.randomizer.base.CommunicationHelper.sendAction
 import com.chrisjanusa.randomizer.base.interfaces.FeatureUIManager
 import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
+import com.chrisjanusa.randomizer.deeplinks.actions.GoogleMapsClickAction
+import com.chrisjanusa.randomizer.deeplinks.actions.UberClickAction
+import com.chrisjanusa.randomizer.deeplinks.actions.YelpClickAction
 import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.metersToMiles
 import com.chrisjanusa.randomizer.yelp.actions.RandomizeAction
 import com.chrisjanusa.yelp.models.Category
 import com.chrisjanusa.yelp.models.Restaurant
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.google.android.material.button.MaterialButton
 import kotlinx.android.synthetic.main.bottom_overlay.*
 
 object YelpUIManager : FeatureUIManager {
@@ -54,6 +58,9 @@ object YelpUIManager : FeatureUIManager {
             findViewById<TextView>(R.id.count).text = restaurant.review_count.toString()
             findViewById<TextView>(R.id.card_cuisines).text = categoriesToDisplayString(restaurant.categories)
             findViewById<TextView>(R.id.distancePrice).text = restaurantToPriceDistanceString(restaurant)
+            findViewById<MaterialButton>(R.id.maps).setOnClickListener { sendAction(GoogleMapsClickAction(restaurant.name, restaurant.location), fragment.randomizerViewModel)}
+            findViewById<MaterialButton>(R.id.uber).setOnClickListener { sendAction(UberClickAction(restaurant.name, restaurant.location, restaurant.coordinates), fragment.randomizerViewModel)}
+            findViewById<MaterialButton>(R.id.yelp).setOnClickListener { sendAction(YelpClickAction(restaurant.url), fragment.randomizerViewModel)}
         }
     }
 

@@ -47,7 +47,7 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
 
     private lateinit var map: GoogleMap
     private lateinit var icon: BitmapDescriptor
-    private lateinit var randomizerViewModel: RandomizerViewModel
+    lateinit var randomizerViewModel: RandomizerViewModel
     private val featureUIManagers = listOf(
         BooleanFilterUIManager,
         CuisineUIManager,

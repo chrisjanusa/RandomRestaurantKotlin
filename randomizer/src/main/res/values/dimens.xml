@@ -29,7 +29,7 @@
     <dimen name="location_search_default_width">@dimen/_135sdp</dimen>
     <dimen name="location_text_start_margin">@dimen/_1sdp</dimen>
     <dimen name="banner_height">@dimen/_80sdp</dimen>
-    <dimen name="banner_icon_height">@dimen/_40sdp</dimen>
+    <dimen name="banner_icon_height">@dimen/_60sdp</dimen>
     <dimen name="dialog_radius">@dimen/_10sdp</dimen>
     <dimen name="dialog_elevation">@dimen/_16sdp</dimen>
     <dimen name="dialog_title_size">@dimen/_14ssp</dimen>

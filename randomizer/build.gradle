@@ -31,13 +31,11 @@ android {
     buildTypes.each {
         Properties properties = new Properties()
         properties.load(project.rootProject.file("local.properties").newDataInputStream())
-        def yelpApiKey = properties.getProperty("yelp_api_key", "")
         def googleApiKey = properties.getProperty("google_api_key", "")
+        def uberClientId = properties.getProperty("uber_client_id", "")
 
-        it.buildConfigField 'String', "YELP_API_KEY", yelpApiKey
-        it.buildConfigField 'String', "GOOGLE_API_KEY", googleApiKey
+        it.buildConfigField 'String', "uberClientId", uberClientId
 
-        it.resValue 'string', "yelp_api_key", yelpApiKey
         it.resValue 'string', "google_api_key", googleApiKey
 
     }
@@ -53,6 +51,7 @@ dependencies {
     implementation "com.google.android.material:material:1.2.0-alpha01"
     implementation 'com.ramotion.fluidslider:fluid-slider:0.3.1'
     implementation 'com.github.bumptech.glide:glide:4.11.0'
+    compile 'com.uber.sdk:rides-android:0.10.2'
     implementation project(":restaurantcard")
     implementation project(":yelp")
     api 'com.google.android.gms:play-services-maps:17.0.0'
