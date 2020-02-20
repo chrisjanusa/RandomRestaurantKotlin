@@ -22,6 +22,9 @@ object YelpHelper {
     ) {
         try {
             state.run {
+                if (currLng == null || currLat == null) {
+                    return
+                }
                 val categories = when {
                     cuisineSet.isNotEmpty() -> cuisineSet.toYelpString()
                     diet != DietHelper.Diet.None -> diet.identifier

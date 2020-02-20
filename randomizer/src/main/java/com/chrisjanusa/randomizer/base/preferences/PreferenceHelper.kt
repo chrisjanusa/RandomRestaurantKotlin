@@ -27,15 +27,15 @@ object PreferenceHelper {
     fun saveState(state: RandomizerState, preferences: SharedPreferences?) {
         preferences?.let {
             with(it.edit()) {
-                putBoolean(PreferenceHelper.StateObject.GpsOn.key, state.gpsOn)
-                putBoolean(PreferenceHelper.StateObject.OpenNowSelected.key, state.openNowSelected)
-                putBoolean(PreferenceHelper.StateObject.FavoriteOnlySelected.key, state.favoriteOnlySelected)
-                putFloat(PreferenceHelper.StateObject.MaxMilesSelected.key, state.maxMilesSelected)
-                putString(PreferenceHelper.StateObject.Diet.key, state.diet.identifier)
-                putString(PreferenceHelper.StateObject.PriceSelected.key, state.priceSet.toSaveString())
-                putString(PreferenceHelper.StateObject.Cuisine.key, state.cuisineSet.toIdentifierString())
-                putFloat(PreferenceHelper.StateObject.Latitude.key, state.currLat.toFloat())
-                putFloat(PreferenceHelper.StateObject.Longitude.key, state.currLng.toFloat())
+                putBoolean(StateObject.GpsOn.key, state.gpsOn)
+                putBoolean(StateObject.OpenNowSelected.key, state.openNowSelected)
+                putBoolean(StateObject.FavoriteOnlySelected.key, state.favoriteOnlySelected)
+                putFloat(StateObject.MaxMilesSelected.key, state.maxMilesSelected)
+                putString(StateObject.Diet.key, state.diet.identifier)
+                putString(StateObject.PriceSelected.key, state.priceSet.toSaveString())
+                putString(StateObject.Cuisine.key, state.cuisineSet.toIdentifierString())
+                state.currLat?.let { lat -> putString(StateObject.Latitude.key, "$lat") }
+                state.currLng?.let { lng -> putString(StateObject.Longitude.key, "$lng") }
                 apply()
             }
         }
@@ -44,16 +44,16 @@ object PreferenceHelper {
     fun retrieveState(preferences: SharedPreferences?): PreferenceData? {
         return preferences?.run {
             PreferenceData(
-                getBoolean(PreferenceHelper.StateObject.GpsOn.key, true),
-                getBoolean(PreferenceHelper.StateObject.OpenNowSelected.key, true),
-                getBoolean(PreferenceHelper.StateObject.FavoriteOnlySelected.key, false),
-                getFloat(PreferenceHelper.StateObject.MaxMilesSelected.key, defaultDistance),
-                getString(PreferenceHelper.StateObject.Diet.key, DietHelper.Diet.None.identifier)
+                getBoolean(StateObject.GpsOn.key, true),
+                getBoolean(StateObject.OpenNowSelected.key, true),
+                getBoolean(StateObject.FavoriteOnlySelected.key, false),
+                getFloat(StateObject.MaxMilesSelected.key, defaultDistance),
+                getString(StateObject.Diet.key, DietHelper.Diet.None.identifier)
                     ?: DietHelper.Diet.None.identifier,
-                getString(PreferenceHelper.StateObject.PriceSelected.key, defaultPriceTitle) ?: defaultPriceTitle,
-                getString(PreferenceHelper.StateObject.Cuisine.key, defaultCuisineTitle) ?: "",
-                getFloat(PreferenceHelper.StateObject.Latitude.key, defaultLat.toFloat()).toDouble(),
-                getFloat(PreferenceHelper.StateObject.Longitude.key, defaultLng.toFloat()).toDouble()
+                getString(StateObject.PriceSelected.key, defaultPriceTitle) ?: defaultPriceTitle,
+                getString(StateObject.Cuisine.key, defaultCuisineTitle) ?: "",
+                getString(StateObject.Latitude.key, null)?.toDouble(),
+                getString(StateObject.Longitude.key, null)?.toDouble()
             )
         }
     }

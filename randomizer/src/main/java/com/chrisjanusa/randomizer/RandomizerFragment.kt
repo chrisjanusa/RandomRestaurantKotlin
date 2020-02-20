@@ -21,8 +21,6 @@ import com.chrisjanusa.randomizer.filter_cuisine.CuisineUIManager
 import com.chrisjanusa.randomizer.filter_distance.DistanceUIManager
 import com.chrisjanusa.randomizer.filter_price.PriceUIManager
 import com.chrisjanusa.randomizer.filter_diet.DietUIManager
-import com.chrisjanusa.randomizer.location_base.LocationHelper.spaceNeedleLat
-import com.chrisjanusa.randomizer.location_base.LocationHelper.spaceNeedleLng
 import com.chrisjanusa.randomizer.location_base.LocationHelper.zoomLevel
 import com.chrisjanusa.randomizer.location_base.LocationUIManager
 import com.chrisjanusa.randomizer.location_base.LocationUIManager.getDefaultMarker
@@ -39,7 +37,6 @@ import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.android.synthetic.main.bottom_overlay.*
 import kotlinx.coroutines.launch
 
 

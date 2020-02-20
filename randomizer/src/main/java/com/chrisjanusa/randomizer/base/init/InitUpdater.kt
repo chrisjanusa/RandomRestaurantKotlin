@@ -14,8 +14,8 @@ class InitUpdater(
     private val diet: DietHelper.Diet,
     private val priceSet: HashSet<Price>,
     private val cuisineSet: HashSet<Cuisine>,
-    private val currLat: Double,
-    private val currLng: Double,
+    private val currLat: Double?,
+    private val currLng: Double?,
     private val locationText: String
 ) : BaseUpdater {
     override fun performUpdate(prevState: RandomizerState): RandomizerState {

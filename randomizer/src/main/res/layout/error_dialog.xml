@@ -55,7 +55,7 @@
                     android:gravity="center"
                     android:paddingLeft="@dimen/dialog_padding"
                     android:paddingRight="@dimen/dialog_padding"
-                    android:text="@string/no_restaurants_found_title"
+                    android:text="@string/no_restaurants_found_error_title"
                     android:textAlignment="center"
                     android:textColor="#000000"
                     android:textSize="@dimen/dialog_title_size" />

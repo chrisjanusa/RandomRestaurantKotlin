@@ -11,5 +11,5 @@ object LocationHelper {
 
     const val zoomLevel = 16f
 
-    fun isDefault(lat: Double, lng: Double): Boolean = defaultLat == lat && defaultLng == lng
+    fun isDefault(lat: Double?, lng: Double?): Boolean = lat == null || lng == null
 }

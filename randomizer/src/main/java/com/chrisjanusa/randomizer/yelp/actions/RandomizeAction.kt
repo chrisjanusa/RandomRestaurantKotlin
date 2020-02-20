@@ -9,6 +9,7 @@ import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.yelp.YelpHelper.queryYelp
 import com.chrisjanusa.randomizer.yelp.YelpHelper.randomRestaurant
 import com.chrisjanusa.randomizer.yelp.events.FinishedLoadingNewRestaurantsEvent
+import com.chrisjanusa.randomizer.yelp.events.InvalidLocationErrorEvent
 import com.chrisjanusa.randomizer.yelp.events.NoRestaurantsErrorEvent
 import com.chrisjanusa.randomizer.yelp.events.StartLoadingNewRestaurantsEvent
 import com.chrisjanusa.randomizer.yelp.updaters.*
@@ -26,6 +27,10 @@ class RandomizeAction : BaseAction {
         currentState.value?.let { state ->
             val channel = Channel<List<Restaurant>>(Channel.UNLIMITED)
             val restaurants = if (state.restaurants.isEmpty() || !state.restaurantCacheValid) {
+                if (state.currLat == null || state.currLng == null) {
+                    eventChannel.send(InvalidLocationErrorEvent())
+                    return
+                }
                 state.lastCacheUpdateJob?.cancel()
                 updateChannel.send(CurrRestaurantUpdater(null))
                 updateChannel.send(ClearRestaurantCacheUpdater())

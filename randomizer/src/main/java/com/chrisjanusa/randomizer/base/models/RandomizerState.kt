@@ -5,8 +5,6 @@ import com.chrisjanusa.randomizer.filter_cuisine.CuisineHelper.Cuisine
 import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.defaultDistance
 import com.chrisjanusa.randomizer.filter_price.PriceHelper.Price
 import com.chrisjanusa.randomizer.filter_diet.DietHelper.Diet
-import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLat
-import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLng
 import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLocationText
 import com.chrisjanusa.yelp.models.Restaurant
 import kotlinx.coroutines.Job
@@ -16,8 +14,8 @@ import kotlin.collections.HashSet
 data class RandomizerState(
     val gpsOn: Boolean = true,
     val locationText: String = defaultLocationText,
-    val currLat: Double = defaultLat,
-    val currLng: Double = defaultLng,
+    val currLat: Double? = null,
+    val currLng: Double? = null,
 
     val addressSearchString: String = "",
     val lastManualLocationText: String = defaultLocationText,

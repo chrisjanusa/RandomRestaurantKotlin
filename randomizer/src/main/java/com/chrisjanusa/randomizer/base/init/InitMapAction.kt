@@ -17,7 +17,7 @@ class InitMapAction : BaseAction {
         mapChannel: Channel<MapUpdate>
     ) {
         currentState.value?.run {
-            if (LocationHelper.isDefault(currLat, currLng)) {
+            if (currLat == null || currLng == null) {
                 mapChannel.send(MapUpdate(LocationHelper.spaceNeedleLat, LocationHelper.spaceNeedleLng, false))
             } else {
                 mapChannel.send(MapUpdate(currLat, currLng, false))

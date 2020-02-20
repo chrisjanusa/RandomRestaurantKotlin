@@ -15,7 +15,6 @@ import com.chrisjanusa.randomizer.filter_diet.DietHelper.dietFromIdentifier
 import com.chrisjanusa.randomizer.filter_price.PriceHelper.priceFromSaveString
 import com.chrisjanusa.randomizer.location_base.LocationHelper
 import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLocationText
-import com.chrisjanusa.randomizer.location_base.LocationHelper.isDefault
 import com.chrisjanusa.randomizer.location_base.updaters.LocationTextUpdater
 import com.chrisjanusa.randomizer.location_gps.GpsHelper.requestLocation
 import com.chrisjanusa.randomizer.location_search.updaters.LastManualLocationUpdater
@@ -34,7 +33,7 @@ class InitAction(private val activity: Activity?) : BaseAction {
             val dietObject = dietFromIdentifier(diet)
             val priceSet = priceFromSaveString(priceSelected)
             val cuisineSet = cuisineFromIdentifierString(cuisineString)
-            val locationName = if (isDefault(currLat, currLng)) {
+            val locationName = if (currLat == null || currLng == null) {
                 defaultLocationText
             } else {
                 getTextFromLatLng(currLat, currLng)

@@ -2,7 +2,6 @@ package com.chrisjanusa.randomizer.location_search.events
 
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.fragment.app.Fragment
 import com.chrisjanusa.randomizer.R
 import com.chrisjanusa.randomizer.RandomizerFragment
 import com.chrisjanusa.randomizer.base.interfaces.BaseEvent
@@ -10,7 +9,7 @@ import com.chrisjanusa.randomizer.location_search.SearchHelper
 import kotlinx.android.synthetic.main.search_card.*
 
 class OpenSearchEvent(private val addressSearchText: String) : BaseEvent {
-    override fun handleEvent(fragment: Fragment) {
+    override fun handleEvent(fragment: RandomizerFragment) {
         if (fragment is RandomizerFragment) {
             fragment.run {
                 // Setup the layout
