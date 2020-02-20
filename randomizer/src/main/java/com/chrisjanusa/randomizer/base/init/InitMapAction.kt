@@ -16,10 +16,16 @@ class InitMapAction : BaseAction {
         eventChannel: Channel<BaseEvent>,
         mapChannel: Channel<MapUpdate>
     ) {
+        println("Updating to init map")
         currentState.value?.run {
-            if (currLat == null || currLng == null) {
+            if (currRestaurant != null) {
+                println("Setting restaurant loc")
+                mapChannel.send(MapUpdate(currRestaurant.coordinates.latitude, currRestaurant.coordinates.longitude, true))
+            } else if (currLat == null || currLng == null) {
+                println("Setting restaurant default")
                 mapChannel.send(MapUpdate(LocationHelper.spaceNeedleLat, LocationHelper.spaceNeedleLng, false))
             } else {
+                println("Setting restaurant user")
                 mapChannel.send(MapUpdate(currLat, currLng, false))
             }
         }

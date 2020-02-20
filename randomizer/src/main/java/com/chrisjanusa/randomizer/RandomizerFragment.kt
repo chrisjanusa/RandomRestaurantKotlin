@@ -45,6 +45,12 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
     private lateinit var map: GoogleMap
     private lateinit var icon: BitmapDescriptor
     lateinit var randomizerViewModel: RandomizerViewModel
+    private val render = fun(newState: RandomizerState) {
+        for (uiManager in featureUIManagers) {
+            uiManager.render(newState, this)
+        }
+    }
+    private val observer = Observer<RandomizerState>(render)
     private val featureUIManagers = listOf(
         BooleanFilterUIManager,
         CuisineUIManager,
@@ -76,7 +82,7 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
             uiManager.init(randomizerViewModel, this)
         }
 
-        randomizerViewModel.state.observe(this, Observer<RandomizerState>(render))
+        randomizerViewModel.state.observe(this, observer)
         val frag = this
         lifecycleScope.launch {
             for (event in randomizerViewModel.eventChannel) {
@@ -92,11 +98,11 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         }
     }
 
-    private val render = fun(newState: RandomizerState) {
-        for (uiManager in featureUIManagers) {
-            uiManager.render(newState, this)
-        }
-    }
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        randomizerViewModel.close()
+//        randomizerViewModel.state.removeObserver(observer)
+//    }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -125,7 +131,6 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
 
     override fun onMapReady(googleMap: GoogleMap?) {
         googleMap ?: return
-        sendAction(InitMapAction(), randomizerViewModel)
         map = googleMap
         icon = getDefaultMarker(this)
 
@@ -135,9 +140,12 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
 
         lifecycleScope.launch {
             for (update in randomizerViewModel.mapChannel) {
+                println("Updating to ${update.lat} ${update.lng}")
                 setMap(update.lat, update.lng, update.addMarker)
             }
         }
+
+        sendAction(InitMapAction(), randomizerViewModel)
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {

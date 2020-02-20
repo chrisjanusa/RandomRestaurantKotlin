@@ -50,13 +50,18 @@ class InitAction(private val activity: Activity?) : BaseAction {
                     cuisineSet,
                     currLat,
                     currLng,
-                    locationName
+                    locationName,
+                    currRestaurant,
+                    restaurants,
+                    cacheValidity
                 )
             )
 
             if (gpsOn) {
                 updateChannel.send(LocationTextUpdater(LocationHelper.calculatingLocationText))
-                activity?.let { requestLocation(it, updateChannel, eventChannel, mapChannel) }
+                activity?.let {
+                    requestLocation(it, updateChannel, eventChannel, mapChannel, currLat, currLng)
+                }
             } else {
                 updateChannel.send(LastManualLocationUpdater(locationName))
             }

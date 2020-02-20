@@ -10,6 +10,7 @@ import com.chrisjanusa.randomizer.base.models.MapUpdate
 import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLat
 import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLng
+import com.chrisjanusa.randomizer.location_base.LocationHelper.hasLocationChanged
 import com.chrisjanusa.randomizer.location_base.updaters.GpsStatusUpdater
 import com.chrisjanusa.randomizer.location_base.updaters.LocationUpdater
 import com.chrisjanusa.randomizer.location_search.updaters.LastManualLocationUpdater
@@ -40,8 +41,11 @@ class LocationChosenAction(private val details: PlaceDetails, private val contex
             // TODO: On null send error event
             val latitude = address?.latitude ?: defaultLat
             val longitude = address?.longitude ?: defaultLng
-
-            mapChannel.send(MapUpdate(latitude, longitude, false))
+            currentState.value?.let { state ->
+                if(hasLocationChanged(state.currLat, state.currLng, latitude, longitude)){
+                    mapChannel.send(MapUpdate(latitude, longitude, false))
+                }
+            }
             updateChannel.send(LocationUpdater(text, latitude, longitude))
             updateChannel.send(LastManualLocationUpdater(text))
             updateChannel.send(GpsStatusUpdater(false))

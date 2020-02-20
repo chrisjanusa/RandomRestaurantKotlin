@@ -22,6 +22,8 @@ class PermissionReceivedAction(private val activity: Activity) : BaseAction {
     ) {
         updateChannel.send(GpsStatusUpdater(true))
         updateChannel.send(LocationTextUpdater(LocationHelper.calculatingLocationText))
-        requestLocation(activity, updateChannel, eventChannel, mapChannel)
+        currentState.value?.let { state ->
+            requestLocation(activity, updateChannel, eventChannel, mapChannel, state.currLat, state.currLng)
+        }
     }
 }
