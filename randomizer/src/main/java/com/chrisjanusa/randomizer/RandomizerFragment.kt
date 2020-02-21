@@ -21,6 +21,7 @@ import com.chrisjanusa.randomizer.filter_cuisine.CuisineUIManager
 import com.chrisjanusa.randomizer.filter_distance.DistanceUIManager
 import com.chrisjanusa.randomizer.filter_price.PriceUIManager
 import com.chrisjanusa.randomizer.filter_diet.DietUIManager
+import com.chrisjanusa.randomizer.location_base.LocationHelper.cameraSpeed
 import com.chrisjanusa.randomizer.location_base.LocationHelper.zoomLevel
 import com.chrisjanusa.randomizer.location_base.LocationUIManager
 import com.chrisjanusa.randomizer.location_base.LocationUIManager.getDefaultMarker
@@ -30,15 +31,15 @@ import com.chrisjanusa.randomizer.location_gps.actions.PermissionDeniedAction
 import com.chrisjanusa.randomizer.location_gps.actions.PermissionReceivedAction
 import com.chrisjanusa.randomizer.location_search.SearchUIManager
 import com.chrisjanusa.randomizer.yelp.YelpUIManager
-import com.google.android.gms.maps.CameraUpdateFactory.newLatLngZoom
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.model.BitmapDescriptor
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.libraries.maps.CameraUpdateFactory.newLatLngZoom
+import com.google.android.libraries.maps.GoogleMap
+import com.google.android.libraries.maps.OnMapReadyCallback
+import com.google.android.libraries.maps.model.BitmapDescriptor
+import com.google.android.libraries.maps.model.LatLng
+import com.google.android.libraries.maps.model.Marker
+import com.google.android.libraries.maps.model.MarkerOptions
+import kotlinx.android.synthetic.main.randomizer_frag.*
 import kotlinx.coroutines.launch
-
 
 class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
@@ -50,7 +51,6 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
             uiManager.render(newState, this)
         }
     }
-    private val observer = Observer<RandomizerState>(render)
     private val featureUIManagers = listOf(
         BooleanFilterUIManager,
         CuisineUIManager,
@@ -77,12 +77,11 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         for (uiManager in featureUIManagers) {
             uiManager.init(randomizerViewModel, this)
         }
 
-        randomizerViewModel.state.observe(this, observer)
+        randomizerViewModel.state.observe(this, Observer<RandomizerState>(render))
         val frag = this
         lifecycleScope.launch {
             for (event in randomizerViewModel.eventChannel) {
@@ -91,18 +90,40 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         }
     }
 
+
+    override fun onStart() {
+        super.onStart()
+        mapView?.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mapView?.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mapView?.onPause()
+    }
+
     override fun onStop() {
         super.onStop()
+        mapView?.onStop()
         randomizerViewModel.state.value?.let {
             PreferenceHelper.saveState(it, activity?.getPreferences(Context.MODE_PRIVATE))
         }
     }
 
-//    override fun onDestroy() {
-//        super.onDestroy()
-//        randomizerViewModel.close()
-//        randomizerViewModel.state.removeObserver(observer)
-//    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        map.clear()
+        mapView?.onDestroy()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mapView?.onLowMemory()
+    }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -119,7 +140,7 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         val location = LatLng(lat, lng)
         map.run {
             clear()
-            animateCamera(newLatLngZoom(location, zoomLevel))
+            animateCamera(newLatLngZoom(location, zoomLevel), cameraSpeed, null)
             if (addMarker) {
                 val marker = MarkerOptions()
                     .position(location)
@@ -135,12 +156,10 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         icon = getDefaultMarker(this)
 
         map.setOnMarkerClickListener(this)
-        map.uiSettings.isMapToolbarEnabled = false
-
+        map.uiSettings?.isMapToolbarEnabled = false
 
         lifecycleScope.launch {
             for (update in randomizerViewModel.mapChannel) {
-                println("Updating to ${update.lat} ${update.lng}")
                 setMap(update.lat, update.lng, update.addMarker)
             }
         }

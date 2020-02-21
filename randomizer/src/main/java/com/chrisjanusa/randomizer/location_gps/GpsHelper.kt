@@ -100,7 +100,6 @@ object GpsHelper {
                 .getFromLocation(latitude, longitude, 1)[0]
                 .locality
             if (hasLocationChanged(prevLat, prevLng, latitude, longitude)) {
-                println("Updating to Here")
                 sendMap(MapUpdate(latitude, longitude, false), mapChannel)
             }
             sendUpdate(LocationUpdater(locationName, latitude, longitude), updateChannel)

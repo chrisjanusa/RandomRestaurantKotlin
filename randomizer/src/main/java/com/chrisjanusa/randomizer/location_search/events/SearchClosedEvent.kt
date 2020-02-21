@@ -6,10 +6,8 @@ import kotlinx.android.synthetic.main.search_card.*
 
 class SearchClosedEvent : BaseEvent {
     override fun handleEvent(fragment: RandomizerFragment) {
-        if (fragment is RandomizerFragment) {
-            fragment.run {
-                user_input.setText("")
-            }
+        fragment.run {
+            user_input.setText("")
         }
     }
 }

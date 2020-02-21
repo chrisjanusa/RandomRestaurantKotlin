@@ -23,7 +23,6 @@ class InitUpdater(
     private val cacheValidity: Boolean
 ) : BaseUpdater {
     override fun performUpdate(prevState: RandomizerState): RandomizerState {
-        println("Updating to Updated")
         return prevState.copy(
             gpsOn = gpsOn,
             priceSet = priceSet,

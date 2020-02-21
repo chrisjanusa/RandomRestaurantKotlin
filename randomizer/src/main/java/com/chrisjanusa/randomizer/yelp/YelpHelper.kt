@@ -69,9 +69,6 @@ object YelpHelper {
         open_now: Boolean = true,
         channel: Channel<List<Restaurant>>
     ) {
-        withContext(Dispatchers.Main) {
-            println("Offset $offset is being run")
-        }
         val restaurants = YelpRepository.getBusinessSearchResults(
             latitude = latitude,
             longitude = longitude,
@@ -83,9 +80,6 @@ object YelpHelper {
             limit = limit,
             open_now = open_now
         ).businesses
-        withContext(Dispatchers.Main) {
-            println("Offset $offset finished")
-        }
         channel.send(restaurants)
     }
 

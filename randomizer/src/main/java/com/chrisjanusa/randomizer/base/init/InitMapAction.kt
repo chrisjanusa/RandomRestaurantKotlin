@@ -6,8 +6,10 @@ import com.chrisjanusa.randomizer.base.interfaces.BaseEvent
 import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
 import com.chrisjanusa.randomizer.base.models.MapUpdate
 import com.chrisjanusa.randomizer.base.models.RandomizerState
-import com.chrisjanusa.randomizer.location_base.LocationHelper
+import com.chrisjanusa.randomizer.location_base.LocationHelper.initMapUpdate
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.withContext
 
 class InitMapAction : BaseAction {
     override suspend fun performAction(
@@ -16,17 +18,10 @@ class InitMapAction : BaseAction {
         eventChannel: Channel<BaseEvent>,
         mapChannel: Channel<MapUpdate>
     ) {
-        println("Updating to init map")
-        currentState.value?.run {
-            if (currRestaurant != null) {
-                println("Setting restaurant loc")
-                mapChannel.send(MapUpdate(currRestaurant.coordinates.latitude, currRestaurant.coordinates.longitude, true))
-            } else if (currLat == null || currLng == null) {
-                println("Setting restaurant default")
-                mapChannel.send(MapUpdate(LocationHelper.spaceNeedleLat, LocationHelper.spaceNeedleLng, false))
-            } else {
-                println("Setting restaurant user")
-                mapChannel.send(MapUpdate(currLat, currLng, false))
+        //On Main to make sure initUpdater finishes before running this code
+        withContext(Dispatchers.Main) {
+            currentState.value?.run {
+                initMapUpdate(mapChannel, currRestaurant, currLat, currLng)
             }
         }
     }

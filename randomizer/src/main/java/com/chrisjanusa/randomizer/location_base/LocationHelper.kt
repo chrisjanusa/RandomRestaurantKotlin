@@ -1,6 +1,9 @@
 package com.chrisjanusa.randomizer.location_base
 
 import android.location.Location
+import com.chrisjanusa.randomizer.base.models.MapUpdate
+import com.chrisjanusa.yelp.models.Restaurant
+import kotlinx.coroutines.channels.Channel
 
 object LocationHelper {
     const val defaultLocationText = "Unknown"
@@ -13,6 +16,7 @@ object LocationHelper {
     private const val minimumDistanceChange = 160.934f
 
     const val zoomLevel = 16f
+    const val cameraSpeed = 700
 
     fun hasLocationChanged(prevLat: Double?, prevLng: Double?, currLat: Double, currLng: Double) : Boolean {
         return if (prevLat != null && prevLng != null) {
@@ -20,8 +24,17 @@ object LocationHelper {
             Location.distanceBetween(prevLat, prevLng, currLat, currLng, distance)
             distance[0] > minimumDistanceChange
         } else {
-            println("Updating to Null")
             true
+        }
+    }
+
+    suspend fun initMapUpdate(mapChannel: Channel<MapUpdate>, currRestaurant: Restaurant?, currLat: Double?, currLng: Double?) {
+        if (currRestaurant != null) {
+            mapChannel.send(MapUpdate(currRestaurant.coordinates.latitude, currRestaurant.coordinates.longitude, true))
+        } else if (currLat == null || currLng == null) {
+            mapChannel.send(MapUpdate(spaceNeedleLat, spaceNeedleLng, false))
+        } else {
+            mapChannel.send(MapUpdate(currLat, currLng, false))
         }
     }
 }

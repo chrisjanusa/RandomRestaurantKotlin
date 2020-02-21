@@ -15,6 +15,7 @@ import com.chrisjanusa.randomizer.filter_diet.DietHelper.dietFromIdentifier
 import com.chrisjanusa.randomizer.filter_price.PriceHelper.priceFromSaveString
 import com.chrisjanusa.randomizer.location_base.LocationHelper
 import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLocationText
+import com.chrisjanusa.randomizer.location_base.LocationHelper.initMapUpdate
 import com.chrisjanusa.randomizer.location_base.updaters.LocationTextUpdater
 import com.chrisjanusa.randomizer.location_gps.GpsHelper.requestLocation
 import com.chrisjanusa.randomizer.location_search.updaters.LastManualLocationUpdater
@@ -56,6 +57,8 @@ class InitAction(private val activity: Activity?) : BaseAction {
                     cacheValidity
                 )
             )
+
+            initMapUpdate(mapChannel, currRestaurant, currLat, currLng)
 
             if (gpsOn) {
                 updateChannel.send(LocationTextUpdater(LocationHelper.calculatingLocationText))
