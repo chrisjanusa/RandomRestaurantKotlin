@@ -18,9 +18,9 @@ import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
 import com.chrisjanusa.randomizer.base.preferences.PreferenceHelper
 import com.chrisjanusa.randomizer.filter_boolean.BooleanFilterUIManager
 import com.chrisjanusa.randomizer.filter_cuisine.CuisineUIManager
+import com.chrisjanusa.randomizer.filter_diet.DietUIManager
 import com.chrisjanusa.randomizer.filter_distance.DistanceUIManager
 import com.chrisjanusa.randomizer.filter_price.PriceUIManager
-import com.chrisjanusa.randomizer.filter_diet.DietUIManager
 import com.chrisjanusa.randomizer.location_base.LocationHelper.cameraSpeed
 import com.chrisjanusa.randomizer.location_base.LocationHelper.zoomLevel
 import com.chrisjanusa.randomizer.location_base.LocationUIManager
@@ -52,12 +52,12 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         }
     }
     private val featureUIManagers = listOf(
+        LocationUIManager,
         BooleanFilterUIManager,
         CuisineUIManager,
         DistanceUIManager,
         PriceUIManager,
         DietUIManager,
-        LocationUIManager,
         GpsUIManager,
         SearchUIManager,
         YelpUIManager
@@ -67,7 +67,6 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         super.onCreate(savedInstanceState)
 
         randomizerViewModel = activity?.let { getViewModel(it) } ?: throw Exception("Invalid Activity")
-
         sendAction(InitAction(activity), randomizerViewModel)
     }
 
@@ -104,20 +103,21 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
     override fun onPause() {
         super.onPause()
         mapView?.onPause()
+        randomizerViewModel.state.value?.let {
+            PreferenceHelper.saveState(it, activity?.getPreferences(Context.MODE_PRIVATE))
+        }
     }
 
     override fun onStop() {
         super.onStop()
         mapView?.onStop()
-        randomizerViewModel.state.value?.let {
-            PreferenceHelper.saveState(it, activity?.getPreferences(Context.MODE_PRIVATE))
-        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         map.clear()
         mapView?.onDestroy()
+        randomizerViewModel.close()
     }
 
     override fun onLowMemory() {

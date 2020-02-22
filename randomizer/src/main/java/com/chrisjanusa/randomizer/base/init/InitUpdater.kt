@@ -36,7 +36,8 @@ class InitUpdater(
             locationText = locationText,
             currRestaurant = currRestaurant,
             restaurants = restaurants,
-            restaurantCacheValid = cacheValidity
+            restaurantCacheValid = cacheValidity,
+            stateInitialized = true
         )
     }
 }

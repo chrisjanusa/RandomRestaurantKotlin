@@ -7,9 +7,7 @@ import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
 import com.chrisjanusa.randomizer.base.models.MapUpdate
 import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.location_base.LocationHelper.initMapUpdate
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.withContext
 
 class InitMapAction : BaseAction {
     override suspend fun performAction(
@@ -18,9 +16,8 @@ class InitMapAction : BaseAction {
         eventChannel: Channel<BaseEvent>,
         mapChannel: Channel<MapUpdate>
     ) {
-        //On Main to make sure initUpdater finishes before running this code
-        withContext(Dispatchers.Main) {
-            currentState.value?.run {
+        currentState.value?.run {
+            if (stateInitialized) {
                 initMapUpdate(mapChannel, currRestaurant, currLat, currLng)
             }
         }
