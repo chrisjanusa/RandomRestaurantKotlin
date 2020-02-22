@@ -41,8 +41,8 @@ class LocationChosenAction(private val details: PlaceDetails, private val contex
             // TODO: On null send error event
             val latitude = address?.latitude ?: defaultLat
             val longitude = address?.longitude ?: defaultLng
-            currentState.value?.let { state ->
-                if(hasLocationChanged(state.currLat, state.currLng, latitude, longitude)){
+            currentState.value?.run {
+                if(hasLocationChanged(currLat, currLng, latitude, longitude)){
                     mapChannel.send(MapUpdate(latitude, longitude, false))
                 }
             }

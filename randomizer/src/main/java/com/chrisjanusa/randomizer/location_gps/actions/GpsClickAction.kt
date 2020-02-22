@@ -20,13 +20,13 @@ class GpsClickAction(private val activity: Activity) : BaseAction {
         eventChannel: Channel<BaseEvent>,
         mapChannel: Channel<MapUpdate>
     ) {
-        currentState.value?.let { state ->
-            if (state.gpsOn) {
+        currentState.value?.run {
+            if (gpsOn) {
                 updateChannel.send(GpsStatusUpdater(false))
             } else {
                 updateChannel.send(GpsStatusUpdater(true))
                 updateChannel.send(LocationTextUpdater(calculatingLocationText))
-                requestLocation(activity, updateChannel, eventChannel, mapChannel, state.currLat, state.currLng)
+                requestLocation(activity, updateChannel, eventChannel, mapChannel, currLat, currLng)
             }
         }
     }

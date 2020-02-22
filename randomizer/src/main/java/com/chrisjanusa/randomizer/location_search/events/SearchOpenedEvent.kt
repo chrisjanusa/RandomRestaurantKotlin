@@ -8,13 +8,11 @@ import kotlinx.android.synthetic.main.search_card.*
 
 class SearchOpenedEvent : BaseEvent {
     override fun handleEvent(fragment: RandomizerFragment) {
-        if (fragment is RandomizerFragment) {
-            fragment.run {
-                user_input.requestFocus()
-                user_input.showDropDown()
-                val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-                imm?.showSoftInput(user_input, InputMethodManager.SHOW_IMPLICIT)
-            }
+        fragment.run {
+            user_input.requestFocus()
+            user_input.showDropDown()
+            val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+            imm?.showSoftInput(user_input, InputMethodManager.SHOW_IMPLICIT)
         }
     }
 }

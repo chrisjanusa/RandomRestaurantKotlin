@@ -19,8 +19,6 @@ android {
         release {
             minifyEnabled false
         }
-        each {
-        }
     }
     compileOptions {
         sourceCompatibility = '1.8'
@@ -32,7 +30,6 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    testImplementation 'junit:junit:4.12'
     implementation 'com.google.android.material:material:1.1.0-beta01'
     implementation 'androidx.core:core-ktx:1.1.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -43,13 +40,6 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.1.0'
     implementation "androidx.fragment:fragment-ktx:1.2.1"
     implementation project(":tempfrag")
-}
-
-ext {
-    roomVersion = '2.2.0'
-    archLifecycleVersion = '2.2.0-beta01'
-    androidxArchVersion = '2.1.0'
-    coroutines = '1.2.0'
 }
 
 repositories {

@@ -69,9 +69,3 @@ dependencies {
     implementation 'com.google.android.gms:play-services-base:17.1.0'
     implementation 'com.google.android.gms:play-services-gcm:17.0.0'
 }
-repositories {
-    mavenCentral()
-    flatDir {
-        dirs 'libs'
-    }
-}

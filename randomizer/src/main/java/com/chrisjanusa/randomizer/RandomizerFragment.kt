@@ -103,14 +103,14 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
     override fun onPause() {
         super.onPause()
         mapView?.onPause()
-        randomizerViewModel.state.value?.let {
-            PreferenceHelper.saveState(it, activity?.getPreferences(Context.MODE_PRIVATE))
-        }
     }
 
     override fun onStop() {
         super.onStop()
         mapView?.onStop()
+        randomizerViewModel.state.value?.let {
+            PreferenceHelper.saveState(it, activity?.getPreferences(Context.MODE_PRIVATE))
+        }
     }
 
     override fun onDestroyView() {
@@ -151,6 +151,7 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
 
     override fun onMapReady(googleMap: GoogleMap?) {
         googleMap ?: return
+        sendAction(InitMapAction(), randomizerViewModel)
         map = googleMap
         icon = getDefaultMarker(this)
 
@@ -162,8 +163,6 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
                 setMap(update.lat, update.lng, update.addMarker)
             }
         }
-
-        sendAction(InitMapAction(), randomizerViewModel)
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {

@@ -15,6 +15,7 @@ import com.chrisjanusa.randomizer.filter_diet.DietHelper.dietFromIdentifier
 import com.chrisjanusa.randomizer.filter_price.PriceHelper.priceFromSaveString
 import com.chrisjanusa.randomizer.location_base.LocationHelper
 import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLocationText
+import com.chrisjanusa.randomizer.location_base.LocationHelper.getTextFromLatLng
 import com.chrisjanusa.randomizer.location_base.LocationHelper.initMapUpdate
 import com.chrisjanusa.randomizer.location_base.updaters.LocationTextUpdater
 import com.chrisjanusa.randomizer.location_gps.GpsHelper.requestLocation
@@ -37,7 +38,7 @@ class InitAction(private val activity: Activity?) : BaseAction {
             val locationName = if (currLat == null || currLng == null) {
                 defaultLocationText
             } else {
-                getTextFromLatLng(currLat, currLng)
+                activity?.let {  getTextFromLatLng(activity, currLat, currLng) } ?: defaultLocationText
             }
 
             updateChannel.send(
@@ -69,14 +70,4 @@ class InitAction(private val activity: Activity?) : BaseAction {
             }
         }
     }
-
-    private fun getTextFromLatLng(currLat: Double, currLng: Double): String {
-        return activity?.let {
-            Geocoder(it)
-                .getFromLocation(currLat, currLng, 1)
-                .getOrNull(0)
-                ?.locality
-        } ?: defaultLocationText
-    }
-
 }

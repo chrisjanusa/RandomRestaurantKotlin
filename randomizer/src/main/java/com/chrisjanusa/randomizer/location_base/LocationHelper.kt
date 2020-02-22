@@ -1,5 +1,7 @@
 package com.chrisjanusa.randomizer.location_base
 
+import android.app.Activity
+import android.location.Geocoder
 import android.location.Location
 import com.chrisjanusa.randomizer.base.models.MapUpdate
 import com.chrisjanusa.yelp.models.Restaurant
@@ -36,5 +38,13 @@ object LocationHelper {
         } else {
             mapChannel.send(MapUpdate(currLat, currLng, false))
         }
+    }
+
+    fun getTextFromLatLng(activity: Activity, currLat: Double, currLng: Double): String {
+        return Geocoder(activity)
+                .getFromLocation(currLat, currLng, 1)
+                .getOrNull(0)
+                ?.locality
+         ?: defaultLocationText
     }
 }
