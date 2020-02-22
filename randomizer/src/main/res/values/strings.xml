@@ -33,4 +33,6 @@
     <string name="location_not_set_error_message">"User location is required.\nPlease enter location or turn on gps in the top bar."</string>
     <string name="no_restaurants_found_error_title">No Restaurants Found</string>
     <string name="location_not_set_error_title">Location not set</string>
+    <string name="fast_food">Fast Food</string>
+    <string name="sit_down">Sit Down Restaurants</string>
 </resources>

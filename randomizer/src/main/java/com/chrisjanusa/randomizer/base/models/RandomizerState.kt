@@ -28,8 +28,9 @@ data class RandomizerState(
     val priceTempSet: HashSet<Price> = HashSet(),
 
     val openNowSelected: Boolean = true,
-
     val favoriteOnlySelected: Boolean = false,
+    val fastFoodSelected: Boolean = false,
+    val sitDownSelected: Boolean = false,
 
     val maxMilesSelected: Float = defaultDistance,
     val tempMaxMiles: Float = defaultDistance,

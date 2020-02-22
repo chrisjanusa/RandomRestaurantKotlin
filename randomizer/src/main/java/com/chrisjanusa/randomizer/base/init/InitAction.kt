@@ -46,6 +46,8 @@ class InitAction(private val activity: Activity?) : BaseAction {
                     gpsOn,
                     openNowSelected,
                     favoriteOnlySelected,
+                    fastFoodSelected,
+                    sitDownSelected,
                     maxMilesSelected,
                     dietObject,
                     priceSet,
