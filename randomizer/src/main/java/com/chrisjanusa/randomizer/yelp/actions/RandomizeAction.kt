@@ -6,15 +6,15 @@ import com.chrisjanusa.randomizer.base.interfaces.BaseEvent
 import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
 import com.chrisjanusa.randomizer.base.models.MapUpdate
 import com.chrisjanusa.randomizer.base.models.RandomizerState
-import com.chrisjanusa.randomizer.yelp.YelpHelper.queryYelp
-import com.chrisjanusa.randomizer.yelp.YelpHelper.randomRestaurant
-import com.chrisjanusa.randomizer.yelp.events.FinishedLoadingNewRestaurantsEvent
+import com.chrisjanusa.randomizer.yelp.YelpHelper.monitorBackgroundThreads
+import com.chrisjanusa.randomizer.yelp.YelpHelper.notifyFinishedLoadingRestaurants
+import com.chrisjanusa.randomizer.yelp.YelpHelper.notifyStartingToLoadRestaurants
+import com.chrisjanusa.randomizer.yelp.YelpHelper.setRandomRestaurant
+import com.chrisjanusa.randomizer.yelp.YelpHelper.startQueryingYelp
+import com.chrisjanusa.randomizer.yelp.YelpHelper.throwNoRestaurantError
 import com.chrisjanusa.randomizer.yelp.events.InvalidLocationErrorEvent
-import com.chrisjanusa.randomizer.yelp.events.NoRestaurantsErrorEvent
-import com.chrisjanusa.randomizer.yelp.events.StartLoadingNewRestaurantsEvent
 import com.chrisjanusa.randomizer.yelp.updaters.*
 import com.chrisjanusa.yelp.models.Restaurant
-import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 
 class RandomizeAction : BaseAction {
@@ -31,45 +31,44 @@ class RandomizeAction : BaseAction {
                     eventChannel.send(InvalidLocationErrorEvent())
                     return
                 }
-                state.lastCacheUpdateJob?.cancel()
-                updateChannel.send(CurrRestaurantUpdater(null))
-                updateChannel.send(ClearRestaurantCacheUpdater())
-                updateChannel.send(RestaurantCacheValidityUpdater(true))
-                eventChannel.send(StartLoadingNewRestaurantsEvent())
-                val job = GlobalScope.launch {  queryYelp(state, channel) }
-                updateChannel.send(CacheJobUpdater(job))
-                val restaurants = channel.receive()
+
+                notifyStartingToLoadRestaurants(state, updateChannel, eventChannel)
+
+                startQueryingYelp(state, updateChannel, channel)
+
+                var restaurants = channel.receive()
+
                 if (restaurants.isEmpty()) {
-                    eventChannel.send(NoRestaurantsErrorEvent())
-                    updateChannel.send(CurrRestaurantUpdater(state.currRestaurant))
-                    eventChannel.send(FinishedLoadingNewRestaurantsEvent())
+                    throwNoRestaurantError(state, updateChannel, eventChannel)
                     return
                 }
+
                 val filteredRestaurants = restaurants.filter { !state.restaurantsSeenRecently.contains(it.id) }
-                val newCache =
-                    if (filteredRestaurants.isEmpty()) {
-                        updateChannel.send(EmptyRestaurantsSeenRecentlyUpdater())
-                        restaurants
-                    } else {
-                        filteredRestaurants
-                    }
-                updateChannel.send(AddRestaurantsUpdater(newCache))
-                eventChannel.send(FinishedLoadingNewRestaurantsEvent())
-                newCache
+                restaurants = checkIfAllRestaurantsAreFiltered(updateChannel, filteredRestaurants, restaurants)
+
+                notifyFinishedLoadingRestaurants(restaurants, updateChannel, eventChannel)
+                restaurants
             } else {
                 channel.close()
                 state.restaurants
             }
-            val newRestaurant = randomRestaurant(restaurants)
-            updateChannel.send(CurrRestaurantUpdater(newRestaurant))
-            updateChannel.send(RemoveRestaurantUpdater(newRestaurant))
-            newRestaurant.coordinates.run {
-                mapChannel.send(MapUpdate(latitude, longitude, true))
-            }
-            for (restaurantList in channel) {
-                updateChannel.send(AddRestaurantsUpdater(restaurantList))
-            }
 
+            setRandomRestaurant(restaurants, updateChannel, mapChannel)
+
+            monitorBackgroundThreads(channel, updateChannel)
+        }
+    }
+
+    private suspend fun checkIfAllRestaurantsAreFiltered(
+        updateChannel: Channel<BaseUpdater>,
+        filteredRestaurants: List<Restaurant>,
+        restaurants: List<Restaurant>
+    ): List<Restaurant> {
+        return if (filteredRestaurants.isEmpty()) {
+            updateChannel.send(EmptyRestaurantsSeenRecentlyUpdater())
+            restaurants
+        } else {
+            filteredRestaurants
         }
     }
 }
