@@ -10,11 +10,13 @@ import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
 import com.chrisjanusa.randomizer.base.models.MapUpdate
 import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.base.preferences.PreferenceHelper
-import com.chrisjanusa.randomizer.filter_cuisine.CuisineHelper.setFromSaveString
+import com.chrisjanusa.randomizer.filter_cuisine.CuisineHelper.cuisineFromIdentifierString
 import com.chrisjanusa.randomizer.filter_diet.DietHelper.dietFromIdentifier
+import com.chrisjanusa.randomizer.filter_price.PriceHelper.priceFromSaveString
 import com.chrisjanusa.randomizer.location_base.LocationHelper
 import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLocationText
-import com.chrisjanusa.randomizer.location_base.LocationHelper.isDefault
+import com.chrisjanusa.randomizer.location_base.LocationHelper.getTextFromLatLng
+import com.chrisjanusa.randomizer.location_base.LocationHelper.initMapUpdate
 import com.chrisjanusa.randomizer.location_base.updaters.LocationTextUpdater
 import com.chrisjanusa.randomizer.location_gps.GpsHelper.requestLocation
 import com.chrisjanusa.randomizer.location_search.updaters.LastManualLocationUpdater
@@ -31,8 +33,13 @@ class InitAction(private val activity: Activity?) : BaseAction {
 
         preferenceData?.run {
             val dietObject = dietFromIdentifier(diet)
-            val cuisineSet = setFromSaveString(cuisineString)
-            val locationName = if (isDefault(currLat, currLng)) { defaultLocationText } else { getTextFromLatLng(currLat, currLng) }
+            val priceSet = priceFromSaveString(priceSelected)
+            val cuisineSet = cuisineFromIdentifierString(cuisineString)
+            val locationName = if (currLat == null || currLng == null) {
+                defaultLocationText
+            } else {
+                activity?.let {  getTextFromLatLng(activity, currLat, currLng) } ?: defaultLocationText
+            }
 
             updateChannel.send(
                 InitUpdater(
@@ -41,31 +48,26 @@ class InitAction(private val activity: Activity?) : BaseAction {
                     favoriteOnlySelected,
                     maxMilesSelected,
                     dietObject,
-                    priceSelected,
-                    cuisineString,
+                    priceSet,
                     cuisineSet,
                     currLat,
                     currLng,
-                    locationName
+                    locationName,
+                    cacheValidity,
+                    restaurantsSeenRecently
                 )
             )
 
+            initMapUpdate(mapChannel, null, currLat, currLng)
+
             if (gpsOn) {
                 updateChannel.send(LocationTextUpdater(LocationHelper.calculatingLocationText))
-                activity?.let { requestLocation(it, updateChannel, eventChannel, mapChannel) }
+                activity?.let {
+                    requestLocation(it, updateChannel, eventChannel, mapChannel, currLat, currLng)
+                }
             } else {
                 updateChannel.send(LastManualLocationUpdater(locationName))
             }
         }
     }
-
-    fun getTextFromLatLng(currLat : Double, currLng : Double) : String {
-        return activity?.let {
-            Geocoder(it)
-                .getFromLocation(currLat, currLng, 1)
-                .getOrNull(0)
-                ?.locality
-        } ?: defaultLocationText
-    }
-
 }

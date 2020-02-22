@@ -1,7 +1,7 @@
 package com.chrisjanusa.randomizer.base.interfaces
 
-import androidx.fragment.app.Fragment
+import com.chrisjanusa.randomizer.RandomizerFragment
 
 interface BaseEvent {
-    fun handleEvent(fragment: Fragment)
+    fun handleEvent(fragment: RandomizerFragment)
 }

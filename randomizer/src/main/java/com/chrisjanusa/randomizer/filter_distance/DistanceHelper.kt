@@ -23,4 +23,8 @@ object DistanceHelper {
     }
 
     fun distanceToPercent(distance: Float) = (distance - minDistance) / totalDistance
+
+    fun milesToMeters(distance: Float) = distance * 1609.34
+
+    fun metersToMiles(distance: Double) : Double = distance * 0.000621371
 }

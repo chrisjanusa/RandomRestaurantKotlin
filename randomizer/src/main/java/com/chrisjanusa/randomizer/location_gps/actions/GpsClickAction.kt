@@ -26,7 +26,7 @@ class GpsClickAction(private val activity: Activity) : BaseAction {
             } else {
                 updateChannel.send(GpsStatusUpdater(true))
                 updateChannel.send(LocationTextUpdater(calculatingLocationText))
-                requestLocation(activity, updateChannel, eventChannel, mapChannel)
+                requestLocation(activity, updateChannel, eventChannel, mapChannel, currLat, currLng)
             }
         }
     }

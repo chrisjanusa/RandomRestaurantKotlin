@@ -15,7 +15,9 @@ import com.chrisjanusa.randomizer.base.CommunicationHelper.sendUpdate
 import com.chrisjanusa.randomizer.base.interfaces.BaseEvent
 import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
 import com.chrisjanusa.randomizer.base.models.MapUpdate
+import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLocationText
+import com.chrisjanusa.randomizer.location_base.LocationHelper.hasLocationChanged
 import com.chrisjanusa.randomizer.location_base.updaters.GpsStatusUpdater
 import com.chrisjanusa.randomizer.location_base.updaters.LocationTextUpdater
 import com.chrisjanusa.randomizer.location_base.updaters.LocationUpdater
@@ -58,16 +60,27 @@ object GpsHelper {
         activity: Activity,
         updateChannel: Channel<BaseUpdater>,
         eventChannel: Channel<BaseEvent>,
-        mapChannel: Channel<MapUpdate>
+        mapChannel: Channel<MapUpdate>,
+        prevLat: Double?,
+        prevLng: Double?
     ) {
         val context: Context = activity.applicationContext ?: return
         val gpsClient = LocationServices.getFusedLocationProviderClient(context)
         if (checkLocationPermissions(context)) {
             gpsClient.lastLocation.addOnCompleteListener(activity) { task ->
                 task.result?.let {
-                    receiveLocation(context, it, updateChannel, mapChannel)
+                    receiveLocation(context, it, updateChannel, mapChannel, prevLat, prevLng)
                 }
-                    ?: makeLocationRequest(activity, context, gpsClient, updateChannel, eventChannel, mapChannel)
+                    ?: makeLocationRequest(
+                        activity,
+                        context,
+                        gpsClient,
+                        updateChannel,
+                        eventChannel,
+                        mapChannel,
+                        prevLat,
+                        prevLng
+                    )
             }
         } else {
             sendEvent(locationPermissionEvent, eventChannel)
@@ -78,13 +91,17 @@ object GpsHelper {
         context: Context,
         location: Location,
         updateChannel: Channel<BaseUpdater>,
-        mapChannel: Channel<MapUpdate>
+        mapChannel: Channel<MapUpdate>,
+        prevLat: Double?,
+        prevLng: Double?
     ) {
         location.run {
             val locationName = Geocoder(context)
                 .getFromLocation(latitude, longitude, 1)[0]
                 .locality
-            sendMap(MapUpdate(latitude, longitude, false), mapChannel)
+            if (hasLocationChanged(prevLat, prevLng, latitude, longitude)) {
+                sendMap(MapUpdate(latitude, longitude, false), mapChannel)
+            }
             sendUpdate(LocationUpdater(locationName, latitude, longitude), updateChannel)
         }
     }
@@ -97,7 +114,9 @@ object GpsHelper {
         gpsClient: FusedLocationProviderClient,
         updateChannel: Channel<BaseUpdater>,
         eventChannel: Channel<BaseEvent>,
-        mapChannel: Channel<MapUpdate>
+        mapChannel: Channel<MapUpdate>,
+        prevLat: Double?,
+        prevLng: Double?
     ) {
         val request = newLocationRequest
         isLocationEnabled(context, request)
@@ -106,7 +125,7 @@ object GpsHelper {
                     gpsClient
                         .requestLocationUpdates(
                             request,
-                            getLocationCallback(context, updateChannel, mapChannel),
+                            getLocationCallback(context, updateChannel, mapChannel, prevLat, prevLng),
                             Looper.myLooper()
                         )
                 } else {
@@ -126,11 +145,13 @@ object GpsHelper {
     private fun getLocationCallback(
         context: Context,
         updateChannel: Channel<BaseUpdater>,
-        mapChannel: Channel<MapUpdate>
+        mapChannel: Channel<MapUpdate>,
+        prevLat: Double?,
+        prevLng: Double?
     ): LocationCallback =
         object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
-                receiveLocation(context, locationResult.lastLocation, updateChannel, mapChannel)
+                receiveLocation(context, locationResult.lastLocation, updateChannel, mapChannel, prevLat, prevLng)
             }
         }
 

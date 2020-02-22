@@ -11,4 +11,5 @@
     <color name="filter_overlay_text">#c95353</color>
     <color name="slider_bar_color">#c95353</color>
     <color name="filter_icon_not_selected">#c95353</color>
+    <color name="banner_background">#282828</color>
 </resources>

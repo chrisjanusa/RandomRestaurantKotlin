@@ -3,11 +3,11 @@ package com.chrisjanusa.randomizer.base.preferences
 import android.content.SharedPreferences
 import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.filter_cuisine.CuisineHelper.defaultCuisineTitle
+import com.chrisjanusa.randomizer.filter_cuisine.CuisineHelper.toIdentifierString
 import com.chrisjanusa.randomizer.filter_price.PriceHelper.defaultPriceTitle
+import com.chrisjanusa.randomizer.filter_price.PriceHelper.toSaveString
 import com.chrisjanusa.randomizer.filter_diet.DietHelper
 import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.defaultDistance
-import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLat
-import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLng
 
 object PreferenceHelper {
     sealed class StateObject(val key: String) {
@@ -20,20 +20,25 @@ object PreferenceHelper {
         object Cuisine : StateObject("cuisine")
         object Latitude : StateObject("currLat")
         object Longitude : StateObject("currLng")
+        object RestaurantsSeen : StateObject("restaurantsSeen")
+        object CacheValidity : StateObject("cacheValidity")
     }
 
     fun saveState(state: RandomizerState, preferences: SharedPreferences?) {
         preferences?.let {
             with(it.edit()) {
-                putBoolean(PreferenceHelper.StateObject.GpsOn.key, state.gpsOn)
-                putBoolean(PreferenceHelper.StateObject.OpenNowSelected.key, state.openNowSelected)
-                putBoolean(PreferenceHelper.StateObject.FavoriteOnlySelected.key, state.favoriteOnlySelected)
-                putFloat(PreferenceHelper.StateObject.MaxMilesSelected.key, state.maxMilesSelected)
-                putString(PreferenceHelper.StateObject.Diet.key, state.diet.identifier)
-                putString(PreferenceHelper.StateObject.PriceSelected.key, state.priceText)
-                putString(PreferenceHelper.StateObject.Cuisine.key, state.cuisineString)
-                putFloat(PreferenceHelper.StateObject.Latitude.key, state.currLat.toFloat())
-                putFloat(PreferenceHelper.StateObject.Longitude.key, state.currLng.toFloat())
+                clear()
+                putBoolean(StateObject.GpsOn.key, state.gpsOn)
+                putBoolean(StateObject.OpenNowSelected.key, state.openNowSelected)
+                putBoolean(StateObject.FavoriteOnlySelected.key, state.favoriteOnlySelected)
+                putFloat(StateObject.MaxMilesSelected.key, state.maxMilesSelected)
+                putString(StateObject.Diet.key, state.diet.identifier)
+                putString(StateObject.PriceSelected.key, state.priceSet.toSaveString())
+                putString(StateObject.Cuisine.key, state.cuisineSet.toIdentifierString())
+                state.currLat?.let { lat -> putString(StateObject.Latitude.key, "$lat") }
+                state.currLng?.let { lng -> putString(StateObject.Longitude.key, "$lng") }
+                putBoolean(StateObject.CacheValidity.key, state.restaurantCacheValid)
+                putStringSet(StateObject.RestaurantsSeen.key, state.restaurantsSeenRecently)
                 apply()
             }
         }
@@ -42,16 +47,18 @@ object PreferenceHelper {
     fun retrieveState(preferences: SharedPreferences?): PreferenceData? {
         return preferences?.run {
             PreferenceData(
-                getBoolean(PreferenceHelper.StateObject.GpsOn.key, true),
-                getBoolean(PreferenceHelper.StateObject.OpenNowSelected.key, true),
-                getBoolean(PreferenceHelper.StateObject.FavoriteOnlySelected.key, false),
-                getFloat(PreferenceHelper.StateObject.MaxMilesSelected.key, defaultDistance),
-                getString(PreferenceHelper.StateObject.Diet.key, DietHelper.Diet.None.identifier)
+                getBoolean(StateObject.GpsOn.key, true),
+                getBoolean(StateObject.OpenNowSelected.key, true),
+                getBoolean(StateObject.FavoriteOnlySelected.key, false),
+                getFloat(StateObject.MaxMilesSelected.key, defaultDistance),
+                getString(StateObject.Diet.key, DietHelper.Diet.None.identifier)
                     ?: DietHelper.Diet.None.identifier,
-                getString(PreferenceHelper.StateObject.PriceSelected.key, defaultPriceTitle) ?: defaultPriceTitle,
-                getString(PreferenceHelper.StateObject.Cuisine.key, defaultCuisineTitle) ?: "",
-                getFloat(PreferenceHelper.StateObject.Latitude.key, defaultLat.toFloat()).toDouble(),
-                getFloat(PreferenceHelper.StateObject.Longitude.key, defaultLng.toFloat()).toDouble()
+                getString(StateObject.PriceSelected.key, defaultPriceTitle) ?: defaultPriceTitle,
+                getString(StateObject.Cuisine.key, defaultCuisineTitle) ?: "",
+                getString(StateObject.Latitude.key, null)?.toDouble(),
+                getString(StateObject.Longitude.key, null)?.toDouble(),
+                getBoolean(StateObject.CacheValidity.key, false),
+                getStringSet(StateObject.RestaurantsSeen.key, HashSet()) ?: HashSet()
             )
         }
     }

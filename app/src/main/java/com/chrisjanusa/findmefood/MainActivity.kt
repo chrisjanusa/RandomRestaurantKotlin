@@ -42,6 +42,10 @@ class MainActivity : OverlayFragmentManager, AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
-        nav_view.setupWithNavController(Navigation.findNavController(this, R.id.my_nav_host_fragment))
+        val navController = Navigation.findNavController(this, R.id.my_nav_host_fragment)
+        nav_view.setupWithNavController(navController)
+        nav_view.setOnNavigationItemReselectedListener {
+            // Do nothing to ignore the reselection
+        }
     }
 }

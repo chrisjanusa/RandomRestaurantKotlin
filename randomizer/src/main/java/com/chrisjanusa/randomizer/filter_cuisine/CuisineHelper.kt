@@ -4,7 +4,7 @@ object CuisineHelper {
     const val defaultCuisineTitle = "Cuisines"
     private const val delimiter = ", "
 
-    fun HashSet<Cuisine>.toSaveString(): String {
+    fun HashSet<Cuisine>.toIdentifierString(): String {
         if (this.isEmpty()) {
             return defaultCuisineTitle
         }
@@ -16,9 +16,19 @@ object CuisineHelper {
         return out.dropLast(2).toString()
     }
 
-    fun isDefault(saveString: String) = saveString == defaultCuisineTitle
+    fun HashSet<Cuisine>.toYelpString(): String? {
+        if (this.isEmpty()) {
+            return null
+        }
+        val out = StringBuilder()
+        for (cuisine in this.iterator()) {
+            out.append(cuisine.yelp)
+            out.append(delimiter)
+        }
+        return out.dropLast(2).toString()
+    }
 
-    fun setFromSaveString(cuisineString: String): HashSet<Cuisine> {
+    fun cuisineFromIdentifierString(cuisineString: String): HashSet<Cuisine> {
         val set = HashSet<Cuisine>()
         for (cuisine in cuisineString.split(delimiter.toRegex())) {
             val catString = when (cuisine) {

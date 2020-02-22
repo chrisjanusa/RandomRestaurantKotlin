@@ -8,6 +8,8 @@ data class PreferenceData(
     val diet: String,
     val priceSelected: String,
     val cuisineString: String,
-    val currLat: Double,
-    val currLng: Double
+    val currLat: Double?,
+    val currLng: Double?,
+    val cacheValidity: Boolean,
+    val restaurantsSeenRecently: Set<String>
 )

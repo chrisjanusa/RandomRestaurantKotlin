@@ -19,7 +19,8 @@ class ApplyDietAction : BaseAction {
         mapChannel: Channel<MapUpdate>
     ) {
         currentState.value?.run {
-            updateChannel.send(SelectedDietUpdater(dietTempSelected))
+            if (dietTempSelected != diet)
+                updateChannel.send(SelectedDietUpdater(dietTempSelected))
         }
         eventChannel.send(CloseFilterEvent())
         updateChannel.send(FilterOpenUpdater(null))

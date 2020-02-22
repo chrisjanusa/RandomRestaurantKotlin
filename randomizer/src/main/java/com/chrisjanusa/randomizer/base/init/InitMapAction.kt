@@ -6,7 +6,7 @@ import com.chrisjanusa.randomizer.base.interfaces.BaseEvent
 import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
 import com.chrisjanusa.randomizer.base.models.MapUpdate
 import com.chrisjanusa.randomizer.base.models.RandomizerState
-import com.chrisjanusa.randomizer.location_base.LocationHelper
+import com.chrisjanusa.randomizer.location_base.LocationHelper.initMapUpdate
 import kotlinx.coroutines.channels.Channel
 
 class InitMapAction : BaseAction {
@@ -17,10 +17,8 @@ class InitMapAction : BaseAction {
         mapChannel: Channel<MapUpdate>
     ) {
         currentState.value?.run {
-            if (LocationHelper.isDefault(currLat, currLng)) {
-                mapChannel.send(MapUpdate(LocationHelper.spaceNeedleLat, LocationHelper.spaceNeedleLng, false))
-            } else {
-                mapChannel.send(MapUpdate(currLat, currLng, false))
+            if (stateInitialized) {
+                initMapUpdate(mapChannel, currRestaurant, currLat, currLng)
             }
         }
     }

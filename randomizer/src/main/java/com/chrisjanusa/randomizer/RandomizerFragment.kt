@@ -18,11 +18,10 @@ import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
 import com.chrisjanusa.randomizer.base.preferences.PreferenceHelper
 import com.chrisjanusa.randomizer.filter_boolean.BooleanFilterUIManager
 import com.chrisjanusa.randomizer.filter_cuisine.CuisineUIManager
+import com.chrisjanusa.randomizer.filter_diet.DietUIManager
 import com.chrisjanusa.randomizer.filter_distance.DistanceUIManager
 import com.chrisjanusa.randomizer.filter_price.PriceUIManager
-import com.chrisjanusa.randomizer.filter_diet.DietUIManager
-import com.chrisjanusa.randomizer.location_base.LocationHelper.spaceNeedleLat
-import com.chrisjanusa.randomizer.location_base.LocationHelper.spaceNeedleLng
+import com.chrisjanusa.randomizer.location_base.LocationHelper.cameraSpeed
 import com.chrisjanusa.randomizer.location_base.LocationHelper.zoomLevel
 import com.chrisjanusa.randomizer.location_base.LocationUIManager
 import com.chrisjanusa.randomizer.location_base.LocationUIManager.getDefaultMarker
@@ -31,38 +30,43 @@ import com.chrisjanusa.randomizer.location_gps.GpsUIManager
 import com.chrisjanusa.randomizer.location_gps.actions.PermissionDeniedAction
 import com.chrisjanusa.randomizer.location_gps.actions.PermissionReceivedAction
 import com.chrisjanusa.randomizer.location_search.SearchUIManager
-import com.google.android.gms.maps.CameraUpdateFactory.newLatLngZoom
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.model.BitmapDescriptor
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.android.synthetic.main.bottom_overlay.*
+import com.chrisjanusa.randomizer.yelp.YelpUIManager
+import com.google.android.libraries.maps.CameraUpdateFactory.newLatLngZoom
+import com.google.android.libraries.maps.GoogleMap
+import com.google.android.libraries.maps.OnMapReadyCallback
+import com.google.android.libraries.maps.model.BitmapDescriptor
+import com.google.android.libraries.maps.model.LatLng
+import com.google.android.libraries.maps.model.Marker
+import com.google.android.libraries.maps.model.MarkerOptions
+import kotlinx.android.synthetic.main.randomizer_frag.*
 import kotlinx.coroutines.launch
-
 
 class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private lateinit var map: GoogleMap
     private lateinit var icon: BitmapDescriptor
-    private lateinit var randomizerViewModel: RandomizerViewModel
+    lateinit var randomizerViewModel: RandomizerViewModel
+    private val render = fun(newState: RandomizerState) {
+        for (uiManager in featureUIManagers) {
+            uiManager.render(newState, this)
+        }
+    }
     private val featureUIManagers = listOf(
+        LocationUIManager,
         BooleanFilterUIManager,
         CuisineUIManager,
         DistanceUIManager,
         PriceUIManager,
         DietUIManager,
-        LocationUIManager,
         GpsUIManager,
-        SearchUIManager
+        SearchUIManager,
+        YelpUIManager
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         randomizerViewModel = activity?.let { getViewModel(it) } ?: throw Exception("Invalid Activity")
-
         sendAction(InitAction(activity), randomizerViewModel)
     }
 
@@ -72,12 +76,9 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         for (uiManager in featureUIManagers) {
             uiManager.init(randomizerViewModel, this)
         }
-
-        random.setOnClickListener { setMap(spaceNeedleLat, spaceNeedleLng, true) }
 
         randomizerViewModel.state.observe(this, Observer<RandomizerState>(render))
         val frag = this
@@ -88,17 +89,39 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         }
     }
 
+
+    override fun onStart() {
+        super.onStart()
+        mapView?.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mapView?.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mapView?.onPause()
+    }
+
     override fun onStop() {
         super.onStop()
+        mapView?.onStop()
         randomizerViewModel.state.value?.let {
             PreferenceHelper.saveState(it, activity?.getPreferences(Context.MODE_PRIVATE))
         }
     }
 
-    private val render = fun(newState: RandomizerState) {
-        for (uiManager in featureUIManagers) {
-            uiManager.render(newState, this)
-        }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        map.clear()
+        mapView?.onDestroy()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mapView?.onLowMemory()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -116,7 +139,7 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         val location = LatLng(lat, lng)
         map.run {
             clear()
-            animateCamera(newLatLngZoom(location, zoomLevel))
+            animateCamera(newLatLngZoom(location, zoomLevel), cameraSpeed, null)
             if (addMarker) {
                 val marker = MarkerOptions()
                     .position(location)
@@ -133,8 +156,7 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         icon = getDefaultMarker(this)
 
         map.setOnMarkerClickListener(this)
-        map.uiSettings.isMapToolbarEnabled = false
-
+        map.uiSettings?.isMapToolbarEnabled = false
 
         lifecycleScope.launch {
             for (update in randomizerViewModel.mapChannel) {

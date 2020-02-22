@@ -14,7 +14,7 @@ import com.chrisjanusa.randomizer.filter_base.FilterHelper.getBackgroundColor
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.getStrokeColor
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.getTextColor
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.renderFilterWithIconStyle
-import com.chrisjanusa.randomizer.filter_cuisine.CuisineHelper.isDefault
+import com.chrisjanusa.randomizer.filter_cuisine.CuisineHelper.toIdentifierString
 import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.filters.*
 
@@ -27,8 +27,8 @@ object CuisineUIManager : FeatureUIManager {
 
     override fun render(state: RandomizerState, fragment: RandomizerFragment) {
         fragment.run {
-            val selected = !isDefault(state.cuisineString)
-            cuisines.text = toDisplayString(state.cuisineString)
+            val selected = state.cuisineSet.isNotEmpty()
+            cuisines.text = toDisplayString(state.cuisineSet.toIdentifierString())
             context?.let { renderFilterWithIconStyle(cuisines, selected, it) }
         }
     }
