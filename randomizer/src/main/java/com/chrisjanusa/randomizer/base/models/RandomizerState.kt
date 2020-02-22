@@ -43,5 +43,6 @@ data class RandomizerState(
     val currRestaurant: Restaurant? = null,
     val restaurants: List<Restaurant> = LinkedList(),
     val restaurantCacheValid: Boolean = true,
-    val lastCacheUpdateJob: Job? = null
+    val lastCacheUpdateJob: Job? = null,
+    val restaurantsSeenRecently: Set<String> = HashSet()
 )

@@ -9,6 +9,8 @@ class RemoveRestaurantUpdater(private val restaurant: Restaurant) : BaseUpdater 
     override fun performUpdate(prevState: RandomizerState): RandomizerState {
         val newRestaurantList = LinkedList(prevState.restaurants)
         newRestaurantList.remove(restaurant)
-        return prevState.copy(restaurants = newRestaurantList)
+        val newRestaurantsSeenRecently = HashSet(prevState.restaurantsSeenRecently)
+        newRestaurantsSeenRecently.add(restaurant.id)
+        return prevState.copy(restaurants = newRestaurantList, restaurantsSeenRecently = newRestaurantsSeenRecently)
     }
 }

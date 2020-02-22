@@ -117,7 +117,6 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         super.onDestroyView()
         map.clear()
         mapView?.onDestroy()
-        randomizerViewModel.close()
     }
 
     override fun onLowMemory() {

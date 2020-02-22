@@ -45,9 +45,17 @@ class RandomizeAction : BaseAction {
                     eventChannel.send(FinishedLoadingNewRestaurantsEvent())
                     return
                 }
-                updateChannel.send(AddRestaurantsUpdater(restaurants))
+                val filteredRestaurants = restaurants.filter { !state.restaurantsSeenRecently.contains(it.id) }
+                val newCache =
+                    if (filteredRestaurants.isEmpty()) {
+                        updateChannel.send(EmptyRestaurantsSeenRecentlyUpdater())
+                        restaurants
+                    } else {
+                        filteredRestaurants
+                    }
+                updateChannel.send(AddRestaurantsUpdater(newCache))
                 eventChannel.send(FinishedLoadingNewRestaurantsEvent())
-                restaurants
+                newCache
             } else {
                 channel.close()
                 state.restaurants

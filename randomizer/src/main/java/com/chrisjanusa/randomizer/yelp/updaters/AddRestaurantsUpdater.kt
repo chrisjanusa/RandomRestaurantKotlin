@@ -8,7 +8,7 @@ import java.util.*
 class AddRestaurantsUpdater(private val newRestaurants : List<Restaurant>) : BaseUpdater {
     override fun performUpdate(prevState: RandomizerState): RandomizerState {
         val newRestaurantList = LinkedList(prevState.restaurants)
-        newRestaurantList.addAll(newRestaurants)
+        newRestaurantList.addAll(newRestaurants.filter { !prevState.restaurantsSeenRecently.contains(it.id) })
         return prevState.copy(restaurants = newRestaurantList)
     }
 }

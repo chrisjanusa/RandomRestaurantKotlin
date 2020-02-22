@@ -52,13 +52,12 @@ class InitAction(private val activity: Activity?) : BaseAction {
                     currLat,
                     currLng,
                     locationName,
-                    currRestaurant,
-                    restaurants,
-                    cacheValidity
+                    cacheValidity,
+                    restaurantsSeenRecently
                 )
             )
 
-            initMapUpdate(mapChannel, currRestaurant, currLat, currLng)
+            initMapUpdate(mapChannel, null, currLat, currLng)
 
             if (gpsOn) {
                 updateChannel.send(LocationTextUpdater(LocationHelper.calculatingLocationText))

@@ -37,10 +37,4 @@ class RandomizerViewModel : ViewModel() {
     suspend fun performAction(action: BaseAction) {
         action.performAction(state, updateChannel, eventChannel, mapChannel)
     }
-
-    fun close() {
-        updateChannel.close()
-        eventChannel.close()
-        updateChannel.close()
-    }
 }

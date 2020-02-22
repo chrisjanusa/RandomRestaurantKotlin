@@ -12,7 +12,8 @@ class LocationUpdater(private val locationStr: String, private val currLat: Doub
                 locationText = locationStr,
                 currLat = currLat,
                 currLng = currLng,
-                restaurantCacheValid = false
+                restaurantCacheValid = false,
+                restaurantsSeenRecently = HashSet()
             )
 
         } else {
