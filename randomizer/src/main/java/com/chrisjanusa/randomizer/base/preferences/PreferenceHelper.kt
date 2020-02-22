@@ -15,6 +15,8 @@ object PreferenceHelper {
         object PriceSelected : StateObject("priceSelected")
         object OpenNowSelected : StateObject("openNowSelected")
         object FavoriteOnlySelected : StateObject("favoriteOnlySelected")
+        object FastFoodSelected : StateObject("fastFoodSelected")
+        object SitDownSelected : StateObject("sitDownSelected")
         object MaxMilesSelected : StateObject("maxMilesSelected")
         object Diet : StateObject("diet")
         object Cuisine : StateObject("cuisine")
@@ -31,6 +33,8 @@ object PreferenceHelper {
                 putBoolean(StateObject.GpsOn.key, state.gpsOn)
                 putBoolean(StateObject.OpenNowSelected.key, state.openNowSelected)
                 putBoolean(StateObject.FavoriteOnlySelected.key, state.favoriteOnlySelected)
+                putBoolean(StateObject.FastFoodSelected.key, state.fastFoodSelected)
+                putBoolean(StateObject.SitDownSelected.key, state.sitDownSelected)
                 putFloat(StateObject.MaxMilesSelected.key, state.maxMilesSelected)
                 putString(StateObject.Diet.key, state.diet.identifier)
                 putString(StateObject.PriceSelected.key, state.priceSet.toSaveString())
@@ -50,6 +54,8 @@ object PreferenceHelper {
                 getBoolean(StateObject.GpsOn.key, true),
                 getBoolean(StateObject.OpenNowSelected.key, true),
                 getBoolean(StateObject.FavoriteOnlySelected.key, false),
+                getBoolean(StateObject.FastFoodSelected.key, false),
+                getBoolean(StateObject.SitDownSelected.key, false),
                 getFloat(StateObject.MaxMilesSelected.key, defaultDistance),
                 getString(StateObject.Diet.key, DietHelper.Diet.None.identifier)
                     ?: DietHelper.Diet.None.identifier,

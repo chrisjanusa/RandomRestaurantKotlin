@@ -42,6 +42,11 @@ object YelpHelper {
                 }
 
                 var term = "restaurants"
+                term = when {
+                    fastFoodSelected && !sitDownSelected -> "fast food $term"
+                    !fastFoodSelected && sitDownSelected -> "sit down $term"
+                    else -> term
+                }
                 term = if (cuisineSet.isNotEmpty() && diet != DietHelper.Diet.None) "${diet.identifier} $term" else term
 
                 val radius = milesToMeters(maxMilesSelected).roundToInt()

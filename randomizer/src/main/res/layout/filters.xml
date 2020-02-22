@@ -17,15 +17,15 @@
                 app:rippleColor="@android:color/transparent"
         />
         <com.google.android.material.button.MaterialButton
+            android:id='@+id/distance'
+            style="@style/FilterAppearance"
+            android:text="@string/max_distance"
+            app:icon="@drawable/expand"
+            />
+        <com.google.android.material.button.MaterialButton
                 android:id='@+id/cuisines'
                 style="@style/FilterAppearance"
                 android:text="@string/cuisines"
-                app:icon="@drawable/expand"
-        />
-        <com.google.android.material.button.MaterialButton
-                android:id="@+id/diet"
-                style="@style/FilterAppearance"
-                android:text="@string/diet"
                 app:icon="@drawable/expand"
         />
         <com.google.android.material.button.MaterialButton
@@ -35,11 +35,23 @@
                 app:icon="@drawable/expand"
         />
         <com.google.android.material.button.MaterialButton
-                android:id='@+id/distance'
-                style="@style/FilterAppearance"
-                android:text="@string/max_distance"
-                app:icon="@drawable/expand"
-        />
+            android:id="@+id/diet"
+            style="@style/FilterAppearance"
+            android:text="@string/diet"
+            app:icon="@drawable/expand"
+            />
+        <com.google.android.material.button.MaterialButton
+            android:id='@+id/fast_food'
+            style="@style/FilterAppearance"
+            android:text="@string/fast_food"
+            app:rippleColor="@android:color/transparent"
+            />
+        <com.google.android.material.button.MaterialButton
+            android:id='@+id/sit_down'
+            style="@style/FilterAppearance"
+            android:text="@string/sit_down"
+            app:rippleColor="@android:color/transparent"
+            />
         <com.google.android.material.button.MaterialButton
                 android:id='@+id/favorites_only'
                 style="@style/FilterAppearance"
