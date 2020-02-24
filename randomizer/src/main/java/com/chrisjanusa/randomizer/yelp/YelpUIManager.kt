@@ -1,12 +1,9 @@
 package com.chrisjanusa.randomizer.yelp
 
 import android.view.View
-import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.bumptech.glide.Glide
 import com.chrisjanusa.randomizer.R
 import com.chrisjanusa.randomizer.RandomizerFragment
 import com.chrisjanusa.randomizer.base.CommunicationHelper.sendAction
@@ -47,11 +44,6 @@ object YelpUIManager : FeatureUIManager {
 
     private fun renderCard(restaurant: Restaurant, fragment: RandomizerFragment) {
         fragment.activity?.run {
-            Glide.with(fragment)
-                .load(restaurant.image_url)
-                .centerCrop()
-                .placeholder(R.drawable.image_placeholder)
-                .into(findViewById(R.id.thumbnail))
             findViewById<TextView>(R.id.name).text = restaurant.name
             val rating = restaurant.rating ?: 0f
             findViewById<TextView>(R.id.rating).text = "%.1f".format(rating)

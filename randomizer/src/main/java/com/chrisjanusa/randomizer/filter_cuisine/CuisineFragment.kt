@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.chrisjanusa.randomizer.R
-import com.chrisjanusa.randomizer.base.CommunicationHelper.getViewModel
+import com.chrisjanusa.randomizer.base.CommunicationHelper
 import com.chrisjanusa.randomizer.base.CommunicationHelper.sendAction
 import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
@@ -18,17 +18,18 @@ import com.chrisjanusa.randomizer.filter_cuisine.actions.ApplyCuisineAction
 import com.chrisjanusa.randomizer.filter_cuisine.actions.CuisineChangeAction
 import com.chrisjanusa.randomizer.filter_cuisine.actions.InitCuisineFilterAction
 import com.chrisjanusa.randomizer.filter_cuisine.actions.ResetCuisineAction
-import kotlinx.android.synthetic.main.cuisines.*
 import kotlinx.android.synthetic.main.confirmation_buttons.*
-import kotlinx.android.synthetic.main.price_filter_fragment.shade
-import kotlinx.android.synthetic.main.price_filter_fragment.xout
+import kotlinx.android.synthetic.main.cuisines.*
+import kotlinx.android.synthetic.main.price_filter_fragment.*
 
 class CuisineFragment : Fragment() {
-    private lateinit var randomizerViewModel: RandomizerViewModel
+    val randomizerViewModel: RandomizerViewModel by lazy {
+        activity?.let { CommunicationHelper.getViewModel(it) } ?: throw Exception("Invalid Activity")
+    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        randomizerViewModel = activity?.let { getViewModel(it) } ?: throw Exception("Invalid Activity")
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        randomizerViewModel.state.observe(viewLifecycleOwner, Observer<RandomizerState>(render))
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -54,8 +55,6 @@ class CuisineFragment : Fragment() {
         seafood.setOnClickListener { cuisineClick(Cuisine.Seafood) }
         steak.setOnClickListener { cuisineClick(Cuisine.Steak) }
         sushi.setOnClickListener { cuisineClick(Cuisine.Sushi) }
-
-        randomizerViewModel.state.observe(this, Observer<RandomizerState>(render))
     }
 
     override fun onResume() {

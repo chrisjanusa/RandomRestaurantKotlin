@@ -15,19 +15,20 @@ import com.chrisjanusa.randomizer.filter_base.FilterHelper.onCancelFilterClick
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.renderFilterStyle
 import com.chrisjanusa.randomizer.filter_diet.DietHelper.Diet
 import com.chrisjanusa.randomizer.filter_diet.actions.ApplyDietAction
+import com.chrisjanusa.randomizer.filter_diet.actions.DietChangeAction
 import com.chrisjanusa.randomizer.filter_diet.actions.InitDietFilterAction
 import com.chrisjanusa.randomizer.filter_diet.actions.ResetDietAction
-import com.chrisjanusa.randomizer.filter_diet.actions.DietChangeAction
 import kotlinx.android.synthetic.main.confirmation_buttons.*
 import kotlinx.android.synthetic.main.diet_filter_fragment.*
-import kotlinx.android.synthetic.main.diet_filter_fragment.shade
 
 class DietFragment : Fragment() {
-    private lateinit var randomizerViewModel: RandomizerViewModel
+    val randomizerViewModel: RandomizerViewModel by lazy {
+        activity?.let { getViewModel(it) } ?: throw Exception("Invalid Activity")
+    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        randomizerViewModel = activity?.let { getViewModel(it) } ?: throw Exception("Invalid Activity")
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        randomizerViewModel.state.observe(viewLifecycleOwner, Observer<RandomizerState>(render))
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -45,8 +46,6 @@ class DietFragment : Fragment() {
         vegan.setOnClickListener { dietClick(Diet.Vegan) }
         vegetarian.setOnClickListener { dietClick(Diet.Vegetarian) }
         kosher.setOnClickListener { dietClick(Diet.Kosher) }
-
-        randomizerViewModel.state.observe(this, Observer<RandomizerState>(render))
     }
 
     override fun onResume() {

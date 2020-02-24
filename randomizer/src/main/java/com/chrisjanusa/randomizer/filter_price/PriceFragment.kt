@@ -13,21 +13,22 @@ import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.onCancelFilterClick
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.renderFilterStyle
+import com.chrisjanusa.randomizer.filter_price.PriceHelper.Price
 import com.chrisjanusa.randomizer.filter_price.actions.ApplyPriceAction
 import com.chrisjanusa.randomizer.filter_price.actions.InitPriceFilterAction
 import com.chrisjanusa.randomizer.filter_price.actions.PriceChangeAction
 import com.chrisjanusa.randomizer.filter_price.actions.ResetPriceAction
-import com.chrisjanusa.randomizer.filter_price.PriceHelper.Price
 import kotlinx.android.synthetic.main.confirmation_buttons.*
 import kotlinx.android.synthetic.main.price_filter_fragment.*
-import kotlinx.android.synthetic.main.price_filter_fragment.shade
 
 class PriceFragment : Fragment() {
-    private lateinit var randomizerViewModel: RandomizerViewModel
+    val randomizerViewModel: RandomizerViewModel by lazy {
+        activity?.let { getViewModel(it) } ?: throw Exception("Invalid Activity")
+    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        randomizerViewModel = activity?.let { getViewModel(it) } ?: throw Exception("Invalid Activity")
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        randomizerViewModel.state.observe(viewLifecycleOwner, Observer<RandomizerState>(render))
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -44,8 +45,6 @@ class PriceFragment : Fragment() {
         price2.setOnClickListener { priceClick(Price.Two) }
         price3.setOnClickListener { priceClick(Price.Three) }
         price4.setOnClickListener { priceClick(Price.Four) }
-
-        randomizerViewModel.state.observe(this, Observer<RandomizerState>(render))
     }
 
     override fun onResume() {
