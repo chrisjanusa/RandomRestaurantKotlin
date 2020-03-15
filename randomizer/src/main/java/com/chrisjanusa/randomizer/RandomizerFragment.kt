@@ -33,6 +33,7 @@ import com.chrisjanusa.randomizer.location_search.SearchUIManager
 import com.chrisjanusa.randomizer.yelp.YelpUIManager
 import com.google.android.libraries.maps.CameraUpdateFactory.newLatLngZoom
 import com.google.android.libraries.maps.GoogleMap
+import com.google.android.libraries.maps.MapView
 import com.google.android.libraries.maps.OnMapReadyCallback
 import com.google.android.libraries.maps.model.BitmapDescriptor
 import com.google.android.libraries.maps.model.LatLng
@@ -45,7 +46,10 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
 
     private lateinit var map: GoogleMap
     private lateinit var icon: BitmapDescriptor
-    lateinit var randomizerViewModel: RandomizerViewModel
+    var mapView : MapView? = null
+    val randomizerViewModel: RandomizerViewModel by lazy {
+        activity?.let { getViewModel(it) } ?: throw Exception("Invalid Activity")
+    }
     private val render = fun(newState: RandomizerState) {
         for (uiManager in featureUIManagers) {
             uiManager.render(newState, this)
@@ -63,10 +67,9 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         YelpUIManager
     )
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        randomizerViewModel = activity?.let { getViewModel(it) } ?: throw Exception("Invalid Activity")
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        randomizerViewModel.state.observe(viewLifecycleOwner, Observer<RandomizerState>(render))
         sendAction(InitAction(activity), randomizerViewModel)
     }
 
@@ -76,11 +79,12 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mapView = MapView(activity?.applicationContext)
+        mapWrapper.addView(mapView)
         for (uiManager in featureUIManagers) {
             uiManager.init(randomizerViewModel, this)
         }
 
-        randomizerViewModel.state.observe(this, Observer<RandomizerState>(render))
         val frag = this
         lifecycleScope.launch {
             for (event in randomizerViewModel.eventChannel) {
@@ -115,8 +119,11 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
 
     override fun onDestroyView() {
         super.onDestroyView()
-        map.clear()
+        map.isMyLocationEnabled = false
         mapView?.onDestroy()
+        mapWrapper.removeAllViews()
+        randomizerViewModel.state.value?.lastCacheUpdateJob?.cancel()
+        mapView = null
     }
 
     override fun onLowMemory() {

@@ -45,10 +45,20 @@ object FilterHelper {
     fun getStrokeColor(selected: Boolean) =
         if (selected) R.color.outline_selected else R.color.outline_not_selected
 
-    sealed class Filter(val fragment: Fragment) {
-        object Price : Filter(PriceFragment())
-        object Cuisine : Filter(CuisineFragment())
-        object Distance : Filter(DistanceFragment())
-        object Diet : Filter(DietFragment())
+    sealed class Filter {
+        object Price : Filter()
+        object Cuisine : Filter()
+        object Distance : Filter()
+        object Diet : Filter()
     }
+
+    fun getFragFromFilter(filter: Filter) : Fragment {
+        return when(filter) {
+            Filter.Price -> PriceFragment()
+            Filter.Cuisine -> CuisineFragment()
+            Filter.Distance -> DistanceFragment()
+            Filter.Diet -> DietFragment()
+        }
+    }
+
 }

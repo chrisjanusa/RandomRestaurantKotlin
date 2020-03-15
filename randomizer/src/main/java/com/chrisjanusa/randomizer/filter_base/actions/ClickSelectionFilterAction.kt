@@ -7,6 +7,7 @@ import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
 import com.chrisjanusa.randomizer.base.models.MapUpdate
 import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.Filter
+import com.chrisjanusa.randomizer.filter_base.FilterHelper.getFragFromFilter
 import com.chrisjanusa.randomizer.filter_base.events.CloseFilterEvent
 import com.chrisjanusa.randomizer.filter_base.events.OpenFilterEvent
 import com.chrisjanusa.randomizer.filter_base.updaters.FilterOpenUpdater
@@ -23,7 +24,7 @@ class ClickSelectionFilterAction(val filter: Filter) :
         currentState.value?.run {
             if (filterOpen != filter) {
                 updateChannel.send(FilterOpenUpdater(filter))
-                eventChannel.send(OpenFilterEvent(filter.fragment))
+                eventChannel.send(OpenFilterEvent(getFragFromFilter(filter)))
             } else {
                 eventChannel.send(CloseFilterEvent())
                 updateChannel.send(FilterOpenUpdater(null))

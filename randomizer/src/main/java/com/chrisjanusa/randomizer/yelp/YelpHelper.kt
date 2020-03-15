@@ -9,16 +9,15 @@ import com.chrisjanusa.randomizer.filter_diet.DietHelper
 import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.milesToMeters
 import com.chrisjanusa.randomizer.filter_price.PriceHelper.setToYelpString
 import com.chrisjanusa.randomizer.yelp.events.FinishedLoadingNewRestaurantsEvent
+import com.chrisjanusa.randomizer.yelp.events.LoadThumbnailEvent
 import com.chrisjanusa.randomizer.yelp.events.NoRestaurantsErrorEvent
 import com.chrisjanusa.randomizer.yelp.events.StartLoadingNewRestaurantsEvent
 import com.chrisjanusa.randomizer.yelp.updaters.*
 import com.chrisjanusa.yelp.YelpRepository
 import com.chrisjanusa.yelp.models.Restaurant
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import kotlin.math.roundToInt
 
 object YelpHelper {
@@ -148,16 +147,19 @@ object YelpHelper {
     ) {
         eventChannel.send(NoRestaurantsErrorEvent())
         updateChannel.send(CurrRestaurantUpdater(state.currRestaurant))
+        eventChannel.send(LoadThumbnailEvent(state.currRestaurant?.image_url))
         eventChannel.send(FinishedLoadingNewRestaurantsEvent())
     }
 
     suspend fun setRandomRestaurant(
         restaurants: List<Restaurant>,
         updateChannel: Channel<BaseUpdater>,
+        eventChannel: Channel<BaseEvent>,
         mapChannel: Channel<MapUpdate>
     ) {
         val newRestaurant = randomRestaurant(restaurants)
         updateChannel.send(CurrRestaurantUpdater(newRestaurant))
+        eventChannel.send(LoadThumbnailEvent(newRestaurant.image_url))
         updateChannel.send(RemoveRestaurantUpdater(newRestaurant))
         newRestaurant.coordinates.run {
             mapChannel.send(MapUpdate(latitude, longitude, true))

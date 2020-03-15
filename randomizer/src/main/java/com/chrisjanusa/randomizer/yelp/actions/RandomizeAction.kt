@@ -53,7 +53,7 @@ class RandomizeAction : BaseAction {
                 state.restaurants
             }
 
-            setRandomRestaurant(restaurants, updateChannel, mapChannel)
+            setRandomRestaurant(restaurants, updateChannel, eventChannel, mapChannel)
 
             monitorBackgroundThreads(channel, updateChannel)
         }

@@ -24,14 +24,15 @@ import com.chrisjanusa.randomizer.filter_distance.actions.ResetDistanceAction
 import com.ramotion.fluidslider.FluidSlider
 import kotlinx.android.synthetic.main.confirmation_buttons.*
 import kotlinx.android.synthetic.main.distance_filter_fragment.*
-import kotlinx.android.synthetic.main.distance_filter_fragment.shade
 
 class DistanceFragment : Fragment() {
-    private lateinit var randomizerViewModel: RandomizerViewModel
+    val randomizerViewModel: RandomizerViewModel by lazy {
+        activity?.let { getViewModel(it) } ?: throw Exception("Invalid Activity")
+    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        randomizerViewModel = activity?.let { getViewModel(it) } ?: throw Exception("Invalid Activity")
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        randomizerViewModel.state.observe(viewLifecycleOwner, Observer<RandomizerState>(render))
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -51,8 +52,6 @@ class DistanceFragment : Fragment() {
         slider.startText = "$minDistance miles"
         slider.endText = "$maxDistance miles"
         slider.endTrackingListener = { distanceChange(percentToDistance(slider.position)) }
-
-        randomizerViewModel.state.observe(this, Observer<RandomizerState>(render))
     }
 
     override fun onResume() {
