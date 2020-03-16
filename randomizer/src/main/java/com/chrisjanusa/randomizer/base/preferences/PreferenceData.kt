@@ -1,5 +1,7 @@
 package com.chrisjanusa.randomizer.base.preferences
 
+import com.chrisjanusa.yelp.models.Restaurant
+
 data class PreferenceData(
     val gpsOn: Boolean,
     val openNowSelected: Boolean,
@@ -13,5 +15,7 @@ data class PreferenceData(
     val currLat: Double?,
     val currLng: Double?,
     val cacheValidity: Boolean,
-    val restaurantsSeenRecently: Set<String>
+    val restaurantsSeenRecently: Set<String>,
+    val favSet: Set<Restaurant>,
+    val blockSet: Set<Restaurant>
 )

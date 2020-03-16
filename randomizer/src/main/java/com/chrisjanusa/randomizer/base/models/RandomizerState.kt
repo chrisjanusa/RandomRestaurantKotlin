@@ -2,9 +2,9 @@ package com.chrisjanusa.randomizer.base.models
 
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.Filter
 import com.chrisjanusa.randomizer.filter_cuisine.CuisineHelper.Cuisine
+import com.chrisjanusa.randomizer.filter_diet.DietHelper.Diet
 import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.defaultDistance
 import com.chrisjanusa.randomizer.filter_price.PriceHelper.Price
-import com.chrisjanusa.randomizer.filter_diet.DietHelper.Diet
 import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLocationText
 import com.chrisjanusa.yelp.models.Restaurant
 import kotlinx.coroutines.Job
@@ -45,5 +45,8 @@ data class RandomizerState(
     val restaurants: List<Restaurant> = LinkedList(),
     val restaurantCacheValid: Boolean = true,
     val lastCacheUpdateJob: Job? = null,
-    val restaurantsSeenRecently: Set<String> = HashSet()
+    val restaurantsSeenRecently: Set<String> = HashSet(),
+
+    val favSet: Set<Restaurant> = HashSet(),
+    val blockSet: Set<Restaurant> = HashSet()
 )

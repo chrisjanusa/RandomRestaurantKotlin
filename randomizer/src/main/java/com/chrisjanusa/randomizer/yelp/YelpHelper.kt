@@ -8,10 +8,7 @@ import com.chrisjanusa.randomizer.filter_cuisine.CuisineHelper.toYelpString
 import com.chrisjanusa.randomizer.filter_diet.DietHelper
 import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.milesToMeters
 import com.chrisjanusa.randomizer.filter_price.PriceHelper.setToYelpString
-import com.chrisjanusa.randomizer.yelp.events.FinishedLoadingNewRestaurantsEvent
-import com.chrisjanusa.randomizer.yelp.events.LoadThumbnailEvent
-import com.chrisjanusa.randomizer.yelp.events.NoRestaurantsErrorEvent
-import com.chrisjanusa.randomizer.yelp.events.StartLoadingNewRestaurantsEvent
+import com.chrisjanusa.randomizer.yelp.events.*
 import com.chrisjanusa.randomizer.yelp.updaters.*
 import com.chrisjanusa.yelp.YelpRepository
 import com.chrisjanusa.yelp.models.Restaurant
@@ -146,6 +143,23 @@ object YelpHelper {
         eventChannel: Channel<BaseEvent>
     ) {
         eventChannel.send(NoRestaurantsErrorEvent())
+        throwRestaurantError(state, updateChannel, eventChannel)
+    }
+
+    suspend fun throwAllRestaurantsBlockedError(
+        state: RandomizerState,
+        updateChannel: Channel<BaseUpdater>,
+        eventChannel: Channel<BaseEvent>
+    ) {
+        eventChannel.send(AllRestaurantsBlockedErrorEvent())
+        throwRestaurantError(state, updateChannel, eventChannel)
+    }
+
+    private suspend fun throwRestaurantError(
+        state: RandomizerState,
+        updateChannel: Channel<BaseUpdater>,
+        eventChannel: Channel<BaseEvent>
+    ) {
         updateChannel.send(CurrRestaurantUpdater(state.currRestaurant))
         eventChannel.send(LoadThumbnailEvent(state.currRestaurant?.image_url))
         eventChannel.send(FinishedLoadingNewRestaurantsEvent())
@@ -165,4 +179,17 @@ object YelpHelper {
             mapChannel.send(MapUpdate(latitude, longitude, true))
         }
     }
+
+    fun isBlocked(prevState: RandomizerState, restaurant: Restaurant) = prevState.blockSet.contains(restaurant)
+
+
+    fun isRecentlySeen(prevState: RandomizerState, restaurant: Restaurant) =
+        prevState.restaurantsSeenRecently.contains(restaurant.id)
+
+    fun isTooFar(prevState: RandomizerState, restaurant: Restaurant) =
+        milesToMeters(prevState.maxMilesSelected).roundToInt() < restaurant.distance
+
+
+    fun isValidRestaurant(prevState: RandomizerState, restaurant: Restaurant) =
+        !(isRecentlySeen(prevState, restaurant) || isBlocked(prevState, restaurant) || isTooFar(prevState, restaurant))
 }

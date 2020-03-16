@@ -8,6 +8,8 @@ import com.chrisjanusa.randomizer.filter_price.PriceHelper.defaultPriceTitle
 import com.chrisjanusa.randomizer.filter_price.PriceHelper.toSaveString
 import com.chrisjanusa.randomizer.filter_diet.DietHelper
 import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.defaultDistance
+import com.chrisjanusa.restaurantstorage.RestaurantPreferenceHelper
+import com.chrisjanusa.restaurantstorage.RestaurantPreferenceHelper.retrieveCache
 
 object PreferenceHelper {
     sealed class StateObject(val key: String) {
@@ -24,12 +26,13 @@ object PreferenceHelper {
         object Longitude : StateObject("currLng")
         object RestaurantsSeen : StateObject("restaurantsSeen")
         object CacheValidity : StateObject("cacheValidity")
+        object FavRestaurants : StateObject("favorites")
+        object BlockedRestaurants : StateObject("blocks")
     }
 
     fun saveState(state: RandomizerState, preferences: SharedPreferences?) {
         preferences?.let {
             with(it.edit()) {
-                clear()
                 putBoolean(StateObject.GpsOn.key, state.gpsOn)
                 putBoolean(StateObject.OpenNowSelected.key, state.openNowSelected)
                 putBoolean(StateObject.FavoriteOnlySelected.key, state.favoriteOnlySelected)
@@ -64,7 +67,9 @@ object PreferenceHelper {
                 getString(StateObject.Latitude.key, null)?.toDouble(),
                 getString(StateObject.Longitude.key, null)?.toDouble(),
                 getBoolean(StateObject.CacheValidity.key, false),
-                getStringSet(StateObject.RestaurantsSeen.key, HashSet()) ?: HashSet()
+                getStringSet(StateObject.RestaurantsSeen.key, HashSet()) ?: HashSet(),
+                retrieveCache(preferences, StateObject.FavRestaurants.key),
+                retrieveCache(preferences, StateObject.BlockedRestaurants.key)
             )
         }
     }

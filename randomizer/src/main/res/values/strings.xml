@@ -30,8 +30,10 @@
     <string name="xout">X</string>
     <string name="ok">OK</string>
     <string name="no_restaurants_error_message">No Restaurants were found.\nPlease remove some filters or extend the search distance.</string>
+    <string name="all_restaurants_blocked_error_message">All Restaurants are blocked.\nPlease remove some filters or extend the search distance.</string>
     <string name="location_not_set_error_message">"User location is required.\nPlease enter location or turn on gps in the top bar."</string>
     <string name="no_restaurants_found_error_title">No Restaurants Found</string>
+    <string name="all_restaurants_blocked_error_title">"All Restaurants Blocked"</string>
     <string name="location_not_set_error_title">Location not set</string>
     <string name="fast_food">Fast Food</string>
     <string name="sit_down">Sit Down Restaurants</string>
