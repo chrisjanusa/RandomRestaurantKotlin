@@ -4,7 +4,7 @@ data class Restaurant(
     val alias: String,
     val categories: List<Category> = ArrayList(),
     val coordinates: Coordinates,
-    val distance: Double? = null,
+    val distance: Double,
     val id: String,
     val url: String,
     val image_url: String? = null,
@@ -14,4 +14,16 @@ data class Restaurant(
     val price: String? = null,
     val rating: Float? = null,
     val review_count: Int? = null
-)
+) {
+    override fun hashCode(): Int {
+        return id.hashCode()
+    }
+
+    override fun equals(other: Any?): Boolean {
+        return if (other is Restaurant) {
+            id == other.id
+        } else {
+            false
+        }
+    }
+}

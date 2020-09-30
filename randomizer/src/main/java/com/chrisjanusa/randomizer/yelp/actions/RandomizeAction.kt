@@ -6,14 +6,19 @@ import com.chrisjanusa.randomizer.base.interfaces.BaseEvent
 import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
 import com.chrisjanusa.randomizer.base.models.MapUpdate
 import com.chrisjanusa.randomizer.base.models.RandomizerState
+import com.chrisjanusa.randomizer.yelp.YelpHelper.isBlocked
+import com.chrisjanusa.randomizer.yelp.YelpHelper.isRecentlySeen
+import com.chrisjanusa.randomizer.yelp.YelpHelper.isTooFar
+import com.chrisjanusa.randomizer.yelp.YelpHelper.isValidRestaurant
 import com.chrisjanusa.randomizer.yelp.YelpHelper.monitorBackgroundThreads
 import com.chrisjanusa.randomizer.yelp.YelpHelper.notifyFinishedLoadingRestaurants
 import com.chrisjanusa.randomizer.yelp.YelpHelper.notifyStartingToLoadRestaurants
 import com.chrisjanusa.randomizer.yelp.YelpHelper.setRandomRestaurant
 import com.chrisjanusa.randomizer.yelp.YelpHelper.startQueryingYelp
+import com.chrisjanusa.randomizer.yelp.YelpHelper.throwAllRestaurantsBlockedError
 import com.chrisjanusa.randomizer.yelp.YelpHelper.throwNoRestaurantError
 import com.chrisjanusa.randomizer.yelp.events.InvalidLocationErrorEvent
-import com.chrisjanusa.randomizer.yelp.updaters.*
+import com.chrisjanusa.randomizer.yelp.updaters.EmptyRestaurantsSeenRecentlyUpdater
 import com.chrisjanusa.yelp.models.Restaurant
 import kotlinx.coroutines.channels.Channel
 
@@ -36,15 +41,19 @@ class RandomizeAction : BaseAction {
 
                 startQueryingYelp(state, updateChannel, channel)
 
-                var restaurants = channel.receive()
-
+                var restaurants = channel.receive().filter { !isTooFar(state, it) }
                 if (restaurants.isEmpty()) {
                     throwNoRestaurantError(state, updateChannel, eventChannel)
                     return
                 }
 
-                val filteredRestaurants = restaurants.filter { !state.restaurantsSeenRecently.contains(it.id) }
-                restaurants = checkIfAllRestaurantsAreFiltered(updateChannel, filteredRestaurants, restaurants)
+                val filteredBLockedRestaurants = restaurants.filter { !isBlocked(state, it) }
+                if (filteredBLockedRestaurants.isEmpty()) {
+                    throwAllRestaurantsBlockedError(state, updateChannel, eventChannel)
+                    return
+                }
+                val filteredRestaurants = filteredBLockedRestaurants.filter { !isRecentlySeen(state, it) }
+                restaurants = checkIfAllRestaurantsAreFiltered(updateChannel, filteredRestaurants, filteredBLockedRestaurants)
 
                 notifyFinishedLoadingRestaurants(restaurants, updateChannel, eventChannel)
                 restaurants

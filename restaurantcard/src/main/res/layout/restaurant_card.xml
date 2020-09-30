@@ -193,29 +193,21 @@
             app:layout_constraintEnd_toEndOf='parent'
             app:layout_constraintTop_toTopOf='@id/thumbnail' />
 
-        <ToggleButton
+        <ImageView
             android:id='@+id/favButton'
             android:layout_width='@dimen/toggle_button_size'
             android:layout_height='@dimen/toggle_button_size'
             android:layout_marginEnd='@dimen/toggle_button_space'
-            android:background='@drawable/fav_selector'
-            android:checked='false'
-            android:text=''
-            android:textOff=''
-            android:textOn=''
+            android:background='@drawable/star_default'
             app:layout_constraintBottom_toTopOf='@id/card_cuisines'
             app:layout_constraintEnd_toStartOf='@id/blockButton'
             app:layout_constraintTop_toBottomOf='@id/name' />
 
-        <ToggleButton
+        <ImageView
             android:id='@+id/blockButton'
             android:layout_width='@dimen/toggle_button_size'
             android:layout_height='@dimen/toggle_button_size'
-            android:background='@drawable/block_selector'
-            android:checked='false'
-            android:text=''
-            android:textOff=''
-            android:textOn=''
+            android:background='@drawable/block_default'
             app:layout_constraintBottom_toTopOf='@id/card_cuisines'
             app:layout_constraintEnd_toEndOf='parent'
             app:layout_constraintTop_toBottomOf='@id/name' />

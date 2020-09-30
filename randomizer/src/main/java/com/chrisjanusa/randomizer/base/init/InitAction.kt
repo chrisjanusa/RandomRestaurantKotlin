@@ -2,7 +2,6 @@ package com.chrisjanusa.randomizer.base.init
 
 import android.app.Activity
 import android.content.Context
-import android.location.Geocoder
 import androidx.lifecycle.LiveData
 import com.chrisjanusa.randomizer.base.interfaces.BaseAction
 import com.chrisjanusa.randomizer.base.interfaces.BaseEvent
@@ -10,6 +9,7 @@ import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
 import com.chrisjanusa.randomizer.base.models.MapUpdate
 import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.base.preferences.PreferenceHelper
+import com.chrisjanusa.randomizer.database_transition.transitionDatabase
 import com.chrisjanusa.randomizer.filter_cuisine.CuisineHelper.cuisineFromIdentifierString
 import com.chrisjanusa.randomizer.filter_diet.DietHelper.dietFromIdentifier
 import com.chrisjanusa.randomizer.filter_price.PriceHelper.priceFromSaveString
@@ -29,7 +29,8 @@ class InitAction(private val activity: Activity?) : BaseAction {
         eventChannel: Channel<BaseEvent>,
         mapChannel: Channel<MapUpdate>
     ) {
-        val preferenceData = PreferenceHelper.retrieveState(activity?.getPreferences(Context.MODE_PRIVATE))
+        val preferences = activity?.getPreferences(Context.MODE_PRIVATE)
+        val preferenceData = PreferenceHelper.retrieveState(preferences)
 
         preferenceData?.run {
             val dietObject = dietFromIdentifier(diet)
@@ -38,7 +39,7 @@ class InitAction(private val activity: Activity?) : BaseAction {
             val locationName = if (currLat == null || currLng == null) {
                 defaultLocationText
             } else {
-                activity?.let {  getTextFromLatLng(activity, currLat, currLng) } ?: defaultLocationText
+                activity?.let { getTextFromLatLng(activity, currLat, currLng) } ?: defaultLocationText
             }
 
             updateChannel.send(
@@ -56,7 +57,9 @@ class InitAction(private val activity: Activity?) : BaseAction {
                     currLng,
                     locationName,
                     cacheValidity,
-                    restaurantsSeenRecently
+                    restaurantsSeenRecently,
+                    favSet,
+                    blockSet
                 )
             )
 
@@ -69,6 +72,10 @@ class InitAction(private val activity: Activity?) : BaseAction {
                 }
             } else {
                 updateChannel.send(LastManualLocationUpdater(locationName))
+            }
+
+            activity?.let {
+                transitionDatabase(preferences, activity.applicationContext, updateChannel)
             }
         }
     }

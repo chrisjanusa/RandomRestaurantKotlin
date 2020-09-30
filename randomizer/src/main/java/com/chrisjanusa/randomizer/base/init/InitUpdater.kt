@@ -5,6 +5,7 @@ import com.chrisjanusa.randomizer.base.models.RandomizerState
 import com.chrisjanusa.randomizer.filter_cuisine.CuisineHelper.Cuisine
 import com.chrisjanusa.randomizer.filter_diet.DietHelper
 import com.chrisjanusa.randomizer.filter_price.PriceHelper.Price
+import com.chrisjanusa.yelp.models.Restaurant
 
 class InitUpdater(
     private val gpsOn: Boolean,
@@ -20,7 +21,9 @@ class InitUpdater(
     private val currLng: Double?,
     private val locationText: String,
     private val cacheValidity: Boolean,
-    private val restaurantsSeenRecently: Set<String>
+    private val restaurantsSeenRecently: Set<String>,
+    private val favSet: Set<Restaurant>,
+    private val blockSet: Set<Restaurant>
 ) : BaseUpdater {
     override fun performUpdate(prevState: RandomizerState): RandomizerState {
         return prevState.copy(
@@ -38,7 +41,9 @@ class InitUpdater(
             locationText = locationText,
             restaurantCacheValid = cacheValidity,
             stateInitialized = true,
-            restaurantsSeenRecently = restaurantsSeenRecently
+            restaurantsSeenRecently = restaurantsSeenRecently,
+            favSet = favSet,
+            blockSet = blockSet
         )
     }
 }
