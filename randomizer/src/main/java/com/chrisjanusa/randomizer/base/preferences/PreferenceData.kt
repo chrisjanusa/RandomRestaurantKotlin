@@ -17,5 +17,6 @@ data class PreferenceData(
     val cacheValidity: Boolean,
     val restaurantsSeenRecently: Set<String>,
     val favSet: Set<Restaurant>,
-    val blockSet: Set<Restaurant>
+    val blockSet: Set<Restaurant>,
+    val history: List<Restaurant>
 )

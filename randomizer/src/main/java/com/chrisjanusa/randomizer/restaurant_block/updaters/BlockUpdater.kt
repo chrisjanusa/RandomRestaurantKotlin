@@ -17,9 +17,6 @@ class BlockUpdater(private val restaurant: Restaurant, private val preferences: 
         } else {
             newSet.add(restaurant)
         }
-        GlobalScope.launch {
-            saveCache(preferences, PreferenceHelper.StateObject.BlockedRestaurants.key, newSet)
-        }
         return prevState.copy(blockSet = newSet)
     }
 }

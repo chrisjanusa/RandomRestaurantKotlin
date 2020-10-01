@@ -17,9 +17,6 @@ class FavoriteUpdater(private val restaurant: Restaurant, private val preference
         } else {
             newSet.add(restaurant)
         }
-        GlobalScope.launch {
-            saveCache(preferences, PreferenceHelper.StateObject.FavRestaurants.key, newSet)
-        }
         return prevState.copy(favSet = newSet)
     }
 }
