@@ -25,7 +25,10 @@ import com.chrisjanusa.randomizer.location_gps.events.LocationFailedEvent
 import com.chrisjanusa.randomizer.location_gps.events.PermissionEvent
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.Task
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.withContext
 
 object GpsHelper {
     const val PERMISSION_ID = 42
@@ -56,7 +59,7 @@ object GpsHelper {
 
     // Suppress since it is check in the if
     @SuppressLint("MissingPermission")
-    fun requestLocation(
+    suspend fun requestLocation(
         activity: Activity,
         updateChannel: Channel<BaseUpdater>,
         eventChannel: Channel<BaseEvent>,
@@ -67,20 +70,22 @@ object GpsHelper {
         val context: Context = activity.applicationContext ?: return
         val gpsClient = LocationServices.getFusedLocationProviderClient(context)
         if (checkLocationPermissions(context)) {
-            gpsClient.lastLocation.addOnCompleteListener(activity) { task ->
-                task.result?.let {
-                    receiveLocation(context, it, updateChannel, mapChannel, prevLat, prevLng)
+            withContext(Dispatchers.Main) {
+                gpsClient.lastLocation.addOnCompleteListener(activity) { task ->
+                    task.result?.let {
+                        receiveLocation(context, it, updateChannel, mapChannel, prevLat, prevLng)
+                    }
+                        ?: makeLocationRequest(
+                            activity,
+                            context,
+                            gpsClient,
+                            updateChannel,
+                            eventChannel,
+                            mapChannel,
+                            prevLat,
+                            prevLng
+                        )
                 }
-                    ?: makeLocationRequest(
-                        activity,
-                        context,
-                        gpsClient,
-                        updateChannel,
-                        eventChannel,
-                        mapChannel,
-                        prevLat,
-                        prevLng
-                    )
             }
         } else {
             sendEvent(locationPermissionEvent, eventChannel)
