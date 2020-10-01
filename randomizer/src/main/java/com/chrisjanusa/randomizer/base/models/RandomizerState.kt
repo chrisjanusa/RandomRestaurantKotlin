@@ -48,5 +48,6 @@ data class RandomizerState(
     val restaurantsSeenRecently: Set<String> = HashSet(),
 
     val favSet: Set<Restaurant> = HashSet(),
-    val blockSet: Set<Restaurant> = HashSet()
+    val blockSet: Set<Restaurant> = HashSet(),
+    val historyList: List<Restaurant> = LinkedList()
 )

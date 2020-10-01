@@ -8,8 +8,10 @@ import com.chrisjanusa.randomizer.filter_price.PriceHelper.defaultPriceTitle
 import com.chrisjanusa.randomizer.filter_price.PriceHelper.toSaveString
 import com.chrisjanusa.randomizer.filter_diet.DietHelper
 import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.defaultDistance
-import com.chrisjanusa.restaurantstorage.RestaurantPreferenceHelper
+import com.chrisjanusa.restaurantstorage.RestaurantPreferenceHelper.saveCache
 import com.chrisjanusa.restaurantstorage.RestaurantPreferenceHelper.retrieveCache
+import com.chrisjanusa.restaurantstorage.RestaurantPreferenceHelper.retrieveListCache
+import com.chrisjanusa.restaurantstorage.RestaurantPreferenceHelper.saveListCache
 
 object PreferenceHelper {
     sealed class StateObject(val key: String) {
@@ -28,6 +30,7 @@ object PreferenceHelper {
         object CacheValidity : StateObject("cacheValidity")
         object FavRestaurants : StateObject("favorites")
         object BlockedRestaurants : StateObject("blocks")
+        object History : StateObject("history")
     }
 
     fun saveState(state: RandomizerState, preferences: SharedPreferences?) {
@@ -46,6 +49,9 @@ object PreferenceHelper {
                 state.currLng?.let { lng -> putString(StateObject.Longitude.key, "$lng") }
                 putBoolean(StateObject.CacheValidity.key, state.restaurantCacheValid)
                 putStringSet(StateObject.RestaurantsSeen.key, state.restaurantsSeenRecently)
+                saveCache(preferences, StateObject.BlockedRestaurants.key, state.blockSet)
+                saveCache(preferences, StateObject.FavRestaurants.key, state.favSet)
+                saveListCache(preferences, StateObject.History.key, state.historyList)
                 apply()
             }
         }
@@ -69,7 +75,8 @@ object PreferenceHelper {
                 getBoolean(StateObject.CacheValidity.key, false),
                 getStringSet(StateObject.RestaurantsSeen.key, HashSet()) ?: HashSet(),
                 retrieveCache(preferences, StateObject.FavRestaurants.key),
-                retrieveCache(preferences, StateObject.BlockedRestaurants.key)
+                retrieveCache(preferences, StateObject.BlockedRestaurants.key),
+                retrieveListCache(preferences, StateObject.History.key)
             )
         }
     }

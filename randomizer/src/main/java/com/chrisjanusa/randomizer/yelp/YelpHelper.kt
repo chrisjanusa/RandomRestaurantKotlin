@@ -178,6 +178,7 @@ object YelpHelper {
         newRestaurant.coordinates.run {
             mapChannel.send(MapUpdate(latitude, longitude, true))
         }
+        updateChannel.send(HistoryUpdater(newRestaurant))
     }
 
     fun isBlocked(prevState: RandomizerState, restaurant: Restaurant) = prevState.blockSet.contains(restaurant)

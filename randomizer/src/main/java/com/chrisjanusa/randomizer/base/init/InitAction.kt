@@ -59,7 +59,8 @@ class InitAction(private val activity: Activity?) : BaseAction {
                     cacheValidity,
                     restaurantsSeenRecently,
                     favSet,
-                    blockSet
+                    blockSet,
+                    history
                 )
             )
 
