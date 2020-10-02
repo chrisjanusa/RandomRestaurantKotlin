@@ -4,13 +4,13 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.WindowManager
-import androidx.fragment.app.Fragment
 import com.chrisjanusa.randomizer.R
 import com.chrisjanusa.base.interfaces.BaseEvent
+import com.chrisjanusa.base.interfaces.BaseRestaurantFragment
 import kotlinx.android.synthetic.main.error_dialog.*
 
 class AllRestaurantsBlockedErrorEvent : BaseEvent {
-    override fun handleEvent(fragment: Fragment) {
+    override fun handleEvent(fragment: BaseRestaurantFragment) {
         fragment.context?.let { context ->
             val dialog = Dialog(context)
             dialog.setContentView(R.layout.error_dialog)

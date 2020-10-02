@@ -6,6 +6,7 @@ import androidx.annotation.DrawableRes
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.chrisjanusa.base.CommunicationHelper.sendAction
+import com.chrisjanusa.base.interfaces.BaseRestaurantFragment
 import com.chrisjanusa.randomizer.R
 import com.chrisjanusa.base.interfaces.FeatureUIManager
 import com.chrisjanusa.base.models.RandomizerState
@@ -18,22 +19,13 @@ import kotlinx.android.synthetic.main.search_card.*
 
 object LocationUIManager : FeatureUIManager {
 
-    override fun init(randomizerViewModel: RandomizerViewModel, fragment: Fragment) {
-        if (fragment !is RandomizerFragment) {
-            return
-        }
+    override fun init(randomizerViewModel: RandomizerViewModel, fragment: BaseRestaurantFragment) {
         fragment.run {
             current_location.setOnClickListener {
                 sendAction(
                     SearchGainFocusAction(randomizerViewModel.state.value?.addressSearchString ?: ""),
                     randomizerViewModel
                 )
-            }
-
-            mapView?.let {
-                it.onCreate(null)
-                it.onResume()
-                it.getMapAsync(this)
             }
         }
     }

@@ -1,22 +1,26 @@
 package com.chrisjanusa.history
 
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chrisjanusa.base.CommunicationHelper
+import com.chrisjanusa.base.interfaces.BaseRestaurantFragment
 import com.chrisjanusa.base.interfaces.FeatureUIManager
 import com.chrisjanusa.base.models.RandomizerState
 import com.chrisjanusa.base.models.RandomizerViewModel
 import com.chrisjanusa.baselist.BlockClickAndRefreshAction
 import com.chrisjanusa.baselist.FavoriteClickAndRefreshAction
+import com.chrisjanusa.baselist.RestaurantAdapter
 import com.chrisjanusa.baselist.renderCardDetails
 import com.chrisjanusa.yelp.models.Restaurant
 import kotlinx.android.synthetic.main.history_frag.*
 import java.util.*
 
 object HistoryListUIManager : FeatureUIManager {
-    override fun init(randomizerViewModel: RandomizerViewModel, fragment: Fragment) {
+    override fun init(randomizerViewModel: RandomizerViewModel, fragment: BaseRestaurantFragment) {
         fragment.run {
             recyclerView.apply {
                 // set a LinearLayoutManager to handle Android
@@ -26,7 +30,7 @@ object HistoryListUIManager : FeatureUIManager {
                 adapter = RestaurantAdapter(
                     randomizerViewModel.state.value?.historyList ?: LinkedList(),
                     randomizerViewModel
-                )
+                ) { inflater: LayoutInflater, parent: ViewGroup -> RestaurantViewHolder(inflater, parent) }
             }
         }
     }
@@ -35,7 +39,7 @@ object HistoryListUIManager : FeatureUIManager {
 
     }
 
-    private fun renderFavBlock(
+    fun renderFavBlock(
         restaurant: Restaurant,
         view: View,
         randomizerViewModel: RandomizerViewModel,
@@ -79,13 +83,4 @@ object HistoryListUIManager : FeatureUIManager {
         }
     }
 
-    fun renderCard(
-        restaurant: Restaurant,
-        view: View,
-        randomizerViewModel: RandomizerViewModel,
-        position: Int
-    ) {
-        renderCardDetails(restaurant, view, randomizerViewModel)
-        renderFavBlock(restaurant, view, randomizerViewModel, position)
-    }
 }

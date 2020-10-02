@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.chrisjanusa.base.CommunicationHelper
 import com.chrisjanusa.base.CommunicationHelper.sendAction
+import com.chrisjanusa.base.interfaces.BaseRestaurantFragment
 import com.chrisjanusa.base.interfaces.FeatureUIManager
 import com.chrisjanusa.base.models.RandomizerState
 import com.chrisjanusa.base.models.RandomizerViewModel
@@ -27,7 +28,7 @@ import com.google.android.material.button.MaterialButton
 import kotlinx.android.synthetic.main.bottom_overlay.*
 
 object YelpUIManager : FeatureUIManager {
-    override fun init(randomizerViewModel: RandomizerViewModel, fragment: Fragment) {
+    override fun init(randomizerViewModel: RandomizerViewModel, fragment: BaseRestaurantFragment) {
         fragment.random.setOnClickListener { sendAction(RandomizeAction(), randomizerViewModel) }
     }
 

@@ -1,4 +1,4 @@
-package com.chrisjanusa.history
+package com.chrisjanusa.baselist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,17 +6,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chrisjanusa.base.models.RandomizerViewModel
 import com.chrisjanusa.yelp.models.Restaurant
 
-class RestaurantAdapter(
+class RestaurantAdapter<T : BaseRestaurantViewHolder>(
     private val list: List<Restaurant>,
-    private val randomizerViewModel: RandomizerViewModel
-) : RecyclerView.Adapter<RestaurantViewHolder>() {
+    private val randomizerViewModel: RandomizerViewModel,
+    private val createViewHolder : (inflater: LayoutInflater, parent: ViewGroup) -> T
+) : RecyclerView.Adapter<T>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): T {
         val inflater = LayoutInflater.from(parent.context)
-        return RestaurantViewHolder(inflater, parent)
+        return createViewHolder(inflater, parent)
     }
 
-    override fun onBindViewHolder(holder: RestaurantViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: T, position: Int) {
         val restaurant: Restaurant = list.elementAt(position)
         holder.bind(restaurant, randomizerViewModel)
     }

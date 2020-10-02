@@ -5,6 +5,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.Fragment
+import com.chrisjanusa.base.interfaces.BaseRestaurantFragment
 import com.chrisjanusa.base.interfaces.FeatureUIManager
 import com.chrisjanusa.base.models.RandomizerState
 import com.chrisjanusa.base.models.RandomizerViewModel
@@ -20,7 +21,7 @@ import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.filters.*
 
 object CuisineUIManager : FeatureUIManager {
-    override fun init(randomizerViewModel: RandomizerViewModel, fragment: Fragment) {
+    override fun init(randomizerViewModel: RandomizerViewModel, fragment: BaseRestaurantFragment) {
         fragment.run {
             cuisines.setOnClickListener { clickSelectionFilter(Filter.Cuisine, randomizerViewModel) }
         }
