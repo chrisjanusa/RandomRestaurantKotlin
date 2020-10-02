@@ -5,6 +5,6 @@ import com.chrisjanusa.base.models.RandomizerState
 import com.chrisjanusa.base.models.RandomizerViewModel
 
 interface FeatureUIManager {
-    fun init(randomizerViewModel: RandomizerViewModel, fragment: Fragment)
+    fun init(randomizerViewModel: RandomizerViewModel, fragment: BaseRestaurantFragment)
     fun render(state: RandomizerState, fragment: Fragment)
 }

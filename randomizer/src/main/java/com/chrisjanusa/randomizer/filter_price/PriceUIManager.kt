@@ -1,6 +1,7 @@
 package com.chrisjanusa.randomizer.filter_price
 
 import androidx.fragment.app.Fragment
+import com.chrisjanusa.base.interfaces.BaseRestaurantFragment
 import com.chrisjanusa.base.interfaces.FeatureUIManager
 import com.chrisjanusa.base.models.RandomizerState
 import com.chrisjanusa.base.models.RandomizerViewModel
@@ -14,7 +15,7 @@ import kotlinx.android.synthetic.main.filters.*
 
 object PriceUIManager : FeatureUIManager {
 
-    override fun init(randomizerViewModel: RandomizerViewModel, fragment: Fragment) {
+    override fun init(randomizerViewModel: RandomizerViewModel, fragment: BaseRestaurantFragment) {
         fragment.run {
             price.setOnClickListener { clickSelectionFilter(Filter.Price, randomizerViewModel) }
         }

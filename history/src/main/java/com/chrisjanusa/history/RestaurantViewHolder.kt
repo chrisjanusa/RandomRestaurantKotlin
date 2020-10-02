@@ -2,19 +2,20 @@ package com.chrisjanusa.history
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import com.chrisjanusa.base.models.RandomizerViewModel
-import com.chrisjanusa.history.HistoryListUIManager.renderCard
+import com.chrisjanusa.baselist.BaseRestaurantViewHolder
+import com.chrisjanusa.history.HistoryListUIManager.renderFavBlock
 import com.chrisjanusa.yelp.models.Restaurant
 
 class RestaurantViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
-    RecyclerView.ViewHolder(inflater.inflate(R.layout.card_wrapper, parent, false)) {
+    BaseRestaurantViewHolder(inflater, parent) {
 
-    fun bind(
+    override fun bind(
         restaurant: Restaurant,
         randomizerViewModel: RandomizerViewModel
     ) {
-        renderCard(restaurant, itemView, randomizerViewModel, adapterPosition)
+        super.bind(restaurant, randomizerViewModel)
+        renderFavBlock(restaurant, itemView, randomizerViewModel, adapterPosition)
     }
 
 }
