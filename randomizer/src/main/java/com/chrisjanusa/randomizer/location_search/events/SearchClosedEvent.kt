@@ -1,11 +1,11 @@
 package com.chrisjanusa.randomizer.location_search.events
 
-import androidx.fragment.app.Fragment
 import com.chrisjanusa.base.interfaces.BaseEvent
+import com.chrisjanusa.base.interfaces.BaseRestaurantFragment
 import kotlinx.android.synthetic.main.search_card.*
 
 class SearchClosedEvent : BaseEvent {
-    override fun handleEvent(fragment: Fragment) {
+    override fun handleEvent(fragment: BaseRestaurantFragment) {
         fragment.run {
             user_input.setText("")
         }

@@ -4,19 +4,16 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.WindowManager
-import androidx.fragment.app.Fragment
 import com.chrisjanusa.randomizer.R
 import com.chrisjanusa.base.CommunicationHelper.sendAction
 import com.chrisjanusa.base.interfaces.BaseEvent
+import com.chrisjanusa.base.interfaces.BaseRestaurantFragment
 import com.chrisjanusa.randomizer.RandomizerFragment
 import com.chrisjanusa.randomizer.location_search.actions.SearchGainFocusAction
 import kotlinx.android.synthetic.main.error_dialog.*
 
 class InvalidLocationErrorEvent : BaseEvent {
-    override fun handleEvent(fragment: Fragment) {
-        if (fragment !is RandomizerFragment) {
-            return
-        }
+    override fun handleEvent(fragment: BaseRestaurantFragment) {
         fragment.context?.let { context ->
             val dialog = Dialog(context)
             dialog.setContentView(R.layout.error_dialog)

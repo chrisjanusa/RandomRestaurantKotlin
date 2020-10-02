@@ -4,14 +4,14 @@ import android.content.Context
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.fragment.app.Fragment
 import com.chrisjanusa.randomizer.R
 import com.chrisjanusa.base.interfaces.BaseEvent
+import com.chrisjanusa.base.interfaces.BaseRestaurantFragment
 import com.chrisjanusa.randomizer.location_search.SearchHelper
 import kotlinx.android.synthetic.main.search_card.*
 
 class CloseSearchEvent : BaseEvent {
-    override fun handleEvent(fragment: Fragment) {
+    override fun handleEvent(fragment: BaseRestaurantFragment) {
         fragment.run {
             // Remove focus from search and close keyboard
             user_input.clearFocus()

@@ -1,11 +1,11 @@
 package com.chrisjanusa.randomizer.init
 
 import android.widget.ImageView
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.chrisjanusa.base.interfaces.BaseEvent
+import com.chrisjanusa.base.interfaces.BaseRestaurantFragment
 import com.chrisjanusa.base.models.RandomizerState
 import com.chrisjanusa.randomizer.R
 import com.chrisjanusa.randomizer.yelp.YelpUIManager.renderCard
@@ -16,7 +16,7 @@ class InitCurrRestaurantEvent(
     private val randomizerState: RandomizerState,
     private val activity: FragmentActivity
 ) : BaseEvent {
-    override fun handleEvent(fragment: Fragment) {
+    override fun handleEvent(fragment: BaseRestaurantFragment) {
         activity.findViewById<ImageView>(R.id.thumbnail)?.let {
             Glide.with(activity)
                 .load(currRestaurant.image_url)
