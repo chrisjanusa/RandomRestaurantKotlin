@@ -9,14 +9,13 @@ import android.location.Geocoder
 import android.location.Location
 import android.os.Looper
 import androidx.core.app.ActivityCompat
-import com.chrisjanusa.randomizer.base.CommunicationHelper.sendEvent
-import com.chrisjanusa.randomizer.base.CommunicationHelper.sendMap
-import com.chrisjanusa.randomizer.base.CommunicationHelper.sendUpdate
-import com.chrisjanusa.randomizer.base.interfaces.BaseEvent
-import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
-import com.chrisjanusa.randomizer.base.models.MapUpdate
-import com.chrisjanusa.randomizer.base.models.RandomizerState
-import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLocationText
+import com.chrisjanusa.base.CommunicationHelper.sendEvent
+import com.chrisjanusa.base.CommunicationHelper.sendMap
+import com.chrisjanusa.base.CommunicationHelper.sendUpdate
+import com.chrisjanusa.base.interfaces.BaseEvent
+import com.chrisjanusa.base.interfaces.BaseUpdater
+import com.chrisjanusa.base.models.MapUpdate
+import com.chrisjanusa.base.models.defaultLocationText
 import com.chrisjanusa.randomizer.location_base.LocationHelper.hasLocationChanged
 import com.chrisjanusa.randomizer.location_base.updaters.GpsStatusUpdater
 import com.chrisjanusa.randomizer.location_base.updaters.LocationTextUpdater
@@ -26,7 +25,6 @@ import com.chrisjanusa.randomizer.location_gps.events.PermissionEvent
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.Task
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.withContext
 

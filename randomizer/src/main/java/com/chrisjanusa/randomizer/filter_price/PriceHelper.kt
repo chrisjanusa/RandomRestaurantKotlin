@@ -1,27 +1,10 @@
 package com.chrisjanusa.randomizer.filter_price
 
+import com.chrisjanusa.base.models.defaultPriceTitle
+import com.chrisjanusa.base.models.delimiter
+import com.chrisjanusa.base.models.enums.Price
+
 object PriceHelper {
-    const val defaultPriceTitle = "Price"
-    private const val delimiter = ", "
-
-
-    sealed class Price(val text: String, val num: Int) {
-        object One : Price("$", 1)
-        object Two : Price("$$", 2)
-        object Three : Price("$$$", 3)
-        object Four : Price("$$$$", 4)
-    }
-
-    private val priceList = listOf(Price.One, Price.Two, Price.Three, Price.Four)
-
-    fun HashSet<Price>.toSaveString(): String {
-        if (isEmpty()) {
-            return defaultPriceTitle
-        }
-        val builder = StringBuilder()
-        priceList.forEach { if (contains(it)) builder.append(it.text + delimiter) }
-        return builder.dropLast(2).toString()
-    }
 
     fun priceFromSaveString(curr: String): HashSet<Price> {
         if (defaultPriceTitle == curr) {

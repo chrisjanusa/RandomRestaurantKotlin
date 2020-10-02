@@ -1,15 +1,14 @@
 package com.chrisjanusa.randomizer.yelp.actions
 
 import androidx.lifecycle.LiveData
-import com.chrisjanusa.randomizer.base.interfaces.BaseAction
-import com.chrisjanusa.randomizer.base.interfaces.BaseEvent
-import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
-import com.chrisjanusa.randomizer.base.models.MapUpdate
-import com.chrisjanusa.randomizer.base.models.RandomizerState
+import com.chrisjanusa.base.interfaces.BaseAction
+import com.chrisjanusa.base.interfaces.BaseEvent
+import com.chrisjanusa.base.interfaces.BaseUpdater
+import com.chrisjanusa.base.models.MapUpdate
+import com.chrisjanusa.base.models.RandomizerState
 import com.chrisjanusa.randomizer.yelp.YelpHelper.isBlocked
 import com.chrisjanusa.randomizer.yelp.YelpHelper.isRecentlySeen
 import com.chrisjanusa.randomizer.yelp.YelpHelper.isTooFar
-import com.chrisjanusa.randomizer.yelp.YelpHelper.isValidRestaurant
 import com.chrisjanusa.randomizer.yelp.YelpHelper.monitorBackgroundThreads
 import com.chrisjanusa.randomizer.yelp.YelpHelper.notifyFinishedLoadingRestaurants
 import com.chrisjanusa.randomizer.yelp.YelpHelper.notifyStartingToLoadRestaurants

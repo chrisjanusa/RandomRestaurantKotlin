@@ -2,7 +2,7 @@ package com.chrisjanusa.randomizer.database_transition
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
+import com.chrisjanusa.base.interfaces.BaseUpdater
 import com.chrisjanusa.randomizer.database_transition.database.BlockDBHelper
 import com.chrisjanusa.randomizer.database_transition.database.FavoritesDBHelper
 import com.chrisjanusa.randomizer.database_transition.updaters.AddBlockUpdater

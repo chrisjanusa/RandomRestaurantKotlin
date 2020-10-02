@@ -4,21 +4,24 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import androidx.annotation.DrawableRes
 import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.Fragment
 import com.chrisjanusa.randomizer.R
 import com.chrisjanusa.randomizer.RandomizerFragment
-import com.chrisjanusa.randomizer.base.CommunicationHelper.sendAction
-import com.chrisjanusa.randomizer.base.interfaces.FeatureUIManager
-import com.chrisjanusa.randomizer.base.models.RandomizerState
-import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
+import com.chrisjanusa.base.CommunicationHelper.sendAction
+import com.chrisjanusa.base.interfaces.FeatureUIManager
+import com.chrisjanusa.base.models.RandomizerState
+import com.chrisjanusa.base.models.RandomizerViewModel
 import com.chrisjanusa.randomizer.location_search.actions.SearchGainFocusAction
 import com.google.android.libraries.maps.model.BitmapDescriptor
 import com.google.android.libraries.maps.model.BitmapDescriptorFactory
-import kotlinx.android.synthetic.main.randomizer_frag.*
 import kotlinx.android.synthetic.main.search_card.*
 
 object LocationUIManager : FeatureUIManager {
 
-    override fun init(randomizerViewModel: RandomizerViewModel, fragment: RandomizerFragment) {
+    override fun init(randomizerViewModel: RandomizerViewModel, fragment: Fragment) {
+        if (fragment !is RandomizerFragment) {
+            return
+        }
         fragment.run {
             current_location.setOnClickListener {
                 sendAction(
@@ -35,7 +38,7 @@ object LocationUIManager : FeatureUIManager {
         }
     }
 
-    override fun render(state: RandomizerState, fragment: RandomizerFragment) {
+    override fun render(state: RandomizerState, fragment: Fragment) {
         fragment.run {
             current_text.text = state.locationText
         }

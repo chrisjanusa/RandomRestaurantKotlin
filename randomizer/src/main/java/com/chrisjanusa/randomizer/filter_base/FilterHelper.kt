@@ -1,12 +1,12 @@
 package com.chrisjanusa.randomizer.filter_base
 
 import android.content.Context
-import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.Fragment
+import com.chrisjanusa.base.CommunicationHelper.sendAction
+import com.chrisjanusa.base.models.RandomizerViewModel
+import com.chrisjanusa.base.models.enums.Filter
 import com.chrisjanusa.randomizer.R
-import com.chrisjanusa.randomizer.base.CommunicationHelper.sendAction
-import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
 import com.chrisjanusa.randomizer.filter_base.actions.CancelClickAction
 import com.chrisjanusa.randomizer.filter_base.actions.ClickSelectionFilterAction
 import com.chrisjanusa.randomizer.filter_cuisine.CuisineFragment
@@ -44,13 +44,6 @@ object FilterHelper {
 
     fun getStrokeColor(selected: Boolean) =
         if (selected) R.color.outline_selected else R.color.outline_not_selected
-
-    sealed class Filter {
-        object Price : Filter()
-        object Cuisine : Filter()
-        object Distance : Filter()
-        object Diet : Filter()
-    }
 
     fun getFragFromFilter(filter: Filter) : Fragment {
         return when(filter) {

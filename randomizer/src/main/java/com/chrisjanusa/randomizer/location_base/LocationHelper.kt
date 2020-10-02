@@ -3,14 +3,13 @@ package com.chrisjanusa.randomizer.location_base
 import android.app.Activity
 import android.location.Geocoder
 import android.location.Location
-import com.chrisjanusa.randomizer.base.models.MapUpdate
+import com.chrisjanusa.base.models.MapUpdate
+import com.chrisjanusa.base.models.defaultLocationText
 import com.chrisjanusa.yelp.models.Restaurant
 import kotlinx.coroutines.channels.Channel
 
 object LocationHelper {
-    const val defaultLocationText = "Unknown"
     const val calculatingLocationText = "Locating"
-
     const val defaultLat = 200.0
     const val defaultLng = 200.0
     const val spaceNeedleLat = 47.620422

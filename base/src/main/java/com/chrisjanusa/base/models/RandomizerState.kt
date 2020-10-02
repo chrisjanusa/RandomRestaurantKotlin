@@ -1,11 +1,9 @@
-package com.chrisjanusa.randomizer.base.models
+package com.chrisjanusa.base.models
 
-import com.chrisjanusa.randomizer.filter_base.FilterHelper.Filter
-import com.chrisjanusa.randomizer.filter_cuisine.CuisineHelper.Cuisine
-import com.chrisjanusa.randomizer.filter_diet.DietHelper.Diet
-import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.defaultDistance
-import com.chrisjanusa.randomizer.filter_price.PriceHelper.Price
-import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLocationText
+import com.chrisjanusa.base.models.enums.Filter
+import com.chrisjanusa.base.models.enums.Cuisine
+import com.chrisjanusa.base.models.enums.Diet
+import com.chrisjanusa.base.models.enums.Price
 import com.chrisjanusa.yelp.models.Restaurant
 import kotlinx.coroutines.Job
 import java.util.*

@@ -1,13 +1,10 @@
-package com.chrisjanusa.randomizer.base.preferences
+package com.chrisjanusa.base.preferences
 
 import android.content.SharedPreferences
-import com.chrisjanusa.randomizer.base.models.RandomizerState
-import com.chrisjanusa.randomizer.filter_cuisine.CuisineHelper.defaultCuisineTitle
-import com.chrisjanusa.randomizer.filter_cuisine.CuisineHelper.toIdentifierString
-import com.chrisjanusa.randomizer.filter_price.PriceHelper.defaultPriceTitle
-import com.chrisjanusa.randomizer.filter_price.PriceHelper.toSaveString
-import com.chrisjanusa.randomizer.filter_diet.DietHelper
-import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.defaultDistance
+import com.chrisjanusa.base.models.*
+import com.chrisjanusa.base.models.enums.Cuisine
+import com.chrisjanusa.base.models.enums.Diet
+import com.chrisjanusa.base.models.enums.Price
 import com.chrisjanusa.restaurantstorage.RestaurantPreferenceHelper.saveCache
 import com.chrisjanusa.restaurantstorage.RestaurantPreferenceHelper.retrieveCache
 import com.chrisjanusa.restaurantstorage.RestaurantPreferenceHelper.retrieveListCache
@@ -66,8 +63,8 @@ object PreferenceHelper {
                 getBoolean(StateObject.FastFoodSelected.key, false),
                 getBoolean(StateObject.SitDownSelected.key, false),
                 getFloat(StateObject.MaxMilesSelected.key, defaultDistance),
-                getString(StateObject.Diet.key, DietHelper.Diet.None.identifier)
-                    ?: DietHelper.Diet.None.identifier,
+                getString(StateObject.Diet.key, Diet.None.identifier)
+                    ?: Diet.None.identifier,
                 getString(StateObject.PriceSelected.key, defaultPriceTitle) ?: defaultPriceTitle,
                 getString(StateObject.Cuisine.key, defaultCuisineTitle) ?: "",
                 getString(StateObject.Latitude.key, null)?.toDouble(),
@@ -79,5 +76,27 @@ object PreferenceHelper {
                 retrieveListCache(preferences, StateObject.History.key)
             )
         }
+    }
+
+    private fun HashSet<Cuisine>.toIdentifierString(): String {
+        if (this.isEmpty()) {
+            return defaultCuisineTitle
+        }
+        val out = StringBuilder()
+        for (cuisine in this.iterator()) {
+            out.append(cuisine.identifier)
+            out.append(delimiter)
+        }
+        return out.dropLast(2).toString()
+    }
+
+    private fun HashSet<Price>.toSaveString(): String {
+        if (isEmpty()) {
+            return defaultPriceTitle
+        }
+        val builder = StringBuilder()
+        val priceList = listOf(Price.One, Price.Two, Price.Three, Price.Four)
+        priceList.forEach { if (contains(it)) builder.append(it.text + delimiter) }
+        return builder.dropLast(2).toString()
     }
 }

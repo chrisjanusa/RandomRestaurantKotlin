@@ -1,11 +1,11 @@
 package com.chrisjanusa.randomizer.yelp
 
-import com.chrisjanusa.randomizer.base.interfaces.BaseEvent
-import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
-import com.chrisjanusa.randomizer.base.models.MapUpdate
-import com.chrisjanusa.randomizer.base.models.RandomizerState
+import com.chrisjanusa.base.interfaces.BaseEvent
+import com.chrisjanusa.base.interfaces.BaseUpdater
+import com.chrisjanusa.base.models.MapUpdate
+import com.chrisjanusa.base.models.RandomizerState
+import com.chrisjanusa.base.models.enums.Diet
 import com.chrisjanusa.randomizer.filter_cuisine.CuisineHelper.toYelpString
-import com.chrisjanusa.randomizer.filter_diet.DietHelper
 import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.milesToMeters
 import com.chrisjanusa.randomizer.filter_price.PriceHelper.setToYelpString
 import com.chrisjanusa.randomizer.yelp.events.*
@@ -27,13 +27,15 @@ object YelpHelper {
     ) {
         try {
             state.run {
-                if (currLng == null || currLat == null) {
+                val queryLat = currLat
+                val queryLng = currLng
+                if (queryLng == null || queryLat == null) {
                     return
                 }
 
                 val categories = when {
                     cuisineSet.isNotEmpty() -> cuisineSet.toYelpString()
-                    diet != DietHelper.Diet.None -> diet.identifier
+                    diet != Diet.None -> diet.identifier
                     else -> null
                 }
 
@@ -43,15 +45,15 @@ object YelpHelper {
                     !fastFoodSelected && sitDownSelected -> "sit down $term"
                     else -> term
                 }
-                term = if (cuisineSet.isNotEmpty() && diet != DietHelper.Diet.None) "${diet.identifier} $term" else term
+                term = if (cuisineSet.isNotEmpty() && diet != Diet.None) "${diet.identifier} $term" else term
 
                 val radius = milesToMeters(maxMilesSelected).roundToInt()
                 val price = setToYelpString(priceSet)
 
                 for (i in 0 until numberOfRestaurants step restaurantsPerQuery) {
                     queryYelpAtOffset(
-                        latitude = currLat,
-                        longitude = currLng,
+                        latitude = queryLat,
+                        longitude = queryLng,
                         term = term,
                         radius = radius,
                         categories = categories,

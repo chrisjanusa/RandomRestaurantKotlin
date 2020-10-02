@@ -1,4 +1,4 @@
-package com.chrisjanusa.randomizer.base.preferences
+package com.chrisjanusa.base.preferences
 
 import com.chrisjanusa.yelp.models.Restaurant
 

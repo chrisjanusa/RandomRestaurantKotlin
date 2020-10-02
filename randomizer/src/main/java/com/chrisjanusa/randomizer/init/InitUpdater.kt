@@ -1,10 +1,10 @@
-package com.chrisjanusa.randomizer.base.init
+package com.chrisjanusa.randomizer.init
 
-import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
-import com.chrisjanusa.randomizer.base.models.RandomizerState
-import com.chrisjanusa.randomizer.filter_cuisine.CuisineHelper.Cuisine
-import com.chrisjanusa.randomizer.filter_diet.DietHelper
-import com.chrisjanusa.randomizer.filter_price.PriceHelper.Price
+import com.chrisjanusa.base.interfaces.BaseUpdater
+import com.chrisjanusa.base.models.RandomizerState
+import com.chrisjanusa.base.models.enums.Cuisine
+import com.chrisjanusa.base.models.enums.Diet
+import com.chrisjanusa.base.models.enums.Price
 import com.chrisjanusa.yelp.models.Restaurant
 
 class InitUpdater(
@@ -14,7 +14,7 @@ class InitUpdater(
     private val fastFoodSelected: Boolean,
     private val sitDownSelected: Boolean,
     private val maxMilesSelected: Float,
-    private val diet: DietHelper.Diet,
+    private val diet: Diet,
     private val priceSet: HashSet<Price>,
     private val cuisineSet: HashSet<Cuisine>,
     private val currLat: Double?,

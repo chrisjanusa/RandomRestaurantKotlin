@@ -1,1 +1,1 @@
-include ':app', ':history', ':randomizer', ':restaurantcard', ':tempfrag', ':yelp', ':restaurantstorage'
+include ':app', ':base', ':history', ':randomizer', ':restaurantcard', ':tempfrag', ':yelp', ':restaurantstorage'

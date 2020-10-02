@@ -1,11 +1,11 @@
-package com.chrisjanusa.randomizer.base.init
+package com.chrisjanusa.randomizer.init
 
 import androidx.lifecycle.LiveData
-import com.chrisjanusa.randomizer.base.interfaces.BaseAction
-import com.chrisjanusa.randomizer.base.interfaces.BaseEvent
-import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
-import com.chrisjanusa.randomizer.base.models.MapUpdate
-import com.chrisjanusa.randomizer.base.models.RandomizerState
+import com.chrisjanusa.base.interfaces.BaseAction
+import com.chrisjanusa.base.interfaces.BaseEvent
+import com.chrisjanusa.base.interfaces.BaseUpdater
+import com.chrisjanusa.base.models.MapUpdate
+import com.chrisjanusa.base.models.RandomizerState
 import com.chrisjanusa.randomizer.location_base.LocationHelper.initMapUpdate
 import kotlinx.coroutines.channels.Channel
 

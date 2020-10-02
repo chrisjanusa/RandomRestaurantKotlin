@@ -1,20 +1,9 @@
 package com.chrisjanusa.randomizer.filter_cuisine
 
-object CuisineHelper {
-    const val defaultCuisineTitle = "Cuisines"
-    private const val delimiter = ", "
+import com.chrisjanusa.base.models.delimiter
+import com.chrisjanusa.base.models.enums.Cuisine
 
-    fun HashSet<Cuisine>.toIdentifierString(): String {
-        if (this.isEmpty()) {
-            return defaultCuisineTitle
-        }
-        val out = StringBuilder()
-        for (cuisine in this.iterator()) {
-            out.append(cuisine.identifier)
-            out.append(delimiter)
-        }
-        return out.dropLast(2).toString()
-    }
+object CuisineHelper {
 
     fun HashSet<Cuisine>.toYelpString(): String? {
         if (this.isEmpty()) {
@@ -50,21 +39,5 @@ object CuisineHelper {
         }
 
         return set
-    }
-
-    sealed class Cuisine(val identifier: String, val yelp: String) {
-        object American : Cuisine("American", "newamerican,tradamerican")
-        object Asian :
-            Cuisine("Asian", "chinese,japanese,korean,thai,ramen,dumplings,hkcafe,panasian,taiwanese,asianfusion")
-        object Bbq : Cuisine("BBQ", "bbq")
-        object Deli : Cuisine("Deli", "delis,sandwiches")
-        object Dessert : Cuisine("Dessert", "desserts")
-        object Italian : Cuisine("Italian", "italian")
-        object Indian : Cuisine("Indian", "indpak")
-        object Mexican : Cuisine("Mexican", "mexican,newmexican,tex-mex")
-        object Pizza : Cuisine("Pizza", "pizza")
-        object Seafood : Cuisine("Seafood", "seafood")
-        object Steak : Cuisine("Steak", "steak")
-        object Sushi : Cuisine("Sushi", "sushi")
     }
 }

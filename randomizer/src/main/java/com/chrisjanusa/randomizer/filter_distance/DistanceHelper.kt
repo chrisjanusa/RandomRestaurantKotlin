@@ -1,10 +1,9 @@
 package com.chrisjanusa.randomizer.filter_distance
 
+import com.chrisjanusa.base.models.defaultDistance
 import kotlin.math.roundToInt
 
 object DistanceHelper {
-    const val defaultDistanceTitle = "Max Distance"
-    const val defaultDistance = 5.0f
     const val minDistance = 0.1f
     const val maxDistance = 20.0f
     private const val totalDistance = maxDistance - minDistance
