@@ -1,7 +1,6 @@
 package com.chrisjanusa.randomizer.location_gps.events
 
 import androidx.fragment.app.Fragment
-import com.chrisjanusa.randomizer.RandomizerFragment
 import com.chrisjanusa.base.interfaces.BaseEvent
 import com.chrisjanusa.randomizer.location_gps.GpsHelper.LOCATION_ID
 import com.google.android.gms.common.api.ResolvableApiException

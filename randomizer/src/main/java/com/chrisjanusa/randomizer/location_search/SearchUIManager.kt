@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
-import com.chrisjanusa.randomizer.RandomizerFragment
 import com.chrisjanusa.base.CommunicationHelper.sendAction
 import com.chrisjanusa.base.interfaces.FeatureUIManager
 import com.chrisjanusa.base.models.RandomizerState

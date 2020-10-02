@@ -10,8 +10,8 @@
               android:label="RandomizerFragment"
               tools:layout="@layout/randomizer_frag"/>
 
-    <fragment android:id="@+id/navigation_history"
-              android:name="com.chrisjanusa.tempfrag.TempFragment"
-              android:label="TempFragment"
-              tools:layout="@layout/temp_frag"/>
+    <fragment
+            android:id="@+id/navigation_history"
+            android:name="com.chrisjanusa.history.HistoryFragment"
+            tools:layout="@layout/history_frag" />
 </navigation>

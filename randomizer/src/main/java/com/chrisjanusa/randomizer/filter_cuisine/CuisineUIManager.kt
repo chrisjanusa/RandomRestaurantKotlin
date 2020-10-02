@@ -5,7 +5,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.Fragment
-import com.chrisjanusa.randomizer.RandomizerFragment
 import com.chrisjanusa.base.interfaces.FeatureUIManager
 import com.chrisjanusa.base.models.RandomizerState
 import com.chrisjanusa.base.models.RandomizerViewModel
