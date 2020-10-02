@@ -174,13 +174,26 @@ object YelpHelper {
         mapChannel: Channel<MapUpdate>
     ) {
         val newRestaurant = randomRestaurant(restaurants)
-        updateChannel.send(CurrRestaurantUpdater(newRestaurant))
-        eventChannel.send(LoadThumbnailEvent(newRestaurant.image_url))
+        setRestaurant(newRestaurant, updateChannel, eventChannel, mapChannel)
         updateChannel.send(RemoveRestaurantUpdater(newRestaurant))
-        newRestaurant.coordinates.run {
+
+    }
+
+    suspend fun setRestaurant(
+        restaurant: Restaurant?,
+        updateChannel: Channel<BaseUpdater>,
+        eventChannel: Channel<BaseEvent>,
+        mapChannel: Channel<MapUpdate>
+    ) {
+        updateChannel.send(CurrRestaurantUpdater(restaurant))
+        if (restaurant == null) {
+            return
+        }
+        eventChannel.send(LoadThumbnailEvent(restaurant.image_url))
+        restaurant.coordinates.run {
             mapChannel.send(MapUpdate(latitude, longitude, true))
         }
-        updateChannel.send(HistoryUpdater(newRestaurant))
+        updateChannel.send(HistoryUpdater(restaurant))
     }
 
     fun isBlocked(prevState: RandomizerState, restaurant: Restaurant) = prevState.blockSet.contains(restaurant)

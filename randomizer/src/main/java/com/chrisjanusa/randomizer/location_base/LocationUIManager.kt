@@ -5,12 +5,12 @@ import android.graphics.Canvas
 import androidx.annotation.DrawableRes
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
-import com.chrisjanusa.randomizer.R
-import com.chrisjanusa.randomizer.RandomizerFragment
 import com.chrisjanusa.base.CommunicationHelper.sendAction
+import com.chrisjanusa.randomizer.R
 import com.chrisjanusa.base.interfaces.FeatureUIManager
 import com.chrisjanusa.base.models.RandomizerState
 import com.chrisjanusa.base.models.RandomizerViewModel
+import com.chrisjanusa.randomizer.RandomizerFragment
 import com.chrisjanusa.randomizer.location_search.actions.SearchGainFocusAction
 import com.google.android.libraries.maps.model.BitmapDescriptor
 import com.google.android.libraries.maps.model.BitmapDescriptorFactory

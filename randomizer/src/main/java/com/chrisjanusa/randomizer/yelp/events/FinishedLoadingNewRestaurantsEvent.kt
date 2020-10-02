@@ -3,7 +3,6 @@ package com.chrisjanusa.randomizer.yelp.events
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.chrisjanusa.randomizer.R
-import com.chrisjanusa.randomizer.RandomizerFragment
 import com.chrisjanusa.base.interfaces.BaseEvent
 import com.facebook.shimmer.ShimmerFrameLayout
 import kotlinx.android.synthetic.main.bottom_overlay.*

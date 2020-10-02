@@ -6,9 +6,9 @@ import android.graphics.drawable.ColorDrawable
 import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import com.chrisjanusa.randomizer.R
-import com.chrisjanusa.randomizer.RandomizerFragment
 import com.chrisjanusa.base.CommunicationHelper.sendAction
 import com.chrisjanusa.base.interfaces.BaseEvent
+import com.chrisjanusa.randomizer.RandomizerFragment
 import com.chrisjanusa.randomizer.location_search.actions.SearchGainFocusAction
 import kotlinx.android.synthetic.main.error_dialog.*
 

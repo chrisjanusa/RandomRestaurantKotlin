@@ -1,7 +1,7 @@
 package com.chrisjanusa.randomizer.init
 
-import android.app.Activity
 import android.content.Context
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
 import com.chrisjanusa.base.interfaces.BaseAction
 import com.chrisjanusa.base.interfaces.BaseEvent
@@ -17,20 +17,28 @@ import com.chrisjanusa.randomizer.filter_price.PriceHelper.priceFromSaveString
 import com.chrisjanusa.randomizer.location_base.LocationHelper
 import com.chrisjanusa.randomizer.location_base.LocationHelper.getTextFromLatLng
 import com.chrisjanusa.randomizer.location_base.LocationHelper.initMapUpdate
-import com.chrisjanusa.randomizer.location_base.LocationHelper.spaceNeedleLat
-import com.chrisjanusa.randomizer.location_base.LocationHelper.spaceNeedleLng
 import com.chrisjanusa.randomizer.location_base.updaters.LocationTextUpdater
 import com.chrisjanusa.randomizer.location_gps.GpsHelper.requestLocation
 import com.chrisjanusa.randomizer.location_search.updaters.LastManualLocationUpdater
 import kotlinx.coroutines.channels.Channel
 
-class InitAction(private val activity: Activity?) : BaseAction {
+class InitAction(private val activity: FragmentActivity?) : BaseAction {
     override suspend fun performAction(
         currentState: LiveData<RandomizerState>,
         updateChannel: Channel<BaseUpdater>,
         eventChannel: Channel<BaseEvent>,
         mapChannel: Channel<MapUpdate>
     ) {
+        if (currentState.value?.stateInitialized == true) {
+            activity?.let { activity ->
+                currentState.value?.let { state ->
+                    state.currRestaurant?.let { restaurant ->
+                        eventChannel.send(InitCurrRestaurantEvent(restaurant, state, activity))
+                    }
+                }
+            }
+            return
+        }
         val preferences = activity?.getPreferences(Context.MODE_PRIVATE)
         val preferenceData = PreferenceHelper.retrieveState(preferences)
 
@@ -41,7 +49,8 @@ class InitAction(private val activity: Activity?) : BaseAction {
             val locationName = if (currLat == null || currLng == null) {
                 defaultLocationText
             } else {
-                activity?.let { getTextFromLatLng(activity, currLat!!, currLng!!) } ?: defaultLocationText
+                activity?.let { getTextFromLatLng(activity, currLat!!, currLng!!) }
+                    ?: defaultLocationText
             }
 
             updateChannel.send(

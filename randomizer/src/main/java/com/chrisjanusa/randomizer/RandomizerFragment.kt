@@ -3,16 +3,18 @@ package com.chrisjanusa.randomizer
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.chrisjanusa.base.CommunicationHelper.getViewModel
 import com.chrisjanusa.base.CommunicationHelper.sendAction
-import com.chrisjanusa.randomizer.init.InitAction
-import com.chrisjanusa.randomizer.init.InitMapAction
 import com.chrisjanusa.base.models.RandomizerState
 import com.chrisjanusa.base.models.RandomizerViewModel
 import com.chrisjanusa.base.preferences.PreferenceHelper
@@ -21,6 +23,8 @@ import com.chrisjanusa.randomizer.filter_cuisine.CuisineUIManager
 import com.chrisjanusa.randomizer.filter_diet.DietUIManager
 import com.chrisjanusa.randomizer.filter_distance.DistanceUIManager
 import com.chrisjanusa.randomizer.filter_price.PriceUIManager
+import com.chrisjanusa.randomizer.init.InitAction
+import com.chrisjanusa.randomizer.init.InitMapAction
 import com.chrisjanusa.randomizer.location_base.LocationHelper.cameraSpeed
 import com.chrisjanusa.randomizer.location_base.LocationHelper.zoomLevel
 import com.chrisjanusa.randomizer.location_base.LocationUIManager
@@ -40,21 +44,20 @@ import com.google.android.libraries.maps.model.LatLng
 import com.google.android.libraries.maps.model.Marker
 import com.google.android.libraries.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.randomizer_frag.*
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private lateinit var map: GoogleMap
     private lateinit var icon: BitmapDescriptor
-    var mapView : MapView? = null
+    var mapView: MapView? = null
     val randomizerViewModel: RandomizerViewModel by lazy {
         activity?.let { getViewModel(it) } ?: throw Exception("Invalid Activity")
     }
-    private val render = fun(newState: RandomizerState) {
-        for (uiManager in featureUIManagers) {
-            uiManager.render(newState, this)
-        }
-    }
+
+    var eventHandler : Job? = null
+
     private val featureUIManagers = listOf(
         LocationUIManager,
         BooleanFilterUIManager,
@@ -69,11 +72,22 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        val render = fun(newState: RandomizerState) {
+            for (uiManager in featureUIManagers) {
+                uiManager.render(newState, this)
+            }
+        }
         randomizerViewModel.state.observe(viewLifecycleOwner, Observer<RandomizerState>(render))
         sendAction(InitAction(activity), randomizerViewModel)
+        Log.wtf("glide_bug", "isAdded onActivityCreated: $isAdded")
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        Log.wtf("glide_bug", "isAdded onCreateView: $isAdded")
         return inflater.inflate(R.layout.randomizer_frag, container, false)
     }
 
@@ -84,24 +98,39 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         for (uiManager in featureUIManagers) {
             uiManager.init(randomizerViewModel, this)
         }
-
-        val frag = this
-        lifecycleScope.launch {
-            for (event in randomizerViewModel.eventChannel) {
-                event.handleEvent(frag)
-            }
+        if (randomizerViewModel.state.value?.stateInitialized == true) {
+            Glide.with(view)
+                .load(randomizerViewModel.state.value?.currRestaurant?.image_url)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .centerCrop()
+                .placeholder(R.drawable.image_placeholder)
+                .into(view.findViewById<ImageView>(R.id.thumbnail))
         }
+        Log.wtf("glide_bug", "isAdded onViewCreated: $isAdded")
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        Log.wtf("glide_bug", "isAdded onAttach: $isAdded")
+
+    }
 
     override fun onStart() {
         super.onStart()
         mapView?.onStart()
+        eventHandler = lifecycleScope.launch {
+            for (event in randomizerViewModel.eventChannel) {
+                event.handleEvent(this@RandomizerFragment)
+            }
+        }
+        Log.wtf("glide_bug", "isAdded onStart: $isAdded")
     }
 
     override fun onResume() {
         super.onResume()
         mapView?.onResume()
+        Log.wtf("glide_bug", "isAdded onResume: $isAdded")
     }
 
     override fun onPause() {
@@ -115,6 +144,8 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         randomizerViewModel.state.value?.let {
             PreferenceHelper.saveState(it, activity?.getPreferences(Context.MODE_PRIVATE))
         }
+        eventHandler?.cancel()
+        eventHandler = null
     }
 
     override fun onDestroyView() {
@@ -131,7 +162,11 @@ class RandomizerFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         mapView?.onLowMemory()
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PERMISSION_ID) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {

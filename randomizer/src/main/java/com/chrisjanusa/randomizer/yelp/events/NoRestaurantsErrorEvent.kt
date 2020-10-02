@@ -6,7 +6,6 @@ import android.graphics.drawable.ColorDrawable
 import android.view.WindowManager.LayoutParams
 import androidx.fragment.app.Fragment
 import com.chrisjanusa.randomizer.R
-import com.chrisjanusa.randomizer.RandomizerFragment
 import com.chrisjanusa.base.interfaces.BaseEvent
 import com.google.android.material.button.MaterialButton
 

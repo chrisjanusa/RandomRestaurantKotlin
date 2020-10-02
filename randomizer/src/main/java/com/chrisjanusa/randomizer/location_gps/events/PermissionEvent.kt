@@ -1,7 +1,6 @@
 package com.chrisjanusa.randomizer.location_gps.events
 
 import androidx.fragment.app.Fragment
-import com.chrisjanusa.randomizer.RandomizerFragment
 import com.chrisjanusa.base.interfaces.BaseEvent
 
 class PermissionEvent(private val permissions: Array<String>, private val permissionNum: Int) :

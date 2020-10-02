@@ -4,7 +4,6 @@ import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import com.chrisjanusa.randomizer.R
-import com.chrisjanusa.randomizer.RandomizerFragment
 import com.chrisjanusa.base.interfaces.BaseEvent
 import com.chrisjanusa.randomizer.location_search.SearchHelper
 import kotlinx.android.synthetic.main.search_card.*

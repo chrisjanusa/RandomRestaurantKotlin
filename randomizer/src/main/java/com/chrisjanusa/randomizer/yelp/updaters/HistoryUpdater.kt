@@ -7,8 +7,9 @@ import java.util.*
 
 class HistoryUpdater(private val restaurant : Restaurant) : BaseUpdater {
     override fun performUpdate(prevState: RandomizerState): RandomizerState {
-        val newRestaurantList = LinkedList(prevState.historyList)
+        var newRestaurantList = LinkedList(prevState.historyList)
         newRestaurantList.addFirst(restaurant)
+        newRestaurantList = LinkedList(newRestaurantList.distinct().toMutableList())
         if (newRestaurantList.size > 100) {
             newRestaurantList.removeLast()
         }
