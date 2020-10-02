@@ -1,7 +1,7 @@
 package com.chrisjanusa.randomizer.filter_boolean.updaters
 
-import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
-import com.chrisjanusa.randomizer.base.models.RandomizerState
+import com.chrisjanusa.base.interfaces.BaseUpdater
+import com.chrisjanusa.base.models.RandomizerState
 import java.util.HashSet
 
 class FastFoodUpdater(private val fastFoodSelected: Boolean) : BaseUpdater {

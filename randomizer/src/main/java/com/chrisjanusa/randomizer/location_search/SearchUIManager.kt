@@ -4,11 +4,12 @@ import android.animation.LayoutTransition
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.fragment.app.Fragment
 import com.chrisjanusa.randomizer.RandomizerFragment
-import com.chrisjanusa.randomizer.base.CommunicationHelper.sendAction
-import com.chrisjanusa.randomizer.base.interfaces.FeatureUIManager
-import com.chrisjanusa.randomizer.base.models.RandomizerState
-import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
+import com.chrisjanusa.base.CommunicationHelper.sendAction
+import com.chrisjanusa.base.interfaces.FeatureUIManager
+import com.chrisjanusa.base.models.RandomizerState
+import com.chrisjanusa.base.models.RandomizerViewModel
 import com.chrisjanusa.randomizer.location_search.actions.*
 import com.seatgeek.placesautocomplete.DetailsCallback
 import com.seatgeek.placesautocomplete.model.PlaceDetails
@@ -16,13 +17,13 @@ import kotlinx.android.synthetic.main.search_card.*
 
 object SearchUIManager : FeatureUIManager {
 
-    override fun init(randomizerViewModel: RandomizerViewModel, fragment: RandomizerFragment) {
+    override fun init(randomizerViewModel: RandomizerViewModel, fragment: Fragment) {
         initOpenListeners(randomizerViewModel, fragment)
         initCloseListeners(randomizerViewModel, fragment)
         initTransitionListeners(randomizerViewModel, fragment)
     }
 
-    private fun initOpenListeners(randomizerViewModel: RandomizerViewModel, fragment: RandomizerFragment) {
+    private fun initOpenListeners(randomizerViewModel: RandomizerViewModel, fragment: Fragment) {
         fragment.run {
             user_input.setOnTouchListener { _, _ ->
                 sendAction(
@@ -42,7 +43,7 @@ object SearchUIManager : FeatureUIManager {
         }
     }
 
-    private fun initCloseListeners(randomizerViewModel: RandomizerViewModel, fragment: RandomizerFragment) {
+    private fun initCloseListeners(randomizerViewModel: RandomizerViewModel, fragment: Fragment) {
         fragment.run {
             back_icon.setOnClickListener {
                 sendAction(SearchFinishedAction(user_input.text.toString()), randomizerViewModel)
@@ -76,7 +77,7 @@ object SearchUIManager : FeatureUIManager {
         }
     }
 
-    private fun initTransitionListeners(randomizerViewModel: RandomizerViewModel, fragment: RandomizerFragment) {
+    private fun initTransitionListeners(randomizerViewModel: RandomizerViewModel, fragment: Fragment) {
         fragment.run {
             // Listen for when the search bar has finished opening or closing to send off that event
             search_bar.layoutTransition.addTransitionListener(object : LayoutTransition.TransitionListener {
@@ -106,6 +107,6 @@ object SearchUIManager : FeatureUIManager {
         }
     }
 
-    override fun render(state: RandomizerState, fragment: RandomizerFragment) {
+    override fun render(state: RandomizerState, fragment: Fragment) {
     }
 }

@@ -1,11 +1,11 @@
-package com.chrisjanusa.randomizer.base.models
+package com.chrisjanusa.base.models
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chrisjanusa.randomizer.base.interfaces.BaseAction
-import com.chrisjanusa.randomizer.base.interfaces.BaseEvent
-import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
+import com.chrisjanusa.base.interfaces.BaseAction
+import com.chrisjanusa.base.interfaces.BaseEvent
+import com.chrisjanusa.base.interfaces.BaseUpdater
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch

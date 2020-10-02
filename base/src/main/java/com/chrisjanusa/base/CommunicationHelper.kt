@@ -1,12 +1,12 @@
-package com.chrisjanusa.randomizer.base
+package com.chrisjanusa.base
 
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.ViewModelProviders
-import com.chrisjanusa.randomizer.base.interfaces.BaseAction
-import com.chrisjanusa.randomizer.base.interfaces.BaseEvent
-import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
-import com.chrisjanusa.randomizer.base.models.MapUpdate
-import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
+import androidx.lifecycle.ViewModelProvider
+import com.chrisjanusa.base.interfaces.BaseAction
+import com.chrisjanusa.base.interfaces.BaseEvent
+import com.chrisjanusa.base.interfaces.BaseUpdater
+import com.chrisjanusa.base.models.MapUpdate
+import com.chrisjanusa.base.models.RandomizerViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
@@ -37,6 +37,6 @@ object CommunicationHelper {
     }
 
     fun getViewModel(fragActivity: FragmentActivity) =
-        ViewModelProviders.of(fragActivity)[RandomizerViewModel::class.java]
+        ViewModelProvider(fragActivity).get(RandomizerViewModel::class.java)
 
 }

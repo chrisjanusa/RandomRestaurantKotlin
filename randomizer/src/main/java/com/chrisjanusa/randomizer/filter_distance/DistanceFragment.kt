@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.chrisjanusa.randomizer.R
-import com.chrisjanusa.randomizer.base.CommunicationHelper.getViewModel
-import com.chrisjanusa.randomizer.base.CommunicationHelper.sendAction
-import com.chrisjanusa.randomizer.base.models.RandomizerState
-import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
+import com.chrisjanusa.base.CommunicationHelper.getViewModel
+import com.chrisjanusa.base.CommunicationHelper.sendAction
+import com.chrisjanusa.base.models.RandomizerState
+import com.chrisjanusa.base.models.RandomizerViewModel
+import com.chrisjanusa.base.models.defaultDistance
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.onCancelFilterClick
-import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.defaultDistance
 import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.distanceToPercent
 import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.maxDistance
 import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.minDistance

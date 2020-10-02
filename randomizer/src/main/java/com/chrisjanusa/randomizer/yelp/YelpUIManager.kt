@@ -6,12 +6,13 @@ import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.Fragment
 import com.chrisjanusa.randomizer.R
 import com.chrisjanusa.randomizer.RandomizerFragment
-import com.chrisjanusa.randomizer.base.CommunicationHelper.sendAction
-import com.chrisjanusa.randomizer.base.interfaces.FeatureUIManager
-import com.chrisjanusa.randomizer.base.models.RandomizerState
-import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
+import com.chrisjanusa.base.CommunicationHelper.sendAction
+import com.chrisjanusa.base.interfaces.FeatureUIManager
+import com.chrisjanusa.base.models.RandomizerState
+import com.chrisjanusa.base.models.RandomizerViewModel
 import com.chrisjanusa.randomizer.deeplinks.actions.GoogleMapsClickAction
 import com.chrisjanusa.randomizer.deeplinks.actions.UberClickAction
 import com.chrisjanusa.randomizer.deeplinks.actions.YelpClickAction
@@ -28,14 +29,15 @@ import kotlinx.android.synthetic.main.bottom_overlay.*
 object YelpUIManager : FeatureUIManager {
     private const val delimiter = " | "
 
-    override fun init(randomizerViewModel: RandomizerViewModel, fragment: RandomizerFragment) {
+    override fun init(randomizerViewModel: RandomizerViewModel, fragment: Fragment) {
         fragment.random.setOnClickListener { sendAction(RandomizeAction(), randomizerViewModel) }
     }
 
-    override fun render(state: RandomizerState, fragment: RandomizerFragment) {
+    override fun render(state: RandomizerState, fragment: Fragment) {
         fragment.activity?.run {
-            if (state.currRestaurant != null) {
-                renderCard(state.currRestaurant, state, fragment)
+            val restaurant = state.currRestaurant
+            if (restaurant != null) {
+                renderCard(restaurant, state, fragment)
                 findViewById<ShimmerFrameLayout>(R.id.shimmer_card_layout).visibility = View.GONE
                 findViewById<ConstraintLayout>(R.id.card_layout).visibility = View.VISIBLE
 
@@ -46,7 +48,10 @@ object YelpUIManager : FeatureUIManager {
         }
     }
 
-    private fun renderCard(restaurant: Restaurant, state: RandomizerState, fragment: RandomizerFragment) {
+    private fun renderCard(restaurant: Restaurant, state: RandomizerState, fragment: Fragment) {
+        if (fragment !is RandomizerFragment) {
+            return
+        }
         fragment.activity?.run {
             findViewById<TextView>(R.id.name).text = restaurant.name
             val rating = restaurant.rating ?: 0f

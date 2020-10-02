@@ -1,12 +1,12 @@
 package com.chrisjanusa.randomizer.filter_cuisine.actions
 
 import androidx.lifecycle.LiveData
-import com.chrisjanusa.randomizer.base.interfaces.BaseAction
-import com.chrisjanusa.randomizer.base.interfaces.BaseEvent
-import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
-import com.chrisjanusa.randomizer.base.models.MapUpdate
-import com.chrisjanusa.randomizer.base.models.RandomizerState
-import com.chrisjanusa.randomizer.filter_cuisine.CuisineHelper.Cuisine
+import com.chrisjanusa.base.interfaces.BaseAction
+import com.chrisjanusa.base.interfaces.BaseEvent
+import com.chrisjanusa.base.interfaces.BaseUpdater
+import com.chrisjanusa.base.models.MapUpdate
+import com.chrisjanusa.base.models.RandomizerState
+import com.chrisjanusa.base.models.enums.Cuisine
 import com.chrisjanusa.randomizer.filter_cuisine.updaters.TempCuisineAddUpdater
 import com.chrisjanusa.randomizer.filter_cuisine.updaters.TempCuisineRemoveUpdater
 import kotlinx.coroutines.channels.Channel

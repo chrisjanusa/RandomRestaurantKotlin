@@ -1,7 +1,7 @@
 package com.chrisjanusa.randomizer.filter_distance.updaters
 
-import com.chrisjanusa.randomizer.base.interfaces.BaseUpdater
-import com.chrisjanusa.randomizer.base.models.RandomizerState
+import com.chrisjanusa.base.interfaces.BaseUpdater
+import com.chrisjanusa.base.models.RandomizerState
 
 class TempDistanceUpdater(private val newDist: Float) : BaseUpdater {
     override fun performUpdate(prevState: RandomizerState): RandomizerState {

@@ -1,26 +1,26 @@
 package com.chrisjanusa.randomizer.filter_distance
 
-import com.chrisjanusa.randomizer.RandomizerFragment
-import com.chrisjanusa.randomizer.base.interfaces.FeatureUIManager
-import com.chrisjanusa.randomizer.base.models.RandomizerState
-import com.chrisjanusa.randomizer.base.models.RandomizerViewModel
-import com.chrisjanusa.randomizer.filter_base.FilterHelper.Filter
+import androidx.fragment.app.Fragment
+import com.chrisjanusa.base.interfaces.FeatureUIManager
+import com.chrisjanusa.base.models.RandomizerState
+import com.chrisjanusa.base.models.RandomizerViewModel
+import com.chrisjanusa.base.models.enums.Filter
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.clickSelectionFilter
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.renderFilterWithIconStyle
-import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.defaultDistanceTitle
 import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.distanceToDisplayString
 import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.isDefault
 import kotlinx.android.synthetic.main.filters.*
 
 object DistanceUIManager : FeatureUIManager {
+    private const val defaultDistanceTitle = "Max Distance"
 
-    override fun init(randomizerViewModel: RandomizerViewModel, fragment: RandomizerFragment) {
+    override fun init(randomizerViewModel: RandomizerViewModel, fragment: Fragment) {
         fragment.run {
             distance.setOnClickListener { clickSelectionFilter(Filter.Distance, randomizerViewModel) }
         }
     }
 
-    override fun render(state: RandomizerState, fragment: RandomizerFragment) {
+    override fun render(state: RandomizerState, fragment: Fragment) {
         fragment.run {
             val selected = !isDefault(state.maxMilesSelected)
             distance.text = if (selected) distanceToDisplayString(state.maxMilesSelected) else defaultDistanceTitle

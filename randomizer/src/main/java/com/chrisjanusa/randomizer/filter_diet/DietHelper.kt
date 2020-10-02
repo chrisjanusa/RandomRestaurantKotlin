@@ -1,15 +1,8 @@
 package com.chrisjanusa.randomizer.filter_diet
 
-object DietHelper {
-    const val defaultDietTitle = "Diet"
+import com.chrisjanusa.base.models.enums.Diet
 
-    sealed class Diet(val identifier: String, val display: String) {
-        object Vegan : Diet("vegan", "Vegan")
-        object Vegetarian : Diet("vegetarian", "Vegetarian")
-        object Halal : Diet("halal", "Halal")
-        object Kosher : Diet("kosher", "Kosher")
-        object None : Diet("none", defaultDietTitle)
-    }
+object DietHelper {
 
     fun dietFromIdentifier(identifier: String): Diet {
         return when (identifier) {
