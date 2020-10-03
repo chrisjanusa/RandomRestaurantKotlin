@@ -1,29 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/cardMapLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
     <include
-            android:id="@+id/search_card"
+            android:id="@+id/search_shade"
+            layout="@layout/shade_overlay"
+            android:visibility="gone"
+            android:alpha="0.0"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            layout="@layout/search_card"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginLeft="@dimen/randomizer_side_margin"
-            android:layout_marginRight="@dimen/randomizer_side_margin"
-    />
+            android:layout_height="match_parent" />
 
-    <include
-            android:id="@+id/filters"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            layout="@layout/filters"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/search_card"
-    />
+            android:layout_height="match_parent">
+
+        <include
+                android:id="@+id/filters"
+                layout="@layout/filters"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/search_card" />
+
+        <include
+                android:id="@+id/search_card"
+                layout="@layout/search_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/randomizer_side_margin"
+                android:layout_marginTop="@dimen/location_top_margin"
+                android:layout_marginRight="@dimen/randomizer_side_margin"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

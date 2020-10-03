@@ -1,0 +1,17 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 30
+    defaultConfig {
+        minSdkVersion 23
+        targetSdkVersion 30
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation project(":baselist")
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+}

@@ -11,14 +11,6 @@
     </RelativeLayout>
 
     <include
-            android:id="@+id/location_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            layout="@layout/top_overlay"
-            android:layout_gravity="top"
-            android:layout_marginTop="@dimen/location_top_margin"/>
-
-    <include
             android:id="@+id/restaurantContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -27,5 +19,15 @@
             android:layout_marginLeft="@dimen/randomizer_side_margin"
             android:layout_marginRight="@dimen/randomizer_side_margin"
             android:layout_marginBottom="@dimen/randomizer_bottom_margin"/>
+
+    <include
+            android:id="@+id/location_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/top_overlay"
+            android:layout_gravity="top"
+            />
+
+
 
 </FrameLayout>

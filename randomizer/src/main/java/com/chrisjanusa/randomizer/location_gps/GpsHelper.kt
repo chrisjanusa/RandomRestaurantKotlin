@@ -14,9 +14,9 @@ import com.chrisjanusa.base.CommunicationHelper.sendMap
 import com.chrisjanusa.base.CommunicationHelper.sendUpdate
 import com.chrisjanusa.base.interfaces.BaseEvent
 import com.chrisjanusa.base.interfaces.BaseUpdater
-import com.chrisjanusa.base.models.MapUpdate
+import com.chrisjanusa.base.models.MapEvent
 import com.chrisjanusa.base.models.defaultLocationText
-import com.chrisjanusa.randomizer.location_base.LocationHelper.hasLocationChanged
+import com.chrisjanusa.randomizer.location_base.hasLocationChanged
 import com.chrisjanusa.randomizer.location_base.updaters.GpsStatusUpdater
 import com.chrisjanusa.randomizer.location_base.updaters.LocationTextUpdater
 import com.chrisjanusa.randomizer.location_base.updaters.LocationUpdater
@@ -61,7 +61,7 @@ object GpsHelper {
         activity: Activity,
         updateChannel: Channel<BaseUpdater>,
         eventChannel: Channel<BaseEvent>,
-        mapChannel: Channel<MapUpdate>,
+        mapChannel: Channel<MapEvent>,
         prevLat: Double?,
         prevLng: Double?
     ) {
@@ -94,7 +94,7 @@ object GpsHelper {
         context: Context,
         location: Location,
         updateChannel: Channel<BaseUpdater>,
-        mapChannel: Channel<MapUpdate>,
+        mapChannel: Channel<MapEvent>,
         prevLat: Double?,
         prevLng: Double?
     ) {
@@ -103,7 +103,7 @@ object GpsHelper {
                 .getFromLocation(latitude, longitude, 1)[0]
                 .locality
             if (hasLocationChanged(prevLat, prevLng, latitude, longitude)) {
-                sendMap(MapUpdate(latitude, longitude, false), mapChannel)
+                sendMap(MapEvent(latitude, longitude, false), mapChannel)
             }
             sendUpdate(LocationUpdater(locationName, latitude, longitude), updateChannel)
         }
@@ -117,7 +117,7 @@ object GpsHelper {
         gpsClient: FusedLocationProviderClient,
         updateChannel: Channel<BaseUpdater>,
         eventChannel: Channel<BaseEvent>,
-        mapChannel: Channel<MapUpdate>,
+        mapChannel: Channel<MapEvent>,
         prevLat: Double?,
         prevLng: Double?
     ) {
@@ -148,7 +148,7 @@ object GpsHelper {
     private fun getLocationCallback(
         context: Context,
         updateChannel: Channel<BaseUpdater>,
-        mapChannel: Channel<MapUpdate>,
+        mapChannel: Channel<MapEvent>,
         prevLat: Double?,
         prevLng: Double?
     ): LocationCallback =

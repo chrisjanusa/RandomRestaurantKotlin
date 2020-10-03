@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import com.chrisjanusa.base.interfaces.BaseAction
 import com.chrisjanusa.base.interfaces.BaseEvent
 import com.chrisjanusa.base.interfaces.BaseUpdater
-import com.chrisjanusa.base.models.MapUpdate
+import com.chrisjanusa.base.models.MapEvent
 import com.chrisjanusa.base.models.RandomizerState
 import com.chrisjanusa.base.models.enums.Diet
 import com.chrisjanusa.randomizer.filter_diet.updaters.TempDietUpdater
@@ -16,7 +16,7 @@ class DietChangeAction(private val dietChanged: Diet) :
         currentState: LiveData<RandomizerState>,
         updateChannel: Channel<BaseUpdater>,
         eventChannel: Channel<BaseEvent>,
-        mapChannel: Channel<MapUpdate>
+        mapChannel: Channel<MapEvent>
     ) {
         val newDietSelection =
             dietChanged.takeUnless { it == currentState.value?.dietTempSelected } ?: Diet.None

@@ -6,17 +6,15 @@ import androidx.lifecycle.viewModelScope
 import com.chrisjanusa.base.interfaces.BaseAction
 import com.chrisjanusa.base.interfaces.BaseEvent
 import com.chrisjanusa.base.interfaces.BaseUpdater
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 class RandomizerViewModel : ViewModel() {
     val state = MutableLiveData<RandomizerState>(RandomizerState())
     private val updateChannel = Channel<BaseUpdater>(Channel.UNLIMITED)
     val eventChannel = Channel<BaseEvent>(Channel.UNLIMITED)
-    val mapChannel = Channel<MapUpdate>(Channel.CONFLATED)
+    val mapChannel = Channel<MapEvent>(Channel.CONFLATED)
 
     init {
         viewModelScope.launch {
@@ -26,10 +24,8 @@ class RandomizerViewModel : ViewModel() {
 
     private suspend fun monitorChannel() {
         for (updater in updateChannel) {
-            withContext(Dispatchers.Main) {
-                state.value?.let {
-                    state.value = updater.performUpdate(it)
-                }
+            state.value?.let {
+                state.value = updater.performUpdate(it)
             }
         }
     }

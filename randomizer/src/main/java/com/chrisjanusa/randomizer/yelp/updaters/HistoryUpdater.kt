@@ -10,7 +10,7 @@ class HistoryUpdater(private val restaurant : Restaurant) : BaseUpdater {
         var newRestaurantList = LinkedList(prevState.historyList)
         newRestaurantList.addFirst(restaurant)
         newRestaurantList = LinkedList(newRestaurantList.distinct().toMutableList())
-        if (newRestaurantList.size > 100) {
+        while (newRestaurantList.size > 25) {
             newRestaurantList.removeLast()
         }
         return prevState.copy(historyList = newRestaurantList)

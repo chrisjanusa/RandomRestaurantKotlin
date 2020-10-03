@@ -6,13 +6,12 @@ import androidx.lifecycle.LiveData
 import com.chrisjanusa.base.interfaces.BaseAction
 import com.chrisjanusa.base.interfaces.BaseEvent
 import com.chrisjanusa.base.interfaces.BaseUpdater
-import com.chrisjanusa.base.models.MapUpdate
+import com.chrisjanusa.base.models.MapEvent
 import com.chrisjanusa.base.models.RandomizerState
-import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLat
-import com.chrisjanusa.randomizer.location_base.LocationHelper.defaultLng
-import com.chrisjanusa.randomizer.location_base.LocationHelper.hasLocationChanged
+import com.chrisjanusa.randomizer.location_base.hasLocationChanged
 import com.chrisjanusa.randomizer.location_base.updaters.GpsStatusUpdater
 import com.chrisjanusa.randomizer.location_base.updaters.LocationUpdater
+import com.chrisjanusa.randomizer.location_search.events.LocationSelectedErrorEvent
 import com.chrisjanusa.randomizer.location_search.updaters.LastManualLocationUpdater
 import com.seatgeek.placesautocomplete.model.AddressComponentType
 import com.seatgeek.placesautocomplete.model.PlaceDetails
@@ -24,7 +23,7 @@ class LocationChosenAction(private val details: PlaceDetails, private val contex
         currentState: LiveData<RandomizerState>,
         updateChannel: Channel<BaseUpdater>,
         eventChannel: Channel<BaseEvent>,
-        mapChannel: Channel<MapUpdate>
+        mapChannel: Channel<MapEvent>
     ) {
         details.run {
             var text = "Error"
@@ -38,12 +37,16 @@ class LocationChosenAction(private val details: PlaceDetails, private val contex
 
             val address = Geocoder(context).getFromLocationName(formatted_address, 1)
                 .getOrNull(0)
-            // TODO: On null send error event
-            val latitude = address?.latitude ?: defaultLat
-            val longitude = address?.longitude ?: defaultLng
+            val latitude = address?.latitude
+            val longitude = address?.longitude
+            if (latitude == null || longitude == null) {
+                eventChannel.send(LocationSelectedErrorEvent(name))
+                updateChannel.send(LastManualLocationUpdater(text))
+                return
+            }
             currentState.value?.run {
                 if(hasLocationChanged(currLat, currLng, latitude, longitude)){
-                    mapChannel.send(MapUpdate(latitude, longitude, false))
+                    mapChannel.send(MapEvent(latitude, longitude, false))
                 }
             }
             updateChannel.send(LocationUpdater(text, latitude, longitude))

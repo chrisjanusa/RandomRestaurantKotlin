@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.chrisjanusa.base.interfaces.BaseAction
 import com.chrisjanusa.base.interfaces.BaseEvent
 import com.chrisjanusa.base.interfaces.BaseUpdater
-import com.chrisjanusa.base.models.MapUpdate
+import com.chrisjanusa.base.models.MapEvent
 import com.chrisjanusa.base.models.RandomizerViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.Channel
@@ -30,7 +30,7 @@ object CommunicationHelper {
         }
     }
 
-    fun sendMap(coordinates: MapUpdate, mapChannel: Channel<MapUpdate>) {
+    fun sendMap(coordinates: MapEvent, mapChannel: Channel<MapEvent>) {
         GlobalScope.launch {
             mapChannel.send(coordinates)
         }

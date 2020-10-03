@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import com.chrisjanusa.base.interfaces.BaseAction
 import com.chrisjanusa.base.interfaces.BaseEvent
 import com.chrisjanusa.base.interfaces.BaseUpdater
-import com.chrisjanusa.base.models.MapUpdate
+import com.chrisjanusa.base.models.MapEvent
 import com.chrisjanusa.base.models.RandomizerState
 import com.chrisjanusa.randomizer.location_base.updaters.GpsStatusUpdater
 import com.chrisjanusa.randomizer.location_base.updaters.LocationTextUpdater
@@ -15,7 +15,7 @@ class PermissionDeniedAction : BaseAction {
         currentState: LiveData<RandomizerState>,
         updateChannel: Channel<BaseUpdater>,
         eventChannel: Channel<BaseEvent>,
-        mapChannel: Channel<MapUpdate>
+        mapChannel: Channel<MapEvent>
     ) {
         updateChannel.send(GpsStatusUpdater(false))
         currentState.value?.run {

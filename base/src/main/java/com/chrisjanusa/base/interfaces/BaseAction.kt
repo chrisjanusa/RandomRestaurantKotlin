@@ -1,7 +1,7 @@
 package com.chrisjanusa.base.interfaces
 
 import androidx.lifecycle.LiveData
-import com.chrisjanusa.base.models.MapUpdate
+import com.chrisjanusa.base.models.MapEvent
 import com.chrisjanusa.base.models.RandomizerState
 import kotlinx.coroutines.channels.Channel
 
@@ -10,6 +10,6 @@ interface BaseAction {
         currentState: LiveData<RandomizerState>,
         updateChannel: Channel<BaseUpdater>,
         eventChannel: Channel<BaseEvent>,
-        mapChannel: Channel<MapUpdate>
+        mapChannel: Channel<MapEvent>
     )
 }
