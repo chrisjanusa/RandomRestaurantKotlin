@@ -15,7 +15,7 @@ import com.chrisjanusa.restaurant_base.restaurantToPriceDistanceString
 import com.chrisjanusa.yelp.models.Restaurant
 import com.google.android.material.button.MaterialButton
 
-fun renderCardDetails(
+fun renderListCardDetails(
     restaurant: Restaurant,
     view: View,
     randomizerViewModel: RandomizerViewModel,
@@ -29,7 +29,7 @@ fun renderCardDetails(
         findViewById<TextView>(R.id.card_cuisines).text =
             categoriesToDisplayString(restaurant.categories)
         findViewById<TextView>(R.id.distancePrice).text =
-            restaurantToPriceDistanceString(restaurant)
+            restaurantToPriceDistanceString(restaurant, false)
 
 
         findViewById<MaterialButton>(R.id.maps).setOnClickListener {

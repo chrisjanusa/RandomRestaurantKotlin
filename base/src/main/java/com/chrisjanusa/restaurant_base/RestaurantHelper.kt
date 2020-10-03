@@ -12,17 +12,19 @@ fun categoriesToDisplayString(categories: List<Category>): String {
     return displayString.dropLast(2).toString()
 }
 
-fun restaurantToPriceDistanceString(restaurant: Restaurant): String {
+fun restaurantToPriceDistanceString(restaurant: Restaurant, showDistance: Boolean): String {
     val delimiter = " | "
     val priceDistanceString = StringBuilder()
     restaurant.price?.let { priceDistanceString.append("$it$delimiter") }
-    restaurant.distance.let {
-        priceDistanceString.append(
-            String.Companion.format(
-                "%.2f mi away$delimiter",
-                metersToMiles(it)
+    if (showDistance) {
+        restaurant.distance.let {
+            priceDistanceString.append(
+                String.Companion.format(
+                    "%.2f mi away$delimiter",
+                    metersToMiles(it)
+                )
             )
-        )
+        }
     }
     return priceDistanceString.dropLast(3).toString()
 }

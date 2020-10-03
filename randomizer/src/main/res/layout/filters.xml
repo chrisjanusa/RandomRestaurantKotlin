@@ -19,7 +19,7 @@
         <com.google.android.material.button.MaterialButton
             android:id='@+id/distance'
             style="@style/FilterAppearance"
-            android:text="@string/max_distance"
+            android:text="@string/max_distance_title"
             app:icon="@drawable/expand"
             />
         <com.google.android.material.button.MaterialButton
