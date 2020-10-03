@@ -8,8 +8,6 @@ import com.chrisjanusa.base.models.RandomizerViewModel
 import com.chrisjanusa.base.models.enums.Filter
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.clickSelectionFilter
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.renderFilterWithIconStyle
-import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.distanceToDisplayString
-import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.isDefault
 import kotlinx.android.synthetic.main.filters.*
 
 object DistanceUIManager : FeatureUIManager {

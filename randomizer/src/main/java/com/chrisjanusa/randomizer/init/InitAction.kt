@@ -6,17 +6,17 @@ import androidx.lifecycle.LiveData
 import com.chrisjanusa.base.interfaces.BaseAction
 import com.chrisjanusa.base.interfaces.BaseEvent
 import com.chrisjanusa.base.interfaces.BaseUpdater
-import com.chrisjanusa.base.models.MapUpdate
+import com.chrisjanusa.base.models.MapEvent
 import com.chrisjanusa.base.models.RandomizerState
 import com.chrisjanusa.base.models.defaultLocationText
 import com.chrisjanusa.base.preferences.PreferenceHelper
 import com.chrisjanusa.randomizer.database_transition.transitionDatabase
 import com.chrisjanusa.randomizer.filter_cuisine.CuisineHelper.cuisineFromIdentifierString
-import com.chrisjanusa.randomizer.filter_diet.DietHelper.dietFromIdentifier
-import com.chrisjanusa.randomizer.filter_price.PriceHelper.priceFromSaveString
-import com.chrisjanusa.randomizer.location_base.LocationHelper
-import com.chrisjanusa.randomizer.location_base.LocationHelper.getTextFromLatLng
-import com.chrisjanusa.randomizer.location_base.LocationHelper.initMapUpdate
+import com.chrisjanusa.randomizer.filter_diet.dietFromIdentifier
+import com.chrisjanusa.randomizer.filter_price.priceFromSaveString
+import com.chrisjanusa.randomizer.location_base.calculatingLocationText
+import com.chrisjanusa.randomizer.location_base.getTextFromLatLng
+import com.chrisjanusa.randomizer.location_base.initMapEvent
 import com.chrisjanusa.randomizer.location_base.updaters.LocationTextUpdater
 import com.chrisjanusa.randomizer.location_gps.GpsHelper.requestLocation
 import com.chrisjanusa.randomizer.location_search.updaters.LastManualLocationUpdater
@@ -27,7 +27,7 @@ class InitAction(private val activity: FragmentActivity?) : BaseAction {
         currentState: LiveData<RandomizerState>,
         updateChannel: Channel<BaseUpdater>,
         eventChannel: Channel<BaseEvent>,
-        mapChannel: Channel<MapUpdate>
+        mapChannel: Channel<MapEvent>
     ) {
         if (currentState.value?.stateInitialized == true) {
             activity?.let { activity ->
@@ -75,10 +75,10 @@ class InitAction(private val activity: FragmentActivity?) : BaseAction {
                 )
             )
 
-            initMapUpdate(mapChannel, null, currLat, currLng)
+            initMapEvent(mapChannel, null, currLat, currLng)
 
             if (gpsOn) {
-                updateChannel.send(LocationTextUpdater(LocationHelper.calculatingLocationText))
+                updateChannel.send(LocationTextUpdater(calculatingLocationText))
                 activity?.let {
                     requestLocation(it, updateChannel, eventChannel, mapChannel, currLat, currLng)
                 }

@@ -15,10 +15,10 @@ import com.chrisjanusa.randomizer.filter_distance.DistanceUIManager
 import com.chrisjanusa.randomizer.filter_price.PriceUIManager
 import com.chrisjanusa.randomizer.init.InitAction
 import com.chrisjanusa.randomizer.init.InitMapAction
-import com.chrisjanusa.randomizer.location_base.LocationHelper.cameraSpeed
-import com.chrisjanusa.randomizer.location_base.LocationHelper.zoomLevel
 import com.chrisjanusa.randomizer.location_base.LocationUIManager
 import com.chrisjanusa.randomizer.location_base.LocationUIManager.getDefaultMarker
+import com.chrisjanusa.randomizer.location_base.cameraSpeed
+import com.chrisjanusa.randomizer.location_base.zoomLevel
 import com.chrisjanusa.randomizer.location_gps.GpsHelper.PERMISSION_ID
 import com.chrisjanusa.randomizer.location_gps.GpsUIManager
 import com.chrisjanusa.randomizer.location_gps.actions.PermissionDeniedAction

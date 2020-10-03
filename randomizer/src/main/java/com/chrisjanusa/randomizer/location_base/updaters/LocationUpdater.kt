@@ -2,7 +2,7 @@ package com.chrisjanusa.randomizer.location_base.updaters
 
 import com.chrisjanusa.base.interfaces.BaseUpdater
 import com.chrisjanusa.base.models.RandomizerState
-import com.chrisjanusa.randomizer.location_base.LocationHelper.hasLocationChanged
+import com.chrisjanusa.randomizer.location_base.hasLocationChanged
 
 class LocationUpdater(private val locationStr: String, private val currLat: Double, private val currLng: Double) :
     BaseUpdater {

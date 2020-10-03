@@ -13,10 +13,6 @@ import com.chrisjanusa.base.models.RandomizerState
 import com.chrisjanusa.base.models.RandomizerViewModel
 import com.chrisjanusa.base.models.defaultDistance
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.onCancelFilterClick
-import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.distanceToPercent
-import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.maxDistance
-import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.minDistance
-import com.chrisjanusa.randomizer.filter_distance.DistanceHelper.percentToDistance
 import com.chrisjanusa.randomizer.filter_distance.actions.ApplyDistanceAction
 import com.chrisjanusa.randomizer.filter_distance.actions.DistanceChangeAction
 import com.chrisjanusa.randomizer.filter_distance.actions.InitDistanceFilterAction

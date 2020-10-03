@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import com.chrisjanusa.base.interfaces.BaseAction
 import com.chrisjanusa.base.interfaces.BaseEvent
 import com.chrisjanusa.base.interfaces.BaseUpdater
-import com.chrisjanusa.base.models.MapUpdate
+import com.chrisjanusa.base.models.MapEvent
 import com.chrisjanusa.base.models.RandomizerState
 import com.chrisjanusa.randomizer.location_search.events.SearchClosedEvent
 import kotlinx.coroutines.channels.Channel
@@ -14,7 +14,7 @@ class SearchClosedAction : BaseAction {
         currentState: LiveData<RandomizerState>,
         updateChannel: Channel<BaseUpdater>,
         eventChannel: Channel<BaseEvent>,
-        mapChannel: Channel<MapUpdate>
+        mapChannel: Channel<MapEvent>
     ) {
         eventChannel.send(SearchClosedEvent())
     }

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import com.chrisjanusa.base.interfaces.BaseAction
 import com.chrisjanusa.base.interfaces.BaseEvent
 import com.chrisjanusa.base.interfaces.BaseUpdater
-import com.chrisjanusa.base.models.MapUpdate
+import com.chrisjanusa.base.models.MapEvent
 import com.chrisjanusa.base.models.RandomizerState
 import com.chrisjanusa.restaurant_base.deeplinks.events.OpenGoogleMapsEvent
 import com.chrisjanusa.yelp.models.Location
@@ -15,7 +15,7 @@ class GoogleMapsClickAction(private val name: String, private val location: Loca
         currentState: LiveData<RandomizerState>,
         updateChannel: Channel<BaseUpdater>,
         eventChannel: Channel<BaseEvent>,
-        mapChannel: Channel<MapUpdate>
+        mapChannel: Channel<MapEvent>
     ) {
         eventChannel.send(OpenGoogleMapsEvent(name, location))
     }

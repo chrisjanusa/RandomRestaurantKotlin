@@ -4,19 +4,9 @@ import androidx.lifecycle.LiveData
 import com.chrisjanusa.base.interfaces.BaseAction
 import com.chrisjanusa.base.interfaces.BaseEvent
 import com.chrisjanusa.base.interfaces.BaseUpdater
-import com.chrisjanusa.base.models.MapUpdate
+import com.chrisjanusa.base.models.MapEvent
 import com.chrisjanusa.base.models.RandomizerState
-import com.chrisjanusa.randomizer.yelp.YelpHelper.favoriteCheck
-import com.chrisjanusa.randomizer.yelp.YelpHelper.isBlocked
-import com.chrisjanusa.randomizer.yelp.YelpHelper.isRecentlySeen
-import com.chrisjanusa.randomizer.yelp.YelpHelper.isTooFar
-import com.chrisjanusa.randomizer.yelp.YelpHelper.monitorBackgroundThreads
-import com.chrisjanusa.randomizer.yelp.YelpHelper.notifyFinishedLoadingRestaurants
-import com.chrisjanusa.randomizer.yelp.YelpHelper.notifyStartingToLoadRestaurants
-import com.chrisjanusa.randomizer.yelp.YelpHelper.setRandomRestaurant
-import com.chrisjanusa.randomizer.yelp.YelpHelper.startQueryingYelp
-import com.chrisjanusa.randomizer.yelp.YelpHelper.throwAllRestaurantsBlockedError
-import com.chrisjanusa.randomizer.yelp.YelpHelper.throwNoRestaurantError
+import com.chrisjanusa.randomizer.yelp.*
 import com.chrisjanusa.randomizer.yelp.events.InvalidLocationErrorEvent
 import com.chrisjanusa.randomizer.yelp.updaters.EmptyRestaurantsSeenRecentlyUpdater
 import com.chrisjanusa.yelp.models.Restaurant
@@ -27,7 +17,7 @@ class RandomizeAction : BaseAction {
         currentState: LiveData<RandomizerState>,
         updateChannel: Channel<BaseUpdater>,
         eventChannel: Channel<BaseEvent>,
-        mapChannel: Channel<MapUpdate>
+        mapChannel: Channel<MapEvent>
     ) {
         currentState.value?.let { state ->
             val channel = Channel<List<Restaurant>>(Channel.UNLIMITED)

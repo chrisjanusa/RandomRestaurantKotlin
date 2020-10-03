@@ -14,6 +14,7 @@ import com.chrisjanusa.randomizer.location_search.actions.*
 import com.seatgeek.placesautocomplete.DetailsCallback
 import com.seatgeek.placesautocomplete.model.PlaceDetails
 import kotlinx.android.synthetic.main.search_card.*
+import kotlinx.android.synthetic.main.top_overlay.*
 
 object SearchUIManager : FeatureUIManager {
 
@@ -46,6 +47,10 @@ object SearchUIManager : FeatureUIManager {
     private fun initCloseListeners(randomizerViewModel: RandomizerViewModel, fragment: Fragment) {
         fragment.run {
             back_icon.setOnClickListener {
+                sendAction(SearchFinishedAction(user_input.text.toString()), randomizerViewModel)
+            }
+
+            search_shade.setOnClickListener {
                 sendAction(SearchFinishedAction(user_input.text.toString()), randomizerViewModel)
             }
 
