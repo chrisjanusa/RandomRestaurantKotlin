@@ -66,7 +66,7 @@ object YelpUIManager : FeatureUIManager {
                 restaurantToPriceDistanceString(restaurant)
 
             val favIcon =
-                if (state.favSet.contains(restaurant))
+                if (state.favList.contains(restaurant))
                     com.chrisjanusa.base.R.drawable.star_selected
                 else
                     com.chrisjanusa.base.R.drawable.star_default
@@ -79,7 +79,7 @@ object YelpUIManager : FeatureUIManager {
             }
 
             val blockIcon =
-                if (state.blockSet.contains(restaurant))
+                if (state.blockList.contains(restaurant))
                     com.chrisjanusa.base.R.drawable.block_selected
                 else
                     com.chrisjanusa.base.R.drawable.block_default

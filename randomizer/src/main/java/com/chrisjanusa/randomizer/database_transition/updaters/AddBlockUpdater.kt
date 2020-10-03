@@ -6,10 +6,11 @@ import com.chrisjanusa.base.interfaces.BaseUpdater
 import com.chrisjanusa.base.models.RandomizerState
 import com.chrisjanusa.base.preferences.PreferenceHelper.StateObject.BlockedRestaurants
 import com.chrisjanusa.randomizer.database_transition.database.FavoritesDBHelper
-import com.chrisjanusa.restaurantstorage.RestaurantPreferenceHelper.saveCache
+import com.chrisjanusa.restaurantstorage.RestaurantPreferenceHelper.saveListCache
 import com.chrisjanusa.yelp.models.Restaurant
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.util.*
 
 class AddBlockUpdater(
     private val restaurant: Restaurant,
@@ -17,13 +18,13 @@ class AddBlockUpdater(
     private val context: Context
 ) : BaseUpdater {
     override fun performUpdate(prevState: RandomizerState): RandomizerState {
-        val newSet = HashSet(prevState.blockSet)
-        newSet.add(restaurant)
+        val newList = LinkedList(prevState.blockList)
+        newList.add(restaurant)
         GlobalScope.launch {
-            if(saveCache(preferences, BlockedRestaurants.key, newSet)) {
+            if (saveListCache(preferences, BlockedRestaurants.key, newList)) {
                 FavoritesDBHelper(context).delete(restaurant.name)
             }
         }
-        return prevState.copy(blockSet = newSet)
+        return prevState.copy(blockList = newList)
     }
 }

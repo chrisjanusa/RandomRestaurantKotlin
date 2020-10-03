@@ -6,10 +6,11 @@ import com.chrisjanusa.base.interfaces.BaseUpdater
 import com.chrisjanusa.base.models.RandomizerState
 import com.chrisjanusa.base.preferences.PreferenceHelper.StateObject
 import com.chrisjanusa.randomizer.database_transition.database.FavoritesDBHelper
-import com.chrisjanusa.restaurantstorage.RestaurantPreferenceHelper.saveCache
+import com.chrisjanusa.restaurantstorage.RestaurantPreferenceHelper.saveListCache
 import com.chrisjanusa.yelp.models.Restaurant
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.util.*
 
 class AddFavoriteUpdater(
     private val restaurant: Restaurant,
@@ -17,13 +18,13 @@ class AddFavoriteUpdater(
     private val context: Context
 ) : BaseUpdater {
     override fun performUpdate(prevState: RandomizerState): RandomizerState {
-        val newSet = HashSet(prevState.favSet)
-        newSet.add(restaurant)
+        val newList = LinkedList(prevState.favList)
+        newList.add(restaurant)
         GlobalScope.launch {
-            if (saveCache(preferences, StateObject.FavRestaurants.key, newSet)) {
+            if (saveListCache(preferences, StateObject.FavRestaurants.key, newList)) {
                 FavoritesDBHelper(context).delete(restaurant.name)
             }
         }
-        return prevState.copy(favSet = newSet)
+        return prevState.copy(favList = newList)
     }
 }

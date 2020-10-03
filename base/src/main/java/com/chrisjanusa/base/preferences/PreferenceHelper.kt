@@ -46,8 +46,8 @@ object PreferenceHelper {
                 state.currLng?.let { lng -> putString(StateObject.Longitude.key, "$lng") }
                 putBoolean(StateObject.CacheValidity.key, state.restaurantCacheValid)
                 putStringSet(StateObject.RestaurantsSeen.key, state.restaurantsSeenRecently)
-                saveCache(preferences, StateObject.BlockedRestaurants.key, state.blockSet)
-                saveCache(preferences, StateObject.FavRestaurants.key, state.favSet)
+                saveListCache(preferences, StateObject.BlockedRestaurants.key, state.blockList)
+                saveListCache(preferences, StateObject.FavRestaurants.key, state.favList)
                 saveListCache(preferences, StateObject.History.key, state.historyList)
                 apply()
             }
@@ -71,8 +71,8 @@ object PreferenceHelper {
                 getString(StateObject.Longitude.key, null)?.toDouble(),
                 getBoolean(StateObject.CacheValidity.key, false),
                 getStringSet(StateObject.RestaurantsSeen.key, HashSet()) ?: HashSet(),
-                retrieveCache(preferences, StateObject.FavRestaurants.key),
-                retrieveCache(preferences, StateObject.BlockedRestaurants.key),
+                retrieveListCache(preferences, StateObject.FavRestaurants.key),
+                retrieveListCache(preferences, StateObject.BlockedRestaurants.key),
                 retrieveListCache(preferences, StateObject.History.key)
             )
         }
