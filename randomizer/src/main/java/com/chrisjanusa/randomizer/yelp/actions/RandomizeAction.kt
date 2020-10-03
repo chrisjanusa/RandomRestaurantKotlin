@@ -31,7 +31,7 @@ class RandomizeAction : BaseAction {
 
                 startQueryingYelp(state, updateChannel, channel)
 
-                var restaurants = channel.receive().filter { !isTooFar(state, it) && favoriteCheck(state, it) }
+                var restaurants = channel.receive().filter { !isRestaurantFiltered(state, it) }
                 if (restaurants.isEmpty()) {
                     throwNoRestaurantError(state, updateChannel, eventChannel)
                     return

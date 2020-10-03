@@ -8,6 +8,7 @@ import com.chrisjanusa.base.models.enums.Diet
 import com.chrisjanusa.randomizer.filter_cuisine.CuisineHelper.toYelpString
 import com.chrisjanusa.randomizer.filter_distance.milesToMeters
 import com.chrisjanusa.randomizer.filter_price.setToYelpString
+import com.chrisjanusa.randomizer.filter_rating.isDefault
 import com.chrisjanusa.randomizer.yelp.events.*
 import com.chrisjanusa.randomizer.yelp.updaters.*
 import com.chrisjanusa.yelp.YelpRepository
@@ -207,11 +208,26 @@ fun isRecentlySeen(prevState: RandomizerState, restaurant: Restaurant) =
 fun isTooFar(prevState: RandomizerState, restaurant: Restaurant) =
     milesToMeters(prevState.maxMilesSelected).roundToInt() < restaurant.distance
 
+fun isTooLowRating(prevState: RandomizerState, restaurant: Restaurant): Boolean {
+    val rating = restaurant.rating
+    return if (rating == null) {
+        !isDefault(prevState.minRating)
+    } else {
+        rating < prevState.minRating
+    }
+}
+
 fun favoriteCheck(state: RandomizerState, restaurant: Restaurant): Boolean =
     !state.favoriteOnlySelected || state.favList.contains(restaurant)
 
-fun isValidRestaurant(prevState: RandomizerState, restaurant: Restaurant) =
-    !(isRecentlySeen(prevState, restaurant) || isBlocked(prevState, restaurant) || isTooFar(
-        prevState,
-        restaurant
-    ))
+fun isRestaurantFiltered(state: RandomizerState, restaurant: Restaurant) =
+    isTooFar(state, restaurant)
+            || !favoriteCheck(state, restaurant)
+            || isTooLowRating(state, restaurant)
+
+
+fun isValidRestaurant(state: RandomizerState, restaurant: Restaurant) =
+    !(isRecentlySeen(state, restaurant)
+            || isBlocked(state, restaurant)
+            || isRestaurantFiltered(state, restaurant)
+            )

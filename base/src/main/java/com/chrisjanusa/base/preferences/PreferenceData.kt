@@ -10,6 +10,7 @@ data class PreferenceData(
     val sitDownSelected: Boolean,
     val maxMilesSelected: Float,
     val diet: String,
+    val rating: Float,
     val priceSelected: String,
     val cuisineString: String,
     val currLat: Double?,

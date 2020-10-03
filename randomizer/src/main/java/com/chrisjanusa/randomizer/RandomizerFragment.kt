@@ -13,6 +13,7 @@ import com.chrisjanusa.randomizer.filter_cuisine.CuisineUIManager
 import com.chrisjanusa.randomizer.filter_diet.DietUIManager
 import com.chrisjanusa.randomizer.filter_distance.DistanceUIManager
 import com.chrisjanusa.randomizer.filter_price.PriceUIManager
+import com.chrisjanusa.randomizer.filter_rating.RatingUIManager
 import com.chrisjanusa.randomizer.init.InitAction
 import com.chrisjanusa.randomizer.init.InitMapAction
 import com.chrisjanusa.randomizer.location_base.LocationUIManager
@@ -54,7 +55,8 @@ class RandomizerFragment :
         DietUIManager,
         GpsUIManager,
         SearchUIManager,
-        YelpUIManager
+        YelpUIManager,
+        RatingUIManager
     )
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

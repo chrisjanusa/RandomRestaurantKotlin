@@ -60,6 +60,7 @@ class InitAction(private val activity: FragmentActivity?) : BaseAction {
                     sitDownSelected,
                     maxMilesSelected,
                     dietObject,
+                    rating,
                     priceSet,
                     cuisineSet,
                     currLat,

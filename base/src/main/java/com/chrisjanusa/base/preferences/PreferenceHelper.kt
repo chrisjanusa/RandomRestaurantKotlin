@@ -19,6 +19,7 @@ object PreferenceHelper {
         object MaxMilesSelected : StateObject("maxMilesSelected")
         object Diet : StateObject("diet")
         object Cuisine : StateObject("cuisine")
+        object Rating : StateObject("rating")
         object Latitude : StateObject("currLat")
         object Longitude : StateObject("currLng")
         object RestaurantsSeen : StateObject("restaurantsSeen")
@@ -40,6 +41,7 @@ object PreferenceHelper {
                 putString(StateObject.Diet.key, state.diet.identifier)
                 putString(StateObject.PriceSelected.key, state.priceSet.toSaveString())
                 putString(StateObject.Cuisine.key, state.cuisineSet.toIdentifierString())
+                putFloat(StateObject.Rating.key, state.minRating)
                 state.currLat?.let { lat -> putString(StateObject.Latitude.key, "$lat") }
                 state.currLng?.let { lng -> putString(StateObject.Longitude.key, "$lng") }
                 putBoolean(StateObject.CacheValidity.key, state.restaurantCacheValid)
@@ -63,6 +65,7 @@ object PreferenceHelper {
                 getFloat(StateObject.MaxMilesSelected.key, defaultDistance),
                 getString(StateObject.Diet.key, Diet.None.identifier)
                     ?: Diet.None.identifier,
+                getFloat(StateObject.Rating.key, 0f),
                 getString(StateObject.PriceSelected.key, defaultPriceTitle) ?: defaultPriceTitle,
                 getString(StateObject.Cuisine.key, defaultCuisineTitle) ?: "",
                 getString(StateObject.Latitude.key, null)?.toDouble(),
