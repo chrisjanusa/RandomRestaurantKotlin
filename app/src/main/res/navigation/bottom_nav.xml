@@ -14,4 +14,14 @@
             android:id="@+id/navigation_history"
             android:name="com.chrisjanusa.history.HistoryFragment"
             tools:layout="@layout/history_frag" />
+    <fragment
+            android:id="@+id/navigation_favorites"
+            android:name="com.chrisjanusa.favorites.FaovritesFragment"
+            android:label="FaovritesFragment"
+            tools:layout="@layout/favorites_frag"/>
+    <fragment
+            android:id="@+id/navigation_blocked"
+            android:name="com.chrisjanusa.blocks.BlocksFragment"
+            android:label="BlocksFragment"
+            tools:layout="@layout/blocks_frag"/>
 </navigation>

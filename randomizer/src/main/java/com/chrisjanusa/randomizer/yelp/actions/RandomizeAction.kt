@@ -6,6 +6,7 @@ import com.chrisjanusa.base.interfaces.BaseEvent
 import com.chrisjanusa.base.interfaces.BaseUpdater
 import com.chrisjanusa.base.models.MapUpdate
 import com.chrisjanusa.base.models.RandomizerState
+import com.chrisjanusa.randomizer.yelp.YelpHelper.favoriteCheck
 import com.chrisjanusa.randomizer.yelp.YelpHelper.isBlocked
 import com.chrisjanusa.randomizer.yelp.YelpHelper.isRecentlySeen
 import com.chrisjanusa.randomizer.yelp.YelpHelper.isTooFar
@@ -40,7 +41,7 @@ class RandomizeAction : BaseAction {
 
                 startQueryingYelp(state, updateChannel, channel)
 
-                var restaurants = channel.receive().filter { !isTooFar(state, it) }
+                var restaurants = channel.receive().filter { !isTooFar(state, it) && favoriteCheck(state, it) }
                 if (restaurants.isEmpty()) {
                     throwNoRestaurantError(state, updateChannel, eventChannel)
                     return
