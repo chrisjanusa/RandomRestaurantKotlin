@@ -13,7 +13,7 @@ open class BaseRestaurantViewHolder(inflater: LayoutInflater, parent: ViewGroup)
         restaurant: Restaurant,
         randomizerViewModel: RandomizerViewModel
     ) {
-        renderCardDetails(restaurant, itemView, randomizerViewModel)
+        renderListCardDetails(restaurant, itemView, randomizerViewModel)
     }
 
 }

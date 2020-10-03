@@ -63,7 +63,7 @@ object YelpUIManager : FeatureUIManager {
             findViewById<TextView>(com.chrisjanusa.base.R.id.card_cuisines).text =
                 categoriesToDisplayString(restaurant.categories)
             findViewById<TextView>(com.chrisjanusa.base.R.id.distancePrice).text =
-                restaurantToPriceDistanceString(restaurant)
+                restaurantToPriceDistanceString(restaurant, true)
 
             val favIcon =
                 if (state.favList.contains(restaurant))

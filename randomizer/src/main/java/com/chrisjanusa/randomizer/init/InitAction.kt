@@ -32,9 +32,7 @@ class InitAction(private val activity: FragmentActivity?) : BaseAction {
         if (currentState.value?.stateInitialized == true) {
             activity?.let { activity ->
                 currentState.value?.let { state ->
-                    state.currRestaurant?.let { restaurant ->
-                        eventChannel.send(InitCurrRestaurantEvent(restaurant, state, activity))
-                    }
+                    eventChannel.send(InitCurrRestaurantEvent(state.currRestaurant, state, activity))
                 }
             }
             return
