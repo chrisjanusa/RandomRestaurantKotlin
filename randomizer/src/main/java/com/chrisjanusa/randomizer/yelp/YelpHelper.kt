@@ -205,6 +205,8 @@ object YelpHelper {
     fun isTooFar(prevState: RandomizerState, restaurant: Restaurant) =
         milesToMeters(prevState.maxMilesSelected).roundToInt() < restaurant.distance
 
+    fun favoriteCheck(state: RandomizerState, restaurant: Restaurant): Boolean =
+        !state.favoriteOnlySelected || state.favSet.contains(restaurant)
 
     fun isValidRestaurant(prevState: RandomizerState, restaurant: Restaurant) =
         !(isRecentlySeen(prevState, restaurant) || isBlocked(prevState, restaurant) || isTooFar(prevState, restaurant))

@@ -1,4 +1,4 @@
-package com.chrisjanusa.history
+package com.chrisjanusa.favorites
 
 import android.view.LayoutInflater
 import android.view.View
@@ -15,10 +15,10 @@ import com.chrisjanusa.baselist.BlockClickAndRefreshAction
 import com.chrisjanusa.baselist.FavoriteClickAndRefreshAction
 import com.chrisjanusa.baselist.RestaurantAdapter
 import com.chrisjanusa.yelp.models.Restaurant
-import kotlinx.android.synthetic.main.history_frag.*
+import kotlinx.android.synthetic.main.favorites_frag.*
 import java.util.*
 
-object HistoryListUIManager : FeatureUIManager {
+object FavoritesListUIManager : FeatureUIManager {
     override fun init(randomizerViewModel: RandomizerViewModel, fragment: BaseRestaurantFragment) {
         fragment.run {
             recyclerView.apply {
@@ -27,14 +27,9 @@ object HistoryListUIManager : FeatureUIManager {
                 layoutManager = LinearLayoutManager(activity)
                 // set the custom adapter to the RecyclerView
                 adapter = RestaurantAdapter(
-                    randomizerViewModel.state.value?.historyList ?: LinkedList(),
+                    randomizerViewModel.state.value?.favSet?.toList() ?: LinkedList(),
                     randomizerViewModel
-                ) { inflater: LayoutInflater, parent: ViewGroup ->
-                    RestaurantViewHolder(
-                        inflater,
-                        parent
-                    )
-                }
+                ) { inflater: LayoutInflater, parent: ViewGroup -> RestaurantViewHolder(inflater, parent) }
             }
         }
     }

@@ -1,1 +1,3 @@
+include ':blocks'
+include ':favorites'
 include ':app', ':base', ':baselist', ':history', ':randomizer', ':restaurantcard', ':tempfrag', ':yelp', ':restaurantstorage'
