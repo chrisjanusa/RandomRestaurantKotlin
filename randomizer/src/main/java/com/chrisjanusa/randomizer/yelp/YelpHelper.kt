@@ -198,7 +198,7 @@ suspend fun setRestaurant(
 }
 
 fun isBlocked(prevState: RandomizerState, restaurant: Restaurant) =
-    prevState.blockSet.contains(restaurant)
+    prevState.blockList.contains(restaurant)
 
 
 fun isRecentlySeen(prevState: RandomizerState, restaurant: Restaurant) =
@@ -208,7 +208,7 @@ fun isTooFar(prevState: RandomizerState, restaurant: Restaurant) =
     milesToMeters(prevState.maxMilesSelected).roundToInt() < restaurant.distance
 
 fun favoriteCheck(state: RandomizerState, restaurant: Restaurant): Boolean =
-    !state.favoriteOnlySelected || state.favSet.contains(restaurant)
+    !state.favoriteOnlySelected || state.favList.contains(restaurant)
 
 fun isValidRestaurant(prevState: RandomizerState, restaurant: Restaurant) =
     !(isRecentlySeen(prevState, restaurant) || isBlocked(prevState, restaurant) || isTooFar(

@@ -52,7 +52,7 @@ object HistoryListUIManager : FeatureUIManager {
         val state = randomizerViewModel.state.value?.copy() ?: return
         view.run {
             val favIcon =
-                if (state.favSet.contains(restaurant))
+                if (state.favList.contains(restaurant))
                     R.drawable.star_selected
                 else
                     R.drawable.star_default
@@ -69,7 +69,7 @@ object HistoryListUIManager : FeatureUIManager {
             }
 
             val blockIcon =
-                if (state.blockSet.contains(restaurant))
+                if (state.blockList.contains(restaurant))
                     R.drawable.block_selected
                 else
                     R.drawable.block_default

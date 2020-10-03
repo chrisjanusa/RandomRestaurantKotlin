@@ -27,7 +27,7 @@ object BlocksListUIManager : FeatureUIManager {
                 layoutManager = LinearLayoutManager(activity)
                 // set the custom adapter to the RecyclerView
                 adapter = RestaurantAdapter(
-                    randomizerViewModel.state.value?.blockSet?.toList() ?: LinkedList(),
+                    randomizerViewModel.state.value?.blockList ?: LinkedList(),
                     randomizerViewModel
                 ) { inflater: LayoutInflater, parent: ViewGroup -> RestaurantViewHolder(inflater, parent) }
             }
@@ -47,7 +47,7 @@ object BlocksListUIManager : FeatureUIManager {
         val state = randomizerViewModel.state.value?.copy() ?: return
         view.run {
             val favIcon =
-                if (state.favSet.contains(restaurant))
+                if (state.favList.contains(restaurant))
                     R.drawable.star_selected
                 else
                     R.drawable.star_default
@@ -64,7 +64,7 @@ object BlocksListUIManager : FeatureUIManager {
             }
 
             val blockIcon =
-                if (state.blockSet.contains(restaurant))
+                if (state.blockList.contains(restaurant))
                     R.drawable.block_selected
                 else
                     R.drawable.block_default

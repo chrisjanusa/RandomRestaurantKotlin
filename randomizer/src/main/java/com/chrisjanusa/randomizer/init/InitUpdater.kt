@@ -22,8 +22,8 @@ class InitUpdater(
     private val locationText: String,
     private val cacheValidity: Boolean,
     private val restaurantsSeenRecently: Set<String>,
-    private val favSet: Set<Restaurant>,
-    private val blockSet: Set<Restaurant>,
+    private val favList: List<Restaurant>,
+    private val blockList: List<Restaurant>,
     private val history: List<Restaurant>
 ) : BaseUpdater {
     override fun performUpdate(prevState: RandomizerState): RandomizerState {
@@ -43,8 +43,8 @@ class InitUpdater(
             restaurantCacheValid = cacheValidity,
             stateInitialized = true,
             restaurantsSeenRecently = restaurantsSeenRecently,
-            favSet = favSet,
-            blockSet = blockSet,
+            favList = favList,
+            blockList = blockList,
             historyList = history
         )
     }

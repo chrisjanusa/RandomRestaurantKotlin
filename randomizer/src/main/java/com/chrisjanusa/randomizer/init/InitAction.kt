@@ -69,8 +69,8 @@ class InitAction(private val activity: FragmentActivity?) : BaseAction {
                     locationName,
                     cacheValidity,
                     restaurantsSeenRecently,
-                    favSet,
-                    blockSet,
+                    favList,
+                    blockList,
                     history
                 )
             )
