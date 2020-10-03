@@ -5,8 +5,6 @@ import com.chrisjanusa.base.models.*
 import com.chrisjanusa.base.models.enums.Cuisine
 import com.chrisjanusa.base.models.enums.Diet
 import com.chrisjanusa.base.models.enums.Price
-import com.chrisjanusa.restaurantstorage.RestaurantPreferenceHelper.saveCache
-import com.chrisjanusa.restaurantstorage.RestaurantPreferenceHelper.retrieveCache
 import com.chrisjanusa.restaurantstorage.RestaurantPreferenceHelper.retrieveListCache
 import com.chrisjanusa.restaurantstorage.RestaurantPreferenceHelper.saveListCache
 
