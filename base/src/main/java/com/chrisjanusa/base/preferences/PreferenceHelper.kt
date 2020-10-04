@@ -5,8 +5,8 @@ import com.chrisjanusa.base.models.*
 import com.chrisjanusa.base.models.enums.Cuisine
 import com.chrisjanusa.base.models.enums.Diet
 import com.chrisjanusa.base.models.enums.Price
-import com.chrisjanusa.restaurantstorage.RestaurantPreferenceHelper.retrieveListCache
-import com.chrisjanusa.restaurantstorage.RestaurantPreferenceHelper.saveListCache
+import com.chrisjanusa.restaurantstorage.retrieveListCache
+import com.chrisjanusa.restaurantstorage.saveListCache
 
 object PreferenceHelper {
     sealed class StateObject(val key: String) {

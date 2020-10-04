@@ -39,7 +39,7 @@
                     android:layout_height="@dimen/banner_icon_height"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/temp_banner_icon" />
+                    android:src="@drawable/error_icon" />
             </RelativeLayout>
 
             <RelativeLayout

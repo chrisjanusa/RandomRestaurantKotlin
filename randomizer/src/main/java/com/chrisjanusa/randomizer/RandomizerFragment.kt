@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
 import androidx.lifecycle.lifecycleScope
 import com.chrisjanusa.base.CommunicationHelper.sendAction
 import com.chrisjanusa.base.interfaces.BaseRestaurantFragment
@@ -34,17 +35,15 @@ import com.google.android.libraries.maps.model.BitmapDescriptor
 import com.google.android.libraries.maps.model.LatLng
 import com.google.android.libraries.maps.model.Marker
 import com.google.android.libraries.maps.model.MarkerOptions
-import kotlinx.android.synthetic.main.randomizer_frag.*
 import kotlinx.coroutines.launch
 
 class RandomizerFragment :
     BaseRestaurantFragment(),
     OnMapReadyCallback,
-    GoogleMap.OnMarkerClickListener
-{
-    private lateinit var map: GoogleMap
-    private lateinit var icon: BitmapDescriptor
-    var mapView: MapView? = null
+    GoogleMap.OnMarkerClickListener {
+    private var map: GoogleMap? = null
+    private var icon: BitmapDescriptor? = null
+    private var mapView: MapView? = null
 
     override fun getFeatureUIManagers() = listOf(
         LocationUIManager,
@@ -75,7 +74,7 @@ class RandomizerFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mapView = MapView(activity?.applicationContext)
-        mapWrapper.addView(mapView)
+        view.findViewById<RelativeLayout>(R.id.mapWrapper).addView(mapView)
         mapView?.let {
             it.onCreate(null)
             it.onResume()
@@ -106,11 +105,13 @@ class RandomizerFragment :
 
     override fun onDestroyView() {
         super.onDestroyView()
-        map.isMyLocationEnabled = false
-        mapView?.onDestroy()
-        mapWrapper.removeAllViews()
         randomizerViewModel.state.value?.lastCacheUpdateJob?.cancel()
+        mapView?.onDestroy()
+        map?.isMyLocationEnabled = false
         mapView = null
+        icon = null
+        map?.clear()
+        map = null
     }
 
     override fun onLowMemory() {
@@ -135,14 +136,16 @@ class RandomizerFragment :
 
     private fun setMap(lat: Double, lng: Double, addMarker: Boolean) {
         val location = LatLng(lat, lng)
-        map.run {
+        map?.run {
             clear()
             animateCamera(newLatLngZoom(location, zoomLevel), cameraSpeed, null)
             if (addMarker) {
-                val marker = MarkerOptions()
-                    .position(location)
-                    .icon(icon)
-                addMarker(marker)
+                icon?.let {
+                    val marker = MarkerOptions()
+                        .position(location)
+                        .icon(icon)
+                    addMarker(marker)
+                }
             }
         }
     }
@@ -153,8 +156,8 @@ class RandomizerFragment :
         map = googleMap
         icon = getDefaultMarker(this)
 
-        map.setOnMarkerClickListener(this)
-        map.uiSettings?.isMapToolbarEnabled = false
+        map?.setOnMarkerClickListener(this)
+        map?.uiSettings?.isMapToolbarEnabled = false
 
         lifecycleScope.launch {
             for (update in randomizerViewModel.mapChannel) {
