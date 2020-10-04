@@ -39,4 +39,6 @@
     <string name="sit_down">Sit Down Restaurants</string>
     <string name="InvalidLocationMessage">Unable to find location selected. Please select a different location or use current location.</string>
     <string name="InvalidLocationTittle">Invalid Location Selected</string>
+    <string name="rating">Rating</string>
+    <string name="rating_title">Minimum Rating</string>
 </resources>

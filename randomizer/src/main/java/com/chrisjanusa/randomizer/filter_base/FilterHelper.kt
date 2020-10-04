@@ -13,6 +13,7 @@ import com.chrisjanusa.randomizer.filter_cuisine.CuisineFragment
 import com.chrisjanusa.randomizer.filter_diet.DietFragment
 import com.chrisjanusa.randomizer.filter_distance.DistanceFragment
 import com.chrisjanusa.randomizer.filter_price.PriceFragment
+import com.chrisjanusa.randomizer.filter_rating.RatingFragment
 import com.google.android.material.button.MaterialButton
 
 object FilterHelper {
@@ -51,6 +52,7 @@ object FilterHelper {
             Filter.Cuisine -> CuisineFragment()
             Filter.Distance -> DistanceFragment()
             Filter.Diet -> DietFragment()
+            Filter.Rating -> RatingFragment()
         }
     }
 

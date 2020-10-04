@@ -35,6 +35,12 @@
                 app:icon="@drawable/expand"
         />
         <com.google.android.material.button.MaterialButton
+                android:id='@+id/rating_button'
+                style="@style/FilterAppearance"
+                android:text="@string/rating"
+                app:icon="@drawable/expand"
+                />
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/diet"
             style="@style/FilterAppearance"
             android:text="@string/diet"

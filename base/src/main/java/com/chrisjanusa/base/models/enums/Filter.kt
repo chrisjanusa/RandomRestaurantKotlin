@@ -5,4 +5,5 @@ sealed class Filter {
     object Cuisine : Filter()
     object Distance : Filter()
     object Diet : Filter()
+    object Rating : Filter()
 }
