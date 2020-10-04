@@ -8,7 +8,6 @@ import com.chrisjanusa.yelp.models.Restaurant
 import kotlinx.coroutines.Job
 import java.util.*
 import kotlin.collections.HashSet
-import kotlin.collections.LinkedHashSet
 
 data class RandomizerState(
     val stateInitialized: Boolean = false,

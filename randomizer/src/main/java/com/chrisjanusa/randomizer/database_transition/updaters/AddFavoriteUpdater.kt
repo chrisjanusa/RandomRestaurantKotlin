@@ -6,7 +6,7 @@ import com.chrisjanusa.base.interfaces.BaseUpdater
 import com.chrisjanusa.base.models.RandomizerState
 import com.chrisjanusa.base.preferences.PreferenceHelper.StateObject
 import com.chrisjanusa.randomizer.database_transition.database.FavoritesDBHelper
-import com.chrisjanusa.restaurantstorage.RestaurantPreferenceHelper.saveListCache
+import com.chrisjanusa.restaurantstorage.saveListCache
 import com.chrisjanusa.yelp.models.Restaurant
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
