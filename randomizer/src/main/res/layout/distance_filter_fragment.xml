@@ -1,68 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/shade"
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/shade"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="true"
         android:focusable="true">
+
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/filter_overlay_background"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:clickable="true"
             android:focusable="true"
-    >
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
         <TextView
                 android:id="@+id/title"
+                style="@style/TitleAppearance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/TitleAppearance"
                 android:text="@string/max_distance_title"
+
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
 
-        />
-        <TextView
+                />
+
+        <ImageView
                 android:id='@+id/xout'
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/TitleAppearance"
-                android:text="@string/xout"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:paddingLeft="@dimen/filter_overlay_side_margin"
+                android:paddingTop="@dimen/filter_overlay_side_margin"
+                android:paddingRight="@dimen/filter_overlay_side_margin"
+                android:src="@drawable/close_filter"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-        />
+                app:layout_constraintBottom_toBottomOf="@id/title"
+                />
+
         <com.ramotion.fluidslider.FluidSlider
                 android:id="@+id/distance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:elevation="2dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/title"
-                android:paddingTop="0dp"
                 android:layout_marginStart="@dimen/filter_overlay_side_margin"
                 android:layout_marginEnd="@dimen/filter_overlay_side_margin"
-                app:size="small"
-                app:duration="@android:integer/config_mediumAnimTime"
-                tools:targetApi="lollipop"
+                android:elevation="2dp"
+                android:paddingTop="0dp"
                 app:bar_color="@color/slider_bar_color"
-        />
+                app:duration="@android:integer/config_mediumAnimTime"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/xout"
+                app:size="small"
+                tools:targetApi="lollipop" />
+
         <include
                 android:id="@+id/confirmation_buttons"
+                layout="@layout/confirmation_buttons"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                layout="@layout/confirmation_buttons"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/distance"
                 android:layout_marginTop="@dimen/filter_overlay_top_margin"
-                android:layout_marginBottom="@dimen/filter_overlay_top_margin"
                 android:layout_marginEnd="@dimen/filter_overlay_side_margin"
-        />
+                android:layout_marginBottom="@dimen/filter_overlay_top_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/distance" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
