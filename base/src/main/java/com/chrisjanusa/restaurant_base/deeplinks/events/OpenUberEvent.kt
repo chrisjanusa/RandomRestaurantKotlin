@@ -12,9 +12,14 @@ class OpenUberEvent(private val name: String, private val location: Location, pr
     override fun handleEvent(fragment: BaseRestaurantFragment) {
         val formattedAddress = encodeUrl("${location.address1}, ${location.city}, ${location.state}")
         val nickname = encodeUrl(name)
-        val url = "uber://?client_id=$uberClientId&action=setPickup&dropoff[latitude]=${coordinates.latitude}l&dropoff[longitude]=${coordinates.longitude}&dropoff[nickname]=$nickname&dropoff[formatted_address]=$formattedAddress"
         fragment.context?.let{context ->
-            openDeeplink(url, context)
+            try {
+                val url = "uber://?client_id=$uberClientId&action=setPickup&dropoff[latitude]=${coordinates.latitude}l&dropoff[longitude]=${coordinates.longitude}&dropoff[nickname]=$nickname&dropoff[formatted_address]=$formattedAddress"
+                openDeeplink(url, context)
+            } catch (throwable : Throwable) {
+                val url = "https://m.uber.com/?client_id=$uberClientId&action=setPickup&dropoff[latitude]=${coordinates.latitude}l&dropoff[longitude]=${coordinates.longitude}&dropoff[nickname]=$nickname&dropoff[formatted_address]=$formattedAddress"
+                openDeeplink(url, context)
+            }
         }
     }
 }
