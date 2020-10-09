@@ -1,7 +1,6 @@
 package com.chrisjanusa.findmefood
 
 import android.os.Bundle
-import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -32,16 +31,15 @@ class MainActivity : OverlayFragmentManager, AppCompatActivity() {
     }
 
     override fun onFilterClosed() {
-        supportFragmentManager.popBackStackImmediate(overlayTag, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        supportFragmentManager.popBackStackImmediate(
+            overlayTag,
+            FragmentManager.POP_BACK_STACK_INCLUSIVE
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        )
         val navController = Navigation.findNavController(this, R.id.my_nav_host_fragment)
         nav_view.setupWithNavController(navController)
         nav_view.setOnNavigationItemReselectedListener {

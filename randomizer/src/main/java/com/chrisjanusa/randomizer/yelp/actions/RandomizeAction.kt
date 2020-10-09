@@ -29,7 +29,7 @@ class RandomizeAction : BaseAction {
 
                 notifyStartingToLoadRestaurants(state, updateChannel, eventChannel)
 
-                startQueryingYelp(state, updateChannel, channel)
+                startQueryingYelp(state, updateChannel, eventChannel, channel)
 
                 var restaurants = channel.receive().filter { !isRestaurantFiltered(state, it) }
                 if (restaurants.isEmpty()) {

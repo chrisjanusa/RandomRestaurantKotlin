@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.Location
 import android.os.Looper
+import android.util.Log
 import androidx.core.app.ActivityCompat
 import com.chrisjanusa.base.CommunicationHelper.sendEvent
 import com.chrisjanusa.base.CommunicationHelper.sendMap
@@ -99,9 +100,14 @@ object GpsHelper {
         prevLng: Double?
     ) {
         location.run {
-            val locationName = Geocoder(context)
-                .getFromLocation(latitude, longitude, 1)[0]
-                .locality
+            var locationName = defaultLocationText
+            try {
+                locationName = Geocoder(context)
+                    .getFromLocation(latitude, longitude, 1)[0]
+                    .locality
+            } catch (throwable : Throwable) {
+                throwable.message?.let { Log.e("Random Restaurant Error", it) }
+            }
             if (hasLocationChanged(prevLat, prevLng, latitude, longitude)) {
                 sendMap(MapEvent(latitude, longitude, false), mapChannel)
             }

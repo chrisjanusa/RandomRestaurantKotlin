@@ -41,4 +41,6 @@
     <string name="InvalidLocationTittle">Invalid Location Selected</string>
     <string name="rating">Rating</string>
     <string name="rating_title">Minimum Rating</string>
+    <string name="internet_error">Internet Error</string>
+    <string name="internet_error_message">There appears to be an issue with your internet. Please check that wifi or mobile data are turned on and functioning properly.</string>
 </resources>

@@ -3,14 +3,13 @@ package com.chrisjanusa.randomizer.location_base
 import android.app.Activity
 import android.location.Geocoder
 import android.location.Location
+import android.util.Log
 import com.chrisjanusa.base.models.MapEvent
 import com.chrisjanusa.base.models.defaultLocationText
 import com.chrisjanusa.yelp.models.Restaurant
 import kotlinx.coroutines.channels.Channel
 
 const val calculatingLocationText = "Locating"
-const val defaultLat = 200.0
-const val defaultLng = 200.0
 const val spaceNeedleLat = 47.620422
 const val spaceNeedleLng = -122.349358
 private const val minimumDistanceChange = 160.934f
@@ -55,9 +54,14 @@ suspend fun initMapEvent(
 }
 
 fun getTextFromLatLng(activity: Activity, currLat: Double, currLng: Double): String {
-    return Geocoder(activity)
-        .getFromLocation(currLat, currLng, 1)
-        .getOrNull(0)
-        ?.locality
-        ?: defaultLocationText
+    return try {
+        Geocoder(activity)
+            .getFromLocation(currLat, currLng, 1)
+            .getOrNull(0)
+            ?.locality
+            ?: defaultLocationText
+    } catch (throwable : Throwable) {
+        throwable.message?.let { Log.e("Random Restaurant Error", it) }
+        defaultLocationText
+    }
 }

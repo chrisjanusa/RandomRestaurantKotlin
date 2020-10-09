@@ -24,7 +24,9 @@ private const val numberOfRestaurants = 500
 
 private suspend fun queryYelp(
     state: RandomizerState,
-    channel: Channel<List<Restaurant>>
+    channel: Channel<List<Restaurant>>,
+    updateChannel: Channel<BaseUpdater>,
+    eventChannel: Channel<BaseEvent>
 ) {
     try {
         state.run {
@@ -51,7 +53,6 @@ private suspend fun queryYelp(
 
             val radius = milesToMeters(maxMilesSelected).roundToInt()
             val price = setToYelpString(priceSet)
-
             for (i in 0 until numberOfRestaurants step restaurantsPerQuery) {
                 queryYelpAtOffset(
                     latitude = queryLat,
@@ -67,6 +68,8 @@ private suspend fun queryYelp(
                 )
             }
         }
+    } catch (throwable: Throwable) {
+        throwQueryError(state, updateChannel, eventChannel)
     } finally {
         channel.close()
     }
@@ -135,9 +138,10 @@ suspend fun notifyFinishedLoadingRestaurants(
 suspend fun startQueryingYelp(
     state: RandomizerState,
     updateChannel: Channel<BaseUpdater>,
+    eventChannel: Channel<BaseEvent>,
     channel: Channel<List<Restaurant>>
 ) {
-    val job = GlobalScope.launch { queryYelp(state, channel) }
+    val job = GlobalScope.launch { queryYelp(state, channel, updateChannel, eventChannel) }
     updateChannel.send(CacheJobUpdater(job))
 }
 
@@ -156,6 +160,15 @@ suspend fun throwAllRestaurantsBlockedError(
     eventChannel: Channel<BaseEvent>
 ) {
     eventChannel.send(AllRestaurantsBlockedErrorEvent())
+    throwRestaurantError(state, updateChannel, eventChannel)
+}
+
+suspend fun throwQueryError(
+    state: RandomizerState,
+    updateChannel: Channel<BaseUpdater>,
+    eventChannel: Channel<BaseEvent>
+) {
+    eventChannel.send(YelpQueryErrorEvent())
     throwRestaurantError(state, updateChannel, eventChannel)
 }
 
