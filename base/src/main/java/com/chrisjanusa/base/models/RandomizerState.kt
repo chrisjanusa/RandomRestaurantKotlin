@@ -12,6 +12,9 @@ import kotlin.collections.HashSet
 data class RandomizerState(
     val stateInitialized: Boolean = false,
 
+    val timesRandomized: Int = 0,
+    val reviewRequested: Boolean = false,
+
     val gpsOn: Boolean = true,
     val locationText: String = defaultLocationText,
     val currLat: Double? = null,

@@ -53,6 +53,8 @@ class InitAction(private val activity: FragmentActivity?) : BaseAction {
 
             updateChannel.send(
                 InitUpdater(
+                    timesRandomized,
+                    reviewRequested,
                     gpsOn,
                     openNowSelected,
                     favoriteOnlySelected,

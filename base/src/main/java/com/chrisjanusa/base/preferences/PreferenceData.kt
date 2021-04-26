@@ -3,6 +3,8 @@ package com.chrisjanusa.base.preferences
 import com.chrisjanusa.yelp.models.Restaurant
 
 data class PreferenceData(
+    val timesRandomized: Int,
+    val reviewRequested: Boolean,
     val gpsOn: Boolean,
     val openNowSelected: Boolean,
     val favoriteOnlySelected: Boolean,

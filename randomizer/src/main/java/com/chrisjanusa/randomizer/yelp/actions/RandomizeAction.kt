@@ -8,7 +8,10 @@ import com.chrisjanusa.base.models.MapEvent
 import com.chrisjanusa.base.models.RandomizerState
 import com.chrisjanusa.randomizer.yelp.*
 import com.chrisjanusa.randomizer.yelp.events.InvalidLocationErrorEvent
+import com.chrisjanusa.randomizer.yelp.events.ReviewRequestEvent
 import com.chrisjanusa.randomizer.yelp.updaters.EmptyRestaurantsSeenRecentlyUpdater
+import com.chrisjanusa.randomizer.yelp.updaters.IncreaseTimesRandomizedUpdater
+import com.chrisjanusa.randomizer.yelp.updaters.ReviewRequestedUpdater
 import com.chrisjanusa.yelp.models.Restaurant
 import kotlinx.coroutines.channels.Channel
 
@@ -53,7 +56,11 @@ class RandomizeAction : BaseAction {
             }
 
             setRandomRestaurant(restaurants, updateChannel, eventChannel, mapChannel)
-
+            if (state.timesRandomized >= 25 && !state.reviewRequested) {
+                updateChannel.send(ReviewRequestedUpdater())
+                eventChannel.send(ReviewRequestEvent())
+            }
+            updateChannel.send(IncreaseTimesRandomizedUpdater())
             monitorBackgroundThreads(channel, updateChannel)
         }
     }
