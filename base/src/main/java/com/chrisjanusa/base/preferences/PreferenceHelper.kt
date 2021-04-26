@@ -27,11 +27,15 @@ object PreferenceHelper {
         object FavRestaurants : StateObject("favorites")
         object BlockedRestaurants : StateObject("blocks")
         object History : StateObject("history")
+        object TimesRandomized : StateObject("timesRandomized")
+        object ReviewRequested : StateObject("reviewRequested")
     }
 
     fun saveState(state: RandomizerState, preferences: SharedPreferences?) {
         preferences?.let {
             with(it.edit()) {
+                putInt(StateObject.TimesRandomized.key, state.timesRandomized)
+                putBoolean(StateObject.ReviewRequested.key, state.reviewRequested)
                 putBoolean(StateObject.GpsOn.key, state.gpsOn)
                 putBoolean(StateObject.OpenNowSelected.key, state.openNowSelected)
                 putBoolean(StateObject.FavoriteOnlySelected.key, state.favoriteOnlySelected)
@@ -57,6 +61,8 @@ object PreferenceHelper {
     fun retrieveState(preferences: SharedPreferences?): PreferenceData? {
         return preferences?.run {
             PreferenceData(
+                getInt(StateObject.TimesRandomized.key, 0),
+                getBoolean(StateObject.ReviewRequested.key, false),
                 getBoolean(StateObject.GpsOn.key, true),
                 getBoolean(StateObject.OpenNowSelected.key, true),
                 getBoolean(StateObject.FavoriteOnlySelected.key, false),

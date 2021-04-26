@@ -8,6 +8,8 @@ import com.chrisjanusa.base.models.enums.Price
 import com.chrisjanusa.yelp.models.Restaurant
 
 class InitUpdater(
+    private val timesRandomized: Int,
+    private val reviewRequested: Boolean,
     private val gpsOn: Boolean,
     private val openNowSelected: Boolean,
     private val favoriteOnlySelected: Boolean,
@@ -29,6 +31,8 @@ class InitUpdater(
 ) : BaseUpdater {
     override fun performUpdate(prevState: RandomizerState): RandomizerState {
         return prevState.copy(
+            timesRandomized = timesRandomized,
+            reviewRequested = reviewRequested,
             gpsOn = gpsOn,
             priceSet = priceSet,
             openNowSelected = openNowSelected,
