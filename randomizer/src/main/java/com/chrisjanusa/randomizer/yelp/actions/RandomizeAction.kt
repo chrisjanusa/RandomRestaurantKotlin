@@ -34,17 +34,13 @@ class RandomizeAction : BaseAction {
 
                 notifyStartingToLoadRestaurants(state, updateChannel, eventChannel)
 
-                val job = startQueryingYelp(state, updateChannel, eventChannel, channel)
+                startQueryingYelp(state, updateChannel, eventChannel, channel)
 
                 var restaurants = try {
                         channel.receive().filter { !isRestaurantFiltered(state, it) }
                     } catch (exception: ClosedReceiveChannelException) {
-                        Log.d("Channel Error", exception.toString())
-                        emptyList()
+                        return
                     }
-                if (job.isCancelled) {
-                    return
-                }
                 if (restaurants.isEmpty()) {
                     throwNoRestaurantError(state, updateChannel, eventChannel)
                     return

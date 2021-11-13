@@ -14,12 +14,11 @@ import com.chrisjanusa.randomizer.yelp.events.*
 import com.chrisjanusa.randomizer.yelp.updaters.*
 import com.chrisjanusa.yelp.YelpRepository
 import com.chrisjanusa.yelp.models.Restaurant
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
-import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.Job
 
 
 private const val restaurantsPerQuery = 50
@@ -165,10 +164,9 @@ suspend fun startQueryingYelp(
     updateChannel: Channel<BaseUpdater>,
     eventChannel: Channel<BaseEvent>,
     channel: Channel<List<Restaurant>>
-) : Job {
+) {
     val job = GlobalScope.launch { queryYelp(state, channel, updateChannel, eventChannel) }
     updateChannel.send(CacheJobUpdater(job))
-    return job
 }
 
 suspend fun throwNoRestaurantError(
