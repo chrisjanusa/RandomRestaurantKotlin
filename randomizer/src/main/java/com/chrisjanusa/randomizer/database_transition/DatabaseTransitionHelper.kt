@@ -2,6 +2,7 @@ package com.chrisjanusa.randomizer.database_transition
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import com.chrisjanusa.base.interfaces.BaseUpdater
 import com.chrisjanusa.randomizer.database_transition.database.BlockDBHelper
 import com.chrisjanusa.randomizer.database_transition.database.FavoritesDBHelper
@@ -17,14 +18,32 @@ private const val databaseTransitioned = "databaseTransitioned"
 suspend fun transitionDatabase(preferences: SharedPreferences?, context: Context, updateChannel: Channel<BaseUpdater>) {
     val alreadyInit = preferences?.getBoolean(databaseTransitioned, false) ?: true
     if (!alreadyInit) {
+        var transitionedAll = true
         var request = GlobalScope.launch {
             val database = FavoritesDBHelper(context)
             for (res in database.getFavoriteRestaurants()) {
                 launch {
-                    val businesses =
-                        getBusinessSearchResults(res.lat, res.lon, res.name, limit = 1, open_now = false).businesses
-                    if (businesses.isNotEmpty()) {
-                        updateChannel.send(AddFavoriteUpdater(businesses[0], preferences, context))
+                    try {
+                        val businesses =
+                            getBusinessSearchResults(
+                                res.lat,
+                                res.lon,
+                                res.name,
+                                limit = 1,
+                                open_now = false
+                            ).businesses
+                        if (businesses.isNotEmpty()) {
+                            updateChannel.send(
+                                AddFavoriteUpdater(
+                                    businesses[0],
+                                    preferences,
+                                    context
+                                )
+                            )
+                        }
+                    } catch (exception: Exception) {
+                        transitionedAll = false
+                        Log.d("caught exception", exception.toString())
                     }
                 }
             }
@@ -34,19 +53,32 @@ suspend fun transitionDatabase(preferences: SharedPreferences?, context: Context
             val database = BlockDBHelper(context)
             for (res in database.getBlockedRestaurants()) {
                 launch {
-                    val businesses =
-                        getBusinessSearchResults(res.lat, res.lon, res.name, limit = 1, open_now = false).businesses
-                    if (businesses.isNotEmpty()) {
-                        updateChannel.send(AddBlockUpdater(businesses[0], preferences, context))
+                    try {
+                        val businesses =
+                            getBusinessSearchResults(
+                                res.lat,
+                                res.lon,
+                                res.name,
+                                limit = 1,
+                                open_now = false
+                            ).businesses
+                        if (businesses.isNotEmpty()) {
+                            updateChannel.send(AddBlockUpdater(businesses[0], preferences, context))
+                        }
+                    } catch (exception: Exception) {
+                        transitionedAll = false
+                        Log.d("caught exception", exception.toString())
                     }
                 }
             }
         }
         request.join()
-        preferences?.let {
-            with(it.edit()) {
-                putBoolean(databaseTransitioned, true)
-                apply()
+        if (transitionedAll) {
+            preferences?.let {
+                with(it.edit()) {
+                    putBoolean(databaseTransitioned, true)
+                    apply()
+                }
             }
         }
     }

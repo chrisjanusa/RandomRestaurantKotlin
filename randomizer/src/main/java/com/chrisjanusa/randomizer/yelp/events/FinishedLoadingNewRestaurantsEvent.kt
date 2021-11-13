@@ -10,10 +10,10 @@ import kotlinx.android.synthetic.main.bottom_overlay.*
 class FinishedLoadingNewRestaurantsEvent : BaseEvent {
     override fun handleEvent(fragment: BaseRestaurantFragment) {
         fragment.activity?.run{
-            findViewById<ShimmerFrameLayout>(R.id.shimmer_card_layout).stopShimmer()
-            random.visibility = View.VISIBLE
-            shimmer_random.visibility = View.GONE
-            shimmer_random.stopShimmer()
+            findViewById<ShimmerFrameLayout>(R.id.shimmer_card_layout)?.stopShimmer()
+            random?.visibility = View.VISIBLE
+            shimmer_random?.visibility = View.GONE
+            shimmer_random?.stopShimmer()
         }
     }
 }

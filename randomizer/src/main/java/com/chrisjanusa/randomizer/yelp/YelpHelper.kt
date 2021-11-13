@@ -1,5 +1,6 @@
 package com.chrisjanusa.randomizer.yelp
 
+import android.util.Log
 import com.chrisjanusa.base.interfaces.BaseEvent
 import com.chrisjanusa.base.interfaces.BaseUpdater
 import com.chrisjanusa.base.models.MapEvent
@@ -13,6 +14,7 @@ import com.chrisjanusa.randomizer.yelp.events.*
 import com.chrisjanusa.randomizer.yelp.updaters.*
 import com.chrisjanusa.yelp.YelpRepository
 import com.chrisjanusa.yelp.models.Restaurant
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
@@ -28,32 +30,54 @@ private suspend fun queryYelp(
     updateChannel: Channel<BaseUpdater>,
     eventChannel: Channel<BaseEvent>
 ) {
-    try {
-        state.run {
-            val queryLat = currLat
-            val queryLng = currLng
-            if (queryLng == null || queryLat == null) {
-                return
-            }
 
-            val categories = when {
-                cuisineSet.isNotEmpty() -> cuisineSet.toYelpString()
-                diet != Diet.None -> diet.identifier
-                else -> null
-            }
+    state.run {
+        val queryLat = currLat
+        val queryLng = currLng
+        if (queryLng == null || queryLat == null) {
+            return
+        }
 
-            var term = "restaurants"
-            term = when {
-                fastFoodSelected && !sitDownSelected -> "fast food $term"
-                !fastFoodSelected && sitDownSelected -> "sit down $term"
-                else -> term
-            }
-            term =
-                if (cuisineSet.isNotEmpty() && diet != Diet.None) "${diet.identifier} $term" else term
+        val categories = when {
+            cuisineSet.isNotEmpty() -> cuisineSet.toYelpString()
+            diet != Diet.None -> diet.identifier
+            else -> null
+        }
 
-            val radius = milesToMeters(maxMilesSelected).roundToInt()
-            val price = setToYelpString(priceSet)
-            for (i in 0 until numberOfRestaurants step restaurantsPerQuery) {
+        var term = "restaurants"
+        term = when {
+            fastFoodSelected && !sitDownSelected -> "fast food $term"
+            !fastFoodSelected && sitDownSelected -> "sit down $term"
+            else -> term
+        }
+        term =
+            if (cuisineSet.isNotEmpty() && diet != Diet.None) "${diet.identifier} $term" else term
+
+        val radius = milesToMeters(maxMilesSelected).roundToInt()
+        val price = setToYelpString(priceSet)
+        try {
+            queryYelpAtOffset(
+                latitude = queryLat,
+                longitude = queryLng,
+                term = term,
+                radius = radius,
+                categories = categories,
+                offset = 0,
+                price = price,
+                limit = restaurantsPerQuery,
+                open_now = openNowSelected,
+                channel = channel
+            )
+        } catch (throwable: Throwable) {
+            if (throwable !is CancellationException) {
+                throwQueryError(state, updateChannel, eventChannel)
+            }
+            Log.d("Query Error", throwable.toString())
+            channel.close()
+            return
+        }
+        try {
+            for (i in restaurantsPerQuery until numberOfRestaurants step restaurantsPerQuery) {
                 queryYelpAtOffset(
                     latitude = queryLat,
                     longitude = queryLng,
@@ -67,11 +91,11 @@ private suspend fun queryYelp(
                     channel = channel
                 )
             }
+        } catch (throwable: Throwable) {
+            Log.d("Query Error", throwable.toString())
+        } finally {
+            channel.close()
         }
-    } catch (throwable: Throwable) {
-        throwQueryError(state, updateChannel, eventChannel)
-    } finally {
-        channel.close()
     }
 }
 
