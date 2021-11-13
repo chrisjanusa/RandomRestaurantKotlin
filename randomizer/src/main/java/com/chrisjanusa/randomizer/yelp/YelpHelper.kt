@@ -18,6 +18,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Job
 
 
 private const val restaurantsPerQuery = 50
@@ -68,7 +70,9 @@ private suspend fun queryYelp(
                 channel = channel
             )
         } catch (throwable: Throwable) {
-            throwQueryError(state, updateChannel, eventChannel)
+            if (throwable !is CancellationException) {
+                throwQueryError(state, updateChannel, eventChannel)
+            }
             Log.d("Query Error", throwable.toString())
             channel.close()
             return
@@ -161,9 +165,10 @@ suspend fun startQueryingYelp(
     updateChannel: Channel<BaseUpdater>,
     eventChannel: Channel<BaseEvent>,
     channel: Channel<List<Restaurant>>
-) {
+) : Job {
     val job = GlobalScope.launch { queryYelp(state, channel, updateChannel, eventChannel) }
     updateChannel.send(CacheJobUpdater(job))
+    return job
 }
 
 suspend fun throwNoRestaurantError(

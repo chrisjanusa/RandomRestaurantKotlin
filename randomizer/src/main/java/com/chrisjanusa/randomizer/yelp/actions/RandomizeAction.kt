@@ -1,5 +1,6 @@
 package com.chrisjanusa.randomizer.yelp.actions
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.chrisjanusa.base.interfaces.BaseAction
 import com.chrisjanusa.base.interfaces.BaseEvent
@@ -14,6 +15,7 @@ import com.chrisjanusa.randomizer.yelp.updaters.IncreaseTimesRandomizedUpdater
 import com.chrisjanusa.randomizer.yelp.updaters.ReviewRequestedUpdater
 import com.chrisjanusa.yelp.models.Restaurant
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.ClosedReceiveChannelException
 
 class RandomizeAction : BaseAction {
     override suspend fun performAction(
@@ -32,9 +34,17 @@ class RandomizeAction : BaseAction {
 
                 notifyStartingToLoadRestaurants(state, updateChannel, eventChannel)
 
-                startQueryingYelp(state, updateChannel, eventChannel, channel)
+                val job = startQueryingYelp(state, updateChannel, eventChannel, channel)
 
-                var restaurants = channel.receive().filter { !isRestaurantFiltered(state, it) }
+                var restaurants = try {
+                        channel.receive().filter { !isRestaurantFiltered(state, it) }
+                    } catch (exception: ClosedReceiveChannelException) {
+                        Log.d("Channel Error", exception.toString())
+                        emptyList()
+                    }
+                if (job.isCancelled) {
+                    return
+                }
                 if (restaurants.isEmpty()) {
                     throwNoRestaurantError(state, updateChannel, eventChannel)
                     return
