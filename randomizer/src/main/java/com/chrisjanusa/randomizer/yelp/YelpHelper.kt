@@ -47,7 +47,7 @@ private suspend fun queryYelp(
         var term = "restaurants"
         term = when {
             fastFoodSelected && !sitDownSelected -> "fast food $term"
-            !fastFoodSelected && sitDownSelected -> "sit down $term"
+            !fastFoodSelected && sitDownSelected -> "table service $term"
             else -> term
         }
         term =
