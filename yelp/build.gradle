@@ -4,24 +4,18 @@ apply plugin: 'kotlin-android-extensions'
 
 
 android {
-    compileSdkVersion 30
-
-    defaultConfig {
-        minSdkVersion 23
-        targetSdkVersion 30
-    }
 
     buildTypes.each {
         Properties properties = new Properties()
         properties.load(project.rootProject.file("local.properties").newDataInputStream())
         def yelpApiKey = properties.getProperty("yelp_api_key", "")
 
-        it.buildConfigField 'String', "YELP_API_KEY", yelpApiKey
+        it.buildConfigField 'String', "YELP_API_KEY", "\"" + yelpApiKey + "\""
 
         it.resValue 'string', "yelp_api_key", yelpApiKey
 
     }
-
+    compileSdkVersion targetSdkVersion
 }
 
 dependencies {
