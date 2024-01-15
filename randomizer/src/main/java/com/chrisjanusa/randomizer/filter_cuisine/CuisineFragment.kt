@@ -18,9 +18,7 @@ import com.chrisjanusa.randomizer.filter_cuisine.actions.ApplyCuisineAction
 import com.chrisjanusa.randomizer.filter_cuisine.actions.CuisineChangeAction
 import com.chrisjanusa.randomizer.filter_cuisine.actions.InitCuisineFilterAction
 import com.chrisjanusa.randomizer.filter_cuisine.actions.ResetCuisineAction
-import kotlinx.android.synthetic.main.confirmation_buttons.*
-import kotlinx.android.synthetic.main.cuisines.*
-import kotlinx.android.synthetic.main.price_filter_fragment.*
+
 
 class CuisineFragment : Fragment() {
     val randomizerViewModel: RandomizerViewModel by lazy {
@@ -38,23 +36,24 @@ class CuisineFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        shade.setOnClickListener { onCancelFilterClick(randomizerViewModel) }
-        confirm.setOnClickListener { sendAction(ApplyCuisineAction(), randomizerViewModel) }
-        xout.setOnClickListener { onCancelFilterClick(randomizerViewModel) }
-        reset.setOnClickListener { sendAction(ResetCuisineAction(), randomizerViewModel) }
-
-        american.setOnClickListener { cuisineClick(Cuisine.American) }
-        asian.setOnClickListener { cuisineClick(Cuisine.Asian) }
-        bbq.setOnClickListener { cuisineClick(Cuisine.Bbq) }
-        deli.setOnClickListener { cuisineClick(Cuisine.Deli) }
-        desserts.setOnClickListener { cuisineClick(Cuisine.Dessert) }
-        italian.setOnClickListener { cuisineClick(Cuisine.Italian) }
-        indian.setOnClickListener { cuisineClick(Cuisine.Indian) }
-        mexican.setOnClickListener { cuisineClick(Cuisine.Mexican) }
-        pizza.setOnClickListener { cuisineClick(Cuisine.Pizza) }
-        seafood.setOnClickListener { cuisineClick(Cuisine.Seafood) }
-        steak.setOnClickListener { cuisineClick(Cuisine.Steak) }
-        sushi.setOnClickListener { cuisineClick(Cuisine.Sushi) }
+        // TODO: Synthetics
+//        shade.setOnClickListener { onCancelFilterClick(randomizerViewModel) }
+//        confirm.setOnClickListener { sendAction(ApplyCuisineAction(), randomizerViewModel) }
+//        xout.setOnClickListener { onCancelFilterClick(randomizerViewModel) }
+//        reset.setOnClickListener { sendAction(ResetCuisineAction(), randomizerViewModel) }
+//
+//        american.setOnClickListener { cuisineClick(Cuisine.American) }
+//        asian.setOnClickListener { cuisineClick(Cuisine.Asian) }
+//        bbq.setOnClickListener { cuisineClick(Cuisine.Bbq) }
+//        deli.setOnClickListener { cuisineClick(Cuisine.Deli) }
+//        desserts.setOnClickListener { cuisineClick(Cuisine.Dessert) }
+//        italian.setOnClickListener { cuisineClick(Cuisine.Italian) }
+//        indian.setOnClickListener { cuisineClick(Cuisine.Indian) }
+//        mexican.setOnClickListener { cuisineClick(Cuisine.Mexican) }
+//        pizza.setOnClickListener { cuisineClick(Cuisine.Pizza) }
+//        seafood.setOnClickListener { cuisineClick(Cuisine.Seafood) }
+//        steak.setOnClickListener { cuisineClick(Cuisine.Steak) }
+//        sushi.setOnClickListener { cuisineClick(Cuisine.Sushi) }
     }
 
     override fun onResume() {
@@ -69,18 +68,18 @@ class CuisineFragment : Fragment() {
     private val render = fun(newState: RandomizerState) {
         context?.let {
             newState.cuisineTempSet.run {
-                renderCuisineCard(american, american_description, american_icon, contains(Cuisine.American), it)
-                renderCuisineCard(asian, asian_description, asian_icon, contains(Cuisine.Asian), it)
-                renderCuisineCard(bbq, bbq_description, bbq_icon, contains(Cuisine.Bbq), it)
-                renderCuisineCard(deli, deli_description, deli_icon, contains(Cuisine.Deli), it)
-                renderCuisineCard(desserts, desserts_description, desserts_icon, contains(Cuisine.Dessert), it)
-                renderCuisineCard(italian, italian_description, italian_icon, contains(Cuisine.Italian), it)
-                renderCuisineCard(indian, indian_description, indian_icon, contains(Cuisine.Indian), it)
-                renderCuisineCard(mexican, mexican_description, mexican_icon, contains(Cuisine.Mexican), it)
-                renderCuisineCard(pizza, pizza_description, pizza_icon, contains(Cuisine.Pizza), it)
-                renderCuisineCard(seafood, seafood_description, seafood_icon, contains(Cuisine.Seafood), it)
-                renderCuisineCard(steak, steak_description, steak_icon, contains(Cuisine.Steak), it)
-                renderCuisineCard(sushi, sushi_description, sushi_icon, contains(Cuisine.Sushi), it)
+//                renderCuisineCard(american, american_description, american_icon, contains(Cuisine.American), it)
+//                renderCuisineCard(asian, asian_description, asian_icon, contains(Cuisine.Asian), it)
+//                renderCuisineCard(bbq, bbq_description, bbq_icon, contains(Cuisine.Bbq), it)
+//                renderCuisineCard(deli, deli_description, deli_icon, contains(Cuisine.Deli), it)
+//                renderCuisineCard(desserts, desserts_description, desserts_icon, contains(Cuisine.Dessert), it)
+//                renderCuisineCard(italian, italian_description, italian_icon, contains(Cuisine.Italian), it)
+//                renderCuisineCard(indian, indian_description, indian_icon, contains(Cuisine.Indian), it)
+//                renderCuisineCard(mexican, mexican_description, mexican_icon, contains(Cuisine.Mexican), it)
+//                renderCuisineCard(pizza, pizza_description, pizza_icon, contains(Cuisine.Pizza), it)
+//                renderCuisineCard(seafood, seafood_description, seafood_icon, contains(Cuisine.Seafood), it)
+//                renderCuisineCard(steak, steak_description, steak_icon, contains(Cuisine.Steak), it)
+//                renderCuisineCard(sushi, sushi_description, sushi_icon, contains(Cuisine.Sushi), it)
             }
         }
     }

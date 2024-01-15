@@ -15,22 +15,22 @@ import com.chrisjanusa.baselist.BlockClickAndRefreshAction
 import com.chrisjanusa.baselist.FavoriteClickAndRefreshAction
 import com.chrisjanusa.baselist.RestaurantAdapter
 import com.chrisjanusa.yelp.models.Restaurant
-import kotlinx.android.synthetic.main.blocks_frag.*
 import java.util.*
 
 object BlocksListUIManager : FeatureUIManager {
     override fun init(randomizerViewModel: RandomizerViewModel, fragment: BaseRestaurantFragment) {
         fragment.run {
-            recyclerView.apply {
-                // set a LinearLayoutManager to handle Android
-                // RecyclerView behavior
-                layoutManager = LinearLayoutManager(activity)
-                // set the custom adapter to the RecyclerView
-                adapter = RestaurantAdapter(
-                    randomizerViewModel.state.value?.blockList ?: LinkedList(),
-                    randomizerViewModel
-                ) { inflater: LayoutInflater, parent: ViewGroup -> RestaurantViewHolder(inflater, parent) }
-            }
+            // TODO: Synthetics
+//            recyclerView.apply {
+//                // set a LinearLayoutManager to handle Android
+//                // RecyclerView behavior
+//                layoutManager = LinearLayoutManager(activity)
+//                // set the custom adapter to the RecyclerView
+//                adapter = RestaurantAdapter(
+//                    randomizerViewModel.state.value?.blockList ?: LinkedList(),
+//                    randomizerViewModel
+//                ) { inflater: LayoutInflater, parent: ViewGroup -> RestaurantViewHolder(inflater, parent) }
+//            }
         }
     }
 

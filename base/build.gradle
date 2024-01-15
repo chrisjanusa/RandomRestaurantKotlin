@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion targetSdkVersion
@@ -8,16 +7,22 @@ android {
     buildTypes.each {
         Properties properties = new Properties()
         properties.load(project.rootProject.file("local.properties").newDataInputStream())
-        def googleApiKey = properties.getProperty("google_api_key", "")
-        def uberClientId = properties.getProperty("uber_client_id", "")
+        def googleApiKey = properties.getProperty("google_api_key", "AIzaSyCM_IjhuhEI-yyKubOvXRKKZBNYifJphew")
+        def uberClientId = properties.getProperty("uber_client_id", "bsWyI4Dr9zyAvA4wW0IuN3lQg61f91Pf")
 
         it.buildConfigField 'String', "uberClientId", "\"" + uberClientId + "\""
 
         it.resValue 'string', "google_api_key", "\"" + googleApiKey + "\""
 
     }
+  namespace 'com.chrisjanusa.base'
+    buildFeatures {
+        buildConfig true
+    }
 }
-
+kotlin {
+    jvmToolchain(17)
+}
 dependencies {
     api project(":restaurantstorage")
     api project(":restaurantcard")

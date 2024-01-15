@@ -25,11 +25,11 @@ import com.chrisjanusa.restaurant_base.restaurant_favorite.actions.FavoriteClick
 import com.chrisjanusa.yelp.models.Restaurant
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.material.button.MaterialButton
-import kotlinx.android.synthetic.main.bottom_overlay.*
 
 object YelpUIManager : FeatureUIManager {
     override fun init(randomizerViewModel: RandomizerViewModel, fragment: BaseRestaurantFragment) {
-        fragment.random.setOnClickListener { sendAction(RandomizeAction(), randomizerViewModel) }
+        // TODO: Synthetics
+//        fragment.random.setOnClickListener { sendAction(RandomizeAction(), randomizerViewModel) }
     }
 
     override fun render(state: RandomizerState, fragment: Fragment) {

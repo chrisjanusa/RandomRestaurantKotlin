@@ -15,24 +15,24 @@ import com.chrisjanusa.randomizer.RandomizerFragment
 import com.chrisjanusa.randomizer.location_search.actions.SearchGainFocusAction
 import com.google.android.libraries.maps.model.BitmapDescriptor
 import com.google.android.libraries.maps.model.BitmapDescriptorFactory
-import kotlinx.android.synthetic.main.search_card.*
 
 object LocationUIManager : FeatureUIManager {
 
     override fun init(randomizerViewModel: RandomizerViewModel, fragment: BaseRestaurantFragment) {
         fragment.run {
-            current_location.setOnClickListener {
-                sendAction(
-                    SearchGainFocusAction(randomizerViewModel.state.value?.addressSearchString ?: ""),
-                    randomizerViewModel
-                )
-            }
+            // TODO: Synthetics
+//            current_location.setOnClickListener {
+//                sendAction(
+//                    SearchGainFocusAction(randomizerViewModel.state.value?.addressSearchString ?: ""),
+//                    randomizerViewModel
+//                )
+//            }
         }
     }
 
     override fun render(state: RandomizerState, fragment: Fragment) {
         fragment.run {
-            current_text.text = state.locationText
+//            current_text.text = state.locationText
         }
     }
 

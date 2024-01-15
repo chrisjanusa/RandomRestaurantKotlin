@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 
 
 android {
@@ -11,27 +10,30 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    compileOptions {
-        sourceCompatibility = '1.8'
-        targetCompatibility = '1.8'
-    }
     compileSdkVersion targetSdkVersion
+    buildFeatures {
+        viewBinding true
+    }
+  namespace 'com.chrisjanusa.randomizer'
 }
-
+kotlin {
+    jvmToolchain(17)
+}
 dependencies {
+    implementation 'com.android.volley:volley:1.2.1'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.ramotion.fluidslider:fluid-slider:0.3.1'
     implementation project(":base")
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
-    implementation 'com.google.android.gms:play-services-location:17.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
     implementation 'com.seatgeek:placesautocomplete:0.3-SNAPSHOT'
     implementation 'com.google.android.libraries.maps:maps:3.1.0-beta'
-    implementation 'com.google.android.gms:play-services-basement:17.4.0'
-    implementation 'com.google.android.gms:play-services-base:17.4.0'
+    implementation 'com.google.android.gms:play-services-basement:18.3.0'
+    implementation 'com.google.android.gms:play-services-base:18.3.0'
     implementation 'com.google.android.gms:play-services-gcm:17.0.0'
-    implementation "androidx.fragment:fragment-ktx:1.2.5"
+    implementation "androidx.fragment:fragment-ktx:1.6.2"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.5'
-    implementation 'com.google.android.play:core:1.8.2'
+    implementation 'com.google.android.play:core:1.10.3'
     implementation 'com.google.android.play:core-ktx:1.8.1'
 }

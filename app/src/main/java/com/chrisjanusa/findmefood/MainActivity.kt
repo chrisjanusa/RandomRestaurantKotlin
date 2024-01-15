@@ -8,7 +8,6 @@ import androidx.navigation.Navigation
 import androidx.navigation.ui.setupWithNavController
 import com.chrisjanusa.randomizer.filter_base.OverlayFragmentManager
 import com.chrisjanusa.randomizer.filter_base.ShadeFragment
-import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : OverlayFragmentManager, AppCompatActivity() {
@@ -41,9 +40,10 @@ class MainActivity : OverlayFragmentManager, AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val navController = Navigation.findNavController(this, R.id.my_nav_host_fragment)
-        nav_view.setupWithNavController(navController)
-        nav_view.setOnNavigationItemReselectedListener {
+        // TODO: Synthetics
+//        nav_view.setupWithNavController(navController)
+//        nav_view.setOnNavigationItemReselectedListener {
             // Do nothing to ignore the reselection
-        }
+//        }
     }
 }

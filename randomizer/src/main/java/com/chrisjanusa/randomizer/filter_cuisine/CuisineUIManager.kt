@@ -18,12 +18,12 @@ import com.chrisjanusa.randomizer.filter_base.FilterHelper.getStrokeColor
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.getTextColor
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.renderFilterWithIconStyle
 import com.google.android.material.card.MaterialCardView
-import kotlinx.android.synthetic.main.filters.*
 
 object CuisineUIManager : FeatureUIManager {
     override fun init(randomizerViewModel: RandomizerViewModel, fragment: BaseRestaurantFragment) {
         fragment.run {
-            cuisines.setOnClickListener { clickSelectionFilter(Filter.Cuisine, randomizerViewModel) }
+            // TODO: Synthetics
+//            cuisines.setOnClickListener { clickSelectionFilter(Filter.Cuisine, randomizerViewModel) }
         }
     }
 
@@ -31,17 +31,17 @@ object CuisineUIManager : FeatureUIManager {
         fragment.run {
             val selected = state.cuisineSet.isNotEmpty()
             val cuisineSet = state.cuisineSet
-            cuisines.text = if (cuisineSet.isEmpty()) {
-                toDisplayString(defaultCuisineTitle)
-            } else {
-                val out = StringBuilder()
-                for (cuisine in cuisineSet.iterator()) {
-                    out.append(cuisine.identifier)
-                    out.append(delimiter)
-                }
-                toDisplayString(out.dropLast(2).toString())
-            }
-            context?.let { renderFilterWithIconStyle(cuisines, selected, it) }
+//            cuisines.text = if (cuisineSet.isEmpty()) {
+//                toDisplayString(defaultCuisineTitle)
+//            } else {
+//                val out = StringBuilder()
+//                for (cuisine in cuisineSet.iterator()) {
+//                    out.append(cuisine.identifier)
+//                    out.append(delimiter)
+//                }
+//                toDisplayString(out.dropLast(2).toString())
+//            }
+//            context?.let { renderFilterWithIconStyle(cuisines, selected, it) }
         }
     }
 
@@ -53,6 +53,6 @@ object CuisineUIManager : FeatureUIManager {
         card.strokeColor = getColor(context, getStrokeColor(selected))
         val color = getColor(context, getTextColor(selected))
         text.setTextColor(color)
-        icon.setColorFilter(color)
+//        icon.setColorFilter(color)
     }
 }

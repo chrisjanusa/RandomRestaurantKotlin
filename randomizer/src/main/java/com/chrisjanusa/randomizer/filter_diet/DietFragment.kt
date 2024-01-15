@@ -18,8 +18,6 @@ import com.chrisjanusa.randomizer.filter_diet.actions.ApplyDietAction
 import com.chrisjanusa.randomizer.filter_diet.actions.DietChangeAction
 import com.chrisjanusa.randomizer.filter_diet.actions.InitDietFilterAction
 import com.chrisjanusa.randomizer.filter_diet.actions.ResetDietAction
-import kotlinx.android.synthetic.main.confirmation_buttons.*
-import kotlinx.android.synthetic.main.diet_filter_fragment.*
 
 class DietFragment : Fragment() {
     val randomizerViewModel: RandomizerViewModel by lazy {
@@ -37,15 +35,16 @@ class DietFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        shade.setOnClickListener { onCancelFilterClick(randomizerViewModel) }
-        confirm.setOnClickListener { sendAction(ApplyDietAction(), randomizerViewModel) }
-        xout.setOnClickListener { onCancelFilterClick(randomizerViewModel) }
-        reset.setOnClickListener { sendAction(ResetDietAction(), randomizerViewModel) }
-
-        halal.setOnClickListener { dietClick(Diet.Halal) }
-        vegan.setOnClickListener { dietClick(Diet.Vegan) }
-        vegetarian.setOnClickListener { dietClick(Diet.Vegetarian) }
-        kosher.setOnClickListener { dietClick(Diet.Kosher) }
+        // TODO: Synthetics
+//        shade.setOnClickListener { onCancelFilterClick(randomizerViewModel) }
+//        confirm.setOnClickListener { sendAction(ApplyDietAction(), randomizerViewModel) }
+//        xout.setOnClickListener { onCancelFilterClick(randomizerViewModel) }
+//        reset.setOnClickListener { sendAction(ResetDietAction(), randomizerViewModel) }
+//
+//        halal.setOnClickListener { dietClick(Diet.Halal) }
+//        vegan.setOnClickListener { dietClick(Diet.Vegan) }
+//        vegetarian.setOnClickListener { dietClick(Diet.Vegetarian) }
+//        kosher.setOnClickListener { dietClick(Diet.Kosher) }
     }
 
     override fun onResume() {
@@ -59,10 +58,10 @@ class DietFragment : Fragment() {
 
     private val render = fun(newState: RandomizerState) {
         context?.let {
-            renderFilterStyle(halal, Diet.Halal == newState.dietTempSelected, it)
-            renderFilterStyle(vegan, Diet.Vegan == newState.dietTempSelected, it)
-            renderFilterStyle(vegetarian, Diet.Vegetarian == newState.dietTempSelected, it)
-            renderFilterStyle(kosher, Diet.Kosher == newState.dietTempSelected, it)
+//            renderFilterStyle(halal, Diet.Halal == newState.dietTempSelected, it)
+//            renderFilterStyle(vegan, Diet.Vegan == newState.dietTempSelected, it)
+//            renderFilterStyle(vegetarian, Diet.Vegetarian == newState.dietTempSelected, it)
+//            renderFilterStyle(kosher, Diet.Kosher == newState.dietTempSelected, it)
         }
     }
 }

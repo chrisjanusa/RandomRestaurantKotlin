@@ -18,8 +18,6 @@ import com.chrisjanusa.randomizer.filter_distance.actions.DistanceChangeAction
 import com.chrisjanusa.randomizer.filter_distance.actions.InitDistanceFilterAction
 import com.chrisjanusa.randomizer.filter_distance.actions.ResetDistanceAction
 import com.ramotion.fluidslider.FluidSlider
-import kotlinx.android.synthetic.main.confirmation_buttons.*
-import kotlinx.android.synthetic.main.distance_filter_fragment.*
 
 class DistanceFragment : Fragment() {
     val randomizerViewModel: RandomizerViewModel by lazy {
@@ -37,17 +35,18 @@ class DistanceFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        shade.setOnClickListener { onCancelFilterClick(randomizerViewModel) }
-        confirm.setOnClickListener { sendAction(ApplyDistanceAction(), randomizerViewModel) }
-        xout.setOnClickListener { onCancelFilterClick(randomizerViewModel) }
-        reset.setOnClickListener { sendAction(ResetDistanceAction(), randomizerViewModel) }
+        // TODO: Synthetics
+//        shade.setOnClickListener { onCancelFilterClick(randomizerViewModel) }
+//        confirm.setOnClickListener { sendAction(ApplyDistanceAction(), randomizerViewModel) }
+//        xout.setOnClickListener { onCancelFilterClick(randomizerViewModel) }
+//        reset.setOnClickListener { sendAction(ResetDistanceAction(), randomizerViewModel) }
 
-        val slider = distance as FluidSlider
-        slider.positionListener = { pos -> slider.bubbleText = "%.1f".format(percentToDistance(pos)) }
-        slider.position = distanceToPercent(defaultDistance)
-        slider.startText = "$minDistance miles"
-        slider.endText = "$maxDistance miles"
-        slider.endTrackingListener = { distanceChange(percentToDistance(slider.position)) }
+//        val slider = distance as FluidSlider
+//        slider.positionListener = { pos -> slider.bubbleText = "%.1f".format(percentToDistance(pos)) }
+//        slider.position = distanceToPercent(defaultDistance)
+//        slider.startText = "$minDistance miles"
+//        slider.endText = "$maxDistance miles"
+//        slider.endTrackingListener = { distanceChange(percentToDistance(slider.position)) }
     }
 
     override fun onResume() {
@@ -60,6 +59,6 @@ class DistanceFragment : Fragment() {
     }
 
     private val render = fun(newState: RandomizerState) {
-        distance.position = distanceToPercent(newState.tempMaxMiles)
+//        distance.position = distanceToPercent(newState.tempMaxMiles)
     }
 }

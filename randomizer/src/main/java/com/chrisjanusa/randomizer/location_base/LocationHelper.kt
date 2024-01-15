@@ -57,7 +57,7 @@ fun getTextFromLatLng(activity: Activity, currLat: Double, currLng: Double): Str
     return try {
         Geocoder(activity)
             .getFromLocation(currLat, currLng, 1)
-            .getOrNull(0)
+            ?.getOrNull(0)
             ?.locality
             ?: defaultLocationText
     } catch (throwable : Throwable) {

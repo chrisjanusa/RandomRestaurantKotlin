@@ -18,8 +18,6 @@ import com.chrisjanusa.randomizer.filter_price.actions.ApplyPriceAction
 import com.chrisjanusa.randomizer.filter_price.actions.InitPriceFilterAction
 import com.chrisjanusa.randomizer.filter_price.actions.PriceChangeAction
 import com.chrisjanusa.randomizer.filter_price.actions.ResetPriceAction
-import kotlinx.android.synthetic.main.confirmation_buttons.*
-import kotlinx.android.synthetic.main.price_filter_fragment.*
 
 class PriceFragment : Fragment() {
     val randomizerViewModel: RandomizerViewModel by lazy {
@@ -37,14 +35,14 @@ class PriceFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        shade.setOnClickListener { onCancelFilterClick(randomizerViewModel) }
-        confirm.setOnClickListener { sendAction(ApplyPriceAction(), randomizerViewModel) }
-        xout.setOnClickListener { onCancelFilterClick(randomizerViewModel) }
-        reset.setOnClickListener { sendAction(ResetPriceAction(), randomizerViewModel) }
-        price1.setOnClickListener { priceClick(Price.One) }
-        price2.setOnClickListener { priceClick(Price.Two) }
-        price3.setOnClickListener { priceClick(Price.Three) }
-        price4.setOnClickListener { priceClick(Price.Four) }
+//        shade.setOnClickListener { onCancelFilterClick(randomizerViewModel) }
+//        confirm.setOnClickListener { sendAction(ApplyPriceAction(), randomizerViewModel) }
+//        xout.setOnClickListener { onCancelFilterClick(randomizerViewModel) }
+//        reset.setOnClickListener { sendAction(ResetPriceAction(), randomizerViewModel) }
+//        price1.setOnClickListener { priceClick(Price.One) }
+//        price2.setOnClickListener { priceClick(Price.Two) }
+//        price3.setOnClickListener { priceClick(Price.Three) }
+//        price4.setOnClickListener { priceClick(Price.Four) }
     }
 
     override fun onResume() {
@@ -58,10 +56,10 @@ class PriceFragment : Fragment() {
 
     private val render = fun(newState: RandomizerState) {
         context?.let {
-            renderFilterStyle(price1, newState.priceTempSet.contains(Price.One), it)
-            renderFilterStyle(price2, newState.priceTempSet.contains(Price.Two), it)
-            renderFilterStyle(price3, newState.priceTempSet.contains(Price.Three), it)
-            renderFilterStyle(price4, newState.priceTempSet.contains(Price.Four), it)
+//            renderFilterStyle(price1, newState.priceTempSet.contains(Price.One), it)
+//            renderFilterStyle(price2, newState.priceTempSet.contains(Price.Two), it)
+//            renderFilterStyle(price3, newState.priceTempSet.contains(Price.Three), it)
+//            renderFilterStyle(price4, newState.priceTempSet.contains(Price.Four), it)
         }
     }
 }

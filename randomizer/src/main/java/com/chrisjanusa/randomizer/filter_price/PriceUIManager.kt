@@ -11,21 +11,21 @@ import com.chrisjanusa.base.models.enums.Filter
 import com.chrisjanusa.base.models.enums.Price
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.clickSelectionFilter
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.renderFilterWithIconStyle
-import kotlinx.android.synthetic.main.filters.*
 
 object PriceUIManager : FeatureUIManager {
 
     override fun init(randomizerViewModel: RandomizerViewModel, fragment: BaseRestaurantFragment) {
         fragment.run {
-            price.setOnClickListener { clickSelectionFilter(Filter.Price, randomizerViewModel) }
+            // TODO: Synthetics
+//            price.setOnClickListener { clickSelectionFilter(Filter.Price, randomizerViewModel) }
         }
     }
 
     override fun render(state: RandomizerState, fragment: Fragment) {
         fragment.run {
             val selected = state.priceSet.isNotEmpty()
-            price.text = state.priceSet.toDisplayString()
-            context?.let { renderFilterWithIconStyle(price, selected, it) }
+//            price.text = state.priceSet.toDisplayString()
+//            context?.let { renderFilterWithIconStyle(price, selected, it) }
         }
     }
 

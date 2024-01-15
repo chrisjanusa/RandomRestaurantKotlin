@@ -19,13 +19,6 @@ import com.chrisjanusa.randomizer.filter_rating.actions.InitRatingFilterAction
 import com.chrisjanusa.randomizer.filter_rating.actions.RatingChangeAction
 import com.chrisjanusa.randomizer.filter_rating.actions.ResetRatingAction
 import com.ramotion.fluidslider.FluidSlider
-import kotlinx.android.synthetic.main.confirmation_buttons.*
-import kotlinx.android.synthetic.main.distance_filter_fragment.*
-import kotlinx.android.synthetic.main.distance_filter_fragment.distance
-import kotlinx.android.synthetic.main.distance_filter_fragment.shade
-import kotlinx.android.synthetic.main.distance_filter_fragment.xout
-import kotlinx.android.synthetic.main.filters.*
-import kotlinx.android.synthetic.main.rating_filter_fragment.*
 
 class RatingFragment : Fragment() {
     val randomizerViewModel: RandomizerViewModel by lazy {
@@ -47,12 +40,13 @@ class RatingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        shade.setOnClickListener { onCancelFilterClick(randomizerViewModel) }
-        confirm.setOnClickListener { sendAction(ApplyRatingAction(), randomizerViewModel) }
-        xout.setOnClickListener { onCancelFilterClick(randomizerViewModel) }
-        reset.setOnClickListener { sendAction(ResetRatingAction(), randomizerViewModel) }
-
-        ratingbar.setOnRatingBarChangeListener { _, rating, _ ->  ratingChange(rating)}
+        // TODO: Synthetics
+//        shade.setOnClickListener { onCancelFilterClick(randomizerViewModel) }
+//        confirm.setOnClickListener { sendAction(ApplyRatingAction(), randomizerViewModel) }
+//        xout.setOnClickListener { onCancelFilterClick(randomizerViewModel) }
+//        reset.setOnClickListener { sendAction(ResetRatingAction(), randomizerViewModel) }
+//
+//        ratingbar.setOnRatingBarChangeListener { _, rating, _ ->  ratingChange(rating)}
     }
 
     override fun onResume() {
@@ -65,6 +59,6 @@ class RatingFragment : Fragment() {
     }
 
     private val render = fun(newState: RandomizerState) {
-        ratingbar.rating = newState.tempMinRating
+//        ratingbar.rating = newState.tempMinRating
     }
 }
