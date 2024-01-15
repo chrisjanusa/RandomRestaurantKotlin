@@ -36,7 +36,7 @@ class LocationChosenAction(private val details: PlaceDetails, private val contex
             }
 
             val address = Geocoder(context).getFromLocationName(formatted_address, 1)
-                .getOrNull(0)
+                ?.getOrNull(0)
             val latitude = address?.latitude
             val longitude = address?.longitude
             if (latitude == null || longitude == null) {

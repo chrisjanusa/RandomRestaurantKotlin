@@ -93,18 +93,18 @@ object GpsHelper {
 
     private fun receiveLocation(
         context: Context,
-        location: Location,
+        location: Location?,
         updateChannel: Channel<BaseUpdater>,
         mapChannel: Channel<MapEvent>,
         prevLat: Double?,
         prevLng: Double?
     ) {
-        location.run {
+        location?.run {
             var locationName = defaultLocationText
             try {
                 locationName = Geocoder(context)
-                    .getFromLocation(latitude, longitude, 1)[0]
-                    .locality
+                    .getFromLocation(latitude, longitude, 1)?.get(0)
+                    ?.locality ?: defaultLocationText
             } catch (throwable : Throwable) {
                 throwable.message?.let { Log.e("Random Restaurant Error", it) }
             }

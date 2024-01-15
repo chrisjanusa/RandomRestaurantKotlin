@@ -3,17 +3,17 @@ package com.chrisjanusa.randomizer.location_search.events
 import android.view.View
 import com.chrisjanusa.base.interfaces.BaseEvent
 import com.chrisjanusa.base.interfaces.BaseRestaurantFragment
-import kotlinx.android.synthetic.main.search_card.*
-import kotlinx.android.synthetic.main.top_overlay.*
+import com.chrisjanusa.randomizer.RandomizerFragmentDetails
 
 class SearchClosedEvent : BaseEvent {
     override fun handleEvent(fragment: BaseRestaurantFragment) {
-        fragment.run {
-            user_input.setText("")
-            search_shade.animate()
+        (fragment.getFragmentDetails() as? RandomizerFragmentDetails)?.binding?.run {
+            locationContainer.searchCard.userInput.setText("")
+            val searchShade = locationContainer.searchShade.root
+            searchShade.animate()
                 .alpha(0f)
                 .setDuration(150)
-                .withEndAction { search_shade.visibility = View.GONE }
+                .withEndAction { searchShade.visibility = View.GONE }
         }
     }
 }

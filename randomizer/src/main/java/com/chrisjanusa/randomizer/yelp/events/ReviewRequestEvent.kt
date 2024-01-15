@@ -12,7 +12,7 @@ class ReviewRequestEvent : BaseEvent {
             requestReview.addOnCompleteListener { request ->
                 if (request.isSuccessful) {
                     val reviewInfo = request.result
-                    manager.launchReviewFlow(fragment.activity, reviewInfo)
+                    fragment.activity?.let { manager.launchReviewFlow(it, reviewInfo) }
                 }
             }
         }

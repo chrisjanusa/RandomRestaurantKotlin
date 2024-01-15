@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 
 
 android {
@@ -8,19 +7,26 @@ android {
     buildTypes.each {
         Properties properties = new Properties()
         properties.load(project.rootProject.file("local.properties").newDataInputStream())
-        def yelpApiKey = properties.getProperty("yelp_api_key", "")
+        def yelpApiKey = properties.getProperty("yelp_api_key", "9d1ugKsHNu2FwjWshce7ax6BTAcBAJ2xwxWaUOUyR88SVvJgkUjcLms62R725UjPnv1CEolpdN-BuBo02vpalRLiV24QNzS1Tm-fJ7SzZw8qydisUy209xjR1wm7WHYx")
 
         it.buildConfigField 'String', "YELP_API_KEY", "\"" + yelpApiKey + "\""
 
         it.resValue 'string', "yelp_api_key", yelpApiKey
 
     }
-    compileSdkVersion targetSdkVersion
+    compileSdk 34
+  namespace 'com.chrisjanusa.yelp'
+    buildFeatures {
+        buildConfig true
+    }
 }
-
+kotlin {
+    jvmToolchain(17)
+}
 dependencies {
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
     implementation "com.squareup.retrofit2:converter-jackson:2.9.0"
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.11.2"
     api "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 }
+

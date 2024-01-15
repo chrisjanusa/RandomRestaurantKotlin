@@ -1,17 +1,20 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'com.google.gms.google-services'
 
 android {
-    compileSdkVersion targetSdkVersion
+    compileSdk 34
+
+    buildFeatures {
+        viewBinding = true
+    }
 
     defaultConfig {
-        minSdkVersion 23
-        targetSdkVersion targetSdkVersion
-        versionCode 21
-        versionName "2.1.3"
+        minSdk 24
+        targetSdk 34
+        versionCode 25
+        versionName "2.2.3"
     }
 
     buildTypes {
@@ -19,25 +22,22 @@ android {
             minifyEnabled false
         }
     }
-    compileOptions {
-        sourceCompatibility = '1.8'
-        targetCompatibility = '1.8'
-    }
-
+    namespace 'com.chrisjanusa.findmefood'
 }
-
+kotlin {
+    jvmToolchain(17)
+}
 dependencies {
-    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'com.google.android.material:material:1.11.0'
     implementation project(":randomizer")
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.0'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.0'
-    implementation "androidx.fragment:fragment-ktx:1.2.5"
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.7.7'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.7.7'
+    implementation "androidx.fragment:fragment-ktx:1.6.2"
     implementation project(":history")
     implementation project(":favorites")
     implementation project(":blocks")
-    implementation 'com.google.firebase:firebase-analytics:17.5.0'
-    implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.5'
+    implementation 'com.google.firebase:firebase-analytics:21.6.2'
+    implementation 'com.google.firebase:firebase-crashlytics:18.6.4'
 }
 
 repositories {
