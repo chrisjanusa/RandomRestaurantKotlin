@@ -7,10 +7,10 @@ android {
     compileSdkVersion targetSdkVersion
 
     defaultConfig {
-        minSdkVersion 23
+        minSdkVersion 24
         targetSdkVersion targetSdkVersion
-        versionCode 22
-        versionName "2.2.0"
+        versionCode 23
+        versionName "2.3.0"
     }
 
     buildTypes {
@@ -26,14 +26,14 @@ kotlin {
 dependencies {
     implementation 'com.google.android.material:material:1.11.0'
     implementation project(":randomizer")
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.7.6'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.7.6'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.7.7'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.7.7'
     implementation "androidx.fragment:fragment-ktx:1.6.2"
     implementation project(":history")
     implementation project(":favorites")
     implementation project(":blocks")
-    implementation 'com.google.firebase:firebase-analytics:21.5.0'
-    implementation 'com.google.firebase:firebase-crashlytics:18.6.0'
+    implementation 'com.google.firebase:firebase-analytics:21.5.1'
+    implementation 'com.google.firebase:firebase-crashlytics:18.6.2'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.5'
 }
 
