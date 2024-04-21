@@ -14,7 +14,7 @@ android {
         it.resValue 'string', "yelp_api_key", yelpApiKey
 
     }
-    compileSdkVersion targetSdkVersion
+    compileSdk 34
   namespace 'com.chrisjanusa.yelp'
     buildFeatures {
         buildConfig true

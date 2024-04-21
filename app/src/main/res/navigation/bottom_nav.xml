@@ -16,7 +16,7 @@
             tools:layout="@layout/history_frag" />
     <fragment
             android:id="@+id/navigation_favorites"
-            android:name="com.chrisjanusa.favorites.FaovritesFragment"
+            android:name="com.chrisjanusa.favorites.FavoritesFragment"
             android:label="FaovritesFragment"
             tools:layout="@layout/favorites_frag"/>
     <fragment

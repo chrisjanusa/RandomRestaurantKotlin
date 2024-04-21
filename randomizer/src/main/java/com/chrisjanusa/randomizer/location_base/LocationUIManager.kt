@@ -4,13 +4,13 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import androidx.annotation.DrawableRes
 import androidx.core.content.res.ResourcesCompat
-import androidx.fragment.app.Fragment
 import com.chrisjanusa.base.CommunicationHelper.sendAction
-import com.chrisjanusa.base.interfaces.BaseRestaurantFragment
 import com.chrisjanusa.randomizer.R
 import com.chrisjanusa.base.interfaces.FeatureUIManager
+import com.chrisjanusa.base.interfaces.BaseFragmentDetails
 import com.chrisjanusa.base.models.RandomizerState
 import com.chrisjanusa.base.models.RandomizerViewModel
+import com.chrisjanusa.randomizer.RandomizerFragmentDetails
 import com.chrisjanusa.randomizer.RandomizerFragment
 import com.chrisjanusa.randomizer.location_search.actions.SearchGainFocusAction
 import com.google.android.libraries.maps.model.BitmapDescriptor
@@ -18,21 +18,23 @@ import com.google.android.libraries.maps.model.BitmapDescriptorFactory
 
 object LocationUIManager : FeatureUIManager {
 
-    override fun init(randomizerViewModel: RandomizerViewModel, fragment: BaseRestaurantFragment) {
-        fragment.run {
-            // TODO: Synthetics
-//            current_location.setOnClickListener {
-//                sendAction(
-//                    SearchGainFocusAction(randomizerViewModel.state.value?.addressSearchString ?: ""),
-//                    randomizerViewModel
-//                )
-//            }
+
+    override fun init(randomizerViewModel: RandomizerViewModel, baseFragmentDetails: BaseFragmentDetails) {
+        if (baseFragmentDetails is RandomizerFragmentDetails) {
+            baseFragmentDetails.fragment.run {
+                baseFragmentDetails.binding.locationContainer.searchCard.currentLocation.setOnClickListener {
+                    sendAction(
+                        SearchGainFocusAction(randomizerViewModel.state.value?.addressSearchString ?: ""),
+                        randomizerViewModel
+                    )
+                }
+            }
         }
     }
 
-    override fun render(state: RandomizerState, fragment: Fragment) {
-        fragment.run {
-//            current_text.text = state.locationText
+    override fun render(state: RandomizerState, baseFragmentDetails: BaseFragmentDetails) {
+        if (baseFragmentDetails is RandomizerFragmentDetails) {
+            baseFragmentDetails.binding.locationContainer.searchCard.currentText.text = state.locationText
         }
     }
 

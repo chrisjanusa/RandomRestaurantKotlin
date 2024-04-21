@@ -15,10 +15,6 @@ buildscript {
     }
 }
 
-ext {
-  targetSdkVersion = 34
-}
-
 allprojects {
     repositories {
         google()

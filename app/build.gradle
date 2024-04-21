@@ -4,13 +4,17 @@ apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'com.google.gms.google-services'
 
 android {
-    compileSdkVersion targetSdkVersion
+    compileSdk 34
+
+    buildFeatures {
+        viewBinding = true
+    }
 
     defaultConfig {
-        minSdkVersion 24
-        targetSdkVersion targetSdkVersion
-        versionCode 23
-        versionName "2.3.0"
+        minSdk 24
+        targetSdk 34
+        versionCode 25
+        versionName "2.2.3"
     }
 
     buildTypes {
@@ -32,9 +36,8 @@ dependencies {
     implementation project(":history")
     implementation project(":favorites")
     implementation project(":blocks")
-    implementation 'com.google.firebase:firebase-analytics:21.5.1'
-    implementation 'com.google.firebase:firebase-crashlytics:18.6.2'
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.5'
+    implementation 'com.google.firebase:firebase-analytics:21.6.2'
+    implementation 'com.google.firebase:firebase-crashlytics:18.6.4'
 }
 
 repositories {

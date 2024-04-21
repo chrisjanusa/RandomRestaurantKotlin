@@ -4,11 +4,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chrisjanusa.base.CommunicationHelper
-import com.chrisjanusa.base.interfaces.BaseRestaurantFragment
 import com.chrisjanusa.base.interfaces.FeatureUIManager
+import com.chrisjanusa.base.interfaces.BaseFragmentDetails
 import com.chrisjanusa.base.models.RandomizerState
 import com.chrisjanusa.base.models.RandomizerViewModel
 import com.chrisjanusa.baselist.BlockClickAndRefreshAction
@@ -18,23 +17,25 @@ import com.chrisjanusa.yelp.models.Restaurant
 import java.util.*
 
 object FavoritesListUIManager : FeatureUIManager {
-    override fun init(randomizerViewModel: RandomizerViewModel, fragment: BaseRestaurantFragment) {
-        fragment.run {
-            // TODO: Synthetics
-//            recyclerView.apply {
-//                // set a LinearLayoutManager to handle Android
-//                // RecyclerView behavior
-//                layoutManager = LinearLayoutManager(activity)
-//                // set the custom adapter to the RecyclerView
-//                adapter = RestaurantAdapter(
-//                    randomizerViewModel.state.value?.favList ?: LinkedList(),
-//                    randomizerViewModel
-//                ) { inflater: LayoutInflater, parent: ViewGroup -> RestaurantViewHolder(inflater, parent) }
-//            }
+
+    override fun init(randomizerViewModel: RandomizerViewModel, baseFragmentDetails: BaseFragmentDetails) {
+        if (baseFragmentDetails is FavoritesFragmentDetails) {
+            baseFragmentDetails.fragment.run {
+                baseFragmentDetails.binding.recyclerView.apply {
+                    // set a LinearLayoutManager to handle Android
+                    // RecyclerView behavior
+                    layoutManager = LinearLayoutManager(activity)
+                    // set the custom adapter to the RecyclerView
+                    adapter = RestaurantAdapter(
+                        randomizerViewModel.state.value?.favList ?: LinkedList(),
+                        randomizerViewModel
+                    ) { inflater: LayoutInflater, parent: ViewGroup -> RestaurantViewHolder(inflater, parent) }
+                }
+            }
         }
     }
 
-    override fun render(state: RandomizerState, fragment: Fragment) {
+    override fun render(state: RandomizerState, baseFragmentDetails: BaseFragmentDetails) {
 
     }
 

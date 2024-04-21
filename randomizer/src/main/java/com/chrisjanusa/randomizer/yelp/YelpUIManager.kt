@@ -5,15 +5,15 @@ import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.chrisjanusa.base.CommunicationHelper
 import com.chrisjanusa.base.CommunicationHelper.sendAction
-import com.chrisjanusa.base.interfaces.BaseRestaurantFragment
 import com.chrisjanusa.base.interfaces.FeatureUIManager
+import com.chrisjanusa.base.interfaces.BaseFragmentDetails
 import com.chrisjanusa.base.models.RandomizerState
 import com.chrisjanusa.base.models.RandomizerViewModel
 import com.chrisjanusa.randomizer.R
+import com.chrisjanusa.randomizer.RandomizerFragmentDetails
 import com.chrisjanusa.randomizer.yelp.actions.RandomizeAction
 import com.chrisjanusa.restaurant_base.categoriesToDisplayString
 import com.chrisjanusa.restaurant_base.deeplinks.actions.GoogleMapsClickAction
@@ -27,22 +27,28 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.material.button.MaterialButton
 
 object YelpUIManager : FeatureUIManager {
-    override fun init(randomizerViewModel: RandomizerViewModel, fragment: BaseRestaurantFragment) {
-        // TODO: Synthetics
-//        fragment.random.setOnClickListener { sendAction(RandomizeAction(), randomizerViewModel) }
+
+    override fun init(randomizerViewModel: RandomizerViewModel, baseFragmentDetails: BaseFragmentDetails) {
+        if (baseFragmentDetails is RandomizerFragmentDetails) {
+            baseFragmentDetails.fragment.run {
+                baseFragmentDetails.binding.restaurantContainer.random.setOnClickListener { sendAction(RandomizeAction(), randomizerViewModel) }
+            }
+        }
     }
 
-    override fun render(state: RandomizerState, fragment: Fragment) {
-        fragment.activity?.run {
-            val restaurant = state.currRestaurant
-            if (restaurant != null) {
-                renderCard(restaurant, state, this)
-                findViewById<ShimmerFrameLayout>(R.id.shimmer_card_layout).visibility = View.GONE
-                findViewById<ConstraintLayout>(R.id.card_layout).visibility = View.VISIBLE
+    override fun render(state: RandomizerState, baseFragmentDetails: BaseFragmentDetails) {
+        if (baseFragmentDetails is RandomizerFragmentDetails) {
+            baseFragmentDetails.fragment.activity?.run {
+                val restaurant = state.currRestaurant
+                if (restaurant != null) {
+                    renderCard(restaurant, state, this)
+                    findViewById<ShimmerFrameLayout>(R.id.shimmer_card_layout).visibility = View.GONE
+                    findViewById<ConstraintLayout>(R.id.card_layout).visibility = View.VISIBLE
 
-            } else {
-                findViewById<ConstraintLayout>(R.id.card_layout).visibility = View.GONE
-                findViewById<ShimmerFrameLayout>(R.id.shimmer_card_layout).visibility = View.VISIBLE
+                } else {
+                    findViewById<ConstraintLayout>(R.id.card_layout).visibility = View.GONE
+                    findViewById<ShimmerFrameLayout>(R.id.shimmer_card_layout).visibility = View.VISIBLE
+                }
             }
         }
     }
