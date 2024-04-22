@@ -5,18 +5,17 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.chrisjanusa.base.interfaces.BaseEvent
 import com.chrisjanusa.base.interfaces.BaseRestaurantFragment
-import kotlinx.android.synthetic.main.search_card.*
-import kotlinx.android.synthetic.main.top_overlay.*
+import com.chrisjanusa.randomizer.RandomizerFragmentDetails
 
 class SearchOpenedEvent : BaseEvent {
     override fun handleEvent(fragment: BaseRestaurantFragment) {
-        fragment.run {
-            user_input.requestFocus()
-            user_input.showDropDown()
-            val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-            imm?.showSoftInput(user_input, InputMethodManager.SHOW_IMPLICIT)
-            search_shade.visibility = View.VISIBLE
-            search_shade.animate()
+        (fragment.getFragmentDetails() as? RandomizerFragmentDetails)?.binding?.locationContainer?.run {
+            searchCard.userInput.requestFocus()
+            searchCard.userInput.showDropDown()
+            val imm = fragment.context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+            imm?.showSoftInput(searchCard.userInput, InputMethodManager.SHOW_IMPLICIT)
+            searchShade.root.visibility = View.VISIBLE
+            searchShade.root.animate()
                 .alpha(1f)
                 .setDuration(150)
         }

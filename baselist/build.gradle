@@ -1,11 +1,13 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 
 dependencies {
     api project(":base")
 }
-
+kotlin {
+  jvmToolchain(17)
+}
 android {
-    compileSdkVersion targetSdkVersion
+    compileSdk 34
+  namespace 'com.chrisjanusa.baselist'
 }

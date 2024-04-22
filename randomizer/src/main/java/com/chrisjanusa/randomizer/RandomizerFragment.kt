@@ -1,5 +1,6 @@
 package com.chrisjanusa.randomizer
 
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +10,8 @@ import android.widget.RelativeLayout
 import androidx.lifecycle.lifecycleScope
 import com.chrisjanusa.base.CommunicationHelper.sendAction
 import com.chrisjanusa.base.interfaces.BaseRestaurantFragment
+import com.chrisjanusa.base.interfaces.BaseFragmentDetails
+import com.chrisjanusa.randomizer.databinding.RandomizerFragBinding
 import com.chrisjanusa.randomizer.filter_boolean.BooleanFilterUIManager
 import com.chrisjanusa.randomizer.filter_cuisine.CuisineUIManager
 import com.chrisjanusa.randomizer.filter_diet.DietUIManager
@@ -44,6 +47,14 @@ class RandomizerFragment :
     private var map: GoogleMap? = null
     private var icon: BitmapDescriptor? = null
     private var mapView: MapView? = null
+    private var _binding: RandomizerFragBinding? = null
+    // This property is only valid between onCreateView and
+// onDestroyView.
+    private val binding get() = _binding!!
+
+    override fun getFragmentDetails(): BaseFragmentDetails {
+        return RandomizerFragmentDetails(this, binding)
+    }
 
     override fun getFeatureUIManagers() = listOf(
         LocationUIManager,
@@ -68,7 +79,8 @@ class RandomizerFragment :
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.randomizer_frag, container, false)
+        _binding = RandomizerFragBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -103,6 +115,7 @@ class RandomizerFragment :
         mapView?.onStop()
     }
 
+    @SuppressLint("MissingPermission")
     override fun onDestroyView() {
         super.onDestroyView()
         randomizerViewModel.state.value?.lastCacheUpdateJob?.cancel()
@@ -112,6 +125,7 @@ class RandomizerFragment :
         icon = null
         map?.clear()
         map = null
+        _binding = null
     }
 
     override fun onLowMemory() {

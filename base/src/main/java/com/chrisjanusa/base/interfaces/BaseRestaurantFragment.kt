@@ -20,11 +20,13 @@ open class BaseRestaurantFragment : Fragment() {
 
     open fun getFeatureUIManagers() : List<FeatureUIManager> = LinkedList()
 
+    open fun getFragmentDetails() : BaseFragmentDetails = BaseFragmentDetails(this)
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         val render = fun(newState: RandomizerState) {
             for (uiManager in getFeatureUIManagers()) {
-                uiManager.render(newState, this)
+                uiManager.render(newState, getFragmentDetails())
             }
         }
         randomizerViewModel.state.observe(viewLifecycleOwner, Observer<RandomizerState>(render))
@@ -33,7 +35,7 @@ open class BaseRestaurantFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         for (uiManager in getFeatureUIManagers()) {
-            uiManager.init(randomizerViewModel, this)
+            uiManager.init(randomizerViewModel, getFragmentDetails())
         }
 
         lifecycleScope.launch {
