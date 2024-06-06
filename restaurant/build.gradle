@@ -1,0 +1,14 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+dependencies {
+  api project(":foursquare")
+  implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.11.2"
+}
+kotlin {
+  jvmToolchain(17)
+}
+android {
+    compileSdk 34
+  namespace 'com.chrisjanusa.restaurant'
+}

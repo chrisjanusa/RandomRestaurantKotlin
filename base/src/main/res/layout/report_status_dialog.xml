@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginEnd="@dimen/dialog_margin"
+    android:layout_marginStart="@dimen/dialog_margin"
+    android:background="@android:color/transparent"
+    android:orientation="vertical">
+
+  <androidx.cardview.widget.CardView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerHorizontal="true"
+      android:layout_centerVertical="true"
+      app:cardBackgroundColor="@android:color/white"
+      app:cardCornerRadius="@dimen/dialog_radius"
+      app:cardElevation="@dimen/dialog_elevation"
+      app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+      <FrameLayout
+          android:id="@+id/banner"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/banner_height">
+
+        <View
+            android:id="@+id/background"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/banner_height"
+            android:background="@color/banner_background" />
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/banner_icon_height"
+            android:layout_gravity="center"
+            android:src="@drawable/error_icon" />
+      </FrameLayout>
+
+      <RelativeLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/banner"
+          android:padding="@dimen/dialog_padding">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/status"
+            android:layout_marginTop="@dimen/dialog_button_top_margin"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+          <com.google.android.material.button.MaterialButton
+              android:id='@+id/ok'
+              android:text="@string/ok"
+              style="@style/DialogApplyAppearance" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dialog_padding"
+            android:gravity="center"
+            android:paddingLeft="@dimen/dialog_padding"
+            android:paddingRight="@dimen/dialog_padding"
+            android:text=""
+            android:textColor="#000000"
+            android:textAlignment="center"
+            android:textSize="@dimen/dialog_message_size" />
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/dialog_padding"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_below="@id/message"
+            android:background="@android:color/darker_gray"/>
+        <TextView
+            android:id="@+id/status_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/divider"
+            android:layout_marginTop="@dimen/dialog_padding"
+            android:gravity="center"
+            android:text="@string/current_status"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="@dimen/dialog_title_size" />
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:layout_below="@id/status_title"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:paddingLeft="@dimen/dialog_padding"
+            android:paddingRight="@dimen/dialog_padding"
+            android:text="@string/processing_status"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="@dimen/dialog_message_size" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/status_title"
+            android:layout_marginTop="@dimen/dialog_padding"
+            android:gravity="center"
+            android:orientation="horizontal">
+          <com.facebook.shimmer.ShimmerFrameLayout
+              android:id="@+id/status_shimmer"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              app:shimmer_auto_start="false"
+              app:shimmer_duration="800">
+
+            <View
+                android:layout_width="@dimen/_75sdp"
+                android:layout_height="@dimen/placeholderTitleTextHeight"
+                android:background="@color/shimmer_background" />
+          </com.facebook.shimmer.ShimmerFrameLayout>
+        </LinearLayout>
+      </RelativeLayout>
+    </RelativeLayout>
+  </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

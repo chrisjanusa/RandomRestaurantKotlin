@@ -2,7 +2,7 @@ package com.chrisjanusa.restaurant_base.restaurant_favorite.updaters
 
 import com.chrisjanusa.base.interfaces.BaseUpdater
 import com.chrisjanusa.base.models.RandomizerState
-import com.chrisjanusa.yelp.models.Restaurant
+import com.chrisjanusa.restaurant.Restaurant
 import java.util.*
 
 class FavoriteUpdater(private val restaurant: Restaurant) : BaseUpdater {

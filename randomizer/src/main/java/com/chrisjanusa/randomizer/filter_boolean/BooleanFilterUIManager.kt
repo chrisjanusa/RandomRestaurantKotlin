@@ -21,7 +21,7 @@ object BooleanFilterUIManager : FeatureUIManager {
                 filterBinding.openNow.setOnClickListener { sendAction(OpenNowClickedAction(), randomizerViewModel) }
                 filterBinding.favoritesOnly.setOnClickListener { sendAction(FavoriteClickedAction(), randomizerViewModel) }
                 filterBinding.fastFood.setOnClickListener { sendAction(FastFoodClickedAction(), randomizerViewModel) }
-                filterBinding.sitDown.setOnClickListener { sendAction(SitDownClickedAction(), randomizerViewModel) }
+//                filterBinding.sitDown.setOnClickListener { sendAction(SitDownClickedAction(), randomizerViewModel) }
             }
         }
     }
@@ -33,7 +33,7 @@ object BooleanFilterUIManager : FeatureUIManager {
                 renderFilterStyle(filterBinding.openNow, state.openNowSelected, it)
                 renderFilterStyle(filterBinding.favoritesOnly, state.favoriteOnlySelected, it)
                 renderFilterStyle(filterBinding.fastFood, state.fastFoodSelected, it)
-                renderFilterStyle(filterBinding.sitDown, state.sitDownSelected, it)
+//                renderFilterStyle(filterBinding.sitDown, state.sitDownSelected, it)
             }
         }
     }

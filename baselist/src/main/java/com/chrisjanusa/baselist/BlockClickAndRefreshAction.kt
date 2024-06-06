@@ -5,16 +5,15 @@ import com.chrisjanusa.base.interfaces.BaseEvent
 import com.chrisjanusa.base.interfaces.BaseUpdater
 import com.chrisjanusa.base.models.MapEvent
 import com.chrisjanusa.base.models.RandomizerState
+import com.chrisjanusa.restaurant.Restaurant
 import com.chrisjanusa.restaurant_base.restaurant_block.actions.BlockClickAction
-import com.chrisjanusa.yelp.models.Restaurant
 import kotlinx.coroutines.channels.Channel
 
 class BlockClickAndRefreshAction(
     restaurant: Restaurant,
     private val position: Int,
     private val recyclerViewId: Int
-) :
-    BlockClickAction(restaurant) {
+) : BlockClickAction(restaurant) {
     override suspend fun performAction(
         currentState: LiveData<RandomizerState>,
         updateChannel: Channel<BaseUpdater>,

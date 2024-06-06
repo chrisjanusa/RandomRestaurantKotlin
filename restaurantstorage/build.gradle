@@ -3,8 +3,9 @@ apply plugin: 'kotlin-android'
 
 dependencies {
     api project(":yelp")
+    api project(":restaurant")
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.11.2"
-    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3"
 }
 kotlin {
   jvmToolchain(17)

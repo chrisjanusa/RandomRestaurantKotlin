@@ -6,7 +6,7 @@ import android.location.Location
 import android.util.Log
 import com.chrisjanusa.base.models.MapEvent
 import com.chrisjanusa.base.models.defaultLocationText
-import com.chrisjanusa.yelp.models.Restaurant
+import com.chrisjanusa.restaurant.Restaurant
 import kotlinx.coroutines.channels.Channel
 
 const val calculatingLocationText = "Locating"

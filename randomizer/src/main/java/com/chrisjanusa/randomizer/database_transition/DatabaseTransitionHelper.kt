@@ -4,73 +4,79 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import com.chrisjanusa.base.interfaces.BaseUpdater
-import com.chrisjanusa.randomizer.database_transition.database.BlockDBHelper
-import com.chrisjanusa.randomizer.database_transition.database.FavoritesDBHelper
+import com.chrisjanusa.base.preferences.PreferenceHelper
+import com.chrisjanusa.foursquare.FourSquareRepository.getBusinessSearchResults
 import com.chrisjanusa.randomizer.database_transition.updaters.AddBlockUpdater
 import com.chrisjanusa.randomizer.database_transition.updaters.AddFavoriteUpdater
-import com.chrisjanusa.yelp.YelpRepository.getBusinessSearchResults
+import com.chrisjanusa.restaurant.toDomainModel
+import com.chrisjanusa.restaurantstorage.retrieveYelpListCache
+import com.chrisjanusa.restaurantstorage.saveYelpListCache
+import com.chrisjanusa.yelp.models.YelpRestaurant
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
 
-private const val databaseTransitioned = "databaseTransitioned"
+private const val databaseTransitioned = "transitionedToFourSquare"
 
-suspend fun transitionDatabase(preferences: SharedPreferences?, context: Context, updateChannel: Channel<BaseUpdater>) {
+suspend fun transitionDatabase(preferences: SharedPreferences?, updateChannel: Channel<BaseUpdater>) {
     val alreadyInit = preferences?.getBoolean(databaseTransitioned, false) ?: true
     if (!alreadyInit) {
         var transitionedAll = true
         var request = GlobalScope.launch {
-            val database = FavoritesDBHelper(context)
-            for (res in database.getFavoriteRestaurants()) {
+            val remainingRestaurants = mutableListOf<YelpRestaurant>()
+            for (res in retrieveYelpListCache(preferences, PreferenceHelper.StateObject.YelpFavRestaurants.key)) {
                 launch {
                     try {
                         val businesses =
                             getBusinessSearchResults(
-                                res.lat,
-                                res.lon,
-                                res.name,
+                                latitude = res.coordinates.latitude,
+                                longitude = res.coordinates.longitude,
+                                term = res.name,
                                 limit = 1,
-                                open_now = false
-                            ).businesses
+                                openNow = false
+                            ).body()?.results ?: emptyList()
                         if (businesses.isNotEmpty()) {
                             updateChannel.send(
                                 AddFavoriteUpdater(
-                                    businesses[0],
-                                    preferences,
-                                    context
+                                    businesses[0].toDomainModel()
                                 )
                             )
                         }
                     } catch (exception: Exception) {
                         transitionedAll = false
+                        remainingRestaurants.add(res)
                         Log.d("caught exception", exception.toString())
                     }
                 }
             }
+            saveYelpListCache(preferences, PreferenceHelper.StateObject.YelpFavRestaurants.key, remainingRestaurants)
         }
+
         request.join()
         request = GlobalScope.launch {
-            val database = BlockDBHelper(context)
-            for (res in database.getBlockedRestaurants()) {
+            val remainingRestaurants = mutableListOf<YelpRestaurant>()
+            for (res in retrieveYelpListCache(preferences, PreferenceHelper.StateObject.YelpBlockedRestaurants.key)) {
                 launch {
                     try {
                         val businesses =
                             getBusinessSearchResults(
-                                res.lat,
-                                res.lon,
-                                res.name,
+                                latitude = res.coordinates.latitude,
+                                longitude = res.coordinates.longitude,
+                                term = res.name,
                                 limit = 1,
-                                open_now = false
-                            ).businesses
+                                openNow = false
+                            ).body()?.results ?: emptyList()
                         if (businesses.isNotEmpty()) {
-                            updateChannel.send(AddBlockUpdater(businesses[0], preferences, context))
+                            updateChannel.send(AddBlockUpdater(businesses[0].toDomainModel()))
                         }
                     } catch (exception: Exception) {
                         transitionedAll = false
+                        remainingRestaurants.add(res)
                         Log.d("caught exception", exception.toString())
                     }
                 }
             }
+            saveYelpListCache(preferences, PreferenceHelper.StateObject.YelpBlockedRestaurants.key, remainingRestaurants)
         }
         request.join()
         if (transitionedAll) {

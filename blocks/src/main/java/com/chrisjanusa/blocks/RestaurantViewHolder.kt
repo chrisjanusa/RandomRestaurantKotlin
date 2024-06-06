@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import com.chrisjanusa.base.models.RandomizerViewModel
 import com.chrisjanusa.baselist.BaseRestaurantViewHolder
 import com.chrisjanusa.blocks.BlocksListUIManager.renderFavBlock
-import com.chrisjanusa.yelp.models.Restaurant
+import com.chrisjanusa.restaurant.Restaurant
 
 class RestaurantViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     BaseRestaurantViewHolder(inflater, parent) {

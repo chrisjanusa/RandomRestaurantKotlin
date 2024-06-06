@@ -5,16 +5,11 @@ import com.chrisjanusa.base.models.enums.Cuisine
 
 object CuisineHelper {
 
-    fun HashSet<Cuisine>.toYelpString(): String? {
+    fun HashSet<Cuisine>.toFoursquareString(): String? {
         if (this.isEmpty()) {
             return null
         }
-        val out = StringBuilder()
-        for (cuisine in this.iterator()) {
-            out.append(cuisine.yelp)
-            out.append(delimiter)
-        }
-        return out.dropLast(2).toString()
+        return joinToString(",", transform = { it.foursquare })
     }
 
     fun cuisineFromIdentifierString(cuisineString: String): HashSet<Cuisine> {

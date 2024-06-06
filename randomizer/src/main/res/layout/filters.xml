@@ -52,12 +52,12 @@
             android:text="@string/fast_food"
             app:rippleColor="@android:color/transparent"
             />
-        <com.google.android.material.button.MaterialButton
-            android:id='@+id/sit_down'
-            style="@style/FilterAppearance"
-            android:text="@string/sit_down"
-            app:rippleColor="@android:color/transparent"
-            />
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id='@+id/sit_down'-->
+<!--            style="@style/FilterAppearance"-->
+<!--            android:text="@string/sit_down"-->
+<!--            app:rippleColor="@android:color/transparent"-->
+<!--            />-->
         <com.google.android.material.button.MaterialButton
                 android:id='@+id/favorites_only'
                 style="@style/FilterAppearance"

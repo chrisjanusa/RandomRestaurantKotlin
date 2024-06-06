@@ -7,12 +7,12 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.chrisjanusa.base.CommunicationHelper
 import com.chrisjanusa.base.models.RandomizerViewModel
+import com.chrisjanusa.restaurant.Restaurant
 import com.chrisjanusa.restaurant_base.categoriesToDisplayString
 import com.chrisjanusa.restaurant_base.deeplinks.actions.GoogleMapsClickAction
 import com.chrisjanusa.restaurant_base.deeplinks.actions.UberClickAction
-import com.chrisjanusa.restaurant_base.deeplinks.actions.YelpClickAction
+import com.chrisjanusa.restaurant_base.deeplinks.actions.LinkClickAction
 import com.chrisjanusa.restaurant_base.restaurantToPriceDistanceString
-import com.chrisjanusa.yelp.models.Restaurant
 import com.google.android.material.button.MaterialButton
 
 fun renderListCardDetails(
@@ -25,7 +25,7 @@ fun renderListCardDetails(
         val rating = restaurant.rating ?: 0f
         findViewById<TextView>(R.id.rating).text = "%.1f".format(rating)
         findViewById<RatingBar>(R.id.stars).rating = rating
-        findViewById<TextView>(R.id.count).text = restaurant.review_count.toString()
+        findViewById<TextView>(R.id.count).text = restaurant.ratingCount.toString()
         findViewById<TextView>(R.id.card_cuisines).text =
             categoriesToDisplayString(restaurant.categories)
         findViewById<TextView>(R.id.distancePrice).text =
@@ -45,15 +45,18 @@ fun renderListCardDetails(
         findViewById<MaterialButton>(R.id.uber).setOnClickListener {
             CommunicationHelper.sendAction(uberClickAction, randomizerViewModel)
         }
-        findViewById<MaterialButton>(R.id.yelp).setOnClickListener {
+        val websiteButton = findViewById<MaterialButton>(R.id.website)
+        websiteButton.setText(restaurant.link.textRes)
+        websiteButton.setIconResource(restaurant.link.iconRes)
+        websiteButton.setOnClickListener {
             CommunicationHelper.sendAction(
-                YelpClickAction(restaurant.url),
+                LinkClickAction(restaurant.link.url),
                 randomizerViewModel
             )
         }
         findViewById<ImageView>(R.id.thumbnail)?.let {
             Glide.with(view)
-                .load(restaurant.image_url)
+                .load(restaurant.imageUrl)
                 .centerCrop()
                 .into(it)
         }

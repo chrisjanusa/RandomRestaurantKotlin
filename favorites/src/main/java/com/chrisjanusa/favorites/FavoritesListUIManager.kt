@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chrisjanusa.base.CommunicationHelper
 import com.chrisjanusa.base.interfaces.FeatureUIManager
@@ -13,7 +15,8 @@ import com.chrisjanusa.base.models.RandomizerViewModel
 import com.chrisjanusa.baselist.BlockClickAndRefreshAction
 import com.chrisjanusa.baselist.FavoriteClickAndRefreshAction
 import com.chrisjanusa.baselist.RestaurantAdapter
-import com.chrisjanusa.yelp.models.Restaurant
+import com.chrisjanusa.restaurant.Restaurant
+import com.chrisjanusa.restaurant_base.restaurant_report.actions.ReportClickAction
 import java.util.*
 
 object FavoritesListUIManager : FeatureUIManager {
@@ -53,7 +56,7 @@ object FavoritesListUIManager : FeatureUIManager {
                 else
                     R.drawable.star_default
             findViewById<ImageView>(R.id.favButton).setImageResource(favIcon)
-            findViewById<ImageView>(R.id.favButton).setOnClickListener {
+            findViewById<RelativeLayout>(R.id.favButtonBox).setOnClickListener {
                 CommunicationHelper.sendAction(
                     FavoriteClickAndRefreshAction(
                         restaurant,
@@ -70,13 +73,26 @@ object FavoritesListUIManager : FeatureUIManager {
                 else
                     R.drawable.block_default
             findViewById<ImageView>(R.id.blockButton).setImageResource(blockIcon)
-            findViewById<ImageView>(R.id.blockButton).setOnClickListener {
+            findViewById<RelativeLayout>(R.id.blockButtonBox).setOnClickListener {
                 CommunicationHelper.sendAction(
                     BlockClickAndRefreshAction(
                         restaurant,
                         position,
                         R.id.recyclerView
                     ),
+                    randomizerViewModel
+                )
+            }
+
+            val reportIcon =
+                if (!state.reportMap[restaurant.id].isNullOrBlank())
+                    R.drawable.report_selected
+                else
+                    R.drawable.report
+            findViewById<ImageView>(R.id.reportButton).setImageResource(reportIcon)
+            findViewById<RelativeLayout>(com.chrisjanusa.base.R.id.reportButtonBox).setOnClickListener {
+                CommunicationHelper.sendAction(
+                    ReportClickAction(restaurant),
                     randomizerViewModel
                 )
             }

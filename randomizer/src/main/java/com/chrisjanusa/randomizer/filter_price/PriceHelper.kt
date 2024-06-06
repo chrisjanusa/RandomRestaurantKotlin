@@ -20,14 +20,3 @@ fun priceFromSaveString(curr: String): HashSet<Price> {
     }
     return selected
 }
-
-fun setToYelpString(prices: HashSet<Price>): String? {
-    if (prices.isEmpty()) return null
-    val yelpString = StringBuilder()
-    for (price in prices) {
-        yelpString.append(price.num)
-        yelpString.append(",")
-    }
-
-    return yelpString.dropLast(1).toString()
-}

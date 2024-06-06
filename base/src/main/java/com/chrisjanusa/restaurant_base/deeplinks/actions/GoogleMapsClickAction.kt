@@ -6,8 +6,8 @@ import com.chrisjanusa.base.interfaces.BaseEvent
 import com.chrisjanusa.base.interfaces.BaseUpdater
 import com.chrisjanusa.base.models.MapEvent
 import com.chrisjanusa.base.models.RandomizerState
+import com.chrisjanusa.restaurant.Location
 import com.chrisjanusa.restaurant_base.deeplinks.events.OpenGoogleMapsEvent
-import com.chrisjanusa.yelp.models.Location
 import kotlinx.coroutines.channels.Channel
 
 class GoogleMapsClickAction(private val name: String, private val location: Location) : BaseAction {

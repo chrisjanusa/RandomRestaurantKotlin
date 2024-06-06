@@ -2,10 +2,12 @@ package com.chrisjanusa.randomizer.init
 
 import com.chrisjanusa.base.interfaces.BaseUpdater
 import com.chrisjanusa.base.models.RandomizerState
+import com.chrisjanusa.base.models.ReportId
 import com.chrisjanusa.base.models.enums.Cuisine
 import com.chrisjanusa.base.models.enums.Diet
 import com.chrisjanusa.base.models.enums.Price
-import com.chrisjanusa.yelp.models.Restaurant
+import com.chrisjanusa.restaurant.Restaurant
+import com.chrisjanusa.restaurant.RestaurantId
 
 class InitUpdater(
     private val timesRandomized: Int,
@@ -27,7 +29,8 @@ class InitUpdater(
     private val restaurantsSeenRecently: Set<String>,
     private val favList: List<Restaurant>,
     private val blockList: List<Restaurant>,
-    private val history: List<Restaurant>
+    private val history: List<Restaurant>,
+    private val reportMap: Map<RestaurantId, ReportId>
 ) : BaseUpdater {
     override fun performUpdate(prevState: RandomizerState): RandomizerState {
         return prevState.copy(
@@ -51,7 +54,8 @@ class InitUpdater(
             restaurantsSeenRecently = restaurantsSeenRecently,
             favList = favList,
             blockList = blockList,
-            historyList = history
+            historyList = history,
+            reportMap = reportMap
         )
     }
 }

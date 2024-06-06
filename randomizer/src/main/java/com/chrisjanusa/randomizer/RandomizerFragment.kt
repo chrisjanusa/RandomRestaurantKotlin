@@ -29,7 +29,7 @@ import com.chrisjanusa.randomizer.location_gps.GpsUIManager
 import com.chrisjanusa.randomizer.location_gps.actions.PermissionDeniedAction
 import com.chrisjanusa.randomizer.location_gps.actions.PermissionReceivedAction
 import com.chrisjanusa.randomizer.location_search.SearchUIManager
-import com.chrisjanusa.randomizer.yelp.YelpUIManager
+import com.chrisjanusa.randomizer.foursquare.FoursquareUIManager
 import com.google.android.libraries.maps.CameraUpdateFactory.newLatLngZoom
 import com.google.android.libraries.maps.GoogleMap
 import com.google.android.libraries.maps.MapView
@@ -65,7 +65,7 @@ class RandomizerFragment :
         DietUIManager,
         GpsUIManager,
         SearchUIManager,
-        YelpUIManager,
+        FoursquareUIManager,
         RatingUIManager
     )
 

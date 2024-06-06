@@ -1,0 +1,38 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+
+android {
+
+    buildTypes.each {
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file("local.properties").newDataInputStream())
+        def foursquare_api_key = properties.getProperty("foursquare_api_key", "")
+
+        it.buildConfigField 'String', "FOURSQUARE_API_KEY", "\"" + foursquare_api_key + "\""
+
+        it.resValue 'string', "foursquare_api_key", foursquare_api_key
+
+        def foursquare_service_key = properties.getProperty("foursquare_service_key", "")
+
+        it.buildConfigField 'String', "FOURSQUARE_SERVICE_KEY", "\"" + foursquare_service_key + "\""
+
+        it.resValue 'string', "foursquare_service_key", foursquare_service_key
+
+    }
+    compileSdk 34
+  namespace 'com.chrisjanusa.foursquare'
+    buildFeatures {
+        buildConfig true
+    }
+}
+kotlin {
+    jvmToolchain(17)
+}
+dependencies {
+    api "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation "com.squareup.retrofit2:converter-jackson:2.9.0"
+    implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.11.2"
+    api "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+}
+

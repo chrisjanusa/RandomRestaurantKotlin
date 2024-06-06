@@ -14,7 +14,7 @@
             app:layout_constraintStart_toStartOf="parent"
     >
         <androidx.constraintlayout.widget.ConstraintLayout
-                style="@style/CuisineConstraint"
+            style="@style/CuisineConstraint"
         >
             <ImageView
                     style="@style/CuisineIcon"

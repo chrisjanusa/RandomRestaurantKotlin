@@ -6,8 +6,8 @@ import com.chrisjanusa.base.interfaces.BaseEvent
 import com.chrisjanusa.base.interfaces.BaseUpdater
 import com.chrisjanusa.base.models.MapEvent
 import com.chrisjanusa.base.models.RandomizerState
+import com.chrisjanusa.restaurant.Restaurant
 import com.chrisjanusa.restaurant_base.restaurant_block.updaters.BlockUpdater
-import com.chrisjanusa.yelp.models.Restaurant
 import kotlinx.coroutines.channels.Channel
 
 

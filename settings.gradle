@@ -2,5 +2,5 @@ plugins {
   id 'org.gradle.toolchains.foojay-resolver-convention' version '0.7.0'
 }
 
-include ':app', ':base', ':baselist', ':blocks', ':favorites', ':history', ':randomizer', ':restaurantcard', ':yelp', ':restaurantstorage'
+include ':app', ':base', ':baselist', ':blocks', ':favorites', ':foursquare',':history', ':randomizer', ':restaurantcard', ':yelp', ':restaurantstorage', ':restaurant'
 

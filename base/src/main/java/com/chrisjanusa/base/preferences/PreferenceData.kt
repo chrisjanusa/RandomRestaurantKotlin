@@ -1,6 +1,8 @@
 package com.chrisjanusa.base.preferences
 
-import com.chrisjanusa.yelp.models.Restaurant
+import com.chrisjanusa.base.models.ReportId
+import com.chrisjanusa.restaurant.Restaurant
+import com.chrisjanusa.restaurant.RestaurantId
 
 data class PreferenceData(
     val timesRandomized: Int,
@@ -21,5 +23,6 @@ data class PreferenceData(
     val restaurantsSeenRecently: Set<String>,
     val favList: List<Restaurant>,
     val blockList: List<Restaurant>,
-    val history: List<Restaurant>
+    val history: List<Restaurant>,
+    val reportMap: Map<RestaurantId, ReportId>
 )

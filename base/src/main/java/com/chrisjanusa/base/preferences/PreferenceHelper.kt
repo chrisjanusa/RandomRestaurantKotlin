@@ -6,7 +6,9 @@ import com.chrisjanusa.base.models.enums.Cuisine
 import com.chrisjanusa.base.models.enums.Diet
 import com.chrisjanusa.base.models.enums.Price
 import com.chrisjanusa.restaurantstorage.retrieveListCache
+import com.chrisjanusa.restaurantstorage.retrieveMapCache
 import com.chrisjanusa.restaurantstorage.saveListCache
+import com.chrisjanusa.restaurantstorage.saveMapCache
 
 object PreferenceHelper {
     sealed class StateObject(val key: String) {
@@ -24,9 +26,13 @@ object PreferenceHelper {
         object Longitude : StateObject("currLng")
         object RestaurantsSeen : StateObject("restaurantsSeen")
         object CacheValidity : StateObject("cacheValidity")
-        object FavRestaurants : StateObject("favorites")
-        object BlockedRestaurants : StateObject("blocks")
-        object History : StateObject("history")
+        object FavRestaurants : StateObject("favorites2")
+        object BlockedRestaurants : StateObject("blocks2")
+        object History : StateObject("history2")
+        object Reports : StateObject("reports")
+        object YelpFavRestaurants : StateObject("favorites")
+        object YelpBlockedRestaurants : StateObject("blocks")
+        object YelpHistory : StateObject("history")
         object TimesRandomized : StateObject("timesRandomized")
         object ReviewRequested : StateObject("reviewRequested")
     }
@@ -53,6 +59,7 @@ object PreferenceHelper {
                 saveListCache(preferences, StateObject.BlockedRestaurants.key, state.blockList)
                 saveListCache(preferences, StateObject.FavRestaurants.key, state.favList)
                 saveListCache(preferences, StateObject.History.key, state.historyList)
+                saveMapCache(preferences, StateObject.Reports.key, state.reportMap)
                 apply()
             }
         }
@@ -80,7 +87,8 @@ object PreferenceHelper {
                 getStringSet(StateObject.RestaurantsSeen.key, HashSet()) ?: HashSet(),
                 retrieveListCache(preferences, StateObject.FavRestaurants.key),
                 retrieveListCache(preferences, StateObject.BlockedRestaurants.key),
-                retrieveListCache(preferences, StateObject.History.key)
+                retrieveListCache(preferences, StateObject.History.key),
+                retrieveMapCache(preferences, StateObject.Reports.key)
             )
         }
     }

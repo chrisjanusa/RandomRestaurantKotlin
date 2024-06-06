@@ -72,7 +72,8 @@ class InitAction(private val activity: FragmentActivity?) : BaseAction {
                     restaurantsSeenRecently,
                     favList,
                     blockList,
-                    history
+                    history,
+                    reportMap
                 )
             )
 
@@ -87,9 +88,7 @@ class InitAction(private val activity: FragmentActivity?) : BaseAction {
                 updateChannel.send(LastManualLocationUpdater(locationName))
             }
 
-            activity?.let {
-                transitionDatabase(preferences, activity.applicationContext, updateChannel)
-            }
+            transitionDatabase(preferences, updateChannel)
         }
     }
 }

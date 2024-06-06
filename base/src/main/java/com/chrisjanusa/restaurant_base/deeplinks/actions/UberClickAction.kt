@@ -6,9 +6,9 @@ import com.chrisjanusa.base.interfaces.BaseEvent
 import com.chrisjanusa.base.interfaces.BaseUpdater
 import com.chrisjanusa.base.models.MapEvent
 import com.chrisjanusa.base.models.RandomizerState
+import com.chrisjanusa.restaurant.Coordinates
 import com.chrisjanusa.restaurant_base.deeplinks.events.OpenUberEvent
-import com.chrisjanusa.yelp.models.Coordinates
-import com.chrisjanusa.yelp.models.Location
+import com.chrisjanusa.restaurant.Location
 import kotlinx.coroutines.channels.Channel
 
 class UberClickAction(private val name: String, private val location: Location, private val coordinates: Coordinates) : BaseAction {

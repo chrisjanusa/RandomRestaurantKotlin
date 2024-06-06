@@ -10,8 +10,8 @@ import com.chrisjanusa.base.interfaces.BaseEvent
 import com.chrisjanusa.base.interfaces.BaseRestaurantFragment
 import com.chrisjanusa.base.models.RandomizerState
 import com.chrisjanusa.randomizer.R
-import com.chrisjanusa.randomizer.yelp.YelpUIManager.renderCard
-import com.chrisjanusa.yelp.models.Restaurant
+import com.chrisjanusa.randomizer.foursquare.FoursquareUIManager.renderCard
+import com.chrisjanusa.restaurant.Restaurant
 import com.facebook.shimmer.ShimmerFrameLayout
 
 class InitCurrRestaurantEvent(
@@ -26,14 +26,14 @@ class InitCurrRestaurantEvent(
             return
         }
 
-        activity.findViewById<ImageView>(R.id.thumbnail)?.let {
+        activity.findViewById<ImageView>(R.id.thumbnail)?.let { view ->
             Glide.with(activity)
-                .load(currRestaurant.image_url)
+                .load(currRestaurant.imageUrl)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
                 .centerCrop()
                 .placeholder(R.drawable.image_placeholder)
-                .into(it)
+                .into(view)
         }
         randomizerState.currRestaurant?.let {
             renderCard(it, randomizerState, activity)

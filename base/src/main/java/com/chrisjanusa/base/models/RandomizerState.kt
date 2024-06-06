@@ -4,7 +4,8 @@ import com.chrisjanusa.base.models.enums.Filter
 import com.chrisjanusa.base.models.enums.Cuisine
 import com.chrisjanusa.base.models.enums.Diet
 import com.chrisjanusa.base.models.enums.Price
-import com.chrisjanusa.yelp.models.Restaurant
+import com.chrisjanusa.restaurant.Restaurant
+import com.chrisjanusa.restaurant.RestaurantId
 import kotlinx.coroutines.Job
 import java.util.*
 import kotlin.collections.HashSet
@@ -53,5 +54,8 @@ data class RandomizerState(
 
     val favList: List<Restaurant> = LinkedList(),
     val blockList: List<Restaurant> = LinkedList(),
-    val historyList: List<Restaurant> = LinkedList()
+    val historyList: List<Restaurant> = LinkedList(),
+    val reportMap: Map<RestaurantId, ReportId> = HashMap(),
 )
+
+typealias ReportId = String

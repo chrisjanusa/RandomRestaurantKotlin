@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chrisjanusa.base.models.RandomizerViewModel
-import com.chrisjanusa.yelp.models.Restaurant
+import com.chrisjanusa.restaurant.Restaurant
 
 class RestaurantAdapter<T : BaseRestaurantViewHolder>(
     private val list: List<Restaurant>,

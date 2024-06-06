@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="report_restaurant_title">Report Restaurant as Permanently Closed?</string>
+    <string name="report_status_title">You Reported Restaurant as Permanently Closed</string>
+    <string name="report_status_message">Thank you for reporting the restaurant as permanently closed!</string>
+    <string name="current_status">Report Status</string>
+    <string name="processing_status">Foursquare is still processing this request</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="report">Report Closed</string>
+</resources>

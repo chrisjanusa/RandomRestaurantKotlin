@@ -3,13 +3,13 @@ package com.chrisjanusa.randomizer.filter_cuisine
 import android.content.Context
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat.getColor
 import com.chrisjanusa.base.interfaces.FeatureUIManager
 import com.chrisjanusa.base.interfaces.BaseFragmentDetails
 import com.chrisjanusa.base.models.RandomizerState
 import com.chrisjanusa.base.models.RandomizerViewModel
 import com.chrisjanusa.base.models.defaultCuisineTitle
-import com.chrisjanusa.base.models.delimiter
 import com.chrisjanusa.base.models.enums.Filter
 import com.chrisjanusa.randomizer.RandomizerFragmentDetails
 import com.chrisjanusa.randomizer.filter_base.FilterHelper.clickSelectionFilter
@@ -37,12 +37,7 @@ object CuisineUIManager : FeatureUIManager {
                 baseFragmentDetails.getFiltersBinding().cuisines.text = if (cuisineSet.isEmpty()) {
                     toDisplayString(defaultCuisineTitle)
                 } else {
-                    val out = StringBuilder()
-                    for (cuisine in cuisineSet.iterator()) {
-                        out.append(cuisine.identifier)
-                        out.append(delimiter)
-                    }
-                    toDisplayString(out.dropLast(2).toString())
+                    toDisplayString(cuisineSet.joinToString { it.identifier })
                 }
                 context?.let { renderFilterWithIconStyle(baseFragmentDetails.getFiltersBinding().cuisines, selected, it) }
             }
